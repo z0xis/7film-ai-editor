@@ -258,6 +258,7 @@ def _seed_timeline(database, asset, shot, *, source_start, source_duration):
         "source_duration_frames": source_duration, "source_rate": "25/1",
         "timeline_start_frame": 0, "timeline_duration_frames": source_duration,
         "score": .9, "reason": "test", "alternatives_json": [],
+        "category": shot.category, "shot_scale": shot.shot_scale,
     })
 
 
@@ -456,3 +457,80 @@ class FootageQualityTests(unittest.TestCase):
 
         self.assertEqual(plan.duration, Fraction(120))
         self.assertFalse([w for w in plan.warnings if "kalite eşiğinin altında" in w])
+
+
+class SavedTimelineSurvivesReanalysisTests(unittest.TestCase):
+    """A rough cut the editor already has must not be hollowed out by re-analysing the footage."""
+
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        self.database = Database(Path(self.temporary.name) / "sevenfilm.sqlite3")
+        self.database.migrate()
+        self.rate = FrameRate(25)
+        self.asset = MediaAsset(
+            id="asset-1", project_id="project-1", path=Path("/media/A001.mov"), name="A001.mov",
+            duration=Fraction(10), frame_rate=self.rate, width=1920, height=1080,
+        )
+        self.shot = Shot(
+            id="shot-1", asset_id="asset-1", source_range=TimeRange(0, 250, self.rate),
+            category="ceremony", shot_scale="close_up", technical_quality=.8, aesthetic_score=.8,
+            motion_score=.5, confidence=.8,
+        )
+        _seed_timeline(self.database, self.asset, self.shot, source_start=25, source_duration=50)
+
+    def reanalyse(self):
+        """What analyse_shots does to a clip: every shot row for it is replaced."""
+        self.database.execute("DELETE FROM shots WHERE asset_id = ?", ("asset-1",))
+        self.database.insert("shots", {
+            "id": "shot-new", "asset_id": "asset-1", "start_frame": 0, "duration_frames": 125,
+            "frame_rate": "25/1", "category": "party", "shot_scale": "wide",
+            "technical_quality": .4, "aesthetic_score": .4, "motion_score": .4, "confidence": .3,
+            "duplicate_group": None, "labels_json": [], "created_at": now(),
+        })
+
+    def test_the_timeline_keeps_all_of_its_clips(self):
+        before = len(get_timeline(self.database, "timeline-1").items)
+
+        self.reanalyse()
+
+        self.assertEqual(len(get_timeline(self.database, "timeline-1").items), before)
+        self.assertEqual(before, 1)
+
+    def test_each_clip_keeps_what_it_was(self):
+        self.reanalyse()
+
+        item = get_timeline(self.database, "timeline-1").items[0]
+
+        self.assertEqual(item.shot.category, "ceremony")
+        self.assertEqual(item.shot.shot_scale, "close_up")
+
+    def test_the_cut_points_are_untouched(self):
+        self.reanalyse()
+
+        item = get_timeline(self.database, "timeline-1").items[0]
+
+        self.assertEqual(item.source_range.start_frame, 25)
+        self.assertEqual(item.source_range.duration_frames, 50)
+        self.assertEqual(item.timeline_range.duration_frames, 50)
+
+    def test_the_timeline_still_exports(self):
+        self.reanalyse()
+
+        plan = get_timeline(self.database, "timeline-1")
+        with tempfile.TemporaryDirectory() as folder:
+            paths = export_all(plan, Path(folder))
+            spine = ET.parse(paths["fcpxml"]).getroot().findall(
+                "./library/event/project/sequence/spine/asset-clip")
+        self.assertEqual(len(spine), 1)
+
+    def test_a_timeline_written_before_the_columns_existed_still_loads(self):
+        """Rows migrated from an older database have no category of their own."""
+        self.database.execute(
+            "UPDATE timeline_items SET category = '', shot_scale = '' WHERE id = ?", ("item-1",))
+        self.reanalyse()
+
+        item = get_timeline(self.database, "timeline-1").items[0]
+
+        self.assertEqual(item.shot.category, "b_roll")
+        self.assertEqual(item.source_range.duration_frames, 50)

@@ -105,7 +105,10 @@ CREATE TABLE IF NOT EXISTS timeline_items (
     id TEXT PRIMARY KEY,
     timeline_id TEXT NOT NULL REFERENCES timeline_versions(id) ON DELETE CASCADE,
     position INTEGER NOT NULL,
-    shot_id TEXT NOT NULL REFERENCES shots(id),
+    -- Deliberately not enforced: re-analysing the footage replaces every shot row, and a
+    -- rough cut the editor has already been given must survive that. The descriptive fields
+    -- below are the item's own copy, and get_timeline reads shots with a LEFT JOIN.
+    shot_id TEXT NOT NULL,
     asset_id TEXT NOT NULL REFERENCES media_assets(id),
     source_start_frame INTEGER NOT NULL,
     source_duration_frames INTEGER NOT NULL,
@@ -114,7 +117,9 @@ CREATE TABLE IF NOT EXISTS timeline_items (
     timeline_duration_frames INTEGER NOT NULL,
     score REAL NOT NULL,
     reason TEXT NOT NULL,
-    alternatives_json TEXT NOT NULL DEFAULT '[]'
+    alternatives_json TEXT NOT NULL DEFAULT '[]',
+    category TEXT NOT NULL DEFAULT '',
+    shot_scale TEXT NOT NULL DEFAULT ''
 );
 
 CREATE TABLE IF NOT EXISTS jobs (
@@ -136,6 +141,10 @@ ADDED_COLUMNS = (
     ("shots", "brightness", "REAL NOT NULL DEFAULT 0"),
     ("shots", "saturation", "REAL NOT NULL DEFAULT 0"),
     ("shots", "highlight_clipping", "REAL NOT NULL DEFAULT 0"),
+    # A saved rough cut keeps its own copy of what each clip is, so re-analysing the footage
+    # cannot quietly hollow it out. See get_timeline, which reads shots with a LEFT JOIN.
+    ("timeline_items", "category", "TEXT NOT NULL DEFAULT ''"),
+    ("timeline_items", "shot_scale", "TEXT NOT NULL DEFAULT ''"),
 )
 
 

@@ -611,6 +611,8 @@ def persist_timeline(database: Database, plan: TimelinePlan) -> None:
                 "score": item.score,
                 "reason": item.selection_reason,
                 "alternatives_json": list(item.alternatives),
+                "category": item.shot.category,
+                "shot_scale": item.shot.shot_scale,
             },
         )
 
@@ -655,15 +657,15 @@ def get_timeline(database: Database, timeline_id: str) -> TimelinePlan:
         music_duration=music_duration,
     )
     rows = database.fetch_all(
-        """SELECT timeline_items.*, shots.category, shots.shot_scale, shots.technical_quality,
-                  shots.aesthetic_score, shots.motion_score, shots.confidence, shots.duplicate_group,
-                  shots.labels_json, shots.brightness, shots.saturation, shots.highlight_clipping,
+        """SELECT timeline_items.*, shots.technical_quality, shots.aesthetic_score,
+                  shots.motion_score, shots.confidence, shots.duplicate_group, shots.labels_json,
+                  shots.brightness, shots.saturation, shots.highlight_clipping,
                   media_assets.project_id, media_assets.path, media_assets.file_name,
                   media_assets.duration_seconds, media_assets.frame_rate AS asset_rate,
                   media_assets.width, media_assets.height, media_assets.codec, media_assets.timecode,
                   media_assets.content_hash
            FROM timeline_items
-           JOIN shots ON shots.id = timeline_items.shot_id
+           LEFT JOIN shots ON shots.id = timeline_items.shot_id
            JOIN media_assets ON media_assets.id = timeline_items.asset_id
            WHERE timeline_items.timeline_id = ? ORDER BY timeline_items.position""",
         (timeline_id,),
@@ -682,10 +684,15 @@ def get_timeline(database: Database, timeline_id: str) -> TimelinePlan:
         shot = Shot(
             id=row["shot_id"], asset_id=row["asset_id"],
             source_range=source_range,
-            category=row["category"], shot_scale=row["shot_scale"],
-            technical_quality=float(row["technical_quality"]), aesthetic_score=float(row["aesthetic_score"]),
-            motion_score=float(row["motion_score"]), confidence=float(row["confidence"]),
-            duplicate_group=row["duplicate_group"], labels=tuple(json.loads(row["labels_json"])),
+            # The shot row is gone once the footage is re-analysed; the item's own copy of what
+            # the clip is keeps the saved rough cut whole, and the scores fall back to neutral.
+            category=row["category"] or "b_roll", shot_scale=row["shot_scale"] or "medium",
+            technical_quality=float(row["technical_quality"] or 0.5),
+            aesthetic_score=float(row["aesthetic_score"] or 0.5),
+            motion_score=float(row["motion_score"] or 0.5),
+            confidence=float(row["confidence"] or 0.0),
+            duplicate_group=row["duplicate_group"],
+            labels=tuple(json.loads(row["labels_json"] or "[]")),
             brightness=float(row["brightness"] or 0.0), saturation=float(row["saturation"] or 0.0),
             highlight_clipping=float(row["highlight_clipping"] or 0.0),
         )
