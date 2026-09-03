@@ -62,6 +62,22 @@ CREATE TABLE IF NOT EXISTS shots (
     created_at TEXT NOT NULL
 );
 
+-- The expensive half of shot analysis: decoding the video, measuring the frames and running
+-- them through CLIP. Keeping the embedding means a re-label costs seconds instead of hours,
+-- and lets the encoding pass resume where it stopped.
+CREATE TABLE IF NOT EXISTS shot_features (
+    shot_id TEXT PRIMARY KEY,
+    asset_id TEXT NOT NULL REFERENCES media_assets(id) ON DELETE CASCADE,
+    start_frame INTEGER NOT NULL,
+    duration_frames INTEGER NOT NULL,
+    frame_rate TEXT NOT NULL,
+    embedding BLOB,
+    metrics_json TEXT NOT NULL,
+    created_at TEXT NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS shot_features_asset ON shot_features(asset_id, start_frame);
+
 CREATE TABLE IF NOT EXISTS music_tracks (
     id TEXT PRIMARY KEY,
     project_id TEXT NOT NULL REFERENCES projects(id) ON DELETE CASCADE,

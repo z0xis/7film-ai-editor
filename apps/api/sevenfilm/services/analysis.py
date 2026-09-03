@@ -6,6 +6,7 @@ import json
 import logging
 import uuid
 from collections.abc import Iterable
+from dataclasses import asdict
 from fractions import Fraction
 from pathlib import Path
 from typing import Any
@@ -16,7 +17,7 @@ from ..db import Database, now
 from ..domain import BeatGrid, MediaAsset, Shot
 from ..timebase import FrameRate, TimeRange
 from .media import project_assets
-from .vision import VisionClassifier, measure_frames
+from .vision import FrameMetrics, VisionClassifier, measure_frames
 
 LOGGER = logging.getLogger(__name__)
 # A continuous take is detected as one scene, and judging it by three frames at its midpoint
@@ -134,115 +135,163 @@ def project_shots(database: Database, project_id: str) -> list[Shot]:
     return [row_to_shot(row) for row in rows]
 
 
+def _shot_id(asset_id: str, source_range: TimeRange) -> str:
+    return str(
+        uuid.uuid5(
+            uuid.NAMESPACE_URL,
+            f"sevenfilm:{asset_id}:{source_range.start_frame}:{source_range.duration_frames}",
+        )
+    )
+
+
+def _store_features(
+    database: Database,
+    asset: MediaAsset,
+    ranges: list[TimeRange],
+    metrics: list[FrameMetrics],
+    embeddings: dict[int, Any],
+) -> None:
+    database.execute("DELETE FROM shot_features WHERE asset_id = ?", (asset.id,))
+    for ordinal, source_range in enumerate(ranges):
+        embedding = embeddings.get(ordinal)
+        database.insert(
+            "shot_features",
+            {
+                "shot_id": _shot_id(asset.id, source_range),
+                "asset_id": asset.id,
+                "start_frame": source_range.start_frame,
+                "duration_frames": source_range.duration_frames,
+                "frame_rate": f"{source_range.rate.numerator}/{source_range.rate.denominator}",
+                "embedding": embedding.astype(np.float32).tobytes() if embedding is not None else None,
+                "metrics_json": asdict(metrics[ordinal]),
+                "created_at": now(),
+            },
+        )
+
+
+def _encode_asset(database: Database, classifier: VisionClassifier, asset: MediaAsset) -> None:
+    """Decode, measure and encode one asset. This is the slow half, and it runs once."""
+    existing_rows = database.fetch_all(
+        "SELECT start_frame, duration_frames, frame_rate FROM shots WHERE asset_id = ? ORDER BY start_frame",
+        (asset.id,),
+    )
+    ranges = [
+        segment
+        for row in existing_rows
+        for segment in _split_long_range(
+            TimeRange(
+                int(row["start_frame"]),
+                int(row["duration_frames"]),
+                FrameRate.parse(str(row["frame_rate"])),
+            )
+        )
+    ]
+    if not ranges:
+        ranges = list(_scene_ranges(asset))
+    frame_groups = _shot_frame_groups(asset, ranges)
+    metrics = [measure_frames(frames) for frames in frame_groups]
+    middle_frames = [frames[len(frames) // 2] if frames else None for frames in frame_groups]
+    positions = [index for index, frame in enumerate(middle_frames) if frame is not None]
+    encoded = classifier.encode([middle_frames[index] for index in positions])
+    embeddings = {} if encoded is None else dict(zip(positions, encoded))
+    _store_features(database, asset, ranges, metrics, embeddings)
+
+
+def _asset_features(database: Database, asset_id: str) -> list[dict[str, Any]]:
+    return database.fetch_all(
+        "SELECT * FROM shot_features WHERE asset_id = ? ORDER BY start_frame", (asset_id,)
+    )
+
+
+def _project_prior(database: Database, classifier: VisionClassifier, project_id: str):
+    """The prompt prior, measured over every encoded frame in the project."""
+    rows = database.fetch_all(
+        """SELECT shot_features.embedding FROM shot_features
+           JOIN media_assets ON media_assets.id = shot_features.asset_id
+           WHERE media_assets.project_id = ? AND shot_features.embedding IS NOT NULL""",
+        (project_id,),
+    )
+    if not rows:
+        return None
+    stacked = np.stack([np.frombuffer(row["embedding"], dtype=np.float32) for row in rows])
+    LOGGER.info(json.dumps(
+        {"event": "category_prior_measured", "project_id": project_id, "frames": len(stacked)}
+    ))
+    return classifier.category_prior(stacked)
+
+
+def _label_asset(database: Database, classifier: VisionClassifier, asset: MediaAsset, prior) -> None:
+    """Turn stored measurements into shots. Cheap, so it re-runs whenever the prior moves."""
+    rows = _asset_features(database, asset.id)
+    if not rows:
+        return
+    metrics = [FrameMetrics(**json.loads(row["metrics_json"])) for row in rows]
+    positions = [index for index, row in enumerate(rows) if row["embedding"] is not None]
+    encoded = (
+        np.stack([np.frombuffer(rows[index]["embedding"], dtype=np.float32) for index in positions])
+        if positions
+        else None
+    )
+    classifications = classifier.classify_features(
+        encoded, [metrics[index] for index in positions], prior
+    )
+    features_by_position = dict(zip(positions, classifications))
+    database.execute("DELETE FROM shots WHERE asset_id = ?", (asset.id,))
+    for ordinal, row in enumerate(rows):
+        measured = metrics[ordinal]
+        features = features_by_position.get(ordinal) or classifier._fallback(measured)
+        database.insert(
+            "shots",
+            {
+                "id": row["shot_id"],
+                "asset_id": asset.id,
+                "start_frame": row["start_frame"],
+                "duration_frames": row["duration_frames"],
+                "frame_rate": row["frame_rate"],
+                "category": features["category"],
+                "shot_scale": features["shot_scale"],
+                "technical_quality": measured.technical_quality,
+                "aesthetic_score": features["aesthetic_score"],
+                "motion_score": measured.motion_score,
+                "confidence": features["confidence"],
+                "duplicate_group": f"visual:{measured.perceptual_hash}",
+                "labels_json": list(features["labels"]),
+                "brightness": measured.brightness,
+                "saturation": measured.saturation,
+                "highlight_clipping": measured.highlight_clipping,
+                "created_at": now(),
+            },
+        )
+
+
 def analyze_shots(database: Database, project_id: str, job_id: str) -> list[Shot]:
     """Measure and label every shot, in two passes over the project.
 
-    The categories are read against a prior measured across the whole shoot, so the encoding
-    has to finish before anything can be labelled. Nothing is written until then, which also
-    means a failure part way through leaves the existing shots alone.
+    Categories are read against a prior measured across the whole shoot, so nothing can be
+    labelled until everything is encoded. The encoding is persisted as it goes, which keeps the
+    job resumable across a crash and makes the second pass cheap enough to re-run whenever the
+    prior moves.
     """
     assets = project_assets(database, project_id)
     if not assets:
         raise ValueError("Önce ham görüntüleri indeksleyin.")
     classifier = VisionClassifier()
-    pending: list[dict[str, Any]] = []
-    for asset_index, asset in enumerate(assets, start=1):
-        existing_rows = database.fetch_all(
-            "SELECT start_frame, duration_frames, frame_rate, labels_json FROM shots "
-            "WHERE asset_id = ? ORDER BY start_frame",
-            (asset.id,),
-        )
-        if existing_rows and all("clip_vision" in str(row["labels_json"]) for row in existing_rows):
-            database.update_job(
-                job_id,
-                status="running",
-                progress=asset_index / (2 * len(assets)),
-                checkpoint={"last_asset_id": asset.id, "vision_cache": "clip_vision"},
-            )
-            continue
-        ranges = [
-            segment
-            for row in existing_rows
-            for segment in _split_long_range(
-                TimeRange(
-                    int(row["start_frame"]),
-                    int(row["duration_frames"]),
-                    FrameRate.parse(str(row["frame_rate"])),
-                )
-            )
-        ]
-        if not ranges:
-            ranges = list(_scene_ranges(asset))
-        frame_groups = _shot_frame_groups(asset, ranges)
-        metrics = [measure_frames(frames) for frames in frame_groups]
-        middle_frames = [frames[len(frames) // 2] if frames else None for frames in frame_groups]
-        valid_positions = [index for index, frame in enumerate(middle_frames) if frame is not None]
-        pending.append(
-            {
-                "asset": asset,
-                "ranges": ranges,
-                "metrics": metrics,
-                "positions": valid_positions,
-                "features": classifier.encode([middle_frames[index] for index in valid_positions]),
-            }
-        )
+    for index, asset in enumerate(assets, start=1):
+        if not _asset_features(database, asset.id):
+            _encode_asset(database, classifier, asset)
         database.update_job(
             job_id,
             status="running",
-            progress=asset_index / (2 * len(assets)),
+            progress=index / (2 * len(assets)),
             checkpoint={"last_asset_id": asset.id, "pass": "encode"},
         )
-
-    encoded = [entry["features"] for entry in pending if entry["features"] is not None]
-    prior = classifier.category_prior(np.concatenate(encoded)) if encoded else None
-    if prior is not None:
-        LOGGER.info(json.dumps({
-            "event": "category_prior_measured", "project_id": project_id,
-            "frames": int(sum(len(item) for item in encoded)),
-        }))
-
-    for entry_index, entry in enumerate(pending, start=1):
-        asset = entry["asset"]
-        classifications = classifier.classify_features(
-            entry["features"], [entry["metrics"][index] for index in entry["positions"]], prior
-        )
-        features_by_position = dict(zip(entry["positions"], classifications))
-        database.execute("DELETE FROM shots WHERE asset_id = ?", (asset.id,))
-        for ordinal, source_range in enumerate(entry["ranges"]):
-            measured = entry["metrics"][ordinal]
-            features = features_by_position.get(ordinal) or classifier._fallback(measured)
-            shot_id = str(
-                uuid.uuid5(
-                    uuid.NAMESPACE_URL,
-                    f"sevenfilm:{asset.id}:{source_range.start_frame}:{source_range.duration_frames}",
-                )
-            )
-            database.insert(
-                "shots",
-                {
-                    "id": shot_id,
-                    "asset_id": asset.id,
-                    "start_frame": source_range.start_frame,
-                    "duration_frames": source_range.duration_frames,
-                    "frame_rate": f"{source_range.rate.numerator}/{source_range.rate.denominator}",
-                    "category": features["category"],
-                    "shot_scale": features["shot_scale"],
-                    "technical_quality": measured.technical_quality,
-                    "aesthetic_score": features["aesthetic_score"],
-                    "motion_score": measured.motion_score,
-                    "confidence": features["confidence"],
-                    "duplicate_group": f"visual:{measured.perceptual_hash}",
-                    "labels_json": list(features["labels"]),
-                    "brightness": measured.brightness,
-                    "saturation": measured.saturation,
-                    "highlight_clipping": measured.highlight_clipping,
-                    "created_at": now(),
-                },
-            )
+    prior = _project_prior(database, classifier, project_id)
+    for index, asset in enumerate(assets, start=1):
+        _label_asset(database, classifier, asset, prior)
         database.update_job(
             job_id,
             status="running",
-            progress=0.5 + entry_index / (2 * max(1, len(pending))),
+            progress=0.5 + index / (2 * len(assets)),
             checkpoint={"last_asset_id": asset.id, "pass": "label"},
         )
     shots = project_shots(database, project_id)
