@@ -12,6 +12,7 @@ import math
 from dataclasses import dataclass
 from itertools import pairwise
 from typing import Any
+from pathlib import Path
 
 import cv2  # type: ignore[import-not-found]
 import numpy as np
@@ -84,14 +85,18 @@ def measure_frames(frames: list[np.ndarray]) -> FrameMetrics:
         motion_values.append(difference)
     motion = _clamp((sum(motion_values) / len(motion_values)) / 0.20) if motion_values else 0.0
 
-    cascade_class = getattr(cv2, "CascadeClassifier", None)
-    faces: list[object] = []
-    if cascade_class is not None:
-        cascade_path = cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
-        cascade = cascade_class(cascade_path)
-        faces = list(
-            cascade.detectMultiScale(gray, scaleFactor=1.15, minNeighbors=5, minSize=(28, 28))
-        )
+    faces = []
+    if hasattr(cv2, "FaceDetectorYN"):
+        model_path = Path(__file__).parent.parent / "models" / "face_detection_yunet_2023mar.onnx"
+        if model_path.exists():
+            h, w = middle.shape[:2]
+            detector = cv2.FaceDetectorYN.create(
+                str(model_path), "", (w, h), score_threshold=0.6, nms_threshold=0.3
+            )
+            success, detected_faces = detector.detect(middle)
+            if detected_faces is not None:
+                faces = list(detected_faces)
+                
     return FrameMetrics(
         technical_quality=round(technical, 3),
         motion_score=round(motion, 3),
