@@ -11,8 +11,8 @@ import logging
 import math
 from dataclasses import dataclass
 from itertools import pairwise
-from typing import Any
 from pathlib import Path
+from typing import Any
 
 import cv2  # type: ignore[import-not-found]
 import numpy as np
@@ -218,48 +218,97 @@ class VisionClassifier:
             "labels": (category, scale, f"faces:{metrics.face_count}", "opencv_fallback"),
         }
 
-    def classify(self, frames: list[np.ndarray], metrics: list[FrameMetrics]) -> list[dict[str, object]]:
-        if not frames:
-            return []
-        if not self._load():
-            return [self._fallback(item) for item in metrics]
-
+    def encode(self, frames: list[np.ndarray]) -> np.ndarray | None:
+        """Turn frames into normalised CLIP image features, or None when CLIP is unavailable."""
+        if not frames or not self._load():
+            return None
         from PIL import Image  # type: ignore[import-not-found]
 
-        category_names = list(CATEGORY_PROMPTS)
-        scale_names = list(SCALE_PROMPTS)
         images = [Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)) for frame in frames]
         inputs = self._processor(images=images, return_tensors="pt")
         inputs = {key: value.to(self._device) for key, value in inputs.items()}
         with self._torch.inference_mode():
-            image_features = self._model.get_image_features(**inputs)
-            if hasattr(image_features, "pooler_output"):
-                image_features = image_features.pooler_output
-            image_features = image_features / image_features.norm(dim=-1, keepdim=True)
-            logits = (image_features @ self._text_features.T * self._model.logit_scale.exp()).float().cpu()
+            features = self._model.get_image_features(**inputs)
+            if hasattr(features, "pooler_output"):
+                features = features.pooler_output
+            features = features / features.norm(dim=-1, keepdim=True)
+        return features.float().cpu().numpy()
 
-        category_end = len(category_names)
-        scale_end = category_end + len(scale_names)
-        category_probabilities = logits[:, :category_end].softmax(dim=1)
-        scale_probabilities = logits[:, category_end:scale_end].softmax(dim=1)
-        aesthetic_probabilities = logits[:, scale_end:].softmax(dim=1)
+    def _probabilities(self, features: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+        with self._torch.inference_mode():
+            logits = (
+                self._torch.from_numpy(features).to(self._device)
+                @ self._text_features.T
+                * self._model.logit_scale.exp()
+            ).float().cpu()
+        category_end = len(CATEGORY_PROMPTS)
+        scale_end = category_end + len(SCALE_PROMPTS)
+        return (
+            logits[:, :category_end].softmax(dim=1).numpy().copy(),
+            logits[:, category_end:scale_end].softmax(dim=1).numpy().copy(),
+            logits[:, scale_end:].softmax(dim=1).numpy().copy(),
+        )
+
+    def category_prior(self, features: np.ndarray) -> np.ndarray | None:
+        """The share of every category CLIP awards on average across a whole shoot.
+
+        CLIP does not answer "which of these is it" so much as "how close is each phrase", and
+        some phrases sit closer to wedding footage than others whatever the frame shows. On this
+        project's own material a wide, blurred white ceiling and a hotel room sign both came back
+        as the bride, with the model confident: 93% of frames were bride or groom, at a median
+        confidence of 0.59. Averaging each category over the shoot measures that standing offset
+        so it can be taken back off, which leaves the part of the score that is about the frame.
+        """
+        if features is None or not len(features) or not self._load():
+            return None
+        return self._probabilities(features)[0].mean(axis=0)
+
+    def classify_features(
+        self,
+        features: np.ndarray,
+        metrics: list[FrameMetrics],
+        category_prior: np.ndarray | None = None,
+    ) -> list[dict[str, object]]:
+        if features is None or not self._load():
+            return [self._fallback(item) for item in metrics]
+        category_names = list(CATEGORY_PROMPTS)
+        scale_names = list(SCALE_PROMPTS)
+        categories, scales, aesthetics = self._probabilities(features)
+        if category_prior is not None:
+            # Only the shape is kept: shifting the least likely category to zero and
+            # renormalising turns the corrected scores back into a distribution.
+            corrected = categories - category_prior
+            corrected = corrected - corrected.min(axis=1, keepdims=True)
+            total = corrected.sum(axis=1, keepdims=True)
+            categories = np.divide(corrected, total, out=np.full_like(corrected, 1 / len(category_names)),
+                                   where=total > 0)
         results = []
         for index, frame_metrics in enumerate(metrics):
-            category_index = int(category_probabilities[index].argmax())
-            scale_index = int(scale_probabilities[index].argmax())
-            category = category_names[category_index]
-            scale = scale_names[scale_index]
-            confidence = float(category_probabilities[index, category_index])
-            aesthetic = float(aesthetic_probabilities[index, 0])
-            top_categories = self._torch.topk(category_probabilities[index], k=3).indices.tolist()
-            labels = tuple(category_names[item] for item in top_categories)
+            category_index = int(categories[index].argmax())
+            scale_index = int(scales[index].argmax())
+            order = list(np.argsort(categories[index])[::-1][:3])
             results.append(
                 {
-                    "category": category,
-                    "shot_scale": scale,
-                    "aesthetic_score": round(aesthetic, 3),
-                    "confidence": round(confidence, 3),
-                    "labels": (*labels, scale, f"faces:{frame_metrics.face_count}", "clip_vision"),
+                    "category": category_names[category_index],
+                    "shot_scale": scale_names[scale_index],
+                    "aesthetic_score": round(float(aesthetics[index, 0]), 3),
+                    "confidence": round(float(categories[index, category_index]), 3),
+                    "labels": (
+                        *(category_names[int(item)] for item in order),
+                        scale_names[scale_index],
+                        f"faces:{frame_metrics.face_count}",
+                        "clip_vision",
+                    ),
                 }
             )
         return results
+
+    def classify(
+        self,
+        frames: list[np.ndarray],
+        metrics: list[FrameMetrics],
+        category_prior: np.ndarray | None = None,
+    ) -> list[dict[str, object]]:
+        if not frames:
+            return []
+        return self.classify_features(self.encode(frames), metrics, category_prior)

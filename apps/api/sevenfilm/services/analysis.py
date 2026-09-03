@@ -10,6 +10,8 @@ from fractions import Fraction
 from pathlib import Path
 from typing import Any
 
+import numpy as np
+
 from ..db import Database, now
 from ..domain import BeatGrid, MediaAsset, Shot
 from ..timebase import FrameRate, TimeRange
@@ -133,10 +135,17 @@ def project_shots(database: Database, project_id: str) -> list[Shot]:
 
 
 def analyze_shots(database: Database, project_id: str, job_id: str) -> list[Shot]:
+    """Measure and label every shot, in two passes over the project.
+
+    The categories are read against a prior measured across the whole shoot, so the encoding
+    has to finish before anything can be labelled. Nothing is written until then, which also
+    means a failure part way through leaves the existing shots alone.
+    """
     assets = project_assets(database, project_id)
     if not assets:
         raise ValueError("Önce ham görüntüleri indeksleyin.")
     classifier = VisionClassifier()
+    pending: list[dict[str, Any]] = []
     for asset_index, asset in enumerate(assets, start=1):
         existing_rows = database.fetch_all(
             "SELECT start_frame, duration_frames, frame_rate, labels_json FROM shots "
@@ -147,7 +156,7 @@ def analyze_shots(database: Database, project_id: str, job_id: str) -> list[Shot
             database.update_job(
                 job_id,
                 status="running",
-                progress=asset_index / len(assets),
+                progress=asset_index / (2 * len(assets)),
                 checkpoint={"last_asset_id": asset.id, "vision_cache": "clip_vision"},
             )
             continue
@@ -164,18 +173,43 @@ def analyze_shots(database: Database, project_id: str, job_id: str) -> list[Shot
         ]
         if not ranges:
             ranges = list(_scene_ranges(asset))
-        database.execute("DELETE FROM shots WHERE asset_id = ?", (asset.id,))
         frame_groups = _shot_frame_groups(asset, ranges)
         metrics = [measure_frames(frames) for frames in frame_groups]
         middle_frames = [frames[len(frames) // 2] if frames else None for frames in frame_groups]
         valid_positions = [index for index, frame in enumerate(middle_frames) if frame is not None]
-        classifications = classifier.classify(
-            [middle_frames[index] for index in valid_positions],
-            [metrics[index] for index in valid_positions],
+        pending.append(
+            {
+                "asset": asset,
+                "ranges": ranges,
+                "metrics": metrics,
+                "positions": valid_positions,
+                "features": classifier.encode([middle_frames[index] for index in valid_positions]),
+            }
         )
-        features_by_position = dict(zip(valid_positions, classifications))
-        for ordinal, source_range in enumerate(ranges):
-            measured = metrics[ordinal]
+        database.update_job(
+            job_id,
+            status="running",
+            progress=asset_index / (2 * len(assets)),
+            checkpoint={"last_asset_id": asset.id, "pass": "encode"},
+        )
+
+    encoded = [entry["features"] for entry in pending if entry["features"] is not None]
+    prior = classifier.category_prior(np.concatenate(encoded)) if encoded else None
+    if prior is not None:
+        LOGGER.info(json.dumps({
+            "event": "category_prior_measured", "project_id": project_id,
+            "frames": int(sum(len(item) for item in encoded)),
+        }))
+
+    for entry_index, entry in enumerate(pending, start=1):
+        asset = entry["asset"]
+        classifications = classifier.classify_features(
+            entry["features"], [entry["metrics"][index] for index in entry["positions"]], prior
+        )
+        features_by_position = dict(zip(entry["positions"], classifications))
+        database.execute("DELETE FROM shots WHERE asset_id = ?", (asset.id,))
+        for ordinal, source_range in enumerate(entry["ranges"]):
+            measured = entry["metrics"][ordinal]
             features = features_by_position.get(ordinal) or classifier._fallback(measured)
             shot_id = str(
                 uuid.uuid5(
@@ -208,8 +242,8 @@ def analyze_shots(database: Database, project_id: str, job_id: str) -> list[Shot
         database.update_job(
             job_id,
             status="running",
-            progress=asset_index / len(assets),
-            checkpoint={"last_asset_id": asset.id},
+            progress=0.5 + entry_index / (2 * max(1, len(pending))),
+            checkpoint={"last_asset_id": asset.id, "pass": "label"},
         )
     shots = project_shots(database, project_id)
     LOGGER.info(json.dumps({"event": "shots_analyzed", "project_id": project_id, "count": len(shots)}))

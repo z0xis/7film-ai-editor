@@ -2,7 +2,13 @@ import unittest
 
 import cv2
 import numpy as np
-from sevenfilm.services.vision import VisionClassifier, measure_frames
+from sevenfilm.services.vision import (
+    AESTHETIC_PROMPTS,
+    CATEGORY_PROMPTS,
+    SCALE_PROMPTS,
+    VisionClassifier,
+    measure_frames,
+)
 
 
 class VisionTests(unittest.TestCase):
@@ -77,3 +83,138 @@ class VisionTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class CategoryPriorTests(unittest.TestCase):
+    """CLIP calls a blurred white ceiling a bride; the prior correction takes that offset off."""
+
+    class FakeClassifier(VisionClassifier):
+        """Substitutes fixed probabilities for the model, so the correction is what is tested."""
+
+        def __init__(self, categories):
+            super().__init__()
+            self._categories = np.asarray(categories, dtype=float)
+
+        def _load(self):
+            return True
+
+        def _probabilities(self, features):
+            count = len(self._categories)
+            scales = np.full((count, len(SCALE_PROMPTS)), 1 / len(SCALE_PROMPTS))
+            aesthetics = np.full((count, len(AESTHETIC_PROMPTS)), 1 / len(AESTHETIC_PROMPTS))
+            return self._categories.copy(), scales, aesthetics
+
+    def metrics(self, count):
+        return [measure_frames([np.full((32, 32, 3), 120, dtype=np.uint8)]) for _ in range(count)]
+
+    def test_a_category_that_always_scores_high_stops_winning_everything(self):
+        # "bride" is the second column and sits high on every frame regardless of content.
+        rows = [
+            [0.05, 0.60, 0.10, 0.05, 0.05, 0.05, 0.05, 0.05],
+            [0.05, 0.55, 0.05, 0.05, 0.20, 0.05, 0.03, 0.02],
+            [0.05, 0.52, 0.05, 0.05, 0.05, 0.23, 0.03, 0.02],
+            [0.05, 0.58, 0.05, 0.05, 0.05, 0.05, 0.15, 0.02],
+        ]
+        classifier = self.FakeClassifier(rows)
+        features = np.zeros((4, 8))
+
+        raw = classifier.classify_features(features, self.metrics(4))
+        prior = classifier.category_prior(features)
+        corrected = classifier.classify_features(features, self.metrics(4), prior)
+
+        self.assertEqual({r["category"] for r in raw}, {"bride"})
+        self.assertGreater(len({r["category"] for r in corrected}), 1)
+
+    def test_the_prior_is_the_average_share_each_category_takes(self):
+        rows = [[0.5, 0.1, 0.1, 0.1, 0.05, 0.05, 0.05, 0.05],
+                [0.3, 0.3, 0.1, 0.1, 0.05, 0.05, 0.05, 0.05]]
+        classifier = self.FakeClassifier(rows)
+
+        prior = classifier.category_prior(np.zeros((2, 8)))
+
+        self.assertAlmostEqual(prior[0], 0.4)
+        self.assertAlmostEqual(prior[1], 0.2)
+
+    def test_a_genuinely_distinctive_frame_keeps_its_category(self):
+        """Correction removes a standing offset, it does not overturn a clear winner."""
+        rows = [
+            [0.05, 0.50, 0.10, 0.10, 0.10, 0.05, 0.05, 0.05],
+            [0.05, 0.50, 0.10, 0.10, 0.10, 0.05, 0.05, 0.05],
+            [0.90, 0.02, 0.02, 0.02, 0.01, 0.01, 0.01, 0.01],
+        ]
+        classifier = self.FakeClassifier(rows)
+        features = np.zeros((3, 8))
+
+        corrected = classifier.classify_features(features, self.metrics(3),
+                                                 classifier.category_prior(features))
+
+        self.assertEqual(corrected[2]["category"], "couple")
+
+    def test_confidence_stays_a_share_between_zero_and_one(self):
+        rows = [[0.05, 0.60, 0.10, 0.05, 0.05, 0.05, 0.05, 0.05],
+                [0.05, 0.55, 0.05, 0.05, 0.20, 0.05, 0.03, 0.02]]
+        classifier = self.FakeClassifier(rows)
+        features = np.zeros((2, 8))
+
+        for result in classifier.classify_features(features, self.metrics(2),
+                                                   classifier.category_prior(features)):
+            self.assertGreaterEqual(result["confidence"], 0.0)
+            self.assertLessEqual(result["confidence"], 1.0)
+
+    def test_without_a_prior_nothing_changes(self):
+        rows = [[0.05, 0.60, 0.10, 0.05, 0.05, 0.05, 0.05, 0.05]]
+        classifier = self.FakeClassifier(rows)
+
+        self.assertEqual(
+            classifier.classify_features(np.zeros((1, 8)), self.metrics(1))[0]["category"], "bride"
+        )
+
+    def test_no_features_falls_back_to_the_opencv_labels(self):
+        classifier = self.FakeClassifier([[0.5] * 8])
+        results = classifier.classify_features(None, self.metrics(1))
+        self.assertIn("opencv_fallback", results[0]["labels"])
+
+
+class ProbabilityPathTests(unittest.TestCase):
+    """The real tensor path, which a classifier stubbed at _probabilities cannot cover."""
+
+    def test_probabilities_come_back_as_plain_writable_arrays(self):
+        torch = __import__("importlib").import_module("torch")
+
+        classifier = VisionClassifier()
+        classifier._torch = torch
+        classifier._device = "cpu"
+        width = len(CATEGORY_PROMPTS) + len(SCALE_PROMPTS) + len(AESTHETIC_PROMPTS)
+        # A parameter carries requires_grad, which is what made .numpy() fail outside
+        # inference_mode; the text features and logit scale are model parameters in practice.
+        classifier._text_features = torch.nn.Parameter(torch.randn(width, 16))
+        classifier._model = type("Stub", (), {"logit_scale": torch.nn.Parameter(torch.tensor(2.0))})()
+        classifier._load = lambda: True
+
+        categories, scales, aesthetics = classifier._probabilities(
+            np.random.rand(3, 16).astype(np.float32)
+        )
+
+        for array in (categories, scales, aesthetics):
+            self.assertIsInstance(array, np.ndarray)
+            self.assertTrue(array.flags.writeable, "the arrays are mutated by the prior correction")
+        np.testing.assert_allclose(categories.sum(axis=1), 1.0, rtol=1e-5)
+        self.assertEqual(categories.shape, (3, len(CATEGORY_PROMPTS)))
+
+    def test_the_prior_correction_can_write_into_those_arrays(self):
+        torch = __import__("importlib").import_module("torch")
+
+        classifier = VisionClassifier()
+        classifier._torch = torch
+        classifier._device = "cpu"
+        width = len(CATEGORY_PROMPTS) + len(SCALE_PROMPTS) + len(AESTHETIC_PROMPTS)
+        classifier._text_features = torch.nn.Parameter(torch.randn(width, 16))
+        classifier._model = type("Stub", (), {"logit_scale": torch.nn.Parameter(torch.tensor(2.0))})()
+        classifier._load = lambda: True
+        features = np.random.rand(4, 16).astype(np.float32)
+        metrics = [measure_frames([np.full((16, 16, 3), 100, dtype=np.uint8)]) for _ in range(4)]
+
+        results = classifier.classify_features(features, metrics, classifier.category_prior(features))
+
+        self.assertEqual(len(results), 4)
+        self.assertTrue(all("clip_vision" in r["labels"] for r in results))
