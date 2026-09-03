@@ -259,3 +259,153 @@ def _seed_timeline(database, asset, shot, *, source_start, source_duration):
         "timeline_start_frame": 0, "timeline_duration_frames": source_duration,
         "score": .9, "reason": "test", "alternatives_json": [],
     })
+
+
+class FootageQualityTests(unittest.TestCase):
+    """A blurry blown-out frame reads to CLIP as a bride; it must never reach the timeline."""
+
+    def setUp(self):
+        self.rate = FrameRate(25)
+        self.music = BeatGrid(
+            bpm=123, beats=tuple(Fraction(step, 2) for step in range(401)), duration=Fraction(200),
+            sections=({"start": "0", "end": "200", "energy": "medium"},),
+        )
+        # The measured signature of the 18 finished 7Film reference edits.
+        self.profile = {
+            "reference_count": 18,
+            "beats_per_cut": {"low": 3, "medium": 2, "high": 1},
+            "shot_duration_p25_seconds": 0.64,
+            "shot_duration_p75_seconds": 1.6,
+            "visual_profile": {"mean_brightness": 0.3474, "mean_saturation": 0.2863},
+        }
+
+    def _asset(self, index):
+        return MediaAsset(
+            id=f"asset-{index}", project_id="project-1", path=Path(f"/media/A{index:03}.mov"),
+            name=f"A{index:03}.mov", duration=Fraction(20), frame_rate=self.rate,
+            width=1920, height=1080,
+        )
+
+    def _shot(self, index, source_frames=250, **overrides):
+        categories = ("venue", "detail", "bride", "groom", "couple", "family", "ceremony", "party")
+        scales = ("wide", "medium", "close_up", "detail")
+        values = {
+            "technical_quality": .82, "aesthetic_score": .8, "motion_score": .5, "confidence": .7,
+            "brightness": .35, "saturation": .29, "highlight_clipping": .01,
+        }
+        values.update(overrides)
+        return Shot(
+            id=f"shot-{index}", asset_id=f"asset-{index}",
+            source_range=TimeRange(0, source_frames, self.rate),
+            category=categories[index % len(categories)], shot_scale=scales[index % len(scales)],
+            **values,
+        )
+
+    def _blown_out(self, index):
+        """A frame CLIP is confident is a bride, that is really an out-of-focus white wall."""
+        return self._shot(
+            index, technical_quality=.04, aesthetic_score=.9, confidence=.9,
+            brightness=.97, saturation=.02, highlight_clipping=.71,
+        )
+
+    def _plan(self, shots, assets, target=Fraction(120)):
+        return build_timeline(
+            project_id="project-1", assets=assets, shots=shots, music=self.music,
+            frame_rate=self.rate, target_duration=target, style_profile=self.profile, seed=5,
+        )
+
+    def test_blown_out_shots_never_reach_the_timeline(self):
+        assets = [self._asset(index) for index in range(80)]
+        shots = [
+            self._blown_out(index) if index % 4 == 0 else self._shot(index)
+            for index in range(80)
+        ]
+
+        plan = self._plan(shots, assets)
+
+        used = {item.shot.id for item in plan.items}
+        blown = {shot.id for shot in shots if shot.technical_quality < .1}
+        self.assertEqual(used & blown, set())
+        self.assertTrue(any("teknik kalite eşiğinin altında" in w for w in plan.warnings))
+
+    def test_a_high_confidence_bride_label_cannot_rescue_an_unusable_frame(self):
+        """The CLIP label and aesthetic score are deliberately flattering here."""
+        assets = [self._asset(index) for index in range(60)]
+        shots = [self._shot(index) for index in range(60)]
+        shots[7] = self._shot(
+            7, technical_quality=.05, aesthetic_score=.99, confidence=.99,
+            brightness=.99, saturation=.01, highlight_clipping=.9,
+        )
+
+        plan = self._plan(shots, assets)
+
+        self.assertNotIn("shot-7", {item.shot.id for item in plan.items})
+
+    def test_clipped_highlights_alone_are_enough_to_reject_a_sharp_shot(self):
+        assets = [self._asset(index) for index in range(60)]
+        shots = [self._shot(index) for index in range(60)]
+        shots[3] = self._shot(3, technical_quality=.9, highlight_clipping=.6, brightness=.9)
+
+        plan = self._plan(shots, assets)
+
+        self.assertNotIn("shot-3", {item.shot.id for item in plan.items})
+
+    def test_low_quality_footage_is_used_but_flagged_when_there_is_nothing_better(self):
+        assets = [self._asset(index) for index in range(60)]
+        shots = [self._shot(index, technical_quality=.2, aesthetic_score=.5) for index in range(60)]
+
+        plan = self._plan(shots, assets)
+
+        self.assertEqual(plan.duration, Fraction(120))
+        self.assertTrue(
+            any("Kalite eşiğini geçen görüntü hedef süreyi doldurmuyor" in w for w in plan.warnings),
+            plan.warnings,
+        )
+
+    def test_shots_matching_the_reference_look_outrank_equally_sharp_off_look_shots(self):
+        # More shots than the edit needs cuts, so the planner is choosing rather than scraping.
+        assets = [self._asset(index) for index in range(200)]
+        on_look = [self._shot(index) for index in range(100)]
+        off_look = [
+            self._shot(index, brightness=.92, saturation=.03) for index in range(100, 200)
+        ]
+
+        plan = self._plan(on_look + off_look, assets, target=Fraction(120))
+
+        # Both groups are equally sharp and equally long, so screen time reflects the look.
+        on_look_ids = {shot.id for shot in on_look}
+        on_look_frames = sum(
+            item.timeline_range.duration_frames for item in plan.items if item.shot.id in on_look_ids
+        )
+        off_look_frames = plan.duration_frames - on_look_frames
+        self.assertGreater(on_look_frames, off_look_frames)
+
+    def test_cuts_stay_inside_the_reference_shot_length_range(self):
+        assets = [self._asset(index) for index in range(80)]
+        shots = [self._shot(index) for index in range(80)]
+        sparse_beats = BeatGrid(
+            bpm=60, beats=tuple(Fraction(step * 5) for step in range(41)), duration=Fraction(200),
+            sections=({"start": "0", "end": "200", "energy": "low"},),
+        )
+
+        plan = build_timeline(
+            project_id="project-1", assets=assets, shots=shots, music=sparse_beats,
+            frame_rate=self.rate, target_duration=Fraction(120), style_profile=self.profile, seed=5,
+        )
+
+        # Without the reference bounds a five second beat gap produced five second holds.
+        longest = max(item.timeline_range.duration_seconds for item in plan.items)
+        self.assertLessEqual(longest, Fraction(16, 10))
+
+    def test_reference_visual_fit_is_neutral_without_measurements(self):
+        """Projects analysed before the visual columns existed must plan exactly as before."""
+        assets = [self._asset(index) for index in range(60)]
+        unmeasured = [
+            self._shot(index, brightness=0.0, saturation=0.0, highlight_clipping=0.0)
+            for index in range(60)
+        ]
+
+        plan = self._plan(unmeasured, assets)
+
+        self.assertEqual(plan.duration, Fraction(120))
+        self.assertFalse([w for w in plan.warnings if "kalite eşiğinin altında" in w])

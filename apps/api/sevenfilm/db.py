@@ -56,6 +56,9 @@ CREATE TABLE IF NOT EXISTS shots (
     confidence REAL NOT NULL,
     duplicate_group TEXT,
     labels_json TEXT NOT NULL DEFAULT '[]',
+    brightness REAL NOT NULL DEFAULT 0,
+    saturation REAL NOT NULL DEFAULT 0,
+    highlight_clipping REAL NOT NULL DEFAULT 0,
     created_at TEXT NOT NULL
 );
 
@@ -112,6 +115,14 @@ CREATE TABLE IF NOT EXISTS jobs (
 """
 
 
+# Columns added after the first release; migrate() adds any that an existing file is missing.
+ADDED_COLUMNS = (
+    ("shots", "brightness", "REAL NOT NULL DEFAULT 0"),
+    ("shots", "saturation", "REAL NOT NULL DEFAULT 0"),
+    ("shots", "highlight_clipping", "REAL NOT NULL DEFAULT 0"),
+)
+
+
 def now() -> str:
     return datetime.now(UTC).isoformat()
 
@@ -137,6 +148,15 @@ class Database:
         self.path.parent.mkdir(parents=True, exist_ok=True)
         with self.connection() as connection:
             connection.executescript(SCHEMA)
+            self._add_missing_columns(connection)
+
+    @staticmethod
+    def _add_missing_columns(connection: sqlite3.Connection) -> None:
+        """Widen tables created by an earlier version without touching their rows."""
+        for table, column, definition in ADDED_COLUMNS:
+            existing = {row["name"] for row in connection.execute(f"PRAGMA table_info({table})")}
+            if column not in existing:
+                connection.execute(f"ALTER TABLE {table} ADD COLUMN {column} {definition}")
 
     def execute(self, sql: str, params: tuple[Any, ...] = ()) -> None:
         with self.connection() as connection:

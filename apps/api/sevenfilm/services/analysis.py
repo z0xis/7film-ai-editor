@@ -17,6 +17,11 @@ from .media import project_assets
 from .vision import VisionClassifier, measure_frames
 
 LOGGER = logging.getLogger(__name__)
+# A continuous take is detected as one scene, and judging it by three frames at its midpoint
+# throws the whole clip away when that midpoint happens to be a blurred pan, and lets a clip in
+# when only its midpoint is good. Long scenes are split into segments this size so each part of
+# a clip is measured, scored and accepted or rejected on its own.
+MAX_SHOT_SECONDS = Fraction(5)
 
 
 def _shot_frame_groups(asset: MediaAsset, ranges: list[TimeRange]) -> list[list[Any]]:
@@ -52,7 +57,26 @@ def _fallback_ranges(asset: MediaAsset) -> Iterable[TimeRange]:
     for start in range(0, total, segment):
         duration = min(segment, total - start)
         if duration >= asset.frame_rate.frames_from_seconds(Fraction(1, 2), rounding="ceil"):
-            yield TimeRange(start, duration, asset.frame_rate)
+            yield from _split_long_range(TimeRange(start, duration, asset.frame_rate))
+
+
+def _split_long_range(
+    source_range: TimeRange, max_seconds: Fraction = MAX_SHOT_SECONDS
+) -> Iterable[TimeRange]:
+    """Cut an over-long scene into equal segments, none longer than max_seconds."""
+    rate = source_range.rate
+    limit = max(1, rate.frames_from_seconds(max_seconds, rounding="floor"))
+    total = source_range.duration_frames
+    if total <= limit:
+        yield source_range
+        return
+    parts = -(-total // limit)
+    base, remainder = divmod(total, parts)
+    offset = 0
+    for index in range(parts):
+        length = base + (1 if index < remainder else 0)
+        yield TimeRange(source_range.start_frame + offset, length, rate)
+        offset += length
 
 
 def _scene_ranges(asset: MediaAsset) -> Iterable[TimeRange]:
@@ -64,7 +88,7 @@ def _scene_ranges(asset: MediaAsset) -> Iterable[TimeRange]:
             start_frame = max(0, int(start.get_frames()))
             duration = max(0, int(end.get_frames()) - start_frame)
             if duration:
-                yield TimeRange(start_frame, duration, asset.frame_rate)
+                yield from _split_long_range(TimeRange(start_frame, duration, asset.frame_rate))
     except (ImportError, OSError, RuntimeError):
         yield from _fallback_ranges(asset)
 
@@ -83,6 +107,9 @@ def row_to_shot(row: dict[str, object]) -> Shot:
         confidence=float(row["confidence"]),
         duplicate_group=row.get("duplicate_group") and str(row["duplicate_group"]),
         labels=tuple(json.loads(str(row["labels_json"]))),
+        brightness=float(row.get("brightness") or 0.0),
+        saturation=float(row.get("saturation") or 0.0),
+        highlight_clipping=float(row.get("highlight_clipping") or 0.0),
     )
 
 
@@ -115,12 +142,15 @@ def analyze_shots(database: Database, project_id: str, job_id: str) -> list[Shot
             )
             continue
         ranges = [
-            TimeRange(
-                int(row["start_frame"]),
-                int(row["duration_frames"]),
-                FrameRate.parse(str(row["frame_rate"])),
-            )
+            segment
             for row in existing_rows
+            for segment in _split_long_range(
+                TimeRange(
+                    int(row["start_frame"]),
+                    int(row["duration_frames"]),
+                    FrameRate.parse(str(row["frame_rate"])),
+                )
+            )
         ]
         if not ranges:
             ranges = list(_scene_ranges(asset))
@@ -159,6 +189,9 @@ def analyze_shots(database: Database, project_id: str, job_id: str) -> list[Shot
                     "confidence": features["confidence"],
                     "duplicate_group": f"visual:{measured.perceptual_hash}",
                     "labels_json": list(features["labels"]),
+                    "brightness": measured.brightness,
+                    "saturation": measured.saturation,
+                    "highlight_clipping": measured.highlight_clipping,
                     "created_at": now(),
                 },
             )

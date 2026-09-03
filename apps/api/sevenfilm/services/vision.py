@@ -19,6 +19,10 @@ import numpy as np
 
 LOGGER = logging.getLogger(__name__)
 MODEL_NAME = "openai/clip-vit-base-patch32"
+# A quarter of the frame blown to pure white, or almost no contrast at all, is the
+# point where a frame stops being usable footage and becomes a flare or a blank wall.
+CLIPPING_LIMIT = 0.25
+FLAT_CONTRAST_LIMIT = 0.15
 
 CATEGORY_PROMPTS = {
     "couple": "a cinematic wedding shot of the bride and groom together",
@@ -38,9 +42,14 @@ SCALE_PROMPTS = {
     "detail": "an extreme close-up detail or macro shot of an object",
 }
 
+# A blown out white wall reads to CLIP as a wedding dress, so the unusable side of this
+# comparison names the concrete failure modes instead of one vague "bad frame" prompt.
 AESTHETIC_PROMPTS = (
     "a beautiful professional cinematic wedding film frame",
     "an accidental unusable poorly composed video frame",
+    "a blurry out of focus smeared video frame",
+    "an overexposed blown out white frame with no detail",
+    "an empty flat featureless wall or blank surface",
 )
 
 
@@ -50,6 +59,11 @@ class FrameMetrics:
     motion_score: float
     perceptual_hash: str
     face_count: int
+    brightness: float = 0.0
+    saturation: float = 0.0
+    highlight_clipping: float = 0.0
+    sharpness: float = 0.0
+    contrast: float = 0.0
 
 
 def _clamp(value: float) -> float:
@@ -64,18 +78,53 @@ def _perceptual_hash(frame: np.ndarray) -> str:
     return packed.tobytes().hex()
 
 
+def _frame_measurements(frame: np.ndarray) -> dict[str, float]:
+    """Measure one BGR frame the way the reference analyzer measures a reference edit."""
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+    gray_float = gray.astype(np.float32) / 255.0
+    return {
+        "sharpness": 1.0 - math.exp(-float(cv2.Laplacian(gray, cv2.CV_64F).var()) / 280.0),
+        "exposure": _clamp(1.0 - abs(float(gray_float.mean()) - 0.5) * 2.2),
+        "contrast": _clamp(float(gray_float.std()) / 0.24),
+        "highlight_clipping": float((gray >= 250).mean()),
+        "brightness": float(hsv[..., 2].mean()) / 255.0,
+        "saturation": float(hsv[..., 1].mean()) / 255.0,
+    }
+
+
+def _usable_quality(measured: dict[str, float]) -> float:
+    """Score focus, exposure and contrast, then veto the frames an editor never uses.
+
+    A smeared or blown out frame is unusable however a semantic model labels it, and CLIP
+    reliably labels a large white blurry area as a bride. The two penalties below are
+    multiplicative so no amount of sharpness or exposure can rescue such a frame.
+    """
+    base = (
+        0.45 * measured["sharpness"]
+        + 0.35 * measured["exposure"]
+        + 0.20 * measured["contrast"]
+    )
+    clipping_penalty = _clamp(measured["highlight_clipping"] / CLIPPING_LIMIT)
+    flat_penalty = _clamp(1.0 - measured["contrast"] / FLAT_CONTRAST_LIMIT)
+    return _clamp(base * (1.0 - clipping_penalty) * (1.0 - flat_penalty))
+
+
 def measure_frames(frames: list[np.ndarray]) -> FrameMetrics:
-    """Measure a shot from three representative BGR frames."""
+    """Measure a shot from its representative BGR frames.
+
+    Every sampled frame is measured and the median is kept, so one lucky sharp frame cannot
+    carry a shot that is out of focus or blown out for most of its length.
+    """
     if not frames:
         return FrameMetrics(0.0, 0.0, "missing", 0)
     middle = frames[len(frames) // 2]
-    gray = cv2.cvtColor(middle, cv2.COLOR_BGR2GRAY)
-    gray_float = gray.astype(np.float32) / 255.0
-    sharpness = 1.0 - math.exp(-float(cv2.Laplacian(gray, cv2.CV_64F).var()) / 280.0)
-    mean_light = float(gray_float.mean())
-    exposure = _clamp(1.0 - abs(mean_light - 0.5) * 2.2)
-    contrast = _clamp(float(gray_float.std()) / 0.24)
-    technical = _clamp(0.45 * sharpness + 0.35 * exposure + 0.20 * contrast)
+    measurements = [_frame_measurements(frame) for frame in frames]
+
+    def median(key: str) -> float:
+        return float(np.median([item[key] for item in measurements]))
+
+    technical = float(np.median([_usable_quality(item) for item in measurements]))
 
     motion_values = []
     for first, second in pairwise(frames):
@@ -93,15 +142,20 @@ def measure_frames(frames: list[np.ndarray]) -> FrameMetrics:
             detector = cv2.FaceDetectorYN.create(
                 str(model_path), "", (w, h), score_threshold=0.6, nms_threshold=0.3
             )
-            success, detected_faces = detector.detect(middle)
+            _success, detected_faces = detector.detect(middle)
             if detected_faces is not None:
                 faces = list(detected_faces)
-                
+
     return FrameMetrics(
         technical_quality=round(technical, 3),
         motion_score=round(motion, 3),
         perceptual_hash=_perceptual_hash(middle),
         face_count=len(faces),
+        brightness=round(median("brightness"), 3),
+        saturation=round(median("saturation"), 3),
+        highlight_clipping=round(median("highlight_clipping"), 3),
+        sharpness=round(median("sharpness"), 3),
+        contrast=round(median("contrast"), 3),
     )
 
 

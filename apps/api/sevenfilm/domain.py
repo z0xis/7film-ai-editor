@@ -38,6 +38,15 @@ class Shot:
     confidence: float = 0.3
     duplicate_group: str | None = None
     labels: tuple[str, ...] = ()
+    # Measured visual signature, compared against the reference style profile. All three stay
+    # at zero for shots analysed before these measurements existed, which reads as "unknown".
+    brightness: float = 0.0
+    saturation: float = 0.0
+    highlight_clipping: float = 0.0
+
+    @property
+    def has_visual_measurements(self) -> bool:
+        return self.brightness > 0.0 or self.saturation > 0.0 or self.highlight_clipping > 0.0
 
 
 @dataclass(frozen=True)
