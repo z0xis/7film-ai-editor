@@ -1,0 +1,7 @@
+{
+  "name": "com.sevenfilm.ai.editor",
+  "version": "0.3.0",
+  "private": true,
+  "description": "7Film AI Editor workflow integration for DaVinci Resolve Studio",
+  "main": "main.js"
+}

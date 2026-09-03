@@ -1,0 +1,46 @@
+# ─── Runtime & Python environment ────────────────────────────────────────────
+.venv/
+.runtime/
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+*.egg/
+
+# ─── Node / desktop build ─────────────────────────────────────────────────────
+node_modules/
+apps/desktop/dist/
+apps/desktop/tsconfig.tsbuildinfo
+
+# ─── Generated data & media ───────────────────────────────────────────────────
+# Keep data/ source-controlled EXCEPT the large derivative / reference media
+data/
+# (if you ever want to re-add specific data sub-dirs, use !data/... overrides)
+
+# Reference media binaries (large video files downloaded from YouTube / Vimeo)
+data/references/media/
+
+# Cache dirs produced at runtime
+cache/
+
+# ─── Export outputs ───────────────────────────────────────────────────────────
+*.otio
+*.fcpxml
+*.edl
+timeline-plan.json
+
+# ─── Proxy / thumbnail derivatives ───────────────────────────────────────────
+proxies/
+thumbnails/
+*.partial.mp4
+*.partial.jpg
+
+# ─── OS / editor junk ─────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/

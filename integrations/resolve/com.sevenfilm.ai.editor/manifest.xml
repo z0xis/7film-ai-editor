@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BlackmagicDesign>
+  <Plugin>
+    <Id>com.sevenfilm.ai.editor</Id>
+    <Name>7Film AI Editor</Name>
+    <Version>0.3.0</Version>
+    <Description>Local-first AI rough-cut assistant for DaVinci Resolve Studio</Description>
+    <FilePath>main.js</FilePath>
+  </Plugin>
+</BlackmagicDesign>

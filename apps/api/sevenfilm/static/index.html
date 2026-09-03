@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>7Film AI Editor</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main>
+      <p class="eyebrow">LOCAL-FIRST ROUGH CUT ASSISTANT</p>
+      <h1>7Film AI Editor</h1>
+      <p class="lede">Ham görüntüleri indeksle, müziği analiz et, ardından düzenlenebilir kaba kurguyu oluştur.</p>
+      <section class="card" id="create-card">
+        <h2>Yeni proje</h2>
+        <form id="create-project">
+          <label>Proje adı <input required name="name" placeholder="Ayşe & Mehmet" /></label>
+          <label>Çalışma klasörü <input required name="workspace_path" placeholder="/Volumes/Work/ayse-mehmet" /></label>
+          <label>Hedef süre (sn) <input required name="target_duration_seconds" type="number" min="120" value="150" /></label>
+          <label>FPS <input required name="frame_rate" value="25/1" /></label>
+          <button>Proje oluştur</button>
+        </form>
+      </section>
+      <section class="card hidden" id="project-card">
+        <div class="project-heading"><div><p class="eyebrow">AÇIK PROJE</p><h2 id="project-name"></h2></div><button class="secondary" id="change-project">Değiştir</button></div>
+        <div class="workflow">
+          <form id="index-form"><label>Ham video klasörü <input required name="folder" placeholder="/Volumes/Work/ayse-mehmet/raw" /></label><button>1. İndeksle</button></form>
+          <form id="music-form"><label>Müzik dosyası <input required name="path" placeholder="/Volumes/Work/music.mp3" /></label><button>2. Müziği analiz et</button></form>
+          <div class="actions"><button id="shots-button">3. Shot'ları çıkar</button><button id="proxy-button" class="secondary">Proxy + thumbnail üret</button></div>
+          <form id="timeline-form"><label>Alternatif seed <input name="seed" type="number" value="1" /></label><button>4. Kaba kurgu oluştur</button></form>
+        </div>
+      </section>
+      <section class="card" id="status-card"><h2>Durum</h2><pre id="status">Bir proje oluşturarak başlayın.</pre></section>
+      <section class="card hidden" id="timeline-card"><div class="project-heading"><h2>Kurgu planı</h2><button id="export-button">Resolve için dışa aktar</button></div><p id="timeline-summary"></p><ol id="timeline-items"></ol><div id="exports"></div></section>
+    </main>
+    <script src="/app.js" defer></script>
+  </body>
+</html>
+
