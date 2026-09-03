@@ -15,11 +15,15 @@ if [[ ! -f "$native_module" ]]; then
 fi
 
 mkdir -p "$target_dir"
-cp "$source_dir/manifest.xml" "$target_dir/manifest.xml"
-cp "$source_dir/package.json" "$target_dir/package.json"
-cp "$source_dir/main.js" "$target_dir/main.js"
-cp "$source_dir/preload.js" "$target_dir/preload.js"
-cp "$source_dir/index.html" "$target_dir/index.html"
+# Every file main.js needs at runtime. A module missing here fails at require() time, with
+# the plugin simply not appearing in Resolve's menu.
+for file in manifest.xml package.json main.js preload.js index.html timeline-builder.js; do
+  if [[ ! -f "$source_dir/$file" ]]; then
+    echo "Eklenti dosyası eksik: $file" >&2
+    exit 1
+  fi
+  cp "$source_dir/$file" "$target_dir/$file"
+done
 cp "$native_module" "$target_dir/WorkflowIntegration.node"
 ln -sfn "$project_dir" "$target_dir/app-root"
 
