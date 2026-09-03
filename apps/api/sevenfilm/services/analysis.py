@@ -22,6 +22,16 @@ LOGGER = logging.getLogger(__name__)
 # when only its midpoint is good. Long scenes are split into segments this size so each part of
 # a clip is measured, scored and accepted or rejected on its own.
 MAX_SHOT_SECONDS = Fraction(5)
+# Energy is read in short windows and merged, so a drop is found where it is rather than
+# smeared across a quarter of the song. Levels are relative to the track's own loud passages.
+ENERGY_WINDOW_SECONDS = 4
+ENERGY_SMOOTHING_WINDOWS = 2
+HIGH_ENERGY_RATIO = 0.70
+LOW_ENERGY_RATIO = 0.30
+# Levels are read as a position between the track's quiet floor and its loud peak. A song with
+# almost no dynamic range has no quiet or loud passages to find, and reading one window as
+# "at the peak" there would cut the whole edit fast for no musical reason.
+MIN_DYNAMIC_RANGE = 0.15
 
 
 def _shot_frame_groups(asset: MediaAsset, ranges: list[TimeRange]) -> list[list[Any]]:
@@ -252,7 +262,15 @@ def analyze_music(database: Database, project_id: str, path: Path) -> BeatGrid:
 
 
 def _energy_sections(samples: object, sample_rate: int, duration: Fraction) -> tuple[dict[str, object], ...]:
-    """A compact, explainable low/medium/high energy curve for v0.1."""
+    """Follow the track's own dynamics instead of splitting it into four equal quarters.
+
+    Quarters smear structure: a ten second drop inside a calm song used to mark a full
+    thirty seconds as high energy, and label identical calm passages differently depending
+    on which quarter they fell in. Narrow windows are placed between the track's own quiet
+    floor and loud peak, and adjacent windows of the same level are merged, so the sections
+    that come out are the ones the song actually has.
+    """
+    del sample_rate  # Energy is measured on the RMS envelope, which carries its own timing.
     try:
         import librosa  # type: ignore[import-not-found]
         import numpy as np  # type: ignore[import-not-found]
@@ -260,15 +278,41 @@ def _energy_sections(samples: object, sample_rate: int, duration: Fraction) -> t
         rms = librosa.feature.rms(y=samples)[0]
         if len(rms) == 0:
             raise ValueError
-        low, high = np.quantile(rms, [0.33, 0.66])
-        boundaries = np.linspace(0, float(duration), num=5)
-        sections = []
-        for index in range(4):
-            start_index = int(index * len(rms) / 4)
-            end_index = int((index + 1) * len(rms) / 4)
-            value = float(np.mean(rms[start_index:end_index]))
-            level = "low" if value <= low else "high" if value >= high else "medium"
-            sections.append({"start": str(Fraction(str(boundaries[index]))), "end": str(Fraction(str(boundaries[index + 1]))), "energy": level})
+        windows = max(1, min(len(rms), round(float(duration) / ENERGY_WINDOW_SECONDS)))
+        loudness = []
+        for index in range(windows):
+            start_index = int(index * len(rms) / windows)
+            end_index = max(start_index + 1, int((index + 1) * len(rms) / windows))
+            # The loudest part of a window, not its average: averaging a chorus over a long
+            # window drags it down until no passage in the song ever reads as high energy.
+            loudness.append(float(np.quantile(rms[start_index:end_index], 0.75)))
+        # The reference points are the song's own quietest and loudest passages. Reading them
+        # off the windows rather than off every RMS frame is what lets a short drop count: a
+        # ten second chorus in a four minute track sits below the 95th percentile of the track.
+        floor, peak = float(np.quantile(loudness, 0.10)), float(max(loudness))
+        if peak <= 0 or (peak - floor) / peak < MIN_DYNAMIC_RANGE:
+            return ({"start": "0", "end": str(duration), "energy": "medium"},)
+        levels = [(value - floor) / (peak - floor) for value in loudness]
+        # A median over neighbouring windows removes single-window flicker, which would
+        # otherwise change the cut pacing every few seconds inside one musical passage.
+        smoothed = [
+            float(np.median(levels[max(0, index - ENERGY_SMOOTHING_WINDOWS): index + ENERGY_SMOOTHING_WINDOWS + 1]))
+            for index in range(windows)
+        ]
+        sections: list[dict[str, object]] = []
+        for index, level in enumerate(smoothed):
+            energy = (
+                "high" if level >= HIGH_ENERGY_RATIO
+                else "low" if level <= LOW_ENERGY_RATIO
+                else "medium"
+            )
+            end = duration * Fraction(index + 1, windows)
+            if sections and sections[-1]["energy"] == energy:
+                sections[-1]["end"] = str(end)
+                continue
+            sections.append(
+                {"start": str(duration * Fraction(index, windows)), "end": str(end), "energy": energy}
+            )
         return tuple(sections)
     except (ImportError, ValueError, TypeError, AttributeError):
         return ({"start": "0", "end": str(duration), "energy": "medium"},)

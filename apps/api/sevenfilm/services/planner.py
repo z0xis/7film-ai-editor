@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import random
 import uuid
+from bisect import bisect_left
 from collections.abc import Iterable, Mapping
 from fractions import Fraction
 from pathlib import Path
@@ -70,19 +71,125 @@ def _beats_per_cut(energy: str, style_profile: Mapping[str, object] | None = Non
     return defaults.get(energy, 2)
 
 
+# analyze_references.py measures each reference edit in four equal quarters, so the planner
+# reads its pacing back out of the profile on exactly the same boundaries.
+REFERENCE_SECTIONS = ("intro", "build", "core", "finale")
+# Fallbacks when the profile carries no shot length spread: a calm passage holds roughly half
+# again as long as the median cut, a driving one runs about two thirds of it.
+DEFAULT_ENERGY_SCALE = {"low": Fraction(3, 2), "medium": Fraction(1, 1), "high": Fraction(2, 3)}
+# Beat-derived cuts are capped at this multiple of the reference length. Past it the grid is
+# too sparse to cut to - a rubato or half time passage - and holding a dead shot to stay on it
+# would be worse than cutting at the length the references hold.
+MAX_BEAT_HOLD_FACTOR = 2
+# The shortest cut allowed anywhere except the final frames of the edit. A shot whose source is
+# nearly used up used to contribute its one remaining frame as a cut, which shows up as a flash.
+# A quarter second still allows a one-beat cut at any tempo up to 240 BPM.
+MIN_CUT_SECONDS = Fraction(1, 4)
+BEAT_TOLERANCE = Fraction(3, 25)  # 120 ms, the tolerance the reference profile reports.
+
+
+def _reference_section_duration(
+    style_profile: Mapping[str, object] | None, progress: float
+) -> Fraction | None:
+    """The median shot length the references hold at this point of the edit."""
+    if not style_profile:
+        return None
+    sections = style_profile.get("section_median_shot_duration_seconds")
+    if not isinstance(sections, Mapping):
+        return None
+    name = REFERENCE_SECTIONS[min(3, int(progress * 4))]
+    value = sections.get(name)
+    if not isinstance(value, (int, float)) or value <= 0:
+        return None
+    return Fraction(str(value))
+
+
+def _energy_scale(style_profile: Mapping[str, object] | None, energy: str) -> Fraction:
+    """How much the music's energy stretches or compresses the reference shot length."""
+    median = style_profile.get("median_shot_duration_seconds") if style_profile else None
+    low = style_profile.get("shot_duration_p75_seconds") if style_profile else None
+    high = style_profile.get("shot_duration_p25_seconds") if style_profile else None
+    if all(isinstance(value, (int, float)) and value > 0 for value in (median, low, high)):
+        measured = {
+            "low": Fraction(str(low)) / Fraction(str(median)),
+            "medium": Fraction(1, 1),
+            "high": Fraction(str(high)) / Fraction(str(median)),
+        }
+        return measured.get(energy, Fraction(1, 1))
+    return DEFAULT_ENERGY_SCALE.get(energy, Fraction(1, 1))
+
+
+def _preferred_cut_seconds(
+    style_profile: Mapping[str, object] | None, progress: float, energy: str
+) -> Fraction | None:
+    base = _reference_section_duration(style_profile, progress)
+    if base is None:
+        return None
+    return base * _energy_scale(style_profile, energy)
+
+
+def _section_beats_per_cut(
+    style_profile: Mapping[str, object] | None, progress: float, energy: str
+) -> int:
+    """How many beats a cut lasts here, in beats rather than seconds.
+
+    The references were measured at their own tempo, so their pacing only transfers to another
+    song when it is expressed on the beat grid: two beats is two beats at any BPM, while "one
+    second" is a fast cut at 80 BPM and a slow one at 160. The seconds the references hold per
+    section modulate that beat count around the median.
+    """
+    base = _beats_per_cut(energy, style_profile)
+    section = _reference_section_duration(style_profile, progress)
+    median = style_profile.get("median_shot_duration_seconds") if style_profile else None
+    if section is None or not isinstance(median, (int, float)) or median <= 0:
+        return base
+    return max(1, round(base * section / Fraction(str(median))))
+
+
 def _duration_from_beats(
     grid: BeatGrid,
     start: Fraction,
     energy: str,
     style_profile: Mapping[str, object] | None = None,
+    progress: float = 0.0,
 ) -> Fraction:
-    future = [beat for beat in grid.beats if beat > start]
-    desired_index = _beats_per_cut(energy, style_profile) - 1
-    if len(future) > desired_index:
-        return future[desired_index] - start
-    return {"low": Fraction(14, 5), "medium": Fraction(9, 5), "high": Fraction(9, 10)}.get(
+    """Hold for a whole number of beats, which is what makes an edit feel cut to the music.
+
+    When the grid is too sparse for that to be musical - the next beats are seconds away - the
+    cut takes the length the references hold instead of sitting on a dead shot.
+    """
+    fallback = {"low": Fraction(14, 5), "medium": Fraction(9, 5), "high": Fraction(9, 10)}.get(
         energy, Fraction(9, 5)
     )
+    preferred = _preferred_cut_seconds(style_profile, progress, energy)
+    # Cut positions are rounded to whole frames, so the current position often sits a frame or
+    # two before the beat it was cut on. Counting that beat as "the next one" asks for a cut a
+    # single frame long, which is where the one frame flashes in the timeline came from.
+    future = [beat for beat in grid.beats if beat - start >= MIN_CUT_SECONDS]
+    beats_per_cut = _section_beats_per_cut(style_profile, progress, energy)
+    if len(future) >= beats_per_cut:
+        duration = future[beats_per_cut - 1] - start
+        limit = (preferred if preferred is not None else fallback) * MAX_BEAT_HOLD_FACTOR
+        if duration <= limit:
+            return duration
+    return preferred if preferred is not None else fallback
+
+
+def beat_alignment_ratio(
+    plan: TimelinePlan, grid: BeatGrid, tolerance: Fraction = BEAT_TOLERANCE
+) -> float:
+    """The share of cuts landing within tolerance of a beat, as the reference analyzer counts."""
+    cuts = [item.timeline_range.start_seconds for item in plan.items[1:]]
+    if not cuts or not grid.beats:
+        return 0.0
+    beats = sorted(grid.beats)
+    aligned = 0
+    for cut in cuts:
+        index = bisect_left(beats, cut)
+        neighbours = beats[max(0, index - 1) : min(len(beats), index + 1)]
+        if min(abs(cut - beat) for beat in neighbours) <= tolerance:
+            aligned += 1
+    return aligned / len(cuts)
 
 
 def _quality_gates(style_profile: Mapping[str, object] | None) -> tuple[float, float]:
@@ -151,13 +258,21 @@ def _source_range_for_duration(
     wanted: Fraction,
     *,
     consumed_frames: int = 0,
+    allow_short: bool = False,
 ) -> TimeRange | None:
+    """Take the wanted length from a shot, or nothing if what is left is too short to cut to.
+
+    allow_short is set only for the last cut of the edit, where a few frames are all that is
+    needed to reach the target; anywhere else a stub would land in the timeline as a flash.
+    """
     rate = shot.source_range.rate
     handle = min(shot.source_range.duration_frames // 8, rate.frames_from_seconds(Fraction(1, 5)))
     usable = _remaining_source_frames(shot, consumed_frames)
     requested_frames = rate.frames_from_seconds(wanted, rounding="nearest")
     frames = min(usable, requested_frames)
-    minimum = min(rate.frames_from_seconds(Fraction(1, 2), rounding="ceil"), requested_frames)
+    minimum = rate.frames_from_seconds(MIN_CUT_SECONDS, rounding="ceil")
+    if allow_short:
+        minimum = min(minimum, requested_frames)
     if frames < minimum:
         return None
     return TimeRange(shot.source_range.start_frame + handle + consumed_frames, frames, rate)
@@ -300,7 +415,7 @@ def build_timeline(
     if isinstance(reference_count, int) and reference_count > 0:
         plan.warnings.append(f"{reference_count} referanstan çıkarılan 7Film ritim profili uygulandı.")
     target_frames = frame_rate.frames_from_seconds(target_duration)
-    reference_bounds = _reference_duration_bounds(style_profile)
+    minimum_cut_frames = frame_rate.frames_from_seconds(MIN_CUT_SECONDS, rounding="ceil")
     current_frame = 0
     consumed_source_frames = {shot.id: 0 for shot in candidates}
     usage_count = {shot.id: 0 for shot in candidates}
@@ -317,11 +432,7 @@ def build_timeline(
         current_time = frame_rate.seconds_from_frames(current_frame)
         progress = current_frame / target_frames
         energy = _energy_at(music, current_time)
-        desired = _duration_from_beats(music, current_time, energy, style_profile)
-        if reference_bounds is not None:
-            # Keep every cut inside the shot lengths actually measured in the reference edits,
-            # so a sparse stretch of beats cannot open a dead four second hole.
-            desired = min(max(desired, reference_bounds[0]), reference_bounds[1])
+        desired = _duration_from_beats(music, current_time, energy, style_profile, progress)
         desired = frame_rate.seconds_from_frames(
             max(1, frame_rate.frames_from_seconds(desired, rounding="nearest"))
         )
@@ -344,6 +455,9 @@ def build_timeline(
         ranked.sort(key=lambda candidate: candidate[0], reverse=True)
         selected_score, selected_shot, components = ranked[0]
         remaining_seconds = frame_rate.seconds_from_frames(remaining_frames)
+        if remaining_frames - frame_rate.frames_from_seconds(desired) < minimum_cut_frames:
+            # Take the whole tail now rather than leaving a stub for the next cut to pick up.
+            desired = remaining_seconds
         remaining_source_seconds = selected_shot.source_range.rate.seconds_from_frames(
             _remaining_source_frames(selected_shot, consumed_source_frames[selected_shot.id])
         )
@@ -352,6 +466,7 @@ def build_timeline(
             selected_shot,
             requested_duration,
             consumed_frames=consumed_source_frames[selected_shot.id],
+            allow_short=remaining_frames <= minimum_cut_frames,
         )
         if source_range is None:
             exhausted.add(selected_shot.id)
@@ -395,7 +510,22 @@ def build_timeline(
         )
     if plan.duration != target_duration:
         plan.warnings.append("Son plan kare sınırına yuvarlandı; süre hedefe en yakın frame-accurate değerdedir.")
+    _append_rhythm_report(plan, music, style_profile)
     return plan
+
+
+def _append_rhythm_report(
+    plan: TimelinePlan, music: BeatGrid, style_profile: Mapping[str, object] | None
+) -> None:
+    """Record how the finished plan sits against the music, next to the reference's own figure."""
+    if len(plan.items) < 2:
+        return
+    aligned = beat_alignment_ratio(plan, music)
+    reference = style_profile.get("beat_alignment_ratio_120ms") if style_profile else None
+    message = f"Kesimlerin %{aligned * 100:.0f}'ı beat'e 120 ms içinde hizalandı"
+    if isinstance(reference, (int, float)):
+        message += f" (referans kurgular: %{float(reference) * 100:.0f})"
+    plan.warnings.append(message + ".")
 
 
 def persist_timeline(database: Database, plan: TimelinePlan) -> None:

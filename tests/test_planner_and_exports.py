@@ -274,8 +274,13 @@ class FootageQualityTests(unittest.TestCase):
         self.profile = {
             "reference_count": 18,
             "beats_per_cut": {"low": 3, "medium": 2, "high": 1},
+            "median_shot_duration_seconds": 1.0,
             "shot_duration_p25_seconds": 0.64,
             "shot_duration_p75_seconds": 1.6,
+            "section_median_shot_duration_seconds": {
+                "intro": 1.17, "build": 1.13, "core": 0.99, "finale": 0.959,
+            },
+            "beat_alignment_ratio_120ms": 0.6064,
             "visual_profile": {"mean_brightness": 0.3474, "mean_saturation": 0.2863},
         }
 
@@ -380,7 +385,7 @@ class FootageQualityTests(unittest.TestCase):
         off_look_frames = plan.duration_frames - on_look_frames
         self.assertGreater(on_look_frames, off_look_frames)
 
-    def test_cuts_stay_inside_the_reference_shot_length_range(self):
+    def test_cuts_follow_the_reference_length_when_the_beats_are_too_sparse(self):
         assets = [self._asset(index) for index in range(80)]
         shots = [self._shot(index) for index in range(80)]
         sparse_beats = BeatGrid(
@@ -393,9 +398,10 @@ class FootageQualityTests(unittest.TestCase):
             frame_rate=self.rate, target_duration=Fraction(120), style_profile=self.profile, seed=5,
         )
 
-        # Without the reference bounds a five second beat gap produced five second holds.
+        # A five second beat gap used to produce five second holds. With no beat anywhere near
+        # the reference length, the cut takes the reference length instead of chasing the grid.
         longest = max(item.timeline_range.duration_seconds for item in plan.items)
-        self.assertLessEqual(longest, Fraction(16, 10))
+        self.assertLessEqual(longest, Fraction(2))
 
     def test_reference_visual_fit_is_neutral_without_measurements(self):
         """Projects analysed before the visual columns existed must plan exactly as before."""
