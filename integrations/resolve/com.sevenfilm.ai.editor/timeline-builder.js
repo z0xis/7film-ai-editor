@@ -2,6 +2,8 @@
 // Kept free of Electron and the native bridge so they stay unit testable.
 
 const DEFAULT_BATCH_SIZE = 40;
+// A clip shorter than this reads as a freeze frame on the timeline rather than a shot.
+const MIN_CLIP_SECONDS = 0.25;
 
 function parseFrameRate(raw, fallback = 25) {
   const text = String(raw ?? "").trim();
@@ -32,17 +34,22 @@ function toFrameCount(value) {
  * routinely run a frame or two long on VFR and long-GOP camera files, so every range is
  * clamped against what Resolve itself reports before it is sent.
  */
-function clampSourceRange({ startFrame, durationFrames, availableFrames }) {
+function clampSourceRange({ startFrame, durationFrames, availableFrames, minimumFrames = 1 }) {
   const available = toFrameCount(availableFrames);
   const rawStart = Number(startFrame);
   const rawDuration = Number(durationFrames);
   let start = Number.isFinite(rawStart) ? Math.max(0, Math.floor(rawStart)) : 0;
   let duration = Number.isFinite(rawDuration) ? Math.floor(rawDuration) : 0;
+  const minimum = Math.max(1, Math.floor(minimumFrames));
   if (duration < 1) duration = 1;
   if (available !== null) {
-    if (start > available - 1) start = Math.max(0, available - 1);
-    duration = Math.max(1, Math.min(duration, available - start));
+    duration = Math.min(duration, available);
+    // Slide the window back into the media instead of truncating it. Cutting the tail off a
+    // clip whose start sits near the end of the file leaves a one frame stub, which Resolve
+    // shows as a freeze frame; the same shot a few frames earlier is the shot that was meant.
+    start = Math.max(0, Math.min(start, available - duration));
   }
+  if (duration < minimum) return null;
   return { startFrame: start, endFrame: start + duration - 1, durationFrames: duration };
 }
 
@@ -56,6 +63,7 @@ function clampSourceRange({ startFrame, durationFrames, availableFrames }) {
 function buildVideoClipInfos(items, resolveMedia) {
   const clipInfos = [];
   const labels = [];
+  const dropped = [];
   for (const item of items || []) {
     const sourcePath = String(item?.source_path ?? "");
     const media = resolveMedia(sourcePath);
@@ -67,7 +75,12 @@ function buildVideoClipInfos(items, resolveMedia) {
       startFrame: item?.source_in?.start_frame,
       durationFrames: item?.source_in?.duration_frames,
       availableFrames: reported === null ? item?.asset_duration_frames : reported,
+      minimumFrames: Math.ceil(MIN_CLIP_SECONDS * parseFrameRate(item?.source_in?.rate)),
     });
+    if (range === null) {
+      dropped.push(sourcePath);
+      continue;
+    }
     clipInfos.push({
       mediaPoolItem: media.mediaPoolItem,
       startFrame: range.startFrame,
@@ -76,7 +89,7 @@ function buildVideoClipInfos(items, resolveMedia) {
     });
     labels.push(`${sourcePath} [${range.startFrame}-${range.endFrame}]`);
   }
-  return { clipInfos, labels };
+  return { clipInfos, labels, dropped };
 }
 
 /**
@@ -163,6 +176,7 @@ function chunk(values, size = DEFAULT_BATCH_SIZE) {
 
 module.exports = {
   DEFAULT_BATCH_SIZE,
+  MIN_CLIP_SECONDS,
   appendClipsInBatches,
   buildMusicClipInfo,
   buildVideoClipInfos,

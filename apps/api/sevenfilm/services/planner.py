@@ -6,7 +6,7 @@ import json
 import random
 import uuid
 from bisect import bisect_left
-from collections.abc import Iterable, Mapping
+from collections.abc import Iterable, Mapping, Sequence
 from fractions import Fraction
 from pathlib import Path
 
@@ -17,8 +17,18 @@ from ..timebase import FrameRate, TimeRange
 MIN_TARGET_DURATION = Fraction(120, 1)
 # An editor never cuts to a smeared or blown out frame, whatever the semantic model called it:
 # CLIP reads a large white blurry area as a bride. These are hard gates, not score components.
-MIN_TECHNICAL_QUALITY = 0.35
+# Raw camera footage is ungraded and measures far below a finished, graded reference edit, so
+# an absolute quality bar throws away usable material: on real project footage the best shot
+# scores under 0.5 and a third of the shoot falls under 0.35. Only genuinely unusable frames
+# are rejected outright, and the working bar is set relative to what this shoot looks like.
+ABSOLUTE_MIN_QUALITY = 0.15
+RELATIVE_MIN_QUALITY = 0.6
 MAX_HIGHLIGHT_CLIPPING = 0.25
+# How far from this shoot's own look a shot may sit before it stops matching, and how much
+# harder being brighter than typical counts: blowing out is the failure mode, which the
+# references confirm by sitting well below any blown highlight.
+VISUAL_SPREAD = 0.35
+OVERBRIGHT_WEIGHT = 1.5
 # One detected shot usually covers a long take that still holds several usable segments.
 # Taking another segment from a strong clip costs this much, which keeps the edit varied while
 # letting a good clip beat a weaker clip's first appearance instead of marching through every
@@ -192,13 +202,34 @@ def beat_alignment_ratio(
     return aligned / len(cuts)
 
 
-def _quality_gates(style_profile: Mapping[str, object] | None) -> tuple[float, float]:
-    minimum = style_profile.get("minimum_technical_quality") if style_profile else None
+def _quality_gates(
+    style_profile: Mapping[str, object] | None, shots: Sequence[Shot]
+) -> tuple[float, float]:
+    """The quality bar for this shoot, and the highlight clipping ceiling.
+
+    The bar is a fraction of what this footage actually achieves, never below the absolute
+    floor for frames no editor could use. A style profile may override either.
+    """
+    configured = style_profile.get("minimum_technical_quality") if style_profile else None
     maximum = style_profile.get("maximum_highlight_clipping") if style_profile else None
-    return (
-        float(minimum) if isinstance(minimum, (int, float)) else MIN_TECHNICAL_QUALITY,
-        float(maximum) if isinstance(maximum, (int, float)) else MAX_HIGHLIGHT_CLIPPING,
-    )
+    ceiling = float(maximum) if isinstance(maximum, (int, float)) else MAX_HIGHLIGHT_CLIPPING
+    if isinstance(configured, (int, float)):
+        return float(configured), ceiling
+    qualities = sorted(shot.technical_quality for shot in shots)
+    if not qualities:
+        return ABSOLUTE_MIN_QUALITY, ceiling
+    typical = qualities[len(qualities) // 2]
+    return max(ABSOLUTE_MIN_QUALITY, typical * RELATIVE_MIN_QUALITY), ceiling
+
+
+def _visual_baseline(shots: Sequence[Shot]) -> tuple[float, float] | None:
+    """What this shoot typically looks like, against which an outlier frame stands out."""
+    measured = [shot for shot in shots if shot.has_visual_measurements]
+    if not measured:
+        return None
+    brightness = sorted(shot.brightness for shot in measured)
+    saturation = sorted(shot.saturation for shot in measured)
+    return brightness[len(brightness) // 2], saturation[len(saturation) // 2]
 
 
 def _is_usable(shot: Shot, minimum_quality: float, maximum_clipping: float) -> bool:
@@ -208,22 +239,40 @@ def _is_usable(shot: Shot, minimum_quality: float, maximum_clipping: float) -> b
     return not (shot.has_visual_measurements and shot.highlight_clipping > maximum_clipping)
 
 
-def _reference_visual_fit(shot: Shot, style_profile: Mapping[str, object] | None) -> float:
-    """Compare a shot's brightness and saturation with the 7Film reference edits.
-
-    Returns a neutral 1.0 when there is nothing to compare, so projects analysed before these
-    measurements existed, and runs without a reference profile, score exactly as before.
-    """
+def _reference_brightness(style_profile: Mapping[str, object] | None) -> float | None:
     profile = style_profile.get("visual_profile") if style_profile else None
-    if not isinstance(profile, Mapping) or not shot.has_visual_measurements:
+    reference = profile.get("mean_brightness") if isinstance(profile, Mapping) else None
+    return float(reference) if isinstance(reference, (int, float)) else None
+
+
+def _reference_visual_fit(
+    shot: Shot,
+    baseline: tuple[float, float] | None,
+    style_profile: Mapping[str, object] | None,
+) -> float:
+    """How well a shot's look matches what this edit should be made of.
+
+    Brightness carries across from a graded reference edit to raw footage - measured on the
+    project's own material it sits at 0.37 against the references' 0.35 - so it is compared
+    with the references directly, which keeps the judgement steady even on a shoot where half
+    the frames are blown out. Saturation does not carry across, because grading is most of it,
+    so it is compared with this shoot's own median instead. Being brighter than the target
+    counts harder: that is the blown out, out of focus frame a semantic model calls a bride.
+    """
+    if baseline is None or not shot.has_visual_measurements:
         return 1.0
-    reference_brightness = profile.get("mean_brightness")
-    reference_saturation = profile.get("mean_saturation")
-    if not isinstance(reference_brightness, (int, float)) or not isinstance(reference_saturation, (int, float)):
-        return 1.0
-    brightness_distance = min(1.0, abs(shot.brightness - float(reference_brightness)) / 0.35)
-    saturation_distance = min(1.0, abs(shot.saturation - float(reference_saturation)) / 0.35)
-    return max(0.0, 1.0 - (0.6 * brightness_distance + 0.4 * saturation_distance))
+    baseline_brightness, baseline_saturation = baseline
+    target_brightness = _reference_brightness(style_profile)
+    if target_brightness is None:
+        target_brightness = baseline_brightness
+    brightness_distance = abs(shot.brightness - target_brightness) / VISUAL_SPREAD
+    if shot.brightness > target_brightness:
+        brightness_distance *= OVERBRIGHT_WEIGHT
+    saturation_distance = abs(shot.saturation - baseline_saturation) / VISUAL_SPREAD
+    return max(
+        0.0,
+        1.0 - (0.6 * min(1.0, brightness_distance) + 0.4 * min(1.0, saturation_distance)),
+    )
 
 
 def _reference_duration_bounds(
@@ -289,6 +338,7 @@ def _score_candidate(
     random_jitter: float,
     style_profile: Mapping[str, object] | None = None,
     reuse_count: int = 0,
+    visual_baseline: tuple[float, float] | None = None,
 ) -> tuple[float, dict[str, float]]:
     category_rank = preferred_categories.index(shot.category) if shot.category in preferred_categories else -1
     raw_story_relevance = (1.0, 0.85, 0.7)[category_rank] if 0 <= category_rank < 3 else 0.35
@@ -297,7 +347,7 @@ def _score_candidate(
     # style_fit is "does this look like a 7Film shot": the preferred scale for this point in
     # the story, and the brightness and saturation measured across the reference edits.
     scale_fit = 1.0 if shot.shot_scale in preferred_scales else 0.4
-    visual_fit = _reference_visual_fit(shot, style_profile)
+    visual_fit = _reference_visual_fit(shot, visual_baseline, style_profile)
     style_fit = 0.5 * scale_fit + 0.5 * visual_fit
     target_motion = {"low": 0.3, "medium": 0.55, "high": 0.78}.get(energy, 0.55)
     music_fit = max(0.0, 1.0 - abs(shot.motion_score - target_motion))
@@ -371,7 +421,7 @@ def build_timeline(
     ]
     if not long_enough:
         raise InsufficientFootageError("Kullanılabilir shot adayı bulunamadı.")
-    minimum_quality, maximum_clipping = _quality_gates(style_profile)
+    minimum_quality, maximum_clipping = _quality_gates(style_profile, long_enough)
     good = [shot for shot in long_enough if _is_usable(shot, minimum_quality, maximum_clipping)]
     good_duration = sum((_available_duration(shot) for shot in good), Fraction(0, 1))
     rejected_count = len(long_enough) - len(good)
@@ -416,6 +466,7 @@ def build_timeline(
         plan.warnings.append(f"{reference_count} referanstan çıkarılan 7Film ritim profili uygulandı.")
     target_frames = frame_rate.frames_from_seconds(target_duration)
     minimum_cut_frames = frame_rate.frames_from_seconds(MIN_CUT_SECONDS, rounding="ceil")
+    visual_baseline = _visual_baseline(candidates)
     current_frame = 0
     consumed_source_frames = {shot.id: 0 for shot in candidates}
     usage_count = {shot.id: 0 for shot in candidates}
@@ -450,6 +501,7 @@ def build_timeline(
                 random_jitter=rng.uniform(-0.015, 0.015),
                 style_profile=style_profile,
                 reuse_count=usage_count[shot.id],
+                visual_baseline=visual_baseline,
             )
             ranked.append((score, shot, components))
         ranked.sort(key=lambda candidate: candidate[0], reverse=True)

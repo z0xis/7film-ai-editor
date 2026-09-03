@@ -216,11 +216,14 @@ async function createTimelineFromPlan(mediaPool, project, plan, timelineName) {
   const poolPaths = musicPath ? [...new Set([...sourcePaths, musicPath])] : sourcePaths;
   const media = await resolveMediaPool(mediaPool, poolPaths);
 
-  const { clipInfos, labels } = buildVideoClipInfos(
+  const { clipInfos, labels, dropped } = buildVideoClipInfos(
     plan.items || [],
     (sourcePath) => media.get(path.resolve(sourcePath)),
   );
   if (!clipInfos.length) throw new Error("Kurgu planında video klibi bulunamadı.");
+  if (dropped.length) {
+    console.warn(`7Film: ${dropped.length} klip tek kare uzunluğunda kalacağı için atlandı.`);
+  }
   const suffix = new Date().toISOString().slice(11, 19).replaceAll(":", "");
   // CreateTimelineFromClips ignores mediaType, so it pulls the camera audio of every source
   // clip onto A1. An empty timeline plus video-only AppendToTimeline batches keeps the rough

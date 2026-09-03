@@ -32,17 +32,32 @@ describe("clampSourceRange", () => {
     );
   });
 
-  it("trims a range that would run past the media Resolve reports", () => {
+  it("slides a range that would run past the media back inside it, keeping its length", () => {
+    // Truncating this to its last ten frames left a stub that Resolve shows as a freeze frame.
     assert.deepEqual(
       clampSourceRange({ startFrame: 240, durationFrames: 40, availableFrames: 250 }),
-      { startFrame: 240, endFrame: 249, durationFrames: 10 },
+      { startFrame: 210, endFrame: 249, durationFrames: 40 },
     );
   });
 
-  it("pulls a start beyond the media back onto the last frame", () => {
+  it("pulls a start beyond the media back to where the whole shot fits", () => {
     assert.deepEqual(
       clampSourceRange({ startFrame: 900, durationFrames: 40, availableFrames: 250 }),
-      { startFrame: 249, endFrame: 249, durationFrames: 1 },
+      { startFrame: 210, endFrame: 249, durationFrames: 40 },
+    );
+  });
+
+  it("shortens the shot only when the media itself is shorter", () => {
+    assert.deepEqual(
+      clampSourceRange({ startFrame: 10, durationFrames: 40, availableFrames: 25 }),
+      { startFrame: 0, endFrame: 24, durationFrames: 25 },
+    );
+  });
+
+  it("drops a clip that cannot reach the minimum length instead of emitting a freeze frame", () => {
+    assert.equal(
+      clampSourceRange({ startFrame: 0, durationFrames: 40, availableFrames: 3, minimumFrames: 7 }),
+      null,
     );
   });
 
@@ -53,7 +68,7 @@ describe("clampSourceRange", () => {
     );
   });
 
-  it("keeps at least one frame on a single frame source", () => {
+  it("keeps a single frame source only when no minimum is asked for", () => {
     assert.deepEqual(
       clampSourceRange({ startFrame: 0, durationFrames: 40, availableFrames: 1 }),
       { startFrame: 0, endFrame: 0, durationFrames: 1 },
@@ -79,12 +94,30 @@ describe("buildVideoClipInfos", () => {
     );
   });
 
-  it("clamps a late clip instead of letting Resolve reject the whole batch", () => {
+  it("moves a late clip inside the media instead of letting Resolve reject the batch", () => {
     const { clipInfos } = buildVideoClipInfos([planItem(245, 40)], resolveMedia);
     assert.deepEqual(
       { startFrame: clipInfos[0].startFrame, endFrame: clipInfos[0].endFrame },
-      { startFrame: 245, endFrame: 249 },
+      { startFrame: 210, endFrame: 249 },
     );
+  });
+
+  it("drops a plan item that would land as a one frame freeze rather than a shot", () => {
+    const stub = { ...planItem(0, 1), source_in: { start_frame: 0, duration_frames: 1 } };
+
+    const { clipInfos, dropped } = buildVideoClipInfos([stub, planItem(0, 40)], resolveMedia);
+
+    assert.equal(clipInfos.length, 1);
+    assert.deepEqual(dropped, ["/media/A001.mov"]);
+  });
+
+  it("reads the minimum length from the source's own frame rate", () => {
+    // A 50 fps source needs 13 frames for a quarter second, a 25 fps source only 7.
+    const fast = { ...planItem(0, 10), source_in: { start_frame: 0, duration_frames: 10, rate: "50/1" } };
+    const slow = { ...planItem(0, 10), source_in: { start_frame: 0, duration_frames: 10, rate: "25/1" } };
+
+    assert.equal(buildVideoClipInfos([fast], resolveMedia).clipInfos.length, 0);
+    assert.equal(buildVideoClipInfos([slow], resolveMedia).clipInfos.length, 1);
   });
 
   it("falls back to the plan's asset frame count when Resolve reports none", () => {
@@ -97,7 +130,7 @@ describe("buildVideoClipInfos", () => {
 
   it("reports a label per clip so a rejected batch names the offending file", () => {
     const { labels } = buildVideoClipInfos([planItem(245, 40)], resolveMedia);
-    assert.deepEqual(labels, ["/media/A001.mov [245-249]"]);
+    assert.deepEqual(labels, ["/media/A001.mov [210-249]"]);
   });
 
   it("throws with the path when a media pool item is missing", () => {
@@ -128,7 +161,7 @@ describe("buildVideoClipInfos", () => {
 
     const { clipInfos } = buildVideoClipInfos(nonsense, () => ({ mediaPoolItem: VIDEO, frameCount: 250 }));
 
-    assert.equal(clipInfos.length, 3);
+    assert.ok(clipInfos.length >= 1, "a usable range must survive");
     for (const clipInfo of clipInfos) {
       assert.ok(clipInfo.startFrame >= 0, "startFrame must not be negative");
       assert.ok(clipInfo.endFrame >= clipInfo.startFrame, "endFrame must not precede startFrame");

@@ -355,9 +355,11 @@ class FootageQualityTests(unittest.TestCase):
 
         self.assertNotIn("shot-3", {item.shot.id for item in plan.items})
 
-    def test_low_quality_footage_is_used_but_flagged_when_there_is_nothing_better(self):
+    def test_unusable_footage_is_used_but_flagged_when_there_is_nothing_better(self):
+        """Only 24s of usable material for a 120s target: the rest is used, and the plan says so."""
         assets = [self._asset(index) for index in range(60)]
-        shots = [self._shot(index, technical_quality=.2, aesthetic_score=.5) for index in range(60)]
+        shots = [self._blown_out(index) for index in range(45)]
+        shots += [self._shot(index, source_frames=50) for index in range(45, 60)]
 
         plan = self._plan(shots, assets)
 
@@ -366,6 +368,45 @@ class FootageQualityTests(unittest.TestCase):
             any("Kalite eşiğini geçen görüntü hedef süreyi doldurmuyor" in w for w in plan.warnings),
             plan.warnings,
         )
+
+    def test_a_shoot_that_simply_measures_low_is_not_thrown_away(self):
+        """Raw footage measures below a graded reference; the bar is relative to this shoot."""
+        assets = [self._asset(index) for index in range(60)]
+        shots = [self._shot(index, technical_quality=.2, aesthetic_score=.5) for index in range(60)]
+
+        plan = self._plan(shots, assets)
+
+        self.assertEqual(plan.duration, Fraction(120))
+        self.assertFalse(
+            [warning for warning in plan.warnings if "kalite eşiğinin altında" in warning],
+            plan.warnings,
+        )
+
+    def test_the_worst_of_a_shoot_is_still_rejected_when_the_whole_shoot_measures_low(self):
+        assets = [self._asset(index) for index in range(60)]
+        shots = [self._shot(index, technical_quality=.3) for index in range(59)]
+        shots.append(self._shot(59, technical_quality=.05, brightness=.98, highlight_clipping=.8))
+
+        plan = self._plan(shots, assets)
+
+        self.assertNotIn("shot-59", {item.shot.id for item in plan.items})
+
+    def test_brightness_is_judged_against_the_references_not_a_blown_out_shoot(self):
+        """With half the shoot blown out, the shoot's own median is no longer a usable centre."""
+        assets = [self._asset(index) for index in range(200)]
+        on_look = [self._shot(index) for index in range(100)]
+        blown = [
+            self._shot(index, brightness=.92, saturation=.03, technical_quality=.5)
+            for index in range(100, 200)
+        ]
+
+        plan = self._plan(on_look + blown, assets)
+
+        on_look_ids = {shot.id for shot in on_look}
+        on_look_frames = sum(
+            item.timeline_range.duration_frames for item in plan.items if item.shot.id in on_look_ids
+        )
+        self.assertGreater(on_look_frames, plan.duration_frames - on_look_frames)
 
     def test_shots_matching_the_reference_look_outrank_equally_sharp_off_look_shots(self):
         # More shots than the edit needs cuts, so the planner is choosing rather than scraping.
