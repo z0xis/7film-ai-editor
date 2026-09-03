@@ -28,7 +28,7 @@ describe("clampSourceRange", () => {
   it("keeps an in-bounds range and makes endFrame the last included frame", () => {
     assert.deepEqual(
       clampSourceRange({ startFrame: 10, durationFrames: 40, availableFrames: 250 }),
-      { startFrame: 10, endFrame: 49, durationFrames: 40 },
+      { startFrame: 10, endFrame: 50, durationFrames: 40 },
     );
   });
 
@@ -36,21 +36,21 @@ describe("clampSourceRange", () => {
     // Truncating this to its last ten frames left a stub that Resolve shows as a freeze frame.
     assert.deepEqual(
       clampSourceRange({ startFrame: 240, durationFrames: 40, availableFrames: 250 }),
-      { startFrame: 210, endFrame: 249, durationFrames: 40 },
+      { startFrame: 210, endFrame: 250, durationFrames: 40 },
     );
   });
 
   it("pulls a start beyond the media back to where the whole shot fits", () => {
     assert.deepEqual(
       clampSourceRange({ startFrame: 900, durationFrames: 40, availableFrames: 250 }),
-      { startFrame: 210, endFrame: 249, durationFrames: 40 },
+      { startFrame: 210, endFrame: 250, durationFrames: 40 },
     );
   });
 
   it("shortens the shot only when the media itself is shorter", () => {
     assert.deepEqual(
       clampSourceRange({ startFrame: 10, durationFrames: 40, availableFrames: 25 }),
-      { startFrame: 0, endFrame: 24, durationFrames: 25 },
+      { startFrame: 0, endFrame: 25, durationFrames: 25 },
     );
   });
 
@@ -64,15 +64,48 @@ describe("clampSourceRange", () => {
   it("leaves the range untouched when the media length is unknown", () => {
     assert.deepEqual(
       clampSourceRange({ startFrame: 240, durationFrames: 40, availableFrames: null }),
-      { startFrame: 240, endFrame: 279, durationFrames: 40 },
+      { startFrame: 240, endFrame: 280, durationFrames: 40 },
     );
   });
 
   it("keeps a single frame source only when no minimum is asked for", () => {
     assert.deepEqual(
       clampSourceRange({ startFrame: 0, durationFrames: 40, availableFrames: 1 }),
-      { startFrame: 0, endFrame: 0, durationFrames: 1 },
+      { startFrame: 0, endFrame: 1, durationFrames: 1 },
     );
+  });
+});
+
+describe("clipInfo ranges Resolve actually accepts", () => {
+  // Measured against DaVinci Resolve Studio 21.0.2 with a real 252 frame camera file.
+  it("treats endFrame as exclusive, so the length is endFrame minus startFrame", () => {
+    const range = clampSourceRange({ startFrame: 0, durationFrames: 50, availableFrames: 252 });
+    assert.equal(range.endFrame - range.startFrame, 50);
+    assert.equal(range.durationFrames, 50);
+  });
+
+  it("never emits the zero length range Resolve rejects", () => {
+    // A one frame plan item used to arrive as startFrame 50, endFrame 50, which places
+    // nothing and fails the batch. Those items cluster late in a plan, which is why the
+    // reported failure was on clips 81-120 rather than the first batch.
+    const range = clampSourceRange({
+      startFrame: 50, durationFrames: 1, availableFrames: 252, minimumFrames: 7,
+    });
+    assert.equal(range, null);
+  });
+
+  it("never emits an inverted range", () => {
+    for (const durationFrames of [0, -10, NaN]) {
+      const range = clampSourceRange({ startFrame: 100, durationFrames, availableFrames: 252 });
+      assert.ok(range === null || range.endFrame > range.startFrame, `duration ${durationFrames}`);
+    }
+  });
+
+  it("keeps the whole range inside the media so Resolve cannot stretch the clip", () => {
+    // Resolve accepts an end past the media and extends the clip: endFrame 452 on a 252
+    // frame file placed a 442 frame clip.
+    const range = clampSourceRange({ startFrame: 247, durationFrames: 200, availableFrames: 252 });
+    assert.ok(range.endFrame <= 252, `endFrame ${range.endFrame} ran past the media`);
   });
 });
 
@@ -98,7 +131,7 @@ describe("buildVideoClipInfos", () => {
     const { clipInfos } = buildVideoClipInfos([planItem(245, 40)], resolveMedia);
     assert.deepEqual(
       { startFrame: clipInfos[0].startFrame, endFrame: clipInfos[0].endFrame },
-      { startFrame: 210, endFrame: 249 },
+      { startFrame: 210, endFrame: 250 },
     );
   });
 
@@ -125,12 +158,12 @@ describe("buildVideoClipInfos", () => {
       [planItem(245, 40)],
       () => ({ mediaPoolItem: VIDEO, frameCount: null }),
     );
-    assert.equal(clipInfos[0].endFrame, 249);
+    assert.equal(clipInfos[0].endFrame, 250);
   });
 
   it("reports a label per clip so a rejected batch names the offending file", () => {
     const { labels } = buildVideoClipInfos([planItem(245, 40)], resolveMedia);
-    assert.deepEqual(labels, ["/media/A001.mov [210-249]"]);
+    assert.deepEqual(labels, ["/media/A001.mov [210-250]"]);
   });
 
   it("throws with the path when a media pool item is missing", () => {
@@ -148,7 +181,7 @@ describe("buildVideoClipInfos", () => {
       );
       assert.equal(clipInfos.length, 1, `frameCount ${String(frameCount)} dropped the clip`);
       // Falls back to the plan's own 250 frame asset length.
-      assert.equal(clipInfos[0].endFrame, 249);
+      assert.equal(clipInfos[0].endFrame, 250);
     }
   });
 
@@ -164,8 +197,8 @@ describe("buildVideoClipInfos", () => {
     assert.ok(clipInfos.length >= 1, "a usable range must survive");
     for (const clipInfo of clipInfos) {
       assert.ok(clipInfo.startFrame >= 0, "startFrame must not be negative");
-      assert.ok(clipInfo.endFrame >= clipInfo.startFrame, "endFrame must not precede startFrame");
-      assert.ok(clipInfo.endFrame <= 249, "endFrame must stay inside the media");
+      assert.ok(clipInfo.endFrame > clipInfo.startFrame, "a zero length range is rejected by Resolve");
+      assert.ok(clipInfo.endFrame <= 250, "endFrame must stay inside the media");
     }
   });
 });
@@ -176,21 +209,21 @@ describe("buildMusicClipInfo", () => {
       mediaPoolItem: MUSIC, timelineFrames: 3000, musicFrames: 3750, trackIndex: 1, recordFrame: 0,
     });
     assert.deepEqual(clipInfo, {
-      mediaPoolItem: MUSIC, startFrame: 0, endFrame: 2999, mediaType: 2, trackIndex: 1, recordFrame: 0,
+      mediaPoolItem: MUSIC, startFrame: 0, endFrame: 3000, mediaType: 2, trackIndex: 1, recordFrame: 0,
     });
   });
 
   it("clamps the music to the rough cut when the track is longer", () => {
     assert.equal(
       buildMusicClipInfo({ mediaPoolItem: MUSIC, timelineFrames: 3000, musicFrames: 9000 }).endFrame,
-      2999,
+      3000,
     );
   });
 
   it("clamps the music to the real track length when the rough cut is longer", () => {
     assert.equal(
       buildMusicClipInfo({ mediaPoolItem: MUSIC, timelineFrames: 9000, musicFrames: 3000 }).endFrame,
-      2999,
+      3000,
     );
   });
 
@@ -256,9 +289,13 @@ function fakeResolve({ frameCount = 250 } = {}) {
     timeline,
     async AppendToTimeline(clipInfos) {
       for (const clipInfo of clipInfos) {
+        // Measured against Resolve Studio 21.0.2: a zero length or inverted range is
+        // rejected, and endFrame is exclusive. Running past the media is accepted, so the
+        // fake only refuses what the real one refuses, plus the out-of-range case the
+        // adapter is expected to have clamped away already.
         const invalid = clipInfo.startFrame < 0
-          || clipInfo.endFrame < clipInfo.startFrame
-          || clipInfo.endFrame >= frameCount;
+          || clipInfo.endFrame <= clipInfo.startFrame
+          || clipInfo.endFrame > frameCount;
         if (invalid) {
           const error = new Error("AppendToTimeline: Error response\nerrorStr: Invalid items to append for timeline\nerrorCode: 2");
           throw error;
@@ -332,7 +369,7 @@ describe("Resolve handoff (regression: clips 81-120 rejected as invalid items)",
     assert.equal(a1[0].recordFrame, 0, "music must start at timeline frame 0");
     assert.equal(a1[0].startFrame, 0, "music must start at its own frame 0");
     // 120 clips * 25 frames = 3000 frames of rough cut, shorter than the 150s track.
-    assert.equal(a1[0].endFrame, 2999);
+    assert.equal(a1[0].endFrame, 3000);
   });
 
   it("still reports the offending clips by name when Resolve refuses a batch", async () => {

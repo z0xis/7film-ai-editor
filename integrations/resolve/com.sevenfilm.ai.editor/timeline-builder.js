@@ -28,11 +28,13 @@ function toFrameCount(value) {
 }
 
 /**
- * Resolve treats endFrame as the LAST included source frame, and rejects the whole
- * AppendToTimeline batch ("Invalid items to append", errorCode 2) as soon as one item
- * points past the media pool item's real frame count. ffprobe/PySceneDetect frame counts
- * routinely run a frame or two long on VFR and long-GOP camera files, so every range is
- * clamped against what Resolve itself reports before it is sent.
+ * endFrame is EXCLUSIVE: verified against Resolve Studio 21.0.2, startFrame 0 with endFrame 50
+ * places 50 frames, and startFrame 50 with endFrame 50 places nothing at all. A zero length
+ * range is one of the few things Resolve actually rejects ("Invalid items to append",
+ * errorCode 2), along with an inverted range and a missing media pool item; a range running
+ * past the end of the media it accepts, stretching the clip instead. So the length is what
+ * matters here: it is kept whole by sliding the window back into the media, and a range that
+ * cannot reach the minimum is dropped rather than sent as a stub.
  */
 function clampSourceRange({ startFrame, durationFrames, availableFrames, minimumFrames = 1 }) {
   const available = toFrameCount(availableFrames);
@@ -50,7 +52,7 @@ function clampSourceRange({ startFrame, durationFrames, availableFrames, minimum
     start = Math.max(0, Math.min(start, available - duration));
   }
   if (duration < minimum) return null;
-  return { startFrame: start, endFrame: start + duration - 1, durationFrames: duration };
+  return { startFrame: start, endFrame: start + duration, durationFrames: duration };
 }
 
 /**
@@ -94,7 +96,7 @@ function buildVideoClipInfos(items, resolveMedia) {
 
 /**
  * The music starts at timeline frame 0 and is clamped by both the rough cut length and the
- * real music length, so Resolve never gets an out-of-range audio item either.
+ * real music length. endFrame is exclusive here too, so it is the frame count itself.
  */
 function buildMusicClipInfo({
   mediaPoolItem,
@@ -113,7 +115,7 @@ function buildMusicClipInfo({
   return {
     mediaPoolItem,
     startFrame: 0,
-    endFrame: duration - 1,
+    endFrame: duration,
     mediaType: 2,
     trackIndex,
     recordFrame,
@@ -138,10 +140,11 @@ function timelineFrameCount(plan) {
 }
 
 /**
- * Append the clips in Resolve sized batches. AppendToTimeline is all or nothing: one bad item
- * rejects its whole batch, which is how a single out-of-range clip used to surface as
- * "Resolve could not add clips 81-120". The ranges are already clamped by the time they get
- * here, and a failure now names the exact clips in the rejected batch.
+ * Append the clips in Resolve sized batches. Resolve drops the invalid items and keeps the
+ * rest, so the returned count is checked as well as the call itself: through the Workflow
+ * Integration bridge an invalid item surfaces as "Invalid items to append for timeline",
+ * errorCode 2, naming the batch it was in rather than the clip. Either way the failure is
+ * reported with the clips of that batch spelled out.
  */
 async function appendClipsInBatches({ mediaPool, clipInfos, labels = [], batchSize = DEFAULT_BATCH_SIZE }) {
   let appendedCount = 0;

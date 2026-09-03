@@ -619,8 +619,9 @@ def _clamped_source_range(start_frame: int, duration_frames: int, rate: FrameRat
     """Keep a persisted source range inside the media the NLE will actually see.
 
     ffprobe and PySceneDetect frame counts run a frame or two long on VFR and long-GOP camera
-    files. Resolve rejects an entire AppendToTimeline batch when a single item points past the
-    media, so the range is clamped here, at the one place every export and adapter reads from.
+    files. Resolve does not refuse a range that overruns the media, it stretches the clip to
+    fill it - a range ending 200 frames past a 252 frame file lays down a 442 frame clip - so
+    the range is clamped here, at the one place every export and adapter reads from.
     """
     available = rate.frames_from_seconds(asset_duration, rounding="floor")
     if available <= 0:

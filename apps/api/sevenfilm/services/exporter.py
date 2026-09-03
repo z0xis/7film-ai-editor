@@ -49,8 +49,8 @@ def plan_as_dict(plan: TimelinePlan) -> dict[str, object]:
                 "asset_id": item.asset.id,
                 "clip_name": item.asset.name,
                 "source_path": str(item.asset.path),
-                # Resolve rejects a whole AppendToTimeline batch when one item points past the
-                # media, so the adapter needs the source's own frame count to clamp against.
+                # Resolve stretches a clip whose range overruns the media rather than refusing
+                # it, so the adapter needs the source's own frame count to clamp against.
                 "asset_duration_frames": item.source_range.rate.frames_from_seconds(
                     item.asset.duration, rounding="floor"
                 ),

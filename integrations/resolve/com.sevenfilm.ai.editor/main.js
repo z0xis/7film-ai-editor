@@ -136,10 +136,12 @@ async function downloadExport(route, destination) {
   return destination;
 }
 
+// An audio media pool item reports Frames, Start and End as empty strings, so its length is
+// unknown here and comes from the plan instead.
 async function frameCountOf(mediaPoolItem) {
   const properties = await mediaPoolItem.GetClipProperty();
   const frames = Number(properties?.Frames);
-  return Number.isFinite(frames) && frames > 0 ? Math.floor(frames) : null;
+  return Number.isFinite(frames) && frames >= 1 ? Math.floor(frames) : null;
 }
 
 async function resolveMediaPool(mediaPool, poolPaths) {
@@ -225,9 +227,9 @@ async function createTimelineFromPlan(mediaPool, project, plan, timelineName) {
     console.warn(`7Film: ${dropped.length} klip tek kare uzunluğunda kalacağı için atlandı.`);
   }
   const suffix = new Date().toISOString().slice(11, 19).replaceAll(":", "");
-  // CreateTimelineFromClips ignores mediaType, so it pulls the camera audio of every source
-  // clip onto A1. An empty timeline plus video-only AppendToTimeline batches keeps the rough
-  // cut picture-only and keeps each payload small enough for Resolve.
+  // CreateTimelineFromClips ignores mediaType and pulls the camera audio of every source clip
+  // onto A1; AppendToTimeline honours it. Verified against Resolve Studio 21.0.2: the first
+  // builds a timeline with an audio clip per source, the second lays down picture only.
   const timeline = await mediaPool.CreateEmptyTimeline(`${timelineName} · ${suffix}`);
   if (!timeline) throw new Error("Resolve video timeline'ını oluşturamadı.");
   await project.SetCurrentTimeline(timeline);
