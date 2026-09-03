@@ -41,12 +41,19 @@ def plan_as_dict(plan: TimelinePlan) -> dict[str, object]:
         "target_duration_seconds": str(plan.target_duration),
         "actual_duration_seconds": str(plan.duration),
         "warnings": plan.warnings,
+        "music_path": str(plan.music_path) if plan.music_path else None,
+        "music_duration_seconds": str(plan.music_duration) if plan.music_duration else None,
         "items": [
             {
                 "id": item.id,
                 "asset_id": item.asset.id,
                 "clip_name": item.asset.name,
                 "source_path": str(item.asset.path),
+                # Resolve rejects a whole AppendToTimeline batch when one item points past the
+                # media, so the adapter needs the source's own frame count to clamp against.
+                "asset_duration_frames": item.source_range.rate.frames_from_seconds(
+                    item.asset.duration, rounding="floor"
+                ),
                 "source_in": item.source_range.as_rational_dict(),
                 "timeline_in": item.timeline_range.as_rational_dict(),
                 "score": item.score,
@@ -161,6 +168,10 @@ def export_fcpxml(plan: TimelinePlan, destination: Path) -> Path:
             start="0s",
             duration=_rational_time(item.asset.duration),
             hasVideo="1",
+            # The rough cut is picture only: the camera audio of the source clips must not
+            # land on an audio track, the user's music owns A1.
+            hasAudio="0",
+            audioSources="0",
             format="r1",
         )
         ET.SubElement(

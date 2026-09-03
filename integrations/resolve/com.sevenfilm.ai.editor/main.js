@@ -7,6 +7,13 @@ const fs = require("fs");
 const http = require("http");
 const path = require("path");
 const WorkflowIntegration = require("./WorkflowIntegration.node");
+const {
+  appendClipsInBatches,
+  buildMusicClipInfo,
+  buildVideoClipInfos,
+  musicFrameLimit,
+  timelineFrameCount,
+} = require("./timeline-builder");
 
 const PLUGIN_ID = "com.sevenfilm.ai.editor";
 const ENGINE_VERSION = "0.3.0";
@@ -129,10 +136,13 @@ async function downloadExport(route, destination) {
   return destination;
 }
 
-async function createTimelineFromPlan(mediaPool, project, plan, timelineName) {
-  const sourcePaths = [...new Set((plan.items || []).map((item) => String(item.source_path)))];
-  const musicPath = plan.music_path ? String(plan.music_path) : null;
-  const poolPaths = musicPath ? [...new Set([...sourcePaths, musicPath])] : sourcePaths;
+async function frameCountOf(mediaPoolItem) {
+  const properties = await mediaPoolItem.GetClipProperty();
+  const frames = Number(properties?.Frames);
+  return Number.isFinite(frames) && frames > 0 ? Math.floor(frames) : null;
+}
+
+async function resolveMediaPool(mediaPool, poolPaths) {
   const itemByPath = new Map();
   const currentFolder = await mediaPool.GetCurrentFolder();
   const existingItems = currentFolder ? await currentFolder.GetClipList() : [];
@@ -153,64 +163,74 @@ async function createTimelineFromPlan(mediaPool, project, plan, timelineName) {
   if (unresolved.length) {
     throw new Error(`Resolve Media Pool aktarımı tamamlanamadı: ${unresolved.length} dosya bulunamadı.`);
   }
+  const media = new Map();
+  for (const sourcePath of poolPaths) {
+    const key = path.resolve(sourcePath);
+    const mediaPoolItem = itemByPath.get(key);
+    media.set(key, { mediaPoolItem, frameCount: await frameCountOf(mediaPoolItem) });
+  }
+  return media;
+}
 
-  const clipInfos = (plan.items || []).map((item) => {
-    const mediaPoolItem = itemByPath.get(path.resolve(String(item.source_path)));
-    if (!mediaPoolItem) throw new Error(`Media Pool öğesi bulunamadı: ${item.source_path}`);
-    const startFrame = Number(item.source_in?.start_frame || 0);
-    const durationFrames = Math.max(1, Number(item.source_in?.duration_frames || 1));
-    return {
-      mediaPoolItem,
-      startFrame,
-      endFrame: startFrame + durationFrames - 1,
-      mediaType: 1,
-    };
+// Blueprint track layout for the Resolve adapter: A1 Music, A2 sync audio / ambience,
+// A3 voice / vows / speeches. The rough cut only fills A1; A2 and A3 stay empty so the
+// editor can drop camera audio and speeches in without rebuilding the timeline.
+const MUSIC_TRACK_INDEX = 1;
+const AUDIO_TRACK_COUNT = 3;
+
+async function ensureAudioTracks(timeline, wanted) {
+  let count = Number(await timeline.GetTrackCount("audio")) || 0;
+  while (count < wanted) {
+    if (!(await timeline.AddTrack("audio", "stereo"))) break;
+    count += 1;
+  }
+  return count;
+}
+
+async function appendMusic(mediaPool, timeline, plan, media) {
+  const musicPath = plan.music_path ? String(plan.music_path) : null;
+  if (!musicPath) return false;
+  const musicMedia = media.get(path.resolve(musicPath));
+  if (!musicMedia?.mediaPoolItem) throw new Error(`Müzik Media Pool öğesi bulunamadı: ${musicPath}`);
+  const audioTracks = await ensureAudioTracks(timeline, AUDIO_TRACK_COUNT);
+  if (audioTracks < MUSIC_TRACK_INDEX) throw new Error("Resolve timeline'ında müzik için audio track açılamadı.");
+  const timelineStart = Number(await timeline.GetStartFrame()) || 0;
+  const clipInfo = buildMusicClipInfo({
+    mediaPoolItem: musicMedia.mediaPoolItem,
+    timelineFrames: timelineFrameCount(plan),
+    musicFrames: musicFrameLimit(plan, musicMedia.frameCount),
+    trackIndex: MUSIC_TRACK_INDEX,
+    recordFrame: timelineStart,
   });
+  if (clipInfo === null) throw new Error("Müzik süresi hesaplanamadı; Resolve timeline'ına eklenemedi.");
+  const audioItems = await mediaPool.AppendToTimeline([clipInfo]);
+  if (!audioItems || audioItems.length !== 1) {
+    throw new Error("Müzik Resolve timeline'ına eklenemedi.");
+  }
+  return true;
+}
+
+async function createTimelineFromPlan(mediaPool, project, plan, timelineName) {
+  const sourcePaths = [...new Set((plan.items || []).map((item) => String(item.source_path)))];
+  const musicPath = plan.music_path ? String(plan.music_path) : null;
+  const poolPaths = musicPath ? [...new Set([...sourcePaths, musicPath])] : sourcePaths;
+  const media = await resolveMediaPool(mediaPool, poolPaths);
+
+  const { clipInfos, labels } = buildVideoClipInfos(
+    plan.items || [],
+    (sourcePath) => media.get(path.resolve(sourcePath)),
+  );
   if (!clipInfos.length) throw new Error("Kurgu planında video klibi bulunamadı.");
   const suffix = new Date().toISOString().slice(11, 19).replaceAll(":", "");
-  // Resolve 21 rejects very large CreateTimelineFromClips payloads as "Invalid items".
-  // A conservative first batch creates the timeline; later batches append in order.
-  const batchSize = 40;
-  const timeline = await mediaPool.CreateTimelineFromClips(
-    `${timelineName} · ${suffix}`,
-    clipInfos.slice(0, batchSize),
-  );
-  if (!timeline) throw new Error("Resolve video timeline’ını oluşturamadı.");
+  // CreateTimelineFromClips ignores mediaType, so it pulls the camera audio of every source
+  // clip onto A1. An empty timeline plus video-only AppendToTimeline batches keeps the rough
+  // cut picture-only and keeps each payload small enough for Resolve.
+  const timeline = await mediaPool.CreateEmptyTimeline(`${timelineName} · ${suffix}`);
+  if (!timeline) throw new Error("Resolve video timeline'ını oluşturamadı.");
   await project.SetCurrentTimeline(timeline);
-  for (let start = batchSize; start < clipInfos.length; start += batchSize) {
-    const batch = clipInfos.slice(start, start + batchSize);
-    let appended = null;
-    try {
-      appended = await mediaPool.AppendToTimeline(batch);
-    } catch (error) {
-      throw new Error(
-        `Resolve ${start + 1}-${start + batch.length}. video kliplerini ekleyemedi: ${error.message || error}`,
-      );
-    }
-    if (!appended || appended.length !== batch.length) {
-      throw new Error(`Resolve ${start + 1}-${start + batch.length}. video grubunu eksik ekledi.`);
-    }
-  }
+  await appendClipsInBatches({ mediaPool, clipInfos, labels });
 
-  if (musicPath) {
-    const musicItem = itemByPath.get(path.resolve(musicPath));
-    const timelineStart = Number(await timeline.GetStartFrame());
-    const targetFrames = Number(plan.items?.reduce(
-      (total, item) => total + Number(item.timeline_in?.duration_frames || 0),
-      0,
-    ) || 1);
-    const audioItems = await mediaPool.AppendToTimeline([{
-      mediaPoolItem: musicItem,
-      startFrame: 0,
-      endFrame: Math.max(0, targetFrames - 1),
-      mediaType: 2,
-      trackIndex: 1,
-      recordFrame: timelineStart,
-    }]);
-    if (!audioItems || audioItems.length !== 1) {
-      throw new Error("Müzik Resolve timeline’ına eklenemedi.");
-    }
-  }
+  await appendMusic(mediaPool, timeline, plan, media);
   return timeline;
 }
 

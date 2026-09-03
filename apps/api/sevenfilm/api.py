@@ -109,10 +109,11 @@ def _project_cache(project_id: str) -> Path:
 def _plan_payload(plan) -> dict[str, Any]:
     payload = plan_as_dict(plan)
     music = DATABASE.fetch_one(
-        "SELECT path FROM music_tracks WHERE project_id = ? ORDER BY created_at DESC LIMIT 1",
+        "SELECT path, duration_seconds FROM music_tracks WHERE project_id = ? ORDER BY created_at DESC LIMIT 1",
         (plan.project_id,),
     )
     payload["music_path"] = music["path"] if music else None
+    payload["music_duration_seconds"] = music["duration_seconds"] if music else None
     return payload
 
 

@@ -338,6 +338,21 @@ def persist_timeline(database: Database, plan: TimelinePlan) -> None:
         )
 
 
+def _clamped_source_range(start_frame: int, duration_frames: int, rate: FrameRate, asset_duration: Fraction) -> TimeRange:
+    """Keep a persisted source range inside the media the NLE will actually see.
+
+    ffprobe and PySceneDetect frame counts run a frame or two long on VFR and long-GOP camera
+    files. Resolve rejects an entire AppendToTimeline batch when a single item points past the
+    media, so the range is clamped here, at the one place every export and adapter reads from.
+    """
+    available = rate.frames_from_seconds(asset_duration, rounding="floor")
+    if available <= 0:
+        return TimeRange(0, max(1, duration_frames), rate)
+    start = max(0, min(start_frame, available - 1))
+    duration = max(1, min(duration_frames, available - start))
+    return TimeRange(start, duration, rate)
+
+
 def get_timeline(database: Database, timeline_id: str) -> TimelinePlan:
     header = database.fetch_one("SELECT * FROM timeline_versions WHERE id = ?", (timeline_id,))
     if header is None:
@@ -382,16 +397,19 @@ def get_timeline(database: Database, timeline_id: str) -> TimelinePlan:
             frame_rate=FrameRate.parse(row["asset_rate"]), width=int(row["width"]), height=int(row["height"]),
             codec=row["codec"], timecode=row["timecode"], content_hash=row["content_hash"],
         )
+        source_range = _clamped_source_range(
+            int(row["source_start_frame"]), int(row["source_duration_frames"]), source_rate, asset.duration
+        )
         shot = Shot(
             id=row["shot_id"], asset_id=row["asset_id"],
-            source_range=TimeRange(int(row["source_start_frame"]), int(row["source_duration_frames"]), source_rate),
+            source_range=source_range,
             category=row["category"], shot_scale=row["shot_scale"],
             technical_quality=float(row["technical_quality"]), aesthetic_score=float(row["aesthetic_score"]),
             motion_score=float(row["motion_score"]), confidence=float(row["confidence"]),
             duplicate_group=row["duplicate_group"], labels=tuple(json.loads(row["labels_json"])),
         )
         plan.items.append(TimelineItem(
-            id=row["id"], shot=shot, asset=asset, source_range=shot.source_range,
+            id=row["id"], shot=shot, asset=asset, source_range=source_range,
             timeline_range=TimeRange(int(row["timeline_start_frame"]), int(row["timeline_duration_frames"]), rate),
             score=float(row["score"]), selection_reason=row["reason"],
             alternatives=tuple(json.loads(row["alternatives_json"])),
