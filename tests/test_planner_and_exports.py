@@ -71,6 +71,51 @@ class PlannerTests(unittest.TestCase):
             self.assertNotIn("src", asset.attrib)
             self.assertEqual(asset.find("media-rep").attrib["kind"], "original-media")
 
+    def test_fcpxml_includes_connected_music_asset_with_clamped_duration(self):
+        plan = build_timeline(
+            project_id="project-1",
+            assets=self.assets,
+            shots=self.shots,
+            music=self.music,
+            frame_rate=self.rate,
+            target_duration=Fraction(120),
+            seed=3,
+        )
+        with tempfile.TemporaryDirectory() as temporary:
+            music_path = Path(temporary) / "music.wav"
+            music_path.touch()
+            plan.music_path = music_path
+            plan.music_duration = Fraction(150)
+
+            paths = export_all(plan, Path(temporary))
+            fcpxml = ET.parse(paths["fcpxml"]).getroot()
+
+            music_asset = fcpxml.find("./resources/asset[@id='m1']")
+            self.assertIsNotNone(music_asset)
+            self.assertEqual(music_asset.attrib["name"], "music.wav")
+            self.assertEqual(
+                Fraction(music_asset.attrib["duration"].removesuffix("s")),
+                Fraction(150),
+            )
+
+            media_rep = music_asset.find("media-rep")
+            self.assertIsNotNone(media_rep)
+            self.assertEqual(media_rep.attrib["kind"], "original-media")
+            self.assertEqual(media_rep.attrib["src"], music_path.resolve().as_uri())
+
+            music_clip = fcpxml.find(
+                "./library/event/project/sequence/spine/asset-clip/asset-clip[@ref='m1']"
+            )
+            self.assertIsNotNone(music_clip)
+            self.assertEqual(music_clip.attrib["lane"], "-1")
+            self.assertEqual(music_clip.attrib["offset"], "0s")
+            self.assertEqual(music_clip.attrib["start"], "0s")
+            self.assertEqual(music_clip.attrib["audioRole"], "music")
+            self.assertEqual(
+                Fraction(music_clip.attrib["duration"].removesuffix("s")),
+                Fraction(120),
+            )
+
     def test_reuses_only_unconsumed_source_segments_when_first_pass_is_short(self):
         assets = self.assets[:20]
         shots = [

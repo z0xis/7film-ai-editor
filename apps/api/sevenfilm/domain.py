@@ -70,6 +70,8 @@ class TimelinePlan:
     items: list[TimelineItem] = field(default_factory=list)
     warnings: list[str] = field(default_factory=list)
     seed: int = 0
+    music_path: Path | None = None
+    music_duration: Fraction | None = None
 
     @property
     def duration_frames(self) -> int:

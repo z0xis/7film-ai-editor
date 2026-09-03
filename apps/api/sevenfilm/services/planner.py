@@ -343,6 +343,13 @@ def get_timeline(database: Database, timeline_id: str) -> TimelinePlan:
     if header is None:
         raise KeyError(f"Timeline bulunamadı: {timeline_id}")
     rate = FrameRate.parse(header["frame_rate"])
+    music = database.fetch_one(
+        "SELECT path, duration_seconds FROM music_tracks WHERE project_id = ? ORDER BY created_at DESC LIMIT 1",
+        (header["project_id"],),
+    )
+    music_path = Path(music["path"]) if music else None
+    music_duration = Fraction(music["duration_seconds"]) if music else None
+
     plan = TimelinePlan(
         id=header["id"],
         project_id=header["project_id"],
@@ -351,6 +358,8 @@ def get_timeline(database: Database, timeline_id: str) -> TimelinePlan:
         target_duration=Fraction(header["target_duration_seconds"]),
         warnings=json.loads(header["warnings_json"]),
         seed=int(header["seed"]),
+        music_path=music_path,
+        music_duration=music_duration,
     )
     rows = database.fetch_all(
         """SELECT timeline_items.*, shots.category, shots.shot_scale, shots.technical_quality,

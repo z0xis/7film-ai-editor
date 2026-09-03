@@ -169,6 +169,26 @@ def export_fcpxml(plan: TimelinePlan, destination: Path) -> Path:
             kind="original-media",
             src=item.asset.path.resolve().as_uri(),
         )
+    if plan.music_path:
+        music_ref = "m1"
+        music_source_duration = plan.music_duration or plan.duration
+        music_timeline_duration = min(plan.duration, music_source_duration)
+        music_asset = ET.SubElement(
+            resources,
+            "asset",
+            id=music_ref,
+            name=plan.music_path.name,
+            start="0s",
+            duration=_rational_time(music_source_duration),
+            hasAudio="1",
+        )
+        ET.SubElement(
+            music_asset,
+            "media-rep",
+            kind="original-media",
+            src=plan.music_path.resolve().as_uri(),
+        )
+
     library = ET.SubElement(root, "library")
     event = ET.SubElement(library, "event", name="7Film AI Editor")
     project = ET.SubElement(event, "project", name=plan.name)
@@ -181,7 +201,7 @@ def export_fcpxml(plan: TimelinePlan, destination: Path) -> Path:
         tcFormat="NDF",
     )
     spine = ET.SubElement(sequence, "spine")
-    for item in plan.items:
+    for i, item in enumerate(plan.items):
         clip = ET.SubElement(
             spine,
             "asset-clip",
@@ -191,6 +211,18 @@ def export_fcpxml(plan: TimelinePlan, destination: Path) -> Path:
             start=_rational_time(item.source_range.start_seconds),
             duration=_rational_time(item.timeline_range.duration_seconds),
         )
+        if i == 0 and plan.music_path:
+            ET.SubElement(
+                clip,
+                "asset-clip",
+                name=plan.music_path.stem,
+                ref="m1",
+                offset="0s",
+                start="0s",
+                duration=_rational_time(music_timeline_duration),
+                lane="-1",
+                audioRole="music",
+            )
         ET.SubElement(
             clip,
             "marker",
