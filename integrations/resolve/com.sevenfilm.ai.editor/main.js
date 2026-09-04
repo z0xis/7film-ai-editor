@@ -253,19 +253,22 @@ async function importTimeline(_event, payload) {
   if (!project) throw new Error("Resolve'da açık bir proje yok.");
   const mediaPool = await project.GetMediaPool();
   const timelineName = String(payload?.timelineName || plan.name || "7Film AI Rough Cut");
+  // The Resolve API is the primary path: it is the only one that can say picture-only, put the
+  // music on A1 and leave A2 and A3 for the editor, and it is the one verified end to end
+  // against Resolve Studio 21.0.2. ImportTimelineFromFile is kept as a last resort - it refuses
+  // this FCPXML in every shape tried, including one written to match Resolve's own 1.8 export,
+  // so leading with it only cost a failed attempt before falling through to here anyway.
   let timeline = null;
-  let importMethod = "FCPXML";
+  let importMethod = "Resolve API";
   try {
+    timeline = await createTimelineFromPlan(mediaPool, project, plan, timelineName);
+  } catch (error) {
+    importMethod = "FCPXML";
     timeline = await mediaPool.ImportTimelineFromFile(importFile, {
       timelineName,
       importSourceClips: true,
     });
-  } catch (_error) {
-    timeline = null;
-  }
-  if (!timeline) {
-    importMethod = "Resolve API";
-    timeline = await createTimelineFromPlan(mediaPool, project, plan, timelineName);
+    if (!timeline) throw error;
   }
 
   await project.SetCurrentTimeline(timeline);

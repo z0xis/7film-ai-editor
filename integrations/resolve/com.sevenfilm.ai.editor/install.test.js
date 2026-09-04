@@ -46,3 +46,26 @@ describe("the installer ships everything the plugin loads", () => {
     }
   });
 });
+
+describe("the import path the plugin leads with", () => {
+  const source = fs.readFileSync(path.join(PLUGIN_DIR, "main.js"), "utf8");
+  const flow = source.slice(source.indexOf("async function importTimeline"));
+
+  it("builds through the Resolve API before trying the FCPXML file", () => {
+    // Only the API path can say picture-only, place the music on A1 and add the markers, and
+    // it is the one verified against real Resolve. Resolve's own importer refuses this FCPXML.
+    const api = flow.indexOf("createTimelineFromPlan(");
+    const fcpxml = flow.indexOf("ImportTimelineFromFile(");
+    assert.ok(api > -1 && fcpxml > -1, "both paths should still be present");
+    assert.ok(api < fcpxml, "the verified Resolve API path must be attempted first");
+  });
+
+  it("still downloads the FCPXML, which the fallback needs", () => {
+    assert.match(flow, /downloadExport\(/);
+  });
+
+  it("reports which path built the timeline", () => {
+    assert.match(flow, /importMethod/);
+    assert.match(flow, /importMethod: "Resolve API"|importMethod = "Resolve API"/);
+  });
+});
