@@ -18,7 +18,13 @@ from pydantic import BaseModel, Field, field_validator
 
 from .config import data_root, database_path
 from .db import Database, now
-from .services.analysis import analyze_music, analyze_shots, latest_music, project_shots
+from .services.analysis import (
+    analyze_music,
+    analyze_shots,
+    latest_music,
+    project_shots,
+    stale_analysis,
+)
 from .services.exporter import export_all, plan_as_dict
 from .services.media import generate_derivatives, index_folder, project_assets
 from .services.planner import build_timeline, get_timeline, persist_timeline
@@ -212,6 +218,7 @@ def get_project(project_id: str) -> dict[str, Any]:
     project["latest_music"] = latest_music(DATABASE, project_id) is not None
     profile = _style_profile()
     project["style_reference_count"] = int(profile.get("reference_count", 0)) if profile else 0
+    project["stale_analysis"] = stale_analysis(DATABASE, project_id)
     return project
 
 

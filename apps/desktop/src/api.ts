@@ -1,4 +1,4 @@
-export type Project = { id: string; name: string; workspace_path: string; target_duration_seconds: string; frame_rate: string; assets?: number; shots?: number; latest_music?: boolean; style_reference_count?: number };
+export type Project = { id: string; name: string; workspace_path: string; target_duration_seconds: string; frame_rate: string; assets?: number; shots?: number; latest_music?: boolean; style_reference_count?: number; stale_analysis?: { shots: boolean; music: boolean } };
 export type CreateProject = Pick<Project, "name" | "workspace_path" | "target_duration_seconds" | "frame_rate">;
 export type Job = { id: string; kind: string; status: "queued" | "running" | "completed" | "failed"; progress: number; error?: string | null };
 export type TimelineItem = { clip_name: string; source_path: string; score: number; category: string; shot_scale: string; selection_reason: string; source_in: { start_seconds: string; duration_seconds: string }; timeline_in: { start_seconds: string; duration_seconds: string } };

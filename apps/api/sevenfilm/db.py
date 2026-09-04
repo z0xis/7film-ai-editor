@@ -56,6 +56,7 @@ CREATE TABLE IF NOT EXISTS shots (
     confidence REAL NOT NULL,
     duplicate_group TEXT,
     labels_json TEXT NOT NULL DEFAULT '[]',
+    analysis_version TEXT NOT NULL DEFAULT '',
     brightness REAL NOT NULL DEFAULT 0,
     saturation REAL NOT NULL DEFAULT 0,
     highlight_clipping REAL NOT NULL DEFAULT 0,
@@ -86,6 +87,7 @@ CREATE TABLE IF NOT EXISTS music_tracks (
     bpm REAL NOT NULL,
     beats_json TEXT NOT NULL,
     sections_json TEXT NOT NULL DEFAULT '[]',
+    analysis_version TEXT NOT NULL DEFAULT '',
     created_at TEXT NOT NULL,
     UNIQUE(project_id, path)
 );
@@ -145,6 +147,10 @@ ADDED_COLUMNS = (
     # cannot quietly hollow it out. See get_timeline, which reads shots with a LEFT JOIN.
     ("timeline_items", "category", "TEXT NOT NULL DEFAULT ''"),
     ("timeline_items", "shot_scale", "TEXT NOT NULL DEFAULT ''"),
+    # Stamped with the analysis semantics that produced the row, so work left over from an
+    # older version can be recognised instead of quietly producing a worse edit.
+    ("shots", "analysis_version", "TEXT NOT NULL DEFAULT ''"),
+    ("music_tracks", "analysis_version", "TEXT NOT NULL DEFAULT ''"),
 )
 
 

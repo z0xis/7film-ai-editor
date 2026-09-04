@@ -74,6 +74,17 @@ function PathField({
   );
 }
 
+/** A stale analysis looks like a finished one, and quietly cuts the edit wrong. */
+function staleWarning(project: Project): string | null {
+  const stale = project.stale_analysis;
+  if (!stale) return null;
+  const parts: string[] = [];
+  if (stale.shots) parts.push("shot analizi");
+  if (stale.music) parts.push("müzik analizi");
+  if (!parts.length) return null;
+  return `${parts.join(" ve ")} eski sürümle yapılmış — kurgu kalitesi için yeniden çalıştırın.`;
+}
+
 function App() {
   const [project, setProject] = useState<Project | null>(null);
   const [projects, setProjects] = useState<Project[]>([]);
@@ -226,6 +237,7 @@ function App() {
           <section className="card">
             <h2>Durum</h2>
             <pre>{error || resolveMessage || (job ? `${job.kind}: ${job.status} · ${Math.round(job.progress * 100)}%` : `${project.assets || 0} medya · ${project.shots || 0} shot · ${project.latest_music ? "müzik hazır" : "müzik bekleniyor"} · ${project.style_reference_count || 0} referans profili`)}</pre>
+            {staleWarning(project) && <p className="stale-analysis">{staleWarning(project)}</p>}
           </section>
         </>
       )}

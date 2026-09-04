@@ -20,6 +20,10 @@ from .media import project_assets
 from .vision import FrameMetrics, VisionClassifier, measure_frames
 
 LOGGER = logging.getLogger(__name__)
+# Bumped whenever measuring or labelling changes in a way that makes older rows worse rather
+# than merely different. "2" added the highlight and flatness vetoes, the five second shot cap,
+# the CLIP prompt prior, and energy sections that follow the track instead of its four quarters.
+ANALYSIS_VERSION = "2"
 # A continuous take is detected as one scene, and judging it by three frames at its midpoint
 # throws the whole clip away when that midpoint happens to be a blurred pan, and lets a clip in
 # when only its midpoint is good. Long scenes are split into segments this size so each part of
@@ -256,6 +260,7 @@ def _label_asset(database: Database, classifier: VisionClassifier, asset: MediaA
                 "confidence": features["confidence"],
                 "duplicate_group": f"visual:{measured.perceptual_hash}",
                 "labels_json": list(features["labels"]),
+                "analysis_version": ANALYSIS_VERSION,
                 "brightness": measured.brightness,
                 "saturation": measured.saturation,
                 "highlight_clipping": measured.highlight_clipping,
@@ -337,6 +342,7 @@ def analyze_music(database: Database, project_id: str, path: Path) -> BeatGrid:
             "bpm": grid.bpm,
             "beats_json": [str(beat) for beat in grid.beats],
             "sections_json": list(grid.sections),
+            "analysis_version": ANALYSIS_VERSION,
             "created_at": now(),
         },
     )
@@ -399,6 +405,28 @@ def _energy_sections(samples: object, sample_rate: int, duration: Fraction) -> t
         return tuple(sections)
     except (ImportError, ValueError, TypeError, AttributeError):
         return ({"start": "0", "end": str(duration), "energy": "medium"},)
+
+
+def stale_analysis(database: Database, project_id: str) -> dict[str, bool]:
+    """Which stored analyses were produced by semantics this version has moved on from.
+
+    Nothing about a stale row looks wrong: a music track analysed before the energy sections
+    followed the song still has beats and sections, and simply cuts the edit twice as fast as
+    the references do. Saying so is the only way anyone would know to run it again.
+    """
+    shots = database.fetch_one(
+        """SELECT COUNT(*) AS total FROM shots JOIN media_assets ON media_assets.id = shots.asset_id
+           WHERE media_assets.project_id = ? AND shots.analysis_version != ?""",
+        (project_id, ANALYSIS_VERSION),
+    )
+    music = database.fetch_one(
+        "SELECT COUNT(*) AS total FROM music_tracks WHERE project_id = ? AND analysis_version != ?",
+        (project_id, ANALYSIS_VERSION),
+    )
+    return {
+        "shots": bool(shots and shots["total"]),
+        "music": bool(music and music["total"]),
+    }
 
 
 def latest_music(database: Database, project_id: str) -> BeatGrid | None:
