@@ -86,10 +86,16 @@ async function ensureBackend() {
   const root = applicationRoot();
   const launcher = path.join(root, "scripts", "run_app.sh");
   const backendPort = new URL(backendOrigin).port;
+  // The engine's output used to go to /dev/null, so when a request failed there was nothing
+  // anywhere to say why — not the status code, not the traceback. Keeping it costs a file.
+  const logPath = path.join(root, "data", "engine.log");
+  fs.mkdirSync(path.dirname(logPath), { recursive: true });
+  const logFile = fs.openSync(logPath, "a");
+  fs.writeSync(logFile, `\n=== ${new Date().toISOString()} · eklenti ${ENGINE_VERSION} motoru başlatıyor ===\n`);
   backendProcess = spawn(launcher, [], {
     cwd: root,
     env: { ...process.env, SEVENFILM_PLUGIN: "1", SEVENFILM_PORT: backendPort },
-    stdio: "ignore",
+    stdio: ["ignore", logFile, logFile],
   });
   backendProcess.on("exit", () => { backendProcess = null; });
   let mismatched = null;

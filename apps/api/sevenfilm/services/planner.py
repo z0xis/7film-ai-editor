@@ -923,6 +923,7 @@ def _segment_from_dict(payload: Mapping[str, object]) -> MusicSegment:
 
 
 def persist_timeline(database: Database, plan: TimelinePlan) -> None:
+    plan.created_at = plan.created_at or now()
     database.insert(
         "timeline_versions",
         {
@@ -934,7 +935,7 @@ def persist_timeline(database: Database, plan: TimelinePlan) -> None:
             "seed": plan.seed,
             "warnings_json": plan.warnings,
             "music_segments_json": [_segment_as_dict(segment) for segment in plan.music_segments],
-            "created_at": now(),
+            "created_at": plan.created_at,
         },
     )
     for position, item in enumerate(plan.items):
@@ -1007,6 +1008,7 @@ def get_timeline(database: Database, timeline_id: str) -> TimelinePlan:
         target_duration=Fraction(header["target_duration_seconds"]),
         warnings=json.loads(header["warnings_json"]),
         seed=int(header["seed"]),
+        created_at=header["created_at"],
         music_segments=segments,
         music_path=segments[0].path if segments else None,
         music_duration=segments[0].duration if segments else None,

@@ -81,6 +81,7 @@ def plan_as_dict(plan: TimelinePlan) -> dict[str, object]:
         "target_duration_seconds": str(plan.target_duration),
         "actual_duration_seconds": str(plan.duration),
         "warnings": plan.warnings,
+        "created_at": plan.created_at,
         "music_path": str(plan.music_path) if plan.music_path else None,
         "music_duration_seconds": str(plan.music_duration) if plan.music_duration else None,
         # Every song under the edit. music_path above stays for the single-song readers; the

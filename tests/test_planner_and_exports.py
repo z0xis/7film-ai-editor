@@ -1004,3 +1004,44 @@ class TwoSongExportTests(unittest.TestCase):
 
         self.assertEqual(len(track["children"]), 1)
         self.assertEqual(len(fcpxml.findall("./resources/asset[@hasAudio='1']")), 1)
+
+
+class PlanIdentityTests(unittest.TestCase):
+    """An edit built minutes ago and one from this morning look identical without a time."""
+
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        self.database = Database(Path(self.temporary.name) / "sevenfilm.sqlite3")
+        self.database.migrate()
+        self.rate = FrameRate(25)
+        self.asset = MediaAsset(
+            id="asset-1", project_id="project-1", path=Path("/media/A001.mov"), name="A001.mov",
+            duration=Fraction(10), frame_rate=self.rate, width=1920, height=1080)
+        self.shot = Shot(id="shot-1", asset_id="asset-1", source_range=TimeRange(0, 250, self.rate),
+                         technical_quality=.8, aesthetic_score=.8, motion_score=.5, confidence=.8)
+        _seed_timeline(self.database, self.asset, self.shot, source_start=25, source_duration=50)
+
+    def test_a_saved_plan_reports_when_it_was_built(self):
+        restored = get_timeline(self.database, "timeline-1")
+
+        self.assertTrue(restored.created_at)
+        self.assertIn("T", restored.created_at)
+
+    def test_the_time_reaches_the_payload_the_app_reads(self):
+        restored = get_timeline(self.database, "timeline-1")
+
+        self.assertEqual(plan_as_dict(restored)["created_at"], restored.created_at)
+
+    def test_persisting_stamps_a_plan_that_has_no_time_yet(self):
+        plan = TimelinePlan(id="timeline-2", project_id="project-1", name="AI Rough Cut",
+                            frame_rate=self.rate, target_duration=Fraction(120))
+        plan.items.append(TimelineItem(
+            id="item-2", shot=self.shot, asset=self.asset,
+            source_range=TimeRange(0, 50, self.rate), timeline_range=TimeRange(0, 50, self.rate),
+            score=.9, selection_reason="r"))
+
+        persist_timeline(self.database, plan)
+
+        self.assertTrue(plan.created_at)
+        self.assertEqual(get_timeline(self.database, "timeline-2").created_at, plan.created_at)

@@ -2,7 +2,7 @@ export type Project = { id: string; name: string; workspace_path: string; target
 export type CreateProject = Pick<Project, "name" | "workspace_path" | "target_duration_seconds" | "frame_rate">;
 export type Job = { id: string; kind: string; status: "queued" | "running" | "completed" | "failed"; progress: number; error?: string | null ; stalled?: boolean };
 export type TimelineItem = { clip_name: string; source_path: string; score: number; category: string; shot_scale: string; selection_reason: string; source_in: { start_seconds: string; duration_seconds: string }; timeline_in: { start_seconds: string; duration_seconds: string } };
-export type Timeline = { id: string; name: string; actual_duration_seconds: string; frame_rate: string; music_path?: string | null; warnings: string[]; items: TimelineItem[] };
+export type Timeline = { id: string; name: string; created_at?: string | null; actual_duration_seconds: string; frame_rate: string; music_path?: string | null; warnings: string[]; items: TimelineItem[] };
 
 /**
  * FastAPI answers a rejected body with `detail` as a list of objects, not a string, and

@@ -102,6 +102,9 @@ class TimelinePlan:
     seed: int = 0
     # Every song under the edit, in order. music_path and music_duration describe the first
     # of them and stay for the callers that only ever knew about one.
+    # When this plan was built. Shown in the app so a panel still holding an earlier edit is
+    # visible at a glance rather than being sent to Resolve by mistake.
+    created_at: str | None = None
     music_segments: tuple[MusicSegment, ...] = ()
     music_path: Path | None = None
     music_duration: Fraction | None = None

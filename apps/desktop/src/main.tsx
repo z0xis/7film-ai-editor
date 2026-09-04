@@ -140,6 +140,15 @@ function SongList({
   );
 }
 
+/** When this plan was built, in the editor's own clock. */
+function builtAt(value: string): string {
+  const when = new Date(value);
+  if (Number.isNaN(when.getTime())) return "";
+  const today = when.toDateString() === new Date().toDateString();
+  const time = when.toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" });
+  return today ? `${time}'de kuruldu` : `${when.toLocaleDateString("tr-TR")} ${time}`;
+}
+
 /** A stale analysis looks like a finished one, and quietly cuts the edit wrong. */
 function staleWarning(project: Project): string | null {
   const stale = project.stale_analysis;
@@ -335,7 +344,15 @@ function App() {
       {timeline && (
         <section className="card">
           <div className="heading">
-            <div><h2>Kurgu planı</h2><p>{timeline.items.length} klip · {timeline.actual_duration_seconds} sn · {timeline.frame_rate} FPS</p></div>
+            <div>
+              <h2>Kurgu planı</h2>
+              <p>
+                {timeline.items.length} klip · {timeline.actual_duration_seconds} sn · {timeline.frame_rate} FPS
+                {/* An edit built minutes ago and one from this morning look identical without
+                    this, and "Resolve'a gönder" sends whatever the panel is holding. */}
+                {timeline.created_at && <> · {builtAt(timeline.created_at)}</>}
+              </p>
+            </div>
             <div className="timeline-actions">
               {window.resolveAPI && <button onClick={sendToResolve}>Resolve’a gönder</button>}
               <button className={window.resolveAPI ? "secondary" : ""} onClick={async () => setExports(await api.export(timeline.id))}>Dosya olarak dışa aktar</button>
