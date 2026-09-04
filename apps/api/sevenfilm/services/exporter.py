@@ -73,6 +73,46 @@ def export_plan_json(plan: TimelinePlan, destination: Path) -> Path:
     return destination
 
 
+def _otio_music_track(plan: TimelinePlan, timeline_rate: Fraction) -> list[dict[str, object]]:
+    """A1 with the chosen music, matching what the FCPXML and the Resolve adapter both build."""
+    if not plan.music_path:
+        return []
+    source = plan.music_duration or plan.duration
+    duration = min(plan.duration, source)
+    return [
+        {
+            "OTIO_SCHEMA": "Track.1",
+            "name": "A1 Music",
+            "kind": "Audio",
+            "children": [
+                {
+                    "OTIO_SCHEMA": "Clip.2",
+                    "name": plan.music_path.name,
+                    "metadata": {"sevenfilm": {"role": "music"}},
+                    "source_range": _otio_range(Fraction(0, 1), duration, timeline_rate),
+                    "media_references": {
+                        "DEFAULT_MEDIA": {
+                            "OTIO_SCHEMA": "ExternalReference.1",
+                            "target_url": plan.music_path.resolve().as_uri(),
+                            "available_range": _otio_range(Fraction(0, 1), source, timeline_rate),
+                            "metadata": {},
+                            "name": plan.music_path.name,
+                        }
+                    },
+                    "active_media_reference_key": "DEFAULT_MEDIA",
+                    "effects": [],
+                    "markers": [],
+                    "enabled": True,
+                }
+            ],
+            "effects": [],
+            "markers": [],
+            "enabled": True,
+            "metadata": {},
+        }
+    ]
+
+
 def export_otio(plan: TimelinePlan, destination: Path) -> Path:
     """Emit canonical OTIO JSON without requiring OTIO at export time."""
     destination.parent.mkdir(parents=True, exist_ok=True)
@@ -95,14 +135,20 @@ def export_otio(plan: TimelinePlan, destination: Path) -> Path:
                 "source_range": _otio_range(
                     item.source_range.start_seconds, item.source_range.duration_seconds, source_rate
                 ),
-                "media_reference": {
-                    "OTIO_SCHEMA": "ExternalReference.1",
-                    "target_url": item.asset.path.resolve().as_uri(),
-                    "available_range": _otio_range(Fraction(0, 1), item.asset.duration, source_rate),
-                    "available_image_bounds": None,
-                    "metadata": {},
-                    "name": item.asset.name,
+                # Clip.2 keeps its media under media_references, keyed by the active one.
+                # A single media_reference is the pre-0.15 shape, which OTIO refuses to read.
+                "media_references": {
+                    "DEFAULT_MEDIA": {
+                        "OTIO_SCHEMA": "ExternalReference.1",
+                        "target_url": item.asset.path.resolve().as_uri(),
+                        "available_range": _otio_range(
+                            Fraction(0, 1), item.asset.duration, source_rate
+                        ),
+                        "metadata": {},
+                        "name": item.asset.name,
+                    }
                 },
+                "active_media_reference_key": "DEFAULT_MEDIA",
                 "effects": [],
                 "markers": [],
                 "enabled": True,
@@ -126,7 +172,8 @@ def export_otio(plan: TimelinePlan, destination: Path) -> Path:
                     "markers": [],
                     "enabled": True,
                     "metadata": {},
-                }
+                },
+                *_otio_music_track(plan, timeline_rate),
             ],
             "effects": [],
             "markers": [],
