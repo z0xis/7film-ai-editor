@@ -64,20 +64,46 @@ def _energy_at(grid: BeatGrid, second: Fraction) -> str:
     return "medium"
 
 
-def _preferred_categories(progress: float) -> tuple[str, ...]:
-    if progress < 0.10:
-        return ("venue", "detail")
-    if progress < 0.28:
-        return ("bride", "groom", "detail")
-    if progress < 0.42:
-        return ("family", "ceremony", "venue")
-    if progress < 0.62:
-        return ("ceremony", "couple", "family")
-    if progress < 0.82:
-        return ("couple", "bride", "groom")
-    if progress < 0.95:
-        return ("party", "family", "couple")
-    return ("couple", "venue", "detail")
+# What the edit shows and when, used only when the profile carries no measured arc. It was
+# written by hand, and against the references it is wrong in places: it gives the middle of the
+# film to `ceremony`, which those films spend between 0% and 5% of every band on, and puts
+# `detail` at the start, where they have almost none.
+FALLBACK_STORY_ARC = (
+    (0.10, ("venue", "detail")),
+    (0.28, ("bride", "groom", "detail")),
+    (0.42, ("family", "ceremony", "venue")),
+    (0.62, ("ceremony", "couple", "family")),
+    (0.82, ("couple", "bride", "groom")),
+    (0.95, ("party", "family", "couple")),
+    (1.01, ("couple", "venue", "detail")),
+)
+# How many categories a band puts forward. _score_candidate ranks the first three and treats
+# everything else alike, so a longer list would change nothing.
+STORY_CATEGORIES_PER_BAND = 3
+
+
+def _preferred_categories(
+    progress: float, style_profile: Mapping[str, object] | None = None
+) -> tuple[str, ...]:
+    """What this point of the edit should be showing.
+
+    Read off the reference films when the profile carries their story arc: each band holds the
+    share of frames each category took there, so the categories come out in the order those
+    films actually favour at this point. Twelve sampled frames were checked by eye before this
+    was trusted — the categories carry across the grade, though the shot scale does not.
+    """
+    arc = style_profile.get("story_arc") if style_profile else None
+    if isinstance(arc, Sequence) and arc:
+        band = arc[min(len(arc) - 1, int(progress * len(arc)))]
+        if isinstance(band, Mapping) and band:
+            ranked = sorted(band.items(), key=lambda item: (-float(item[1]), item[0]))
+            chosen = tuple(name for name, share in ranked[:STORY_CATEGORIES_PER_BAND] if share > 0)
+            if chosen:
+                return chosen
+    for limit, categories in FALLBACK_STORY_ARC:
+        if progress < limit:
+            return categories
+    return FALLBACK_STORY_ARC[-1][1]
 
 
 def _preferred_scales(progress: float) -> tuple[str, ...]:
@@ -597,7 +623,7 @@ def build_timeline(
         desired = frame_rate.seconds_from_frames(
             max(1, frame_rate.frames_from_seconds(desired, rounding="nearest"))
         )
-        preferred_categories = _preferred_categories(progress)
+        preferred_categories = _preferred_categories(progress, style_profile)
         preferred_scales = _preferred_scales(progress)
         ranked: list[tuple[float, Shot, dict[str, float]]] = []
         for shot in available_shots:
@@ -690,24 +716,26 @@ def build_timeline(
     if plan.duration != target_duration:
         plan.warnings.append("Son plan kare sınırına yuvarlandı; süre hedefe en yakın frame-accurate değerdedir.")
     _append_rhythm_report(plan, music, style_profile)
-    coverage = _story_coverage_warning(candidates)
+    coverage = _story_coverage_warning(candidates, style_profile)
     if coverage:
         plan.warnings.append(coverage)
     plan.warnings.append(
-        f"Kesimlerin %{_story_arc_ratio(plan) * 100:.0f}'ı bulunduğu bölüm için tercih edilen "
-        "kategoriden."
+        f"Kesimlerin %{_story_arc_ratio(plan, style_profile) * 100:.0f}'ı bulunduğu bölüm için "
+        "tercih edilen kategoriden."
     )
     return plan
 
 
-def _story_coverage_warning(candidates: Sequence[Shot]) -> str | None:
+def _story_coverage_warning(
+    candidates: Sequence[Shot], style_profile: Mapping[str, object] | None = None
+) -> str | None:
     """Name the parts of the wedding story this footage has almost nothing for."""
     if not candidates:
         return None
     counts = Counter(shot.category for shot in candidates)
     wanted: set[str] = set()
     for progress in STORY_PROGRESS_POINTS:
-        wanted.update(_preferred_categories(progress))
+        wanted.update(_preferred_categories(progress, style_profile))
     thin = sorted(
         (category for category in wanted
          if counts.get(category, 0) / len(candidates) < THIN_CATEGORY_SHARE),
@@ -724,7 +752,9 @@ def _story_coverage_warning(candidates: Sequence[Shot]) -> str | None:
     )
 
 
-def _story_arc_ratio(plan: TimelinePlan) -> float:
+def _story_arc_ratio(
+    plan: TimelinePlan, style_profile: Mapping[str, object] | None = None
+) -> float:
     """How much of the edit sits in a category preferred where it lands."""
     total = plan.duration_frames
     if not total or not plan.items:
@@ -732,7 +762,8 @@ def _story_arc_ratio(plan: TimelinePlan) -> float:
     matched = sum(
         item.timeline_range.duration_frames
         for item in plan.items
-        if item.shot.category in _preferred_categories(item.timeline_range.start_frame / total)
+        if item.shot.category in _preferred_categories(
+            item.timeline_range.start_frame / total, style_profile)
     )
     return matched / total
 

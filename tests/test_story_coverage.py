@@ -6,6 +6,7 @@ from pathlib import Path
 
 from sevenfilm.domain import BeatGrid, MediaAsset, Shot, TimelineItem, TimelinePlan
 from sevenfilm.services.planner import (
+    FALLBACK_STORY_ARC,
     _preferred_categories,
     _story_arc_ratio,
     _story_coverage_warning,
@@ -121,3 +122,55 @@ class PlanReportsCoverageTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class LearnedStoryArcTests(unittest.TestCase):
+    """The order of the film is read off the references, not written by hand."""
+
+    def profile(self, bands):
+        return {"story_arc": bands}
+
+    def band(self, **shares):
+        base = dict.fromkeys(
+            ("bride", "groom", "couple", "family", "venue", "detail", "ceremony", "party"), 0.0)
+        base.update(shares)
+        return base
+
+    def test_the_measured_arc_decides_what_a_band_prefers(self):
+        arc = [self.band(couple=0.4, venue=0.21, bride=0.18, groom=0.09)]
+
+        self.assertEqual(_preferred_categories(0.0, self.profile(arc)),
+                         ("couple", "venue", "bride"))
+
+    def test_each_band_covers_its_own_slice_of_the_edit(self):
+        arc = [self.band(venue=1.0), self.band(party=1.0)]
+        profile = self.profile(arc)
+
+        self.assertEqual(_preferred_categories(0.10, profile), ("venue",))
+        self.assertEqual(_preferred_categories(0.90, profile), ("party",))
+
+    def test_the_last_band_holds_the_very_end(self):
+        arc = [self.band(venue=1.0), self.band(party=1.0)]
+
+        self.assertEqual(_preferred_categories(1.0, self.profile(arc)), ("party",))
+
+    def test_a_category_no_reference_ever_shows_is_not_asked_for(self):
+        """Some weddings have no ceremony, and the references barely show one either."""
+        arc = [self.band(couple=0.5, bride=0.3, groom=0.2)]
+
+        self.assertNotIn("ceremony", _preferred_categories(0.5, self.profile(arc)))
+
+    def test_a_profile_without_an_arc_falls_back_to_the_written_one(self):
+        self.assertEqual(_preferred_categories(0.0, {"median_shot_duration_seconds": 1.0}),
+                         FALLBACK_STORY_ARC[0][1])
+        self.assertEqual(_preferred_categories(0.0, None), FALLBACK_STORY_ARC[0][1])
+
+    def test_an_empty_or_broken_arc_falls_back_too(self):
+        for arc in ([], [{}], "nonsense", {"a": 1}):
+            self.assertEqual(_preferred_categories(0.5, {"story_arc": arc}),
+                             _preferred_categories(0.5, None), repr(arc))
+
+    def test_at_most_three_categories_come_out(self):
+        arc = [self.band(couple=.2, bride=.2, groom=.2, party=.2, venue=.2)]
+
+        self.assertEqual(len(_preferred_categories(0.5, self.profile(arc))), 3)

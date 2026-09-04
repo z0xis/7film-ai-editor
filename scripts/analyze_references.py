@@ -59,6 +59,60 @@ def visual_summary(path: Path, duration: float) -> dict[str, float]:
     }
 
 
+STORY_BANDS = 10
+
+
+def story_arc(paths: list[Path]) -> list[dict[str, float]] | None:
+    """What the reference films show at each tenth of their length.
+
+    Until this existed the profile carried only rhythm and colour — cut lengths, beats per cut,
+    brightness — and the story order the planner worked to was written by hand rather than read
+    off the films. An edit built from it put the shots on the beat and nothing else.
+
+    Sampled every 1.5 seconds and read with the same classifier and the same prompt-prior
+    correction the footage gets. Twelve frames were pulled out and checked by eye across three
+    categories and three parts of the film: eleven were plainly right and one was arguable, so
+    the categories carry across the grade even though the shot scale does not.
+    """
+    import sys
+
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "apps" / "api"))
+    from sevenfilm.services.vision import CATEGORY_PROMPTS, VisionClassifier, measure_frames
+
+    classifier = VisionClassifier()
+    if not classifier._load():
+        return None
+    frames: list[np.ndarray] = []
+    progress: list[float] = []
+    for path in paths:
+        capture = cv2.VideoCapture(str(path))
+        rate = capture.get(cv2.CAP_PROP_FPS) or 25
+        total = int(capture.get(cv2.CAP_PROP_FRAME_COUNT) or 0)
+        for frame_number in range(0, total, max(1, int(rate * 1.5))):
+            capture.set(cv2.CAP_PROP_POS_FRAMES, frame_number)
+            ok, image = capture.read()
+            if ok:
+                frames.append(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+                progress.append(frame_number / total)
+        capture.release()
+    if not frames:
+        return None
+    features = classifier.encode(frames)
+    metrics = [measure_frames([frame]) for frame in frames]
+    labelled = classifier.classify_features(features, metrics, classifier.prompt_priors(features))
+    bands = [dict.fromkeys(CATEGORY_PROMPTS, 0.0) for _ in range(STORY_BANDS)]
+    counts = [0] * STORY_BANDS
+    for result, position in zip(labelled, progress, strict=True):
+        band = min(STORY_BANDS - 1, int(position * STORY_BANDS))
+        bands[band][str(result["category"])] += 1
+        counts[band] += 1
+    return [
+        {name: round(value / count, 4) for name, value in band.items()}
+        for band, count in zip(bands, counts, strict=True)
+        if count
+    ]
+
+
 def analyze_video(path: Path, info: dict[str, object]) -> dict[str, object]:
     video = open_video(str(path))
     manager = SceneManager()
@@ -103,13 +157,18 @@ def analyze_video(path: Path, info: dict[str, object]) -> dict[str, object]:
 
 def build_profile(media_dir: Path, info_dir: Path) -> dict[str, object]:
     videos = []
+    media_paths: list[Path] = []
     for media_path in sorted(media_dir.glob("*")):
         if not media_path.is_file() or media_path.suffix.lower() not in {".mkv", ".mp4", ".webm", ".mov"}:
             continue
         info_path = next(info_dir.glob(f"*-{media_path.stem}.info.json"), None)
         info = json.loads(info_path.read_text()) if info_path else {"id": media_path.stem}
         print(f"Analiz: {info.get('title', media_path.stem)}", flush=True)
+        media_paths.append(media_path)
         videos.append(analyze_video(media_path, info))
+
+    print("Hikâye akışı ölçülüyor...", flush=True)
+    arc = story_arc(media_paths)
 
     all_durations = [value for video in videos for value in video["shot_durations_seconds"]]
     section_profile = {}
@@ -122,13 +181,16 @@ def build_profile(media_dir: Path, info_dir: Path) -> dict[str, object]:
     median = float(np.median(all_durations))
     p75 = float(np.quantile(all_durations, 0.75))
     return {
-        "schema_version": "1.0",
+        "schema_version": "1.1",
         "name": "7Film Reference Style",
         "reference_count": len(videos),
         "total_reference_duration_seconds": round(sum(video["duration_seconds"] for video in videos), 3),
         "detected_shot_count": sum(video["detected_shots"] for video in videos),
         "median_reference_bpm": round(median_bpm, 3),
         "median_shot_duration_seconds": round(median, 3),
+        # What the references show at each tenth of their length, so the planner reads the
+        # story order off the films instead of a list written by hand.
+        "story_arc": arc,
         "shot_duration_p25_seconds": round(p25, 3),
         "shot_duration_p75_seconds": round(p75, 3),
         "section_median_shot_duration_seconds": section_profile,

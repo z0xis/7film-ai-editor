@@ -153,7 +153,11 @@ class StorySwitchPointTests(unittest.TestCase):
             story_switch_points(0, Fraction(120))
 
     def test_the_boundaries_are_where_the_planner_actually_turns(self):
-        """The two lists are written apart; this is what keeps them from drifting."""
+        """The two lists are written apart; this is what keeps them from drifting.
+
+        These are the fallback arc's turns. When a profile carries a measured arc the planner
+        follows that instead, and tying the song switches to it is separate work.
+        """
         turns, previous = [], _preferred_categories(0.0)
         for step in range(1, 10001):
             progress = step / 10000
