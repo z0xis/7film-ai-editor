@@ -17,6 +17,7 @@ from ..db import Database, now
 from ..domain import BeatGrid, MediaAsset, Shot
 from ..timebase import FrameRate, TimeRange
 from .media import project_assets
+from .music import MusicTrack
 from .vision import FrameMetrics, VisionClassifier, measure_frames
 
 LOGGER = logging.getLogger(__name__)
@@ -313,8 +314,14 @@ def _fallback_beats(duration: Fraction, bpm: float = 120.0) -> tuple[Fraction, .
     return tuple(interval * step for step in range(count + 1))
 
 
-def analyze_music(database: Database, project_id: str, path: Path) -> BeatGrid:
-    """Use librosa when installed; never invent an analysis for unsupported audio."""
+def analyze_music(
+    database: Database, project_id: str, path: Path, position: int = 0
+) -> BeatGrid:
+    """Use librosa when installed; never invent an analysis for unsupported audio.
+
+    `position` is where this song sits in the running order the editor chose, so an edit can
+    open on one song and move to another. A single song leaves it at 0.
+    """
     music_path = path.expanduser().resolve()
     if not music_path.is_file():
         raise ValueError(f"Müzik dosyası bulunamadı: {music_path}")
@@ -345,6 +352,7 @@ def analyze_music(database: Database, project_id: str, path: Path) -> BeatGrid:
             "bpm": grid.bpm,
             "beats_json": [str(beat) for beat in grid.beats],
             "sections_json": list(grid.sections),
+            "position": position,
             "analysis_version": ANALYSIS_VERSION,
             "created_at": now(),
         },
@@ -430,6 +438,26 @@ def stale_analysis(database: Database, project_id: str) -> dict[str, bool]:
         "shots": bool(shots and shots["total"]),
         "music": bool(music and music["total"]),
     }
+
+
+def project_music(database: Database, project_id: str) -> list[MusicTrack]:
+    """Every song of this project, in the running order the editor chose."""
+    rows = database.fetch_all(
+        "SELECT * FROM music_tracks WHERE project_id = ? ORDER BY position, created_at",
+        (project_id,),
+    )
+    return [
+        MusicTrack(
+            path=Path(row["path"]),
+            grid=BeatGrid(
+                bpm=float(row["bpm"]),
+                beats=tuple(Fraction(item) for item in json.loads(row["beats_json"])),
+                duration=Fraction(row["duration_seconds"]),
+                sections=tuple(json.loads(row["sections_json"])),
+            ),
+        )
+        for row in rows
+    ]
 
 
 def latest_music(database: Database, project_id: str) -> BeatGrid | None:

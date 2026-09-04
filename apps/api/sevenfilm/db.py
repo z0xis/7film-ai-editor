@@ -154,6 +154,8 @@ ADDED_COLUMNS = (
     # A saved rough cut keeps the songs it was cut to, and which part of each was used. Reading
     # "the newest music row" back instead would hand an old timeline whatever was imported since.
     ("timeline_versions", "music_segments_json", "TEXT NOT NULL DEFAULT '[]'"),
+    # Where a song sits in the running order the editor chose. One song leaves it at 0.
+    ("music_tracks", "position", "INTEGER NOT NULL DEFAULT 0"),
 )
 
 

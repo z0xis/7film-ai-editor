@@ -225,3 +225,15 @@ def join_tracks(
         sections=tuple(sections),
     )
     return grid, tuple(segments), warnings
+
+
+def plan_music(
+    tracks: Sequence[MusicTrack], target_duration: Fraction
+) -> tuple[BeatGrid, tuple[MusicSegment, ...], list[str]]:
+    """Everything the planner needs from however many songs the editor chose.
+
+    One song behaves exactly as it did before there could be more than one: no switch points,
+    nothing to prefer, so it plays from its own beginning.
+    """
+    switches = story_switch_points(len(tracks), target_duration)
+    return join_tracks(tracks, switches, target_duration)

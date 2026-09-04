@@ -19,15 +19,17 @@ from pydantic import BaseModel, Field, field_validator
 
 from .config import data_root, database_path
 from .db import Database, now
+from .domain import MusicSegment
 from .services.analysis import (
     analyze_music,
     analyze_shots,
-    latest_music,
+    project_music,
     project_shots,
     stale_analysis,
 )
 from .services.exporter import export_all, plan_as_dict
 from .services.media import generate_derivatives, index_folder, project_assets
+from .services.music import plan_music
 from .services.planner import build_timeline, get_timeline, persist_timeline
 from .timebase import FrameRate
 
@@ -91,7 +93,15 @@ class FolderRequest(BaseModel):
 
 
 class MusicRequest(BaseModel):
-    path: str
+    """One song or several, in the order they should play under the edit."""
+
+    path: str | None = None
+    paths: list[str] | None = None
+
+    def chosen(self) -> list[str]:
+        if self.paths:
+            return self.paths
+        return [self.path] if self.path else []
 
 
 class TimelineRequest(BaseModel):
@@ -164,7 +174,10 @@ def _run_job(job_id: str) -> None:
         elif job["kind"] == "shots":
             analyze_shots(DATABASE, job["project_id"], job_id)
         elif job["kind"] == "music":
-            analyze_music(DATABASE, job["project_id"], Path(checkpoint["path"]))
+            for position, raw in enumerate(checkpoint["paths"]):
+                analyze_music(DATABASE, job["project_id"], Path(raw), position)
+                DATABASE.update_job(
+                    job_id, status="running", progress=(position + 1) / len(checkpoint["paths"]))
         else:
             raise ValueError(f"Bilinmeyen job türü: {job['kind']}")
         DATABASE.update_job(job_id, status="completed", progress=1.0)
@@ -216,7 +229,7 @@ def get_project(project_id: str) -> dict[str, Any]:
     project = _project(project_id)
     project["assets"] = len(project_assets(DATABASE, project_id))
     project["shots"] = len(project_shots(DATABASE, project_id))
-    project["latest_music"] = latest_music(DATABASE, project_id) is not None
+    project["latest_music"] = bool(project_music(DATABASE, project_id))
     profile = _style_profile()
     project["style_reference_count"] = int(profile.get("reference_count", 0)) if profile else 0
     project["stale_analysis"] = stale_analysis(DATABASE, project_id)
@@ -251,8 +264,14 @@ def start_shot_analysis(project_id: str, background_tasks: BackgroundTasks) -> d
 @app.post("/api/projects/{project_id}/music", status_code=202)
 def start_music_analysis(project_id: str, request: MusicRequest, background_tasks: BackgroundTasks) -> dict[str, str]:
     _project(project_id)
-    path = _normalize_path(request.path)
-    job_id = _create_job(project_id, "music", {"path": str(path)})
+    chosen = request.chosen()
+    if not chosen:
+        raise HTTPException(status_code=422, detail="En az bir şarkı seçilmeli.")
+    paths = [str(_normalize_path(item)) for item in chosen]
+    # The chosen songs replace the previous selection outright: leaving the old rows behind
+    # would silently add a song the editor has taken out of the running order.
+    DATABASE.execute("DELETE FROM music_tracks WHERE project_id = ?", (project_id,))
+    job_id = _create_job(project_id, "music", {"paths": paths})
     background_tasks.add_task(_run_job, job_id)
     return {"job_id": job_id, "status": "queued"}
 
@@ -282,18 +301,29 @@ def list_shots(project_id: str) -> list[dict[str, Any]]:
 def create_timeline(project_id: str, request: TimelineRequest) -> dict[str, Any]:
     project = _project(project_id)
     target = Fraction(request.target_duration_seconds or project["target_duration_seconds"])
+    songs = project_music(DATABASE, project_id)
+    music_segments: tuple[MusicSegment, ...] = ()
+    music_warnings: list[str] = []
+    if songs:
+        music_grid, music_segments, music_warnings = plan_music(songs, target)
+    else:
+        music_grid = _missing_music()
     try:
         plan = build_timeline(
             project_id=project_id,
             assets=project_assets(DATABASE, project_id),
             shots=project_shots(DATABASE, project_id),
-            music=latest_music(DATABASE, project_id) or _missing_music(),
+            music=music_grid,
             frame_rate=FrameRate.parse(project["frame_rate"]),
             target_duration=target,
             style_profile=_style_profile(),
             seed=request.seed,
             name=request.name,
         )
+        plan.music_segments = music_segments
+        plan.music_path = music_segments[0].path if music_segments else None
+        plan.music_duration = music_segments[0].duration if music_segments else None
+        plan.warnings.extend(music_warnings)
         persist_timeline(DATABASE, plan)
     except ValueError as error:
         raise HTTPException(status_code=422, detail=str(error)) from error
