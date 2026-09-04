@@ -36,6 +36,11 @@ def item(shot):
         score=.8, selection_reason="r")
 
 
+def used(*shots):
+    """What the edit remembers: the hash of every shot already in it."""
+    return [h for h in (_perceptual_hash(one) for one in shots) if h is not None]
+
+
 def shot(shot_id, group, asset_id="a"):
     return Shot(
         id=shot_id, asset_id=asset_id, source_range=TimeRange(0, 500, RATE),
@@ -55,44 +60,55 @@ class PerceptualHashTests(unittest.TestCase):
 
 class VisualRepeatPenaltyTests(unittest.TestCase):
     def test_the_same_frame_again_costs_the_full_penalty(self):
-        recent = (item(shot("a", digest(0xFF00FF00FF00FF00))),)
+        already = used(shot("a", digest(0xFF00FF00FF00FF00)))
 
-        penalty = _visual_repeat_penalty(shot("b", digest(0xFF00FF00FF00FF00)), recent)
+        penalty = _visual_repeat_penalty(shot("b", digest(0xFF00FF00FF00FF00)), already)
 
         self.assertAlmostEqual(penalty, DUPLICATE_PENALTY)
 
     def test_a_single_bit_apart_is_still_caught(self):
         """Exact equality was the old test, and a 64 bit hash never repeats exactly."""
-        recent = (item(shot("a", digest(0xFF00FF00FF00FF00))),)
+        already = used(shot("a", digest(0xFF00FF00FF00FF00)))
 
-        penalty = _visual_repeat_penalty(shot("b", digest(0xFF00FF00FF00FF01)), recent)
+        penalty = _visual_repeat_penalty(shot("b", digest(0xFF00FF00FF00FF01)), already)
 
         self.assertGreater(penalty, DUPLICATE_PENALTY * 0.8)
 
     def test_a_different_shot_costs_nothing(self):
-        recent = (item(shot("a", digest(0))),)
+        already = used(shot("a", digest(0)))
         far = digest((1 << NEAR_DUPLICATE_BITS) - 1)  # exactly the threshold apart
 
-        self.assertEqual(_visual_repeat_penalty(shot("b", far), recent), 0.0)
+        self.assertEqual(_visual_repeat_penalty(shot("b", far), already), 0.0)
 
     def test_the_penalty_fades_with_distance(self):
-        recent = (item(shot("a", digest(0))),)
+        already = used(shot("a", digest(0)))
         readings = [
-            _visual_repeat_penalty(shot("b", digest((1 << bits) - 1)), recent)
+            _visual_repeat_penalty(shot("b", digest((1 << bits) - 1)), already)
             for bits in range(NEAR_DUPLICATE_BITS + 1)
         ]
 
         self.assertEqual(readings, sorted(readings, reverse=True))
         self.assertEqual(readings[-1], 0.0)
 
-    def test_the_closest_of_the_recent_shots_decides(self):
-        recent = (item(shot("a", digest(0xFFFFFFFFFFFFFFFF))), item(shot("b", digest(0))))
+    def test_the_closest_of_everything_already_used_decides(self):
+        already = used(shot("a", digest(0xFFFFFFFFFFFFFFFF)), shot("b", digest(0)))
 
-        self.assertAlmostEqual(_visual_repeat_penalty(shot("c", digest(0)), recent), DUPLICATE_PENALTY)
+        self.assertAlmostEqual(_visual_repeat_penalty(shot("c", digest(0)), already), DUPLICATE_PENALTY)
+
+    def test_a_repeat_far_back_in_the_edit_still_costs(self):
+        """A neon sign came back four times, every repeat just outside a four cut window."""
+        already = used(*[shot(f"s{i}", spread(i)) for i in range(40)],
+                       shot("sign", digest(0xABCDEF0123456789)),
+                       *[shot(f"t{i}", spread(100 + i)) for i in range(30)])
+
+        penalty = _visual_repeat_penalty(shot("again", digest(0xABCDEF0123456789)), already)
+
+        self.assertAlmostEqual(penalty, DUPLICATE_PENALTY)
 
     def test_shots_with_no_hash_are_not_penalised(self):
-        self.assertEqual(_visual_repeat_penalty(shot("b", None), (item(shot("a", digest(0))),)), 0.0)
-        self.assertEqual(_visual_repeat_penalty(shot("b", digest(0)), (item(shot("a", None)),)), 0.0)
+        self.assertEqual(_visual_repeat_penalty(shot("b", None), used(shot("a", digest(0)))), 0.0)
+        self.assertEqual(_visual_repeat_penalty(shot("b", digest(0)), used(shot("a", None))), 0.0)
+        self.assertEqual(_visual_repeat_penalty(shot("b", digest(0)), []), 0.0)
 
 
 class PlanAvoidsVisualRepeatsTests(unittest.TestCase):
@@ -163,3 +179,57 @@ class PlanAvoidsVisualRepeatsTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class AssetReuseTests(unittest.TestCase):
+    """One long take must not supply a sixth of the edit just because it detected many shots."""
+
+    def build(self, target=Fraction(120)):
+        assets, shots = [], []
+        # One 400 second file cut into 120 shots, and 120 ordinary files with one shot each.
+        long_asset = MediaAsset(id="long", project_id="p", path=Path("/m/long.mov"),
+                                name="long.mov", duration=Fraction(400), frame_rate=RATE,
+                                width=1920, height=1080)
+        assets.append(long_asset)
+        for index in range(120):
+            shots.append(Shot(
+                id=f"long-{index}", asset_id="long",
+                source_range=TimeRange(index * 80, 80, RATE), category="couple",
+                shot_scale="medium", technical_quality=.9, aesthetic_score=.9, motion_score=.5,
+                confidence=.9, duplicate_group=spread(index), brightness=.36, saturation=.15,
+                highlight_clipping=.01))
+        for index in range(120):
+            asset = MediaAsset(id=f"a{index}", project_id="p", path=Path(f"/m/{index}.mov"),
+                               name=f"{index}.mov", duration=Fraction(20), frame_rate=RATE,
+                               width=1920, height=1080)
+            assets.append(asset)
+            shots.append(Shot(
+                id=f"s{index}", asset_id=asset.id, source_range=TimeRange(0, 400, RATE),
+                category="couple", shot_scale="medium", technical_quality=.85,
+                aesthetic_score=.85, motion_score=.5, confidence=.85,
+                duplicate_group=spread(1000 + index), brightness=.36, saturation=.15,
+                highlight_clipping=.01))
+        beats = tuple(Fraction(i, 2) for i in range(600))
+        music = BeatGrid(bpm=120, beats=beats, duration=Fraction(300),
+                         sections=({"energy": "medium", "start": "0", "end": "300"},))
+        return build_timeline(project_id="p", assets=assets, shots=shots, music=music,
+                              frame_rate=RATE, target_duration=target, seed=1)
+
+    def test_the_long_take_does_not_dominate_the_edit(self):
+        plan = self.build()
+        from_long = sum(1 for item in plan.items if item.asset.id == "long")
+
+        # It is the highest scoring footage in the set, so it should appear — but not run away
+        # with the edit the way an uncounted file did with sixteen of 137 clips.
+        self.assertLessEqual(from_long, len(plan.items) // 4)
+
+    def test_the_edit_still_reaches_its_target(self):
+        plan = self.build()
+
+        self.assertGreaterEqual(float(plan.duration), 119.9)
+
+    def test_most_of_the_edit_comes_from_different_files(self):
+        plan = self.build()
+        files = {item.asset.id for item in plan.items}
+
+        self.assertGreaterEqual(len(files), len(plan.items) * 3 // 4)

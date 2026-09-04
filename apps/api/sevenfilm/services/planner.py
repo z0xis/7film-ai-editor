@@ -35,6 +35,16 @@ OVERBRIGHT_WEIGHT = 1.5
 # letting a good clip beat a weaker clip's first appearance instead of marching through every
 # shot in turn regardless of how it scored.
 REUSE_PENALTY = 0.22
+# One camera file usually holds one long take, and the shot detector cuts it into dozens of
+# segments that each look like a fresh candidate. Nothing counted the file, so a 121 second
+# take of the cake being cut supplied sixteen of one edit's 137 clips.
+#
+# Measured on this shoot at 120 seconds, sweeping the value: 0 leaves one file used 5 times,
+# 0.03 caps it at 2 across 105 files, 0.06 and above allow each file exactly once. Mean shot
+# quality moves from 0.424 to 0.420 over that whole range, so the variety is nearly free.
+# 0.03 is the one that still lets a genuinely strong clip come back, which is what taking a
+# second segment is for.
+ASSET_REUSE_PENALTY = 0.03
 # Perceptual hashes are compared by Hamming distance, not equality: two frames of the same
 # moment differ in a few bits, and the odds of a 64 bit hash matching exactly are nil, which is
 # why the duplicate penalty had never once fired. This footage holds 56 pairs within 5 bits and
@@ -273,23 +283,21 @@ def _perceptual_hash(shot: Shot) -> int | None:
         return None
 
 
-def _visual_repeat_penalty(shot: Shot, recent: tuple[TimelineItem, ...]) -> float:
-    """How much this shot looks like one just used, whatever file it came from.
+def _visual_repeat_penalty(shot: Shot, used: Sequence[int]) -> float:
+    """How much this shot looks like one already in the edit, whatever file it came from.
 
-    Falls to nothing at NEAR_DUPLICATE_BITS, so only a shot that genuinely repeats a recent one
-    is held back; a different angle on the same scene is several times further away than that.
+    Falls to nothing at NEAR_DUPLICATE_BITS, so only a shot that genuinely repeats one already
+    used is held back; a different angle on the same scene is several times further away.
+
+    This weighs the whole edit, not the last few cuts. Against a four cut window a neon sign
+    reading "Daima Aşk ile" came back four times in one 137 clip edit, at positions 37, 41, 48
+    and 55 — every repeat just outside the window. A viewer remembers a shot for longer than
+    four cuts, so the edit has to as well.
     """
     current = _perceptual_hash(shot)
-    if current is None:
+    if current is None or not used:
         return 0.0
-    distances = [
-        (current ^ other).bit_count()
-        for other in (_perceptual_hash(item.shot) for item in recent)
-        if other is not None
-    ]
-    if not distances:
-        return 0.0
-    closest = min(distances)
+    closest = min((current ^ other).bit_count() for other in used)
     if closest >= NEAR_DUPLICATE_BITS:
         return 0.0
     return DUPLICATE_PENALTY * (1.0 - closest / NEAR_DUPLICATE_BITS)
@@ -431,6 +439,8 @@ def _score_candidate(
     random_jitter: float,
     style_profile: Mapping[str, object] | None = None,
     reuse_count: int = 0,
+    asset_reuse_count: int = 0,
+    used_hashes: Sequence[int] = (),
     visual_baseline: tuple[float, float] | None = None,
 ) -> tuple[float, dict[str, float]]:
     category_rank = preferred_categories.index(shot.category) if shot.category in preferred_categories else -1
@@ -445,7 +455,7 @@ def _score_candidate(
     target_motion = {"low": 0.3, "medium": 0.55, "high": 0.78}.get(energy, 0.55)
     music_fit = max(0.0, 1.0 - abs(shot.motion_score - target_motion))
     sequence_continuity = 1.0
-    duplicate_penalty = _visual_repeat_penalty(shot, recent)
+    duplicate_penalty = _visual_repeat_penalty(shot, used_hashes)
     jump_cut_penalty = 0.0
     previous = recent[-1] if recent else None
     if previous is not None:
@@ -458,7 +468,7 @@ def _score_candidate(
         sequence_continuity = 0.8 if jump_cut_penalty else 1.0
     recent_category_count = sum(item.shot.category == shot.category for item in recent)
     jump_cut_penalty += 0.09 * recent_category_count
-    reuse_penalty = REUSE_PENALTY * reuse_count
+    reuse_penalty = REUSE_PENALTY * reuse_count + ASSET_REUSE_PENALTY * asset_reuse_count
     available = _available_duration(shot)
     duration_fit = max(0.0, 1.0 - float(abs(available - desired_duration) / max(desired_duration, Fraction(1, 2))))
     music_fit = music_fit * 0.7 + duration_fit * 0.3
@@ -562,6 +572,9 @@ def build_timeline(
     current_frame = 0
     consumed_source_frames = {shot.id: 0 for shot in candidates}
     usage_count = {shot.id: 0 for shot in candidates}
+    asset_usage: dict[str, int] = {shot.asset_id: 0 for shot in candidates}
+    # Every shot already in the edit, so a repeat is caught however long ago it played.
+    used_hashes: list[int] = []
     exhausted: set[str] = set()
 
     while current_frame < target_frames:
@@ -598,6 +611,8 @@ def build_timeline(
                 random_jitter=rng.uniform(-0.015, 0.015),
                 style_profile=style_profile,
                 reuse_count=usage_count[shot.id],
+                asset_reuse_count=asset_usage[shot.asset_id],
+                used_hashes=used_hashes,
                 visual_baseline=visual_baseline,
             )
             ranked.append((score, shot, components))
@@ -661,6 +676,10 @@ def build_timeline(
         current_frame += timeline_duration
         consumed_source_frames[selected_shot.id] += source_range.duration_frames
         usage_count[selected_shot.id] += 1
+        asset_usage[selected_shot.asset_id] = asset_usage.get(selected_shot.asset_id, 0) + 1
+        selected_hash = _perceptual_hash(selected_shot)
+        if selected_hash is not None:
+            used_hashes.append(selected_hash)
 
     if current_frame < target_frames:
         available_seconds = frame_rate.seconds_from_frames(current_frame)
