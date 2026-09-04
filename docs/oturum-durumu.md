@@ -1,6 +1,6 @@
 # 7Film AI Editor — oturum durumu
 
-Son güncelleme: 4 Eylül 2026, 03:20. Bu dosya, çalışmayı devralan bir sonraki oturum içindir.
+Son güncelleme: 4 Eylül 2026, 04:10. Bu dosya, çalışmayı devralan bir sonraki oturum içindir.
 
 ## Bu turda kapatılan hatalar
 
@@ -16,6 +16,8 @@ Son güncelleme: 4 Eylül 2026, 03:20. Bu dosya, çalışmayı devralan bir sonr
 | `37769f2` | Kayıtlı kurgular yeniden analizde sessizce boşalıyordu |
 | `4bc5b62` | Eklenti `timeline-builder.js`'i kurmuyordu — hiç açılmazdı |
 | `5ea3a9c` | Eski analizler sessizdi; artık damgalanıp arayüzde bildiriliyor |
+| `c8a0af9` | Referans tempo her kesimde aşağı yuvarlanıyordu; kesirli tutulup artık devrediliyor |
+| `51e87ed` | Adapter rasyonel saniyeyi okuyamıyordu (müzik sınırı kayboluyordu); API sözleşme testi |
 
 ## Yeniden analiz tamamlandı
 
@@ -31,19 +33,37 @@ Son güncelleme: 4 Eylül 2026, 03:20. Bu dosya, çalışmayı devralan bir sonr
 
 | ölçüt | üretilen | referans |
 |---|---|---|
-| medyan kesim | 0,92 sn | 1,00 sn |
-| p25 / p75 | 0,48 / 1,40 sn | 0,64 / 1,60 sn |
-| beat hizası ≤120ms | %90 | %61 |
-| kesim/saniye | 1,03 | 0,74 |
+| medyan kesim | **1,00 sn** | 1,00 sn |
+| p25 / p75 | 0,52 / 1,48 sn | 0,64 / 1,60 sn |
+| beat hizası ≤120ms | %86 | %61 |
+| kesim/saniye | 0,92 | 0,74 |
 | 1 karelik flaş | 0 | — |
 
-Kalan en belirgin fark **kesim yoğunluğu**: hâlâ referanslardan ~%40 daha sık kesiyor. Sıradaki
-iş bu. Beat hizasının referanstan yüksek olması kasıtlı (makine grid'e oturur, insan editör
-bilerek kaydırır) ama isteğe bağlı bir off-beat oranı eklenebilir.
+## Gerçek Resolve'da uçtan uca doğrulandı
+
+Eklentinin `importTimeline` akışının tamamı, gönderilen adapter koduyla, gerçek malzeme
+üzerinde Resolve Studio 21.0.2'de çalıştırıldı (geçici proje, sonra silindi):
+
+```
+V1 klip     : 141 / 141   batch hatası yok
+en kısa klip: 14 kare     1 karelik klip yok
+ses         : A1 müzik (kare 0'dan), A2/A3 boş, kamera sesi yok
+marker      : 141 adet, hepsi tam kesim başlarında, gerekçe metniyle
+```
+
+Ayrıca `AddMarker` ölçüldü: **timeline başlangıcına göreli kare** alıyor, yani `main.js`'in ham
+`timeline_in.start_frame` kullanması doğru. (Timeline 90000'de başlıyor; mutlak kare vermek
+marker'ı timeline'ın dışına atardı. Kod doğruydu, "düzeltmek" hata olurdu.)
+
+Testler eklentinin gerçekten kullandığı ortamda da geçiyor:
+`.runtime/mamba-root/envs/sevenfilm/bin/python -m pytest -q` — bu, `.venv` değil.
 
 ## Doğrulanmamış kalanlar
 
-- **JS Workflow Integration köprüsü**: doğrulama Python scripting API'siyle yapıldı. Kullanıcının gördüğü `errorCode: 2` biçimi JS köprüsüne ait; orada geçersiz öğe exception fırlatıyor, Python'da kısmi ekleme oluyor.
+- **JS Workflow Integration köprüsü**: Resolve menüsünden tıklama gerektirdiği için doğrudan
+  çalıştırılamadı. Adapter mantığının tamamı Python scripting API'si üzerinden gerçek Resolve'da
+  doğrulandı; kalan tek fark köprünün hata biçimi (`errorCode: 2` exception olarak gelir,
+  Python'da kısmi ekleme olur). Kullanıcı eklentiyi bir kez açtığında bu da kapanır.
 - **CLIP düzeltmesi 11 karelik görsel denetime dayanıyor**; etiketli doğruluk seti yok. `ceremony` az temsil ediliyor olabilir.
 - Öncül projeye özgü: aynı klip farklı projede farklı etiketlenebilir.
 - Mevcut 6120 timeline item'ın kategorisi `b_roll`'a düştü (kesim noktaları sağlam). O eski kurguları yeniden üretmek daha iyi sonuç verir.
