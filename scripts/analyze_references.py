@@ -113,6 +113,57 @@ def story_arc(paths: list[Path]) -> list[dict[str, float]] | None:
     ]
 
 
+HELD_SHOT_SECONDS = 3.0
+
+
+def held_shot_profile(videos: list[dict[str, object]], bands: int = STORY_BANDS) -> dict[str, object]:
+    """How much of each part of a reference film is spent on a shot that is simply held.
+
+    The profile described the middle of the cut distribution and nothing else, so an edit built
+    from it came out uniformly around a second: median 0.96s, longest cut 2.48s, nothing over
+    three seconds anywhere. The references are not like that. A quarter of their total running
+    time sits in shots longer than three seconds, they reach 19 seconds, and those shots are not
+    spread evenly — they open the film and they close it.
+
+    Measured across the 18 references: 38% of the first tenth and 56% of the last tenth is held,
+    against 10-19% through the middle. That shape is the difference between an edit that has an
+    entrance and a slow passage and one that only ever runs on the beat.
+    """
+    held = [0.0] * bands
+    total = [0.0] * bands
+    lengths: list[float] = []
+    by_band: list[list[float]] = [[] for _ in range(bands)]
+    for video in videos:
+        durations = list(video["shot_durations_seconds"])
+        running = sum(durations)
+        if running <= 0:
+            continue
+        elapsed = 0.0
+        for duration in durations:
+            band = min(bands - 1, int((elapsed + duration / 2) / running * bands))
+            total[band] += duration
+            if duration > HELD_SHOT_SECONDS:
+                held[band] += duration
+                lengths.append(duration)
+                by_band[band].append(duration)
+            elapsed += duration
+    if not lengths:
+        return {}
+    return {
+        "threshold_seconds": HELD_SHOT_SECONDS,
+        "share_by_band": [
+            round(held[band] / total[band], 4) if total[band] else 0.0 for band in range(bands)
+        ],
+        "median_seconds": round(float(np.median(lengths)), 3),
+        "p90_seconds": round(float(np.quantile(lengths, 0.9)), 3),
+        # How long a hold runs where it happens. The references hold longest at the two ends,
+        # so one figure for the whole film makes the opening and the ending too brisk.
+        "median_seconds_by_band": [
+            round(float(np.median(values)), 3) if values else None for values in by_band
+        ],
+    }
+
+
 def analyze_video(path: Path, info: dict[str, object]) -> dict[str, object]:
     video = open_video(str(path))
     manager = SceneManager()
@@ -191,6 +242,8 @@ def build_profile(media_dir: Path, info_dir: Path) -> dict[str, object]:
         # What the references show at each tenth of their length, so the planner reads the
         # story order off the films instead of a list written by hand.
         "story_arc": arc,
+        # How long the references hold a shot, and where in the film they do it.
+        "held_shots": held_shot_profile(videos),
         "shot_duration_p25_seconds": round(p25, 3),
         "shot_duration_p75_seconds": round(p75, 3),
         "section_median_shot_duration_seconds": section_profile,

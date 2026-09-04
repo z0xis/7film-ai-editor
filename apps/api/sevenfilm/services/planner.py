@@ -248,6 +248,108 @@ def _beats_for_cut(target: Fraction, debt: Fraction) -> tuple[int, Fraction]:
     return beats, max(-MAX_BEAT_DEBT, min(MAX_BEAT_DEBT, carried))
 
 
+# A held shot is one the edit simply stays on, past the point where it would normally cut. The
+# references spend a quarter of their running time on these and reach nineteen seconds; an edit
+# built from cut-length averages alone had none at all, its longest cut 2.48 seconds. They are
+# what an entrance, a first look or a slow dance is made of.
+HELD_SHOT_SECONDS = Fraction(3)
+# Without a measured profile: hold about a sixth of the time, for four seconds, which is the
+# references' own median held shot.
+DEFAULT_HELD_SHARE = Fraction(1, 6)
+DEFAULT_HELD_SECONDS = Fraction(4)
+# A held shot still has to end on a beat, and it may not eat more than this much of what is
+# left, or one hold in the last stretch swallows the ending.
+MAX_HELD_SHARE_OF_REMAINDER = Fraction(1, 3)
+
+
+def _held_share(style_profile: Mapping[str, object] | None, progress: float) -> Fraction:
+    """How much of this part of the edit the references spend on a held shot."""
+    held = style_profile.get("held_shots") if style_profile else None
+    if not isinstance(held, Mapping):
+        return DEFAULT_HELD_SHARE
+    shares = held.get("share_by_band")
+    if not isinstance(shares, Sequence) or not shares:
+        return DEFAULT_HELD_SHARE
+    value = shares[min(len(shares) - 1, int(progress * len(shares)))]
+    if not isinstance(value, (int, float)) or value <= 0:
+        return Fraction(0)
+    return Fraction(str(round(float(value), 4)))
+
+
+def _held_seconds(style_profile: Mapping[str, object] | None, progress: float = 0.0) -> Fraction:
+    """How long a hold runs here. The references hold longest at the two ends of a film."""
+    held = style_profile.get("held_shots") if style_profile else None
+    if not isinstance(held, Mapping):
+        return DEFAULT_HELD_SECONDS
+    by_band = held.get("median_seconds_by_band")
+    if isinstance(by_band, Sequence) and by_band:
+        value = by_band[min(len(by_band) - 1, int(progress * len(by_band)))]
+        if isinstance(value, (int, float)) and value > 0:
+            return Fraction(str(value))
+    value = held.get("median_seconds")
+    if isinstance(value, (int, float)) and value > 0:
+        return Fraction(str(value))
+    return DEFAULT_HELD_SECONDS
+
+
+def _hold_frequency(share: Fraction, held: Fraction, ordinary: Fraction) -> Fraction:
+    """Turn a share of the running time into a share of the cuts.
+
+    The references' figure is a proportion of screen time, and a held shot buys far more of
+    that than an ordinary cut does. Holding one cut in six, when a hold is four seconds and a
+    cut is one, spends 44% of the time held, not 17% — measured, the first attempt came out at
+    38% against the references' 25%. Solving f·H = s·(f·H + (1-f)·o) for f gives the frequency
+    that actually lands on the share.
+    """
+    if share <= 0 or held <= 0 or ordinary <= 0:
+        return Fraction(0)
+    if share >= 1:
+        return Fraction(1)
+    denominator = held * (1 - share) + share * ordinary
+    if denominator <= 0:
+        return Fraction(0)
+    return min(Fraction(1), share * ordinary / denominator)
+
+
+def _hold_this_cut(frequency: Fraction, debt: Fraction) -> tuple[bool, Fraction]:
+    """Decide by paying the frequency forward, the way the beat count carries its fraction.
+
+    It has to come out right over a run rather than by chance on any one cut, and it has to
+    fall in the same places every time the plan is rebuilt.
+    """
+    wanted = frequency + debt
+    if wanted >= 1:
+        return True, wanted - 1
+    return False, wanted
+
+
+def _held_duration(
+    grid: BeatGrid, start: Fraction, wanted: Fraction, remaining: Fraction
+) -> Fraction | None:
+    """The beat landing closest to the held length, so a long shot still sits on the music.
+
+    It has to be a beat. A four second hold that ends between two beats leaves every cut after
+    it off the grid, and the next one comes out at whatever fraction of a beat is left — a
+    0.36 second flash in the middle of the edit. When no beat lands in range, there is no hold
+    here; the share is carried to a cut where one does.
+    """
+    # A hold may not swallow a long remainder. Close to the end it may take all of what is
+    # left, because there it *is* the ending: the references spend 56% of their last tenth
+    # held, and a plain third-of-what-is-left rule made the ending the one place a hold could
+    # never happen.
+    ending = remaining <= HELD_SHOT_SECONDS * 2
+    ceiling = remaining if ending else remaining * MAX_HELD_SHARE_OF_REMAINDER
+    if ceiling < HELD_SHOT_SECONDS:
+        return None
+    target = min(wanted, ceiling)
+    landings = [
+        beat - start for beat in grid.beats if HELD_SHOT_SECONDS <= beat - start <= ceiling
+    ]
+    if not landings:
+        return None
+    return min(landings, key=lambda landing: (abs(landing - target), landing))
+
+
 def _duration_from_beats(
     grid: BeatGrid,
     start: Fraction,
@@ -595,6 +697,7 @@ def build_timeline(
     minimum_cut_frames = frame_rate.frames_from_seconds(MIN_CUT_SECONDS, rounding="ceil")
     visual_baseline = _visual_baseline(candidates)
     beat_debt = Fraction(0)
+    hold_debt = Fraction(0)
     current_frame = 0
     consumed_source_frames = {shot.id: 0 for shot in candidates}
     usage_count = {shot.id: 0 for shot in candidates}
@@ -620,6 +723,22 @@ def build_timeline(
         desired = _duration_from_beats(
             music, current_time, energy, style_profile, progress, beats_per_cut
         )
+        held_seconds = _held_seconds(style_profile, progress)
+        frequency = _hold_frequency(
+            _held_share(style_profile, progress), held_seconds, desired
+        )
+        hold, hold_debt = _hold_this_cut(frequency, hold_debt)
+        if hold:
+            held = _held_duration(
+                music, current_time, held_seconds,
+                frame_rate.seconds_from_frames(remaining_frames),
+            )
+            if held is not None:
+                desired = held
+            else:
+                # No room left to hold: give the frequency back so it is spent at a cut where
+                # a beat does land, rather than lost.
+                hold_debt += frequency
         desired = frame_rate.seconds_from_frames(
             max(1, frame_rate.frames_from_seconds(desired, rounding="nearest"))
         )

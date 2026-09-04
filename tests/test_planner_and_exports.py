@@ -620,10 +620,18 @@ class FootageQualityTests(unittest.TestCase):
             frame_rate=self.rate, target_duration=Fraction(120), style_profile=self.profile, seed=5,
         )
 
-        # A five second beat gap used to produce five second holds. With no beat anywhere near
-        # the reference length, the cut takes the reference length instead of chasing the grid.
-        longest = max(item.timeline_range.duration_seconds for item in plan.items)
-        self.assertLessEqual(longest, Fraction(2))
+        # A five second beat gap used to make every cut five seconds long. An ordinary cut now
+        # takes the reference length instead of chasing the grid; the deliberate held shots the
+        # references spend a quarter of their time on are the exception, and they land on a beat.
+        # The last cut absorbs whatever is left of the target, so it is judged separately.
+        body = plan.items[:-1]
+        ordinary = [i for i in body if i.timeline_range.duration_seconds <= Fraction(2)]
+        held = [i for i in body if i.timeline_range.duration_seconds > Fraction(2)]
+
+        self.assertGreater(len(ordinary), len(held))
+        for item in held:
+            end = item.timeline_range.start_seconds + item.timeline_range.duration_seconds
+            self.assertEqual(end % Fraction(5), 0, f"{float(end)} sn beat'e oturmuyor")
 
     def test_reference_visual_fit_is_neutral_without_measurements(self):
         """Projects analysed before the visual columns existed must plan exactly as before."""
