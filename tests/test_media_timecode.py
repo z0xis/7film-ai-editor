@@ -149,3 +149,32 @@ class DisplayRotationTests(unittest.TestCase):
 
     def test_an_unreadable_angle_is_treated_as_none(self):
         self.assertEqual(self.shape(self.payload(rotation="sideways")), (1920, 1080))
+
+
+class FrameRateFallbackTests(unittest.TestCase):
+    """ffprobe writes "0/0" for an average it could not compute; the container still knows."""
+
+    def payload(self, **rates):
+        stream = {"codec_type": "video", "codec_name": "h264", "width": 1920, "height": 1080,
+                  "duration": "4.0", "tags": {}, **rates}
+        return {"streams": [stream], "format": {"duration": "4.0", "filename": "/m/x.mp4"}}
+
+    def rate(self, payload):
+        value = metadata_from_probe(Path("/m/x.mp4"), payload)["frame_rate"]
+        return value.numerator, value.denominator
+
+    def test_an_uncomputed_average_falls_back_to_the_declared_rate(self):
+        """50 fps footage was being recorded at 25, halving every clip."""
+        self.assertEqual(self.rate(self.payload(avg_frame_rate="0/0", r_frame_rate="50/1")), (50, 1))
+
+    def test_a_missing_average_falls_back_too(self):
+        self.assertEqual(self.rate(self.payload(r_frame_rate="30000/1001")), (30000, 1001))
+
+    def test_the_measured_average_still_wins_when_it_is_usable(self):
+        self.assertEqual(self.rate(self.payload(avg_frame_rate="25/1", r_frame_rate="50/1")), (25, 1))
+
+    def test_an_unparsable_rate_is_skipped(self):
+        self.assertEqual(self.rate(self.payload(avg_frame_rate="N/A", r_frame_rate="50/1")), (50, 1))
+
+    def test_a_stream_with_no_usable_rate_at_all_defaults(self):
+        self.assertEqual(self.rate(self.payload(avg_frame_rate="0/0", r_frame_rate="0/0")), (25, 1))

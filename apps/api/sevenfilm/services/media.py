@@ -129,12 +129,30 @@ def _start_timecode(payload: dict[str, Any]) -> str | None:
     return str(timecode) if timecode else None
 
 
+def _frame_rate_of(stream: dict[str, Any]) -> FrameRate:
+    """Take the measured average, but fall back to the declared rate rather than to a guess.
+
+    ffprobe writes "0/0" for an average it could not compute, and the old reading treated that
+    as the end of the search: a stream reporting avg_frame_rate "0/0" and r_frame_rate "50/1"
+    was recorded at 25 fps, halving every clip length and putting every shot boundary and every
+    timecode conversion at the wrong moment, silently. r_frame_rate is the value the container
+    declares and is exactly what it is there for.
+    """
+    for raw in (stream.get("avg_frame_rate"), stream.get("r_frame_rate")):
+        if not raw:
+            continue
+        try:
+            value = Fraction(str(raw))
+        except (ValueError, ZeroDivisionError):
+            continue
+        if value > 0:
+            return FrameRate(value.numerator, value.denominator)
+    return FrameRate(25)
+
+
 def metadata_from_probe(path: Path, payload: dict[str, Any]) -> dict[str, Any]:
     stream = _first_video_stream(payload)
-    raw_rate = stream.get("avg_frame_rate") or stream.get("r_frame_rate") or "25/1"
-    if raw_rate == "0/0":
-        raw_rate = "25/1"
-    frame_rate = FrameRate.parse(raw_rate)
+    frame_rate = _frame_rate_of(stream)
     raw_duration = stream.get("duration") or payload.get("format", {}).get("duration")
     if raw_duration is None:
         raise ValueError(f"Süre bilgisi bulunamadı: {path}")
