@@ -70,6 +70,40 @@ Testler eklentinin gerçekten kullandığı ortamda da geçiyor:
 - Eşikler tek gerçek projede kalibre edildi.
 - Kesim yoğunluğu referansın ~%140'ı; enerji bölümlerinin dağılımına duyarlı.
 
+## Ölçek (shot scale) denetimi — 4 Eylül
+
+Kaydedilmiş kurguda **141 klipte tek bir yakın plan yoktu**. Nedeni: prompt-prior düzeltmesi
+yalnızca kategorilere uygulanıyordu, ölçeğe uygulanmıyordu. Bu shoot'un 1405 karesi üzerinde
+ölçüldü — "a medium shot showing people from the waist up" olasılığın ortalama %60,8'ini,
+yakın plan cümlesi %3,9'unu alıyor. Düzeltmeden sonra havuz 791 medium / 479 wide / 86 close_up
+/ 49 detail oldu (öncesi 948 / 384 / 45 / 28). Ham görüntüden çıkarılan 10 karenin 6'sına
+bakıldı, 5'i doğruydu; yanlış olan tek kare zaten kalite kapısının reddetmesi gereken bulanık
+bir tavan pan'ı. `ANALYSIS_VERSION` "3" oldu, yeniden etiketleme 7 saniye sürdü (encoding'ler
+saklı olduğu için ikinci geçiş ucuz).
+
+Yeni kurgu ölçümü (120 sn hedef, seed 1):
+
+```
+medyan kesim 0,96 (ref 1,00)   p25/p75 0,50/1,29 (ref 0,64/1,60)
+kesim/sn     1,00 (ref 0,74)   beat 120ms %84 (ref %61), 200ms %92 (ref %80)
+ölçek        medium 76, wide 39, detail 4, close_up 1
+kategori     8/8 kullanılıyor, en büyüğü couple 34
+```
+
+### Referanslardan ölçek hedefi çıkarılamadı
+
+18 referans filmden 835 kare örneklenip aynı sınıflandırıcıdan geçirildi: %60 wide, %37 medium,
+%3 close_up. Bu, ham malzemedeki dağılımın tersi. Ama **bu ölçüm güvenilmez**: örneklenen
+4 kareye bakıldığında ikisi açıkça yanlış etiketliydi (yüzlerin kareyi doldurduğu bir plan
+"wide", bel üstü bir plan "close_up"). Referans filmler renklendirilmiş, altyazı yakılmış ve
+film-kenarı overlay'i eklenmiş — CLIP için ham kamera görüntüsünden farklı bir alan. Bu yüzden
+planlayıcıya referanstan türetilmiş bir ölçek hedefi **konmadı**. Ham malzeme üzerindeki
+düzeltme ayrı bir şey ve kendi alanında doğrulandı.
+
+Kurgudaki close_up oranı (1/120) havuzdakinin (%6,1) altında; planlayıcının ölçek çeşitliliği
+diye bir kavramı yok, havuzu olduğu gibi yansıtıyor. Bunu değiştirmek için önce güvenilir bir
+hedef gerekiyor — yani ya etiketli bir doğruluk seti ya da referansların ham hallerine erişim.
+
 ## Çalışma biçimi
 
 Önce ölç, sonra değiştir. Bu turda dört iddia ölçümle çürütüldü: sınır dışı karelerin batch'i reddettirdiği, batch'in ya hep ya hiç olduğu, yavaş şarkının yavaş kurgu ürettiği, dinamik aralığı olmayan parçanın "high" sayılmaması gerektiği. Görsel kararlar (kategori, kalite) ekrana bakılarak denetlendi.
