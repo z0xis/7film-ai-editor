@@ -320,10 +320,49 @@ class FcpxmlTimecodeTests(unittest.TestCase):
                 asset = self.exported(self.plan(timecode=timecode)).find("./resources/asset")
                 self.assertEqual(asset.attrib["start"], "0s")
 
-    def test_a_drop_frame_separator_is_accepted(self):
+    def test_a_semicolon_means_nothing_at_a_whole_frame_rate(self):
+        """There is no drop-frame at 25 fps, whatever separator the camera wrote."""
         asset = self.exported(self.plan(timecode="08:19:21;02")).find("./resources/asset")
 
         self.assertEqual(Fraction(asset.attrib["start"].removesuffix("s")), Fraction(749027, 25))
+
+    def test_drop_frame_timecode_is_counted_as_drop_frame(self):
+        """Counting it continuously runs 30 seconds fast at this time of day, which puts every
+        clip start outside its own media - the very thing that made Resolve refuse the file."""
+        ntsc = FrameRate(30000, 1001)
+
+        asset = self.exported(self.plan(timecode="08:19:21;02", rate=ntsc)).find("./resources/asset")
+
+        # 898832 frames counted continuously, 900 of them never existed.
+        self.assertEqual(
+            Fraction(asset.attrib["start"].removesuffix("s")), Fraction(897932) / ntsc.value)
+
+    def test_non_drop_ntsc_is_left_alone(self):
+        ntsc = FrameRate(30000, 1001)
+
+        asset = self.exported(self.plan(timecode="08:19:21:02", rate=ntsc)).find("./resources/asset")
+
+        self.assertEqual(
+            Fraction(asset.attrib["start"].removesuffix("s")), Fraction(898832) / ntsc.value)
+
+    def test_drop_frame_at_fifty_nine_ninety_four_drops_four_a_minute(self):
+        rate = FrameRate(60000, 1001)
+
+        asset = self.exported(self.plan(timecode="01:00:00;00", rate=rate)).find("./resources/asset")
+
+        # One hour: 60 minutes less the 6 tenth minutes, four frames each.
+        self.assertEqual(
+            Fraction(asset.attrib["start"].removesuffix("s")),
+            Fraction(3600 * 60 - 4 * (60 - 6)) / rate.value)
+
+    def test_the_first_ten_minutes_of_drop_frame_lose_eighteen_frames(self):
+        ntsc = FrameRate(30000, 1001)
+
+        asset = self.exported(self.plan(timecode="00:10:00;00", rate=ntsc)).find("./resources/asset")
+
+        # Minutes 1 to 9 drop two frames each; minute 10 does not.
+        self.assertEqual(
+            Fraction(asset.attrib["start"].removesuffix("s")), Fraction(600 * 30 - 18) / ntsc.value)
 
 
 class FootageQualityTests(unittest.TestCase):

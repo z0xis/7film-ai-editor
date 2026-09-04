@@ -32,6 +32,31 @@ def _otio_range(start: Fraction, duration: Fraction, rate: Fraction) -> dict[str
     }
 
 
+def _timecode_frames(timecode: str, rate: Fraction) -> int | None:
+    """The frame a timecode names, honouring drop-frame notation.
+
+    Drop-frame skips two frame numbers at the top of every minute except every tenth, so
+    counting it as if it were continuous runs half a second fast per hour of timecode - thirty
+    seconds at the time of day these cameras record. Written into an FCPXML that puts every
+    clip's start outside its own media, which is the thing Resolve refuses.
+    """
+    drop = ";" in timecode or "," in timecode
+    parts = timecode.replace(";", ":").replace(",", ":").split(":")
+    if len(parts) != 4 or not all(part.isdigit() for part in parts):
+        return None
+    hours, minutes, seconds, frames = (int(part) for part in parts)
+    nominal = round(rate)
+    if nominal <= 0:
+        return None
+    total = (hours * 3600 + minutes * 60 + seconds) * nominal + frames
+    # Only the 1000/1001 rates carry drop-frame; a semicolon at 25 fps means nothing.
+    if drop and rate.denominator != 1:
+        per_minute = nominal // 15
+        elapsed_minutes = hours * 60 + minutes
+        total -= per_minute * (elapsed_minutes - elapsed_minutes // 10)
+    return total
+
+
 def _asset_start(asset: MediaAsset) -> Fraction:
     """Where the media begins on its own clock, as Resolve reads it off the file.
 
@@ -42,12 +67,9 @@ def _asset_start(asset: MediaAsset) -> Fraction:
     """
     if not asset.timecode:
         return Fraction(0, 1)
-    parts = asset.timecode.replace(";", ":").split(":")
-    if len(parts) != 4 or not all(part.isdigit() for part in parts):
-        return Fraction(0, 1)
-    hours, minutes, seconds, frames = (int(part) for part in parts)
     rate = asset.frame_rate.value
-    return (Fraction(hours * 3600 + minutes * 60 + seconds) * rate + frames) / rate
+    frames = _timecode_frames(asset.timecode, rate)
+    return Fraction(0, 1) if frames is None else Fraction(frames) / rate
 
 
 def plan_as_dict(plan: TimelinePlan) -> dict[str, object]:
