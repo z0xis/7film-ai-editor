@@ -9,9 +9,13 @@ import numpy as np
 from sevenfilm.domain import BeatGrid, MediaAsset, Shot
 from sevenfilm.services.analysis import _energy_sections
 from sevenfilm.services.planner import (
+    MAX_BEAT_DEBT,
+    _beats_for_cut,
     _duration_from_beats,
     _energy_at,
     _preferred_cut_seconds,
+    _reference_beats,
+    _target_beats_per_cut,
     beat_alignment_ratio,
     build_timeline,
 )
@@ -204,6 +208,48 @@ class BeatSnappingTests(unittest.TestCase):
         self.assertEqual(_preferred_cut_seconds(REFERENCE_PROFILE, 0.5, "medium"), core)
 
 
+class FractionalPacingTests(unittest.TestCase):
+    """A cut lands on a whole beat, but a run of cuts must average the reference pace."""
+
+    def test_the_reference_pace_is_read_without_rounding(self):
+        # The references' fastest quarter runs 0.64s at 123.047 BPM, which is 1.31 beats.
+        # The profile stores that as beats_per_cut 1, a fifth short.
+        self.assertAlmostEqual(float(_reference_beats(REFERENCE_PROFILE, "high")), 1.3125, places=3)
+        self.assertAlmostEqual(float(_reference_beats(REFERENCE_PROFILE, "medium")), 2.0508, places=3)
+        self.assertAlmostEqual(float(_reference_beats(REFERENCE_PROFILE, "low")), 3.2812, places=3)
+
+    def test_without_the_seconds_it_falls_back_to_the_stated_beats(self):
+        self.assertIsNone(_reference_beats({"beats_per_cut": {"high": 1}}, "high"))
+        self.assertEqual(_target_beats_per_cut({"beats_per_cut": {"high": 1}}, 0.5, "high"), 1)
+
+    def test_a_run_of_cuts_averages_the_fractional_target(self):
+        target = Fraction(131, 100)
+        debt, chosen = Fraction(0), []
+        for _ in range(100):
+            beats, debt = _beats_for_cut(target, debt)
+            chosen.append(beats)
+
+        average = Fraction(sum(chosen), len(chosen))
+        self.assertLess(abs(average - target), Fraction(1, 50), f"ortalama {float(average)}")
+        self.assertEqual(set(chosen), {1, 2}, "a 1.31 beat target is one beat or two, never three")
+
+    def test_every_cut_is_at_least_one_beat(self):
+        debt = Fraction(0)
+        for _ in range(50):
+            beats, debt = _beats_for_cut(Fraction(1, 4), debt)
+            self.assertGreaterEqual(beats, 1)
+
+    def test_the_debt_cannot_run_away(self):
+        debt = Fraction(0)
+        for _ in range(200):
+            _, debt = _beats_for_cut(Fraction(1, 10), debt)
+            self.assertLessEqual(abs(debt), MAX_BEAT_DEBT)
+
+    def test_a_whole_number_target_carries_nothing(self):
+        beats, debt = _beats_for_cut(Fraction(2), Fraction(0))
+        self.assertEqual((beats, debt), (2, Fraction(0)))
+
+
 class MusicDrivenPlanTests(unittest.TestCase):
     """End to end: a finished plan measured the way a reference edit is measured."""
 
@@ -308,6 +354,22 @@ class MusicDrivenPlanTests(unittest.TestCase):
 
     def test_the_edit_still_lands_on_the_target_duration(self):
         self.assertEqual(self.plan().duration, Fraction(150))
+
+    def test_the_pace_matches_the_references_it_was_learned_from(self):
+        plan = self.plan()
+
+        durations = sorted(item.timeline_range.duration_seconds for item in plan.items)
+        median = durations[len(durations) // 2]
+
+        reference = Fraction(str(REFERENCE_PROFILE["median_shot_duration_seconds"]))
+        self.assertLess(abs(median - reference), Fraction(1, 4), f"medyan {float(median)}")
+
+    def test_the_last_cut_is_not_a_stub(self):
+        """Finishing on a shot that runs out mid-cut left a four frame shot at the end."""
+        plan = self.plan()
+
+        self.assertGreaterEqual(plan.items[-1].timeline_range.duration_seconds, Fraction(1, 4))
+        self.assertEqual(plan.duration, Fraction(150))
 
     def test_no_cut_is_a_single_frame_flash(self):
         """Shots running out of source used to contribute their last frame as a cut."""

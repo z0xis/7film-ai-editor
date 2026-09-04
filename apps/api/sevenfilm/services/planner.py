@@ -138,22 +138,65 @@ def _preferred_cut_seconds(
     return base * _energy_scale(style_profile, energy)
 
 
-def _section_beats_per_cut(
+REFERENCE_SECONDS_BY_ENERGY = {
+    "low": "shot_duration_p75_seconds",
+    "medium": "median_shot_duration_seconds",
+    "high": "shot_duration_p25_seconds",
+}
+# How far the running beat debt may drift before it is simply given up on, so one unusual
+# passage cannot go on paying itself back for the rest of the edit.
+MAX_BEAT_DEBT = Fraction(2)
+
+
+def _reference_beats(style_profile: Mapping[str, object] | None, energy: str) -> Fraction | None:
+    """The reference pace for this energy, in beats, without rounding it to a whole one.
+
+    The profile also states beats_per_cut, but it rounds: the references' fastest quarter runs
+    1.31 beats and is stored as 1, a fifth short. Reading the seconds back against the
+    references' own tempo keeps the figure the planner should be aiming at.
+    """
+    if not style_profile:
+        return None
+    bpm = style_profile.get("median_reference_bpm")
+    seconds = style_profile.get(REFERENCE_SECONDS_BY_ENERGY.get(energy, ""))
+    if not isinstance(bpm, (int, float)) or not isinstance(seconds, (int, float)):
+        return None
+    if bpm <= 0 or seconds <= 0:
+        return None
+    return Fraction(str(seconds)) * Fraction(str(bpm)) / 60
+
+
+def _target_beats_per_cut(
     style_profile: Mapping[str, object] | None, progress: float, energy: str
-) -> int:
-    """How many beats a cut lasts here, in beats rather than seconds.
+) -> Fraction:
+    """How many beats a cut should last here, kept fractional.
 
     The references were measured at their own tempo, so their pacing only transfers to another
     song when it is expressed on the beat grid: two beats is two beats at any BPM, while "one
     second" is a fast cut at 80 BPM and a slow one at 160. The seconds the references hold per
     section modulate that beat count around the median.
     """
-    base = _beats_per_cut(energy, style_profile)
+    base = _reference_beats(style_profile, energy)
+    if base is None:
+        base = Fraction(_beats_per_cut(energy, style_profile))
     section = _reference_section_duration(style_profile, progress)
     median = style_profile.get("median_shot_duration_seconds") if style_profile else None
     if section is None or not isinstance(median, (int, float)) or median <= 0:
         return base
-    return max(1, round(base * section / Fraction(str(median))))
+    return base * section / Fraction(str(median))
+
+
+def _beats_for_cut(target: Fraction, debt: Fraction) -> tuple[int, Fraction]:
+    """Pick a whole number of beats, carrying the fraction over to the next cut.
+
+    A cut has to land on a beat, so a 1.31 beat target can only ever be one beat or two. Paying
+    the remainder forward makes the run of cuts average out to the reference pace instead of
+    every one of them being rounded the same way, a fifth short.
+    """
+    wanted = target + debt
+    beats = max(1, int(wanted + Fraction(1, 2)))
+    carried = wanted - beats
+    return beats, max(-MAX_BEAT_DEBT, min(MAX_BEAT_DEBT, carried))
 
 
 def _duration_from_beats(
@@ -162,6 +205,7 @@ def _duration_from_beats(
     energy: str,
     style_profile: Mapping[str, object] | None = None,
     progress: float = 0.0,
+    beats_per_cut: int | None = None,
 ) -> Fraction:
     """Hold for a whole number of beats, which is what makes an edit feel cut to the music.
 
@@ -176,7 +220,10 @@ def _duration_from_beats(
     # two before the beat it was cut on. Counting that beat as "the next one" asks for a cut a
     # single frame long, which is where the one frame flashes in the timeline came from.
     future = [beat for beat in grid.beats if beat - start >= MIN_CUT_SECONDS]
-    beats_per_cut = _section_beats_per_cut(style_profile, progress, energy)
+    if beats_per_cut is None:
+        beats_per_cut = _beats_for_cut(
+            _target_beats_per_cut(style_profile, progress, energy), Fraction(0)
+        )[0]
     if len(future) >= beats_per_cut:
         duration = future[beats_per_cut - 1] - start
         limit = (preferred if preferred is not None else fallback) * MAX_BEAT_HOLD_FACTOR
@@ -467,6 +514,7 @@ def build_timeline(
     target_frames = frame_rate.frames_from_seconds(target_duration)
     minimum_cut_frames = frame_rate.frames_from_seconds(MIN_CUT_SECONDS, rounding="ceil")
     visual_baseline = _visual_baseline(candidates)
+    beat_debt = Fraction(0)
     current_frame = 0
     consumed_source_frames = {shot.id: 0 for shot in candidates}
     usage_count = {shot.id: 0 for shot in candidates}
@@ -483,7 +531,12 @@ def build_timeline(
         current_time = frame_rate.seconds_from_frames(current_frame)
         progress = current_frame / target_frames
         energy = _energy_at(music, current_time)
-        desired = _duration_from_beats(music, current_time, energy, style_profile, progress)
+        beats_per_cut, beat_debt = _beats_for_cut(
+            _target_beats_per_cut(style_profile, progress, energy), beat_debt
+        )
+        desired = _duration_from_beats(
+            music, current_time, energy, style_profile, progress, beats_per_cut
+        )
         desired = frame_rate.seconds_from_frames(
             max(1, frame_rate.frames_from_seconds(desired, rounding="nearest"))
         )
@@ -507,9 +560,20 @@ def build_timeline(
         ranked.sort(key=lambda candidate: candidate[0], reverse=True)
         selected_score, selected_shot, components = ranked[0]
         remaining_seconds = frame_rate.seconds_from_frames(remaining_frames)
-        if remaining_frames - frame_rate.frames_from_seconds(desired) < minimum_cut_frames:
-            # Take the whole tail now rather than leaving a stub for the next cut to pick up.
+        # Take the whole tail now rather than leaving a stub for the next cut to pick up. Only
+        # a shot with enough source left can do that, so in the tail the others stand down:
+        # picking one that runs out mid-cut is what leaves the four frame shot at the end.
+        finishing = remaining_frames - frame_rate.frames_from_seconds(desired) < minimum_cut_frames
+        if finishing:
             desired = remaining_seconds
+            long_enough_to_finish = [
+                shot for shot in available_shots
+                if _remaining_source_frames(shot, consumed_source_frames[shot.id])
+                >= shot.source_range.rate.frames_from_seconds(remaining_seconds, rounding="ceil")
+            ]
+            if long_enough_to_finish and selected_shot not in long_enough_to_finish:
+                ranked = [entry for entry in ranked if entry[1] in long_enough_to_finish]
+                selected_score, selected_shot, components = ranked[0]
         remaining_source_seconds = selected_shot.source_range.rate.seconds_from_frames(
             _remaining_source_frames(selected_shot, consumed_source_frames[selected_shot.id])
         )
