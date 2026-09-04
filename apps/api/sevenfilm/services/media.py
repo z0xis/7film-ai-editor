@@ -26,6 +26,12 @@ class MediaToolUnavailable(RuntimeError):
     pass
 
 
+# ffprobe exits non-zero on a file it cannot read, and metadata_from_probe raises when a file
+# has no video stream or no duration. A card that filled mid-recording leaves exactly that, and
+# one of them used to abort the whole job before anything was indexed.
+UNREADABLE_MEDIA = (subprocess.CalledProcessError, ValueError, json.JSONDecodeError)
+
+
 def require_tool(name: str) -> str:
     path = shutil.which(name)
     if not path:
@@ -142,6 +148,7 @@ def index_folder(database: Database, project_id: str, folder: Path, job_id: str)
     checkpoint_row = database.fetch_one("SELECT checkpoint_json FROM jobs WHERE id = ?", (job_id,))
     checkpoint = json.loads(checkpoint_row["checkpoint_json"]) if checkpoint_row else {}
     completed_paths = set(checkpoint.get("completed_paths", []))
+    unreadable: list[str] = []
     for index, path in enumerate(candidates, start=1):
         if str(path) in completed_paths:
             continue
@@ -149,7 +156,26 @@ def index_folder(database: Database, project_id: str, folder: Path, job_id: str)
             "SELECT id FROM media_assets WHERE project_id = ? AND path = ?", (project_id, str(path))
         )
         if existing is None:
-            details = metadata_from_probe(path, probe(path))
+            try:
+                details = metadata_from_probe(path, probe(path))
+            except UNREADABLE_MEDIA as error:
+                # Skip it and keep going: the rest of the shoot is still worth indexing, and the
+                # editor needs to be told which files were left out rather than losing the run.
+                unreadable.append(str(path))
+                LOGGER.warning(
+                    json.dumps({"event": "media_unreadable", "project_id": project_id,
+                                "path": str(path), "reason": type(error).__name__})
+                )
+                completed_paths.add(str(path))
+                database.update_job(
+                    job_id,
+                    status="running",
+                    progress=index / len(candidates),
+                    checkpoint={"completed_paths": sorted(completed_paths),
+                                "source_folder": str(source_folder),
+                                "unreadable": sorted(unreadable)},
+                )
+                continue
             content_hash = hash_file(path)
             duplicate = database.fetch_one(
                 "SELECT id, path FROM media_assets WHERE project_id = ? AND content_hash = ?",
@@ -198,9 +224,19 @@ def index_folder(database: Database, project_id: str, folder: Path, job_id: str)
             job_id,
             status="running",
             progress=index / len(candidates),
-            checkpoint={"completed_paths": sorted(completed_paths), "source_folder": str(source_folder)},
+            checkpoint={"completed_paths": sorted(completed_paths), "source_folder": str(source_folder),
+                        "unreadable": sorted(unreadable)},
         )
         LOGGER.info(json.dumps({"event": "media_indexed", "project_id": project_id, "path": str(path)}))
+    assets = project_assets(database, project_id)
+    if unreadable and not assets:
+        raise ValueError(
+            f"Seçilen klasördeki {len(unreadable)} dosyanın hiçbiri okunamadı. "
+            "Dosyalar bozuk olabilir veya FFmpeg kurulumu eksik olabilir."
+        )
+    if unreadable:
+        LOGGER.warning(json.dumps({"event": "media_unreadable_total", "project_id": project_id,
+                                   "count": len(unreadable)}))
     return project_assets(database, project_id)
 
 
@@ -218,31 +254,45 @@ def generate_derivatives(database: Database, project_id: str, cache_root: Path, 
     assets = project_assets(database, project_id)
     if not assets:
         raise ValueError("Önce ham görüntüleri indeksleyin.")
+    failed: list[str] = []
     for position, asset in enumerate(assets, start=1):
         proxy, thumbnail = derivative_paths(cache_root, asset)
-        if not proxy.exists():
-            proxy_temp = proxy.with_suffix(".partial.mp4")
-            subprocess.run(
-                [
-                    ffmpeg, "-y", "-i", str(asset.path), "-map", "0:v:0", "-an", "-vf",
-                    "scale='min(1280,iw)':-2", "-c:v", "libx264", "-preset", "veryfast", "-crf", "28",
-                    "-movflags", "+faststart", str(proxy_temp),
-                ],
-                check=True,
-                capture_output=True,
-                text=True,
+        try:
+            if not proxy.exists():
+                proxy_temp = proxy.with_suffix(".partial.mp4")
+                subprocess.run(
+                    [
+                        ffmpeg, "-y", "-i", str(asset.path), "-map", "0:v:0", "-an", "-vf",
+                        "scale='min(1280,iw)':-2", "-c:v", "libx264", "-preset", "veryfast", "-crf", "28",
+                        "-movflags", "+faststart", str(proxy_temp),
+                    ],
+                    check=True,
+                    capture_output=True,
+                    text=True,
+                )
+                proxy_temp.replace(proxy)
+            if not thumbnail.exists():
+                thumbnail_temp = thumbnail.with_suffix(".partial.jpg")
+                timestamp = str(float(asset.duration / 2))
+                subprocess.run(
+                    [ffmpeg, "-y", "-ss", timestamp, "-i", str(asset.path), "-frames:v", "1", "-q:v", "3", str(thumbnail_temp)],
+                    check=True,
+                    capture_output=True,
+                    text=True,
+                )
+                thumbnail_temp.replace(thumbnail)
+        except (subprocess.CalledProcessError, OSError) as error:
+            # One clip ffmpeg cannot transcode must not cost the whole shoot its proxies.
+            failed.append(asset.name)
+            LOGGER.warning(json.dumps({"event": "derivative_failed", "asset_id": asset.id,
+                                       "path": str(asset.path), "reason": type(error).__name__}))
+            database.update_job(
+                job_id,
+                status="running",
+                progress=position / len(assets),
+                checkpoint={"last_asset_id": asset.id, "failed": sorted(failed)},
             )
-            proxy_temp.replace(proxy)
-        if not thumbnail.exists():
-            thumbnail_temp = thumbnail.with_suffix(".partial.jpg")
-            timestamp = str(float(asset.duration / 2))
-            subprocess.run(
-                [ffmpeg, "-y", "-ss", timestamp, "-i", str(asset.path), "-frames:v", "1", "-q:v", "3", str(thumbnail_temp)],
-                check=True,
-                capture_output=True,
-                text=True,
-            )
-            thumbnail_temp.replace(thumbnail)
+            continue
         database.execute(
             "UPDATE media_assets SET proxy_path = ?, thumbnail_path = ? WHERE id = ?",
             (str(proxy), str(thumbnail), asset.id),
@@ -251,6 +301,10 @@ def generate_derivatives(database: Database, project_id: str, cache_root: Path, 
             job_id,
             status="running",
             progress=position / len(assets),
-            checkpoint={"last_asset_id": asset.id},
+            checkpoint={"last_asset_id": asset.id, "failed": sorted(failed)},
         )
         LOGGER.info(json.dumps({"event": "derivatives_created", "asset_id": asset.id}))
+    if failed and len(failed) == len(assets):
+        raise ValueError(
+            f"{len(failed)} dosyanın hiçbiri için proxy üretilemedi. FFmpeg kurulumunu doğrulayın."
+        )
