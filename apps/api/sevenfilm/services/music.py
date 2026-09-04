@@ -209,7 +209,8 @@ def join_tracks(
                 f"{float(playable):.0f} saniyesi kullanıldı."
             )
         segments.append(MusicSegment(
-            path=track.path, timeline_start=cursor, duration=playable, source_start=window_start))
+            path=track.path, timeline_start=cursor, duration=playable,
+            source_start=window_start, source_total=track.grid.duration))
         beats.extend(_shift(track.grid.beats, window_start, window_end, cursor))
         sections.extend(_shift_sections(track.grid.sections, window_start, window_end, cursor))
         cursor += playable

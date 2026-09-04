@@ -739,6 +739,7 @@ def _segment_as_dict(segment: MusicSegment) -> dict[str, str]:
         "timeline_start": str(segment.timeline_start),
         "duration": str(segment.duration),
         "source_start": str(segment.source_start),
+        "source_total": str(segment.source_total) if segment.source_total is not None else "",
     }
 
 
@@ -748,6 +749,7 @@ def _segment_from_dict(payload: Mapping[str, object]) -> MusicSegment:
         timeline_start=Fraction(str(payload["timeline_start"])),
         duration=Fraction(str(payload["duration"])),
         source_start=Fraction(str(payload.get("source_start", 0))),
+        source_total=Fraction(str(payload["source_total"])) if payload.get("source_total") else None,
     )
 
 

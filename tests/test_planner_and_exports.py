@@ -109,7 +109,10 @@ class PlannerTests(unittest.TestCase):
             )
             self.assertIsNotNone(music_clip)
             self.assertEqual(music_clip.attrib["lane"], "-1")
-            self.assertEqual(music_clip.attrib["offset"], "0s")
+            # An anchored item's offset is measured in the parent clip's own timeline, whose
+            # origin is that clip's `start`. This clip is trimmed 5 frames (1/5s at 25fps) into
+            # its source, so the music sitting at the edit's first frame reads 1/5s, not 0s.
+            self.assertEqual(music_clip.attrib["offset"], "1/5s")
             self.assertEqual(music_clip.attrib["start"], "0s")
             self.assertEqual(music_clip.attrib["audioRole"], "music")
             self.assertEqual(
@@ -861,3 +864,135 @@ class MusicRoundTripTests(unittest.TestCase):
         self.assertEqual(restored.music_path, Path("/m/tek.mp3"))
         self.assertEqual(restored.music_duration, Fraction(150))
         self.assertEqual(len(restored.music_segments), 1)
+
+
+class TwoSongExportTests(unittest.TestCase):
+    """Both songs have to reach the exports, each playing the part that was chosen."""
+
+    def setUp(self):
+        self.rate = FrameRate(25)
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        self.folder = Path(self.temporary.name)
+        self.slow = self.folder / "yavaş.mp3"
+        self.fast = self.folder / "hareketli.mp3"
+        for path in (self.slow, self.fast):
+            path.touch()
+
+    def plan(self, segments=None):
+        plan = TimelinePlan(id="t", project_id="p", name="AI Rough Cut", frame_rate=self.rate,
+                            target_duration=Fraction(120))
+        start = 0
+        for index in range(1, 5):  # 4 x 750 frames = 120 seconds
+            asset = MediaAsset(
+                id=f"a{index}", project_id="p", path=Path(f"/media/A00{index}.mov"),
+                name=f"A00{index}.mov", duration=Fraction(60), frame_rate=self.rate,
+                width=1920, height=1080)
+            shot = Shot(id=f"s{index}", asset_id=asset.id, source_range=TimeRange(0, 1500, self.rate))
+            plan.items.append(TimelineItem(
+                id=f"i{index}", shot=shot, asset=asset, source_range=TimeRange(0, 750, self.rate),
+                timeline_range=TimeRange(start, 750, self.rate), score=.9, selection_reason="r"))
+            start += 750
+        if segments is None:
+            segments = (
+                MusicSegment(path=self.slow, timeline_start=Fraction(0), duration=Fraction(90),
+                             source_total=Fraction(200)),
+                MusicSegment(path=self.fast, timeline_start=Fraction(90), duration=Fraction(30),
+                             source_start=Fraction(40), source_total=Fraction(150)),
+            )
+        plan.music_segments = segments
+        plan.music_path = segments[0].path if segments else None
+        plan.music_duration = segments[0].duration if segments else None
+        return plan
+
+    def exported(self, plan=None):
+        paths = export_all(plan or self.plan(), self.folder / "out")
+        return (ET.parse(paths["fcpxml"]).getroot(), json.loads(paths["otio"].read_text()))
+
+    def audio_track(self, otio):
+        for track in otio["tracks"]["children"]:
+            if track.get("kind") == "Audio":
+                return track
+        raise AssertionError("Ses parçası yok")
+
+    # --- FCPXML ---
+
+    def test_each_song_is_declared_once(self):
+        fcpxml, _ = self.exported()
+        assets = fcpxml.findall("./resources/asset[@hasAudio='1']")
+
+        self.assertEqual([a.attrib["name"] for a in assets], ["yavaş.mp3", "hareketli.mp3"])
+
+    def test_a_song_declares_its_whole_length_not_the_part_used(self):
+        fcpxml, _ = self.exported()
+        second = fcpxml.findall("./resources/asset[@hasAudio='1']")[1]
+
+        self.assertEqual(Fraction(second.attrib["duration"].removesuffix("s")), Fraction(150))
+
+    def test_the_second_song_hangs_off_the_clip_that_is_playing_when_it_enters(self):
+        fcpxml, _ = self.exported()
+        spine = fcpxml.find("./library/event/project/sequence/spine")
+        # 90 seconds in is the fourth clip, which starts at 90.
+        owners = [i for i, clip in enumerate(spine) if clip.find("asset-clip[@ref='m2']") is not None]
+
+        self.assertEqual(owners, [3])
+
+    def test_the_second_song_starts_where_it_was_cut_from(self):
+        fcpxml, _ = self.exported()
+        music = fcpxml.find(".//asset-clip[@ref='m2']")
+
+        self.assertEqual(Fraction(music.attrib["start"].removesuffix("s")), Fraction(40))
+        self.assertEqual(Fraction(music.attrib["duration"].removesuffix("s")), Fraction(30))
+
+    def test_each_song_is_on_the_music_lane(self):
+        fcpxml, _ = self.exported()
+
+        for reference in ("m1", "m2"):
+            clip = fcpxml.find(f".//asset-clip[@ref='{reference}']")
+            self.assertEqual(clip.attrib["lane"], "-1", reference)
+            self.assertEqual(clip.attrib["audioRole"], "music", reference)
+
+    def test_a_song_entering_mid_clip_is_offset_inside_its_parent(self):
+        segments = (
+            MusicSegment(path=self.slow, timeline_start=Fraction(0), duration=Fraction(100),
+                         source_total=Fraction(200)),
+            MusicSegment(path=self.fast, timeline_start=Fraction(100), duration=Fraction(20),
+                         source_total=Fraction(150)),
+        )
+        fcpxml, _ = self.exported(self.plan(segments))
+        music = fcpxml.find(".//asset-clip[@ref='m2']")
+
+        # The fourth clip starts at 90s and is untrimmed, so 100s is 10s into it.
+        self.assertEqual(Fraction(music.attrib["offset"].removesuffix("s")), Fraction(10))
+
+    # --- OTIO ---
+
+    def test_the_otio_music_track_holds_both_songs_in_order(self):
+        _, otio = self.exported()
+        track = self.audio_track(otio)
+
+        self.assertEqual([c["name"] for c in track["children"]], ["yavaş.mp3", "hareketli.mp3"])
+
+    def test_the_otio_clips_are_laid_end_to_end(self):
+        _, otio = self.exported()
+        track = self.audio_track(otio)
+        durations = [Fraction(str(c["source_range"]["duration"]["value"])) /
+                     Fraction(str(c["source_range"]["duration"]["rate"])) for c in track["children"]]
+
+        self.assertEqual(durations, [Fraction(90), Fraction(30)])
+
+    def test_the_otio_second_clip_starts_inside_its_song(self):
+        _, otio = self.exported()
+        track = self.audio_track(otio)
+        start = track["children"][1]["source_range"]["start_time"]
+
+        self.assertEqual(Fraction(str(start["value"])) / Fraction(str(start["rate"])), Fraction(40))
+
+    def test_one_song_still_produces_a_single_clip(self):
+        segments = (MusicSegment(path=self.slow, timeline_start=Fraction(0),
+                                 duration=Fraction(120), source_total=Fraction(200)),)
+        fcpxml, otio = self.exported(self.plan(segments))
+        track = self.audio_track(otio)
+
+        self.assertEqual(len(track["children"]), 1)
+        self.assertEqual(len(fcpxml.findall("./resources/asset[@hasAudio='1']")), 1)

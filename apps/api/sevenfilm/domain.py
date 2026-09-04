@@ -77,6 +77,9 @@ class MusicSegment:
     timeline_start: Fraction
     duration: Fraction
     source_start: Fraction = Fraction(0)
+    # The whole song's length, which the exports declare so a host knows how much is there
+    # beyond the part being used. None when it was never measured.
+    source_total: Fraction | None = None
 
     @property
     def timeline_end(self) -> Fraction:

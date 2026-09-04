@@ -7,7 +7,7 @@ from fractions import Fraction
 from pathlib import Path
 from xml.etree import ElementTree as ET
 
-from ..domain import MediaAsset, TimelinePlan
+from ..domain import MediaAsset, MusicSegment, TimelinePlan
 
 
 def _rational_time(value: Fraction) -> str:
@@ -113,38 +113,78 @@ def export_plan_json(plan: TimelinePlan, destination: Path) -> Path:
     return destination
 
 
-def _otio_music_track(plan: TimelinePlan, timeline_rate: Fraction) -> list[dict[str, object]]:
-    """A1 with the chosen music, matching what the FCPXML and the Resolve adapter both build."""
+def _plan_segments(plan: TimelinePlan) -> list[MusicSegment]:
+    """The songs under this edit, as segments, however the plan was put together.
+
+    A plan built before an edit could hold more than one song carries only music_path and
+    music_duration, and those still have to export.
+    """
+    if plan.music_segments:
+        return list(plan.music_segments)
     if not plan.music_path:
         return []
     source = plan.music_duration or plan.duration
-    duration = min(plan.duration, source)
+    return [MusicSegment(
+        path=plan.music_path,
+        timeline_start=Fraction(0),
+        duration=min(plan.duration, source),
+        source_total=source,
+    )]
+
+
+def _otio_music_track(plan: TimelinePlan, timeline_rate: Fraction) -> list[dict[str, object]]:
+    """A1 with the chosen songs, matching what the FCPXML and the Resolve adapter both build."""
+    segments = [
+        segment for segment in _plan_segments(plan) if segment.timeline_start < plan.duration
+    ]
+    if not segments:
+        return []
+    children: list[dict[str, object]] = []
+    cursor = Fraction(0)
+    for segment in segments:
+        if segment.timeline_start > cursor:
+            children.append({
+                "OTIO_SCHEMA": "Gap.1",
+                "name": "",
+                "source_range": _otio_range(
+                    Fraction(0, 1), segment.timeline_start - cursor, timeline_rate),
+                "effects": [],
+                "markers": [],
+                "enabled": True,
+                "metadata": {},
+            })
+            cursor = segment.timeline_start
+        duration = min(segment.duration, plan.duration - cursor)
+        if duration <= 0:
+            continue
+        children.append({
+            "OTIO_SCHEMA": "Clip.2",
+            "name": segment.path.name,
+            "metadata": {"sevenfilm": {"role": "music"}},
+            # The part of the song that plays, not the song from its start.
+            "source_range": _otio_range(segment.source_start, duration, timeline_rate),
+            "media_references": {
+                "DEFAULT_MEDIA": {
+                    "OTIO_SCHEMA": "ExternalReference.1",
+                    "target_url": segment.path.resolve().as_uri(),
+                    "available_range": _otio_range(
+                        Fraction(0, 1), segment.source_total or segment.source_end, timeline_rate),
+                    "metadata": {},
+                    "name": segment.path.name,
+                }
+            },
+            "active_media_reference_key": "DEFAULT_MEDIA",
+            "effects": [],
+            "markers": [],
+            "enabled": True,
+        })
+        cursor += duration
     return [
         {
             "OTIO_SCHEMA": "Track.1",
             "name": "A1 Music",
             "kind": "Audio",
-            "children": [
-                {
-                    "OTIO_SCHEMA": "Clip.2",
-                    "name": plan.music_path.name,
-                    "metadata": {"sevenfilm": {"role": "music"}},
-                    "source_range": _otio_range(Fraction(0, 1), duration, timeline_rate),
-                    "media_references": {
-                        "DEFAULT_MEDIA": {
-                            "OTIO_SCHEMA": "ExternalReference.1",
-                            "target_url": plan.music_path.resolve().as_uri(),
-                            "available_range": _otio_range(Fraction(0, 1), source, timeline_rate),
-                            "metadata": {},
-                            "name": plan.music_path.name,
-                        }
-                    },
-                    "active_media_reference_key": "DEFAULT_MEDIA",
-                    "effects": [],
-                    "markers": [],
-                    "enabled": True,
-                }
-            ],
+            "children": children,
             "effects": [],
             "markers": [],
             "enabled": True,
@@ -245,6 +285,20 @@ def _sequence_resolution(plan: TimelinePlan) -> tuple[int, int]:
     return max(frames_by_shape, key=lambda shape: (frames_by_shape[shape], -order[shape]))
 
 
+def _anchors_here(segment: MusicSegment, item, plan: TimelinePlan) -> bool:
+    """Each song hangs off the picture clip that is on screen when it comes in.
+
+    FCPXML has no free-floating clip: an anchored item belongs to one clip of the spine. A
+    second song entering forty seconds in has to hang off whatever is playing there, and the
+    first song hangs off the first clip whether or not the edit starts at zero.
+    """
+    start = item.timeline_range.start_seconds
+    end = start + item.timeline_range.duration_seconds
+    if segment.timeline_start < start:
+        return item.timeline_range.start_frame == 0
+    return start <= segment.timeline_start < end
+
+
 def export_fcpxml(plan: TimelinePlan, destination: Path) -> Path:
     """Write FCPXML 1.10; import it to Resolve and relink to unchanged original paths."""
     destination.parent.mkdir(parents=True, exist_ok=True)
@@ -312,24 +366,30 @@ def export_fcpxml(plan: TimelinePlan, destination: Path) -> Path:
             kind="original-media",
             src=item.asset.path.resolve().as_uri(),
         )
-    if plan.music_path:
-        music_ref = "m1"
-        music_source_duration = plan.music_duration or plan.duration
-        music_timeline_duration = min(plan.duration, music_source_duration)
+    music_segments = [
+        segment for segment in _plan_segments(plan) if segment.timeline_start < plan.duration
+    ]
+    music_refs: dict[str, str] = {}
+    for segment in music_segments:
+        key = str(segment.path)
+        if key in music_refs:
+            continue
+        reference = f"m{len(music_refs) + 1}"
+        music_refs[key] = reference
         music_asset = ET.SubElement(
             resources,
             "asset",
-            id=music_ref,
-            name=plan.music_path.name,
+            id=reference,
+            name=segment.path.name,
             start="0s",
-            duration=_rational_time(music_source_duration),
+            duration=_rational_time(segment.source_total or segment.source_end),
             hasAudio="1",
         )
         ET.SubElement(
             music_asset,
             "media-rep",
             kind="original-media",
-            src=plan.music_path.resolve().as_uri(),
+            src=segment.path.resolve().as_uri(),
         )
 
     library = ET.SubElement(root, "library")
@@ -356,15 +416,23 @@ def export_fcpxml(plan: TimelinePlan, destination: Path) -> Path:
             duration=_rational_time(item.timeline_range.duration_seconds),
             format=format_of(item.asset),
         )
-        if i == 0 and plan.music_path:
+        for segment in music_segments:
+            if not _anchors_here(segment, item, plan):
+                continue
+            # An anchored item's offset is measured in the parent clip's own timeline, whose
+            # origin is that clip's `start` — the media clock, not zero. The music therefore
+            # begins at the parent's start plus however far into that clip the song comes in.
+            parent_start = _asset_start(item.asset) + item.source_range.start_seconds
+            into_clip = segment.timeline_start - item.timeline_range.start_seconds
+            playing = min(segment.duration, plan.duration - segment.timeline_start)
             ET.SubElement(
                 clip,
                 "asset-clip",
-                name=plan.music_path.stem,
-                ref="m1",
-                offset="0s",
-                start="0s",
-                duration=_rational_time(music_timeline_duration),
+                name=segment.path.stem,
+                ref=music_refs[str(segment.path)],
+                offset=_rational_time(parent_start + max(Fraction(0), into_clip)),
+                start=_rational_time(segment.source_start),
+                duration=_rational_time(playing),
                 lane="-1",
                 audioRole="music",
             )
