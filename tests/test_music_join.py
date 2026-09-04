@@ -1,9 +1,9 @@
 import unittest
 from fractions import Fraction
+from itertools import pairwise
 from pathlib import Path
 
 from sevenfilm.domain import BeatGrid
-from sevenfilm.services.planner import _preferred_categories
 from sevenfilm.services.music import (
     STORY_BOUNDARIES,
     MusicSegment,
@@ -11,6 +11,7 @@ from sevenfilm.services.music import (
     join_tracks,
     story_switch_points,
 )
+from sevenfilm.services.planner import _preferred_categories
 
 
 def grid(*, bpm, seconds, beat_gap, energy="medium"):
@@ -180,7 +181,7 @@ class ChosenCountTests(unittest.TestCase):
 
             self.assertEqual(len(segments), count, f"{count} parça")
             self.assertEqual(segments[0].timeline_start, Fraction(0), f"{count} parça")
-            for earlier, later in zip(segments, segments[1:]):
+            for earlier, later in pairwise(segments):
                 self.assertEqual(earlier.timeline_end, later.timeline_start, f"{count} parça")
             self.assertGreaterEqual(combined.duration, target, f"{count} parça")
 

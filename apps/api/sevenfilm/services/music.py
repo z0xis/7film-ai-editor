@@ -21,7 +21,6 @@ from typing import Any
 
 from sevenfilm.domain import BeatGrid
 
-
 # Where the story arc turns, most telling first. These are the points at which
 # planner._preferred_categories changes its answer, and test_music_join keeps the two in step.
 # The order is what a wedding film is built out of: the party is the one break every edit has,
