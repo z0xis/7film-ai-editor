@@ -135,3 +135,81 @@ class PluginContractTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class JobResumeTests(unittest.TestCase):
+    """Shot analysis runs for tens of minutes; a reload must not lose sight of it."""
+
+    @classmethod
+    def setUpClass(cls):
+        api.DATABASE.migrate()
+        if not api.DATABASE.fetch_one("SELECT id FROM projects WHERE id = ?", ("p",)):
+            api.DATABASE.insert("projects", {
+                "id": "p", "name": "T", "workspace_path": _ROOT.name,
+                "target_duration_seconds": "150", "frame_rate": "25/1",
+                "created_at": now(), "updated_at": now()})
+        cls.client = TestClient(api.app)
+
+    def add_job(self, job_id, status, progress, *, minutes_ago=0, kind="shots"):
+        from datetime import UTC, datetime, timedelta
+        stamp = (datetime.now(UTC) - timedelta(minutes=minutes_ago)).isoformat()
+        api.DATABASE.insert("jobs", {
+            "id": job_id, "project_id": "p", "kind": kind, "status": status,
+            "progress": progress, "checkpoint_json": {"pass": "encode"}, "error": None,
+            "created_at": stamp, "updated_at": stamp})
+        api.DATABASE.execute("UPDATE jobs SET updated_at = ? WHERE id = ?", (stamp, job_id))
+
+    def tearDown(self):
+        api.DATABASE.execute("DELETE FROM jobs", ())
+
+    def test_a_project_with_no_jobs_says_so(self):
+        self.assertEqual(self.client.get("/api/projects/p/jobs/latest").status_code, 404)
+
+    def test_the_running_job_comes_back_after_a_reload(self):
+        self.add_job("j1", "completed", 1.0, minutes_ago=30)
+        self.add_job("j2", "running", 0.4)
+
+        job = self.client.get("/api/projects/p/jobs/latest").json()
+
+        self.assertEqual(job["id"], "j2")
+        self.assertEqual(job["kind"], "shots")
+        self.assertAlmostEqual(job["progress"], 0.4)
+        self.assertFalse(job["stalled"])
+
+    def test_the_checkpoint_says_which_pass_it_is_on(self):
+        self.add_job("j1", "running", 0.2)
+
+        self.assertEqual(self.client.get("/api/projects/p/jobs/latest").json()["checkpoint"]["pass"],
+                         "encode")
+
+    def test_a_job_nothing_is_working_on_is_reported_as_stalled(self):
+        """A killed process leaves its job at "running" for ever, with nothing to finish it."""
+        self.add_job("j1", "running", 0.17, minutes_ago=45)
+
+        self.assertTrue(self.client.get("/api/projects/p/jobs/latest").json()["stalled"])
+
+    def test_a_finished_job_is_never_stalled(self):
+        self.add_job("j1", "completed", 1.0, minutes_ago=600)
+
+        job = self.client.get("/api/projects/p/jobs/latest").json()
+        self.assertFalse(job["stalled"])
+        self.assertEqual(job["status"], "completed")
+
+    def test_a_failed_job_carries_its_reason(self):
+        self.add_job("j1", "failed", 0.3, minutes_ago=1)
+        api.DATABASE.execute("UPDATE jobs SET error = ? WHERE id = ?", ("ffprobe yok", "j1"))
+
+        job = self.client.get("/api/projects/p/jobs/latest").json()
+
+        self.assertEqual(job["status"], "failed")
+        self.assertEqual(job["error"], "ffprobe yok")
+
+    def test_the_single_job_endpoint_reports_stalling_too(self):
+        self.add_job("j1", "running", 0.5, minutes_ago=45)
+
+        self.assertTrue(self.client.get("/api/jobs/j1").json()["stalled"])
+
+    def test_another_project_does_not_leak_in(self):
+        self.add_job("j1", "running", 0.5)
+
+        self.assertEqual(self.client.get("/api/projects/unknown/jobs/latest").status_code, 404)

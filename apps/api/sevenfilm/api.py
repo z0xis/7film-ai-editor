@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import logging
 import uuid
+from datetime import UTC, datetime
 from fractions import Fraction
 from pathlib import Path
 from typing import Any, Literal
@@ -343,13 +344,39 @@ def download_export(timeline_id: str, kind: Literal["plan", "otio", "fcpxml"]) -
     return FileResponse(paths[kind], filename=paths[kind].name)
 
 
+# A job whose progress has not moved for this long is not being worked on any more: the
+# process that was running it is gone, and nothing will ever mark it finished.
+STALLED_JOB_SECONDS = 300
+
+
+def _job_payload(job: dict[str, Any]) -> dict[str, Any]:
+    job["checkpoint"] = json.loads(job.pop("checkpoint_json"))
+    if job["status"] in {"queued", "running"}:
+        updated = datetime.fromisoformat(job["updated_at"])
+        job["stalled"] = (datetime.now(UTC) - updated).total_seconds() > STALLED_JOB_SECONDS
+    else:
+        job["stalled"] = False
+    return job
+
+
+@app.get("/api/projects/{project_id}/jobs/latest")
+def latest_job(project_id: str) -> dict[str, Any]:
+    """The job the desktop app should still be showing, after a reload or a restart."""
+    _project(project_id)
+    job = DATABASE.fetch_one(
+        "SELECT * FROM jobs WHERE project_id = ? ORDER BY created_at DESC LIMIT 1", (project_id,)
+    )
+    if job is None:
+        raise HTTPException(status_code=404, detail="Bu proje için kayıtlı iş yok.")
+    return _job_payload(job)
+
+
 @app.get("/api/jobs/{job_id}")
 def read_job(job_id: str) -> dict[str, Any]:
     job = DATABASE.fetch_one("SELECT * FROM jobs WHERE id = ?", (job_id,))
     if job is None:
         raise HTTPException(status_code=404, detail="Job bulunamadı.")
-    job["checkpoint"] = json.loads(job.pop("checkpoint_json"))
-    return job
+    return _job_payload(job)
 
 
 REACT_ROOT = Path(__file__).resolve().parents[2] / "desktop" / "dist"

@@ -117,8 +117,17 @@ function App() {
       setProject(detailedProject);
       setTimeline(await api.latestTimeline(detailedProject.id).catch(() => null));
       setError("");
+      const running = await api.latestJob(detailedProject.id).catch(() => null);
+      setJob(running && !running.stalled && running.status !== "completed" ? running : null);
     } catch (cause) { setError(String(cause)); }
   }
+
+  const busy = job !== null && (job.status === "queued" || job.status === "running") && !job.stalled;
+
+  useEffect(() => {
+    if (project && busy) follow(job!.id);
+    // Only re-attach when the project changes, not on every progress tick.
+  }, [project?.id]);
 
   async function create(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -138,18 +147,30 @@ function App() {
     } catch (cause) { setError(String(cause)); }
   }
 
-  async function run(endpoint: string, payload?: object) {
+  /** Follow a job to its end. Shot analysis runs for tens of minutes, so this has to survive
+   *  a reload: the job is found again from the project rather than remembered in this tab. */
+  async function follow(jobId: string) {
     if (!project) return;
     try {
-      const { job_id } = await api.startJob(project.id, endpoint, payload);
       for (;;) {
-        const next = await api.job(job_id);
+        const next = await api.job(jobId);
         setJob(next);
         if (next.status === "completed") break;
         if (next.status === "failed") throw new Error(next.error || "İş tamamlanamadı.");
+        if (next.stalled) throw new Error(
+          `${next.kind}: iş yanıt vermiyor, ilerleme %${Math.round(next.progress * 100)}'te durdu. ` +
+          "Yeniden başlatabilirsiniz; tamamlanan kısım korunur.");
         await new Promise((resolve) => setTimeout(resolve, 700));
       }
       setProject(await api.getProject(project.id));
+    } catch (cause) { setError(String(cause)); }
+  }
+
+  async function run(endpoint: string, payload?: object) {
+    if (!project || busy) return;
+    try {
+      const { job_id } = await api.startJob(project.id, endpoint, payload);
+      await follow(job_id);
     } catch (cause) { setError(String(cause)); }
   }
 
@@ -220,14 +241,14 @@ function App() {
             </div>
             <div className="workflow">
               <form onSubmit={(event) => { event.preventDefault(); run("index", Object.fromEntries(new FormData(event.currentTarget))); }}>
-                <PathField label="Ham video klasörü" name="folder" value={rawFolder} onChange={setRawFolder} picker="folder" /><button>1. İndeksle</button>
+                <PathField label="Ham video klasörü" name="folder" value={rawFolder} onChange={setRawFolder} picker="folder" /><button disabled={busy}>1. İndeksle</button>
               </form>
               <form onSubmit={(event) => { event.preventDefault(); run("music", Object.fromEntries(new FormData(event.currentTarget))); }}>
-                <PathField label="Müzik dosyası" name="path" value={musicPath} onChange={setMusicPath} picker="music" /><button>2. Müziği analiz et</button>
+                <PathField label="Müzik dosyası" name="path" value={musicPath} onChange={setMusicPath} picker="music" /><button disabled={busy}>2. Müziği analiz et</button>
               </form>
               <div className="actions">
-                <button onClick={() => run("shots")}>3. Shot’ları çıkar</button>
-                <button className="secondary" onClick={() => run("derivatives")}>Proxy + thumbnail</button>
+                <button disabled={busy} onClick={() => run("shots")}>3. Shot’ları çıkar</button>
+                <button className="secondary" disabled={busy} onClick={() => run("derivatives")}>Proxy + thumbnail</button>
               </div>
               <form onSubmit={build}>
                 <Field label="Alternatif seed" name="seed" type="number" value="1" /><button>4. Kaba kurgu oluştur</button>
