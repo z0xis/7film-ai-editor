@@ -34,6 +34,12 @@ OVERBRIGHT_WEIGHT = 1.5
 # letting a good clip beat a weaker clip's first appearance instead of marching through every
 # shot in turn regardless of how it scored.
 REUSE_PENALTY = 0.22
+# Perceptual hashes are compared by Hamming distance, not equality: two frames of the same
+# moment differ in a few bits, and the odds of a 64 bit hash matching exactly are nil, which is
+# why the duplicate penalty had never once fired. This footage holds 56 pairs within 5 bits and
+# 409 within 10, across different files - the kind the same-asset penalty cannot see.
+NEAR_DUPLICATE_BITS = 10
+DUPLICATE_PENALTY = 0.65
 
 
 class InsufficientFootageError(ValueError):
@@ -249,6 +255,39 @@ def beat_alignment_ratio(
     return aligned / len(cuts)
 
 
+def _perceptual_hash(shot: Shot) -> int | None:
+    group = shot.duplicate_group or ""
+    prefix, _, digits = group.partition(":")
+    if prefix != "visual" or not digits:
+        return None
+    try:
+        return int(digits, 16)
+    except ValueError:
+        return None
+
+
+def _visual_repeat_penalty(shot: Shot, recent: tuple[TimelineItem, ...]) -> float:
+    """How much this shot looks like one just used, whatever file it came from.
+
+    Falls to nothing at NEAR_DUPLICATE_BITS, so only a shot that genuinely repeats a recent one
+    is held back; a different angle on the same scene is several times further away than that.
+    """
+    current = _perceptual_hash(shot)
+    if current is None:
+        return 0.0
+    distances = [
+        (current ^ other).bit_count()
+        for other in (_perceptual_hash(item.shot) for item in recent)
+        if other is not None
+    ]
+    if not distances:
+        return 0.0
+    closest = min(distances)
+    if closest >= NEAR_DUPLICATE_BITS:
+        return 0.0
+    return DUPLICATE_PENALTY * (1.0 - closest / NEAR_DUPLICATE_BITS)
+
+
 def _quality_gates(
     style_profile: Mapping[str, object] | None, shots: Sequence[Shot]
 ) -> tuple[float, float]:
@@ -399,7 +438,7 @@ def _score_candidate(
     target_motion = {"low": 0.3, "medium": 0.55, "high": 0.78}.get(energy, 0.55)
     music_fit = max(0.0, 1.0 - abs(shot.motion_score - target_motion))
     sequence_continuity = 1.0
-    duplicate_penalty = 0.0
+    duplicate_penalty = _visual_repeat_penalty(shot, recent)
     jump_cut_penalty = 0.0
     previous = recent[-1] if recent else None
     if previous is not None:
@@ -409,8 +448,6 @@ def _score_candidate(
             jump_cut_penalty = 0.16
         if previous.shot.asset_id == shot.asset_id:
             jump_cut_penalty += 0.30
-        if previous.shot.duplicate_group and previous.shot.duplicate_group == shot.duplicate_group:
-            duplicate_penalty = 0.65
         sequence_continuity = 0.8 if jump_cut_penalty else 1.0
     recent_category_count = sum(item.shot.category == shot.category for item in recent)
     jump_cut_penalty += 0.09 * recent_category_count
