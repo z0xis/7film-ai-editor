@@ -6,6 +6,7 @@ import json
 import random
 import uuid
 from bisect import bisect_left
+from collections import Counter
 from collections.abc import Iterable, Mapping, Sequence
 from fractions import Fraction
 from pathlib import Path
@@ -101,6 +102,12 @@ MAX_BEAT_HOLD_FACTOR = 2
 # nearly used up used to contribute its one remaining frame as a cut, which shows up as a flash.
 # A quarter second still allows a one-beat cut at any tempo up to 240 BPM.
 MIN_CUT_SECONDS = Fraction(1, 4)
+# A story section whose categories make up less than this much of the footage cannot be built
+# from it, however the planner scores. Saying so beats quietly filling the section with
+# whatever else was to hand, and the editor is the one who knows whether the coverage is
+# really missing or the labels are wrong.
+THIN_CATEGORY_SHARE = 0.02
+STORY_PROGRESS_POINTS = (0.05, 0.2, 0.35, 0.55, 0.75, 0.9, 0.98)
 BEAT_TOLERANCE = Fraction(3, 25)  # 120 ms, the tolerance the reference profile reports.
 
 
@@ -664,7 +671,51 @@ def build_timeline(
     if plan.duration != target_duration:
         plan.warnings.append("Son plan kare sınırına yuvarlandı; süre hedefe en yakın frame-accurate değerdedir.")
     _append_rhythm_report(plan, music, style_profile)
+    coverage = _story_coverage_warning(candidates)
+    if coverage:
+        plan.warnings.append(coverage)
+    plan.warnings.append(
+        f"Kesimlerin %{_story_arc_ratio(plan) * 100:.0f}'ı bulunduğu bölüm için tercih edilen "
+        "kategoriden."
+    )
     return plan
+
+
+def _story_coverage_warning(candidates: Sequence[Shot]) -> str | None:
+    """Name the parts of the wedding story this footage has almost nothing for."""
+    if not candidates:
+        return None
+    counts = Counter(shot.category for shot in candidates)
+    wanted: set[str] = set()
+    for progress in STORY_PROGRESS_POINTS:
+        wanted.update(_preferred_categories(progress))
+    thin = sorted(
+        (category for category in wanted
+         if counts.get(category, 0) / len(candidates) < THIN_CATEGORY_SHARE),
+        key=lambda category: counts.get(category, 0),
+    )
+    if not thin:
+        return None
+    described = ", ".join(
+        f"{category} (%{100 * counts.get(category, 0) / len(candidates):.0f})" for category in thin
+    )
+    return (
+        f"Hikâye akışının şu bölümleri için görüntü neredeyse yok: {described}. "
+        "O bölümler eldeki diğer kategorilerden dolduruldu."
+    )
+
+
+def _story_arc_ratio(plan: TimelinePlan) -> float:
+    """How much of the edit sits in a category preferred where it lands."""
+    total = plan.duration_frames
+    if not total or not plan.items:
+        return 0.0
+    matched = sum(
+        item.timeline_range.duration_frames
+        for item in plan.items
+        if item.shot.category in _preferred_categories(item.timeline_range.start_frame / total)
+    )
+    return matched / total
 
 
 def _append_rhythm_report(
