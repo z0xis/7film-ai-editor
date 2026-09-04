@@ -711,3 +711,58 @@ class SavedTimelineSurvivesReanalysisTests(unittest.TestCase):
 
         self.assertEqual(item.shot.category, "b_roll")
         self.assertEqual(item.source_range.duration_frames, 50)
+
+
+class SequenceResolutionTests(unittest.TestCase):
+    """A mixed-orientation shoot was given a timeline shaped like neither of its cameras."""
+
+    def setUp(self):
+        self.rate = FrameRate(25)
+
+    def plan(self, shapes):
+        """shapes: (width, height, frames) per clip, laid end to end."""
+        plan = TimelinePlan(id="t", project_id="p", name="AI Rough Cut", frame_rate=self.rate,
+                            target_duration=Fraction(8))
+        start = 0
+        for index, (width, height, frames) in enumerate(shapes, start=1):
+            asset = MediaAsset(
+                id=f"asset-{index}", project_id="p", path=Path(f"/media/A00{index}.mov"),
+                name=f"A00{index}.mov", duration=Fraction(10), frame_rate=self.rate,
+                width=width, height=height, timecode="08:19:21:02")
+            shot = Shot(id=f"shot-{index}", asset_id=asset.id, source_range=TimeRange(0, 250, self.rate))
+            plan.items.append(TimelineItem(
+                id=f"i{index}", shot=shot, asset=asset,
+                source_range=TimeRange(0, frames, self.rate),
+                timeline_range=TimeRange(start, frames, self.rate), score=.9, selection_reason="r"))
+            start += frames
+        return plan
+
+    def sequence_format(self, plan):
+        folder = tempfile.TemporaryDirectory()
+        self.addCleanup(folder.cleanup)
+        root = ET.parse(export_all(plan, Path(folder.name))["fcpxml"]).getroot()
+        element = root.find("./resources/format[@id='r0']")
+        return int(element.attrib["width"]), int(element.attrib["height"])
+
+    def test_a_vertical_clip_does_not_make_the_timeline_square(self):
+        shape = self.sequence_format(self.plan([(1920, 1080, 200), (1080, 1920, 50)]))
+
+        self.assertEqual(shape, (1920, 1080))
+
+    def test_the_shape_holding_the_most_time_wins(self):
+        shape = self.sequence_format(self.plan([(1920, 1080, 50), (3840, 2160, 400)]))
+
+        self.assertEqual(shape, (3840, 2160))
+
+    def test_a_tie_keeps_the_first_shape_on_the_timeline(self):
+        shape = self.sequence_format(self.plan([(1080, 1920, 100), (1920, 1080, 100)]))
+
+        self.assertEqual(shape, (1080, 1920))
+
+    def test_an_unmeasured_asset_does_not_decide_the_timeline(self):
+        shape = self.sequence_format(self.plan([(0, 0, 300), (3840, 2160, 50)]))
+
+        self.assertEqual(shape, (3840, 2160))
+
+    def test_an_empty_plan_still_exports(self):
+        self.assertEqual(self.sequence_format(self.plan([])), (1920, 1080))

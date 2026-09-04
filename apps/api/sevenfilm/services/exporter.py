@@ -225,6 +225,26 @@ def export_otio(plan: TimelinePlan, destination: Path) -> Path:
     return destination
 
 
+def _sequence_resolution(plan: TimelinePlan) -> tuple[int, int]:
+    """The shape most of the edit is actually in, not the widest width beside the tallest height.
+
+    Taking each dimension's maximum independently invents a frame no source has: a shoot mixing
+    1920x1080 with a 1080x1920 phone clip produced a square 1920x1920 timeline. An editor picks
+    the format the bulk of the footage is in, so weigh each shape by the time it holds.
+    """
+    frames_by_shape: dict[tuple[int, int], int] = {}
+    for item in plan.items:
+        shape = (item.asset.width, item.asset.height)
+        if shape[0] < 1 or shape[1] < 1:
+            continue
+        frames_by_shape[shape] = frames_by_shape.get(shape, 0) + item.timeline_range.duration_frames
+    if not frames_by_shape:
+        return 1920, 1080
+    # Ties go to the first shape on the timeline, which keeps the export stable.
+    order = {shape: index for index, shape in enumerate(frames_by_shape)}
+    return max(frames_by_shape, key=lambda shape: (frames_by_shape[shape], -order[shape]))
+
+
 def export_fcpxml(plan: TimelinePlan, destination: Path) -> Path:
     """Write FCPXML 1.10; import it to Resolve and relink to unchanged original paths."""
     destination.parent.mkdir(parents=True, exist_ok=True)
@@ -234,14 +254,15 @@ def export_fcpxml(plan: TimelinePlan, destination: Path) -> Path:
     # declaring every clip at the timeline's rate, which tells Resolve to read a start timecode
     # at a rate the file does not have. Resolve's own export writes a format per combination.
     sequence_format = "r0"
+    sequence_width, sequence_height = _sequence_resolution(plan)
     ET.SubElement(
         resources,
         "format",
         id=sequence_format,
         name="FFVideoFormat",
         frameDuration=_rational_time(Fraction(1, 1) / plan.frame_rate.value),
-        width=str(max((item.asset.width for item in plan.items), default=1920)),
-        height=str(max((item.asset.height for item in plan.items), default=1080)),
+        width=str(sequence_width),
+        height=str(sequence_height),
     )
     asset_formats: dict[tuple[str, int, int], str] = {}
     for item in plan.items:
