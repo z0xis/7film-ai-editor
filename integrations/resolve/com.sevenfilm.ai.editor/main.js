@@ -92,10 +92,24 @@ async function ensureBackend() {
     stdio: "ignore",
   });
   backendProcess.on("exit", () => { backendProcess = null; });
+  let mismatched = null;
   for (let attempt = 0; attempt < 40; attempt += 1) {
     const health = await backendHealth(backendOrigin);
-    if (health?.status === "ok" && health?.engine_version === ENGINE_VERSION) return;
+    if (health?.status === "ok") {
+      if (health.engine_version === ENGINE_VERSION) return;
+      mismatched = health.engine_version;
+    }
     await new Promise((resolve) => setTimeout(resolve, 500));
+  }
+  // An engine that answers with the wrong version is a plugin that was not reinstalled after
+  // the code moved: this copy is installed under Workflow Integration Plugins and does not
+  // change when the repository does. Waiting twenty seconds and reporting "did not start" sent
+  // the user looking for a backend that was running the whole time.
+  if (mismatched) {
+    throw new Error(
+      `7Film eklentisi ${ENGINE_VERSION} bekliyor, çalışan motor ${mismatched} bildiriyor. `
+      + "scripts/install_resolve_plugin.sh çalıştırıp Resolve'u yeniden başlatın.",
+    );
   }
   throw new Error("7Film analiz motoru 20 saniye içinde başlamadı.");
 }

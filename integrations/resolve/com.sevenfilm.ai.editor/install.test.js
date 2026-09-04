@@ -69,3 +69,27 @@ describe("the import path the plugin leads with", () => {
     assert.match(flow, /importMethod: "Resolve API"|importMethod = "Resolve API"/);
   });
 });
+
+describe("the plugin and the engine agree on a version", () => {
+  const API = path.join(PLUGIN_DIR, "..", "..", "..", "apps", "api", "sevenfilm", "api.py");
+
+  it("main.js declares the same ENGINE_VERSION as api.py", () => {
+    // The installed copy lives under Resolve's plugin folder and does not move when the
+    // repository does. When they disagree the plugin refuses the engine it just started,
+    // waits twenty seconds and dies — which is how the window stopped opening at all.
+    const plugin = fs.readFileSync(path.join(PLUGIN_DIR, "main.js"), "utf8")
+      .match(/const ENGINE_VERSION = "([^"]+)"/);
+    const engine = fs.readFileSync(API, "utf8").match(/^ENGINE_VERSION = "([^"]+)"/m);
+
+    assert.ok(plugin, "main.js has no ENGINE_VERSION");
+    assert.ok(engine, "api.py has no ENGINE_VERSION");
+    assert.equal(plugin[1], engine[1]);
+  });
+
+  it("says which versions disagree instead of reporting a backend that never started", () => {
+    const source = fs.readFileSync(path.join(PLUGIN_DIR, "main.js"), "utf8");
+
+    assert.match(source, /install_resolve_plugin\.sh/);
+    assert.match(source, /bildiriyor/);
+  });
+});
