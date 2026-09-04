@@ -3,7 +3,14 @@ from fractions import Fraction
 from pathlib import Path
 
 from sevenfilm.domain import BeatGrid
-from sevenfilm.services.music import MusicSegment, MusicTrack, join_tracks
+from sevenfilm.services.planner import _preferred_categories
+from sevenfilm.services.music import (
+    STORY_BOUNDARIES,
+    MusicSegment,
+    MusicTrack,
+    join_tracks,
+    story_switch_points,
+)
 
 
 def grid(*, bpm, seconds, beat_gap, energy="medium"):
@@ -103,3 +110,86 @@ class JoinTracksTests(unittest.TestCase):
         segment = MusicSegment(path=Path("/m/a.mp3"), timeline_start=Fraction(10), duration=Fraction(5))
 
         self.assertEqual(segment.timeline_end, Fraction(15))
+
+
+class StorySwitchPointTests(unittest.TestCase):
+    """How many tracks is the editor's call; where they change follows from the film."""
+
+    def points(self, count, target=Fraction(120)):
+        return [point / target for point in story_switch_points(count, target)]
+
+    def test_one_track_never_switches(self):
+        self.assertEqual(story_switch_points(1, Fraction(120)), ())
+
+    def test_two_tracks_change_at_the_party(self):
+        self.assertEqual(self.points(2), [Fraction(82, 100)])
+
+    def test_a_third_track_takes_the_ceremony_as_well(self):
+        self.assertEqual(self.points(3), [Fraction(42, 100), Fraction(82, 100)])
+
+    def test_the_points_come_out_in_order(self):
+        for count in range(2, 9):
+            points = self.points(count)
+            self.assertEqual(points, sorted(points), f"{count} parça")
+
+    def test_the_points_are_seconds_on_the_edit(self):
+        self.assertEqual(story_switch_points(2, Fraction(200)), (Fraction(164),))
+
+    def test_more_tracks_than_the_arc_has_hinges_are_spaced_evenly(self):
+        points = self.points(8)
+
+        self.assertEqual(points, [Fraction(index, 8) for index in range(1, 8)])
+
+    def test_a_switch_point_always_falls_inside_the_edit(self):
+        for count in range(2, 9):
+            for point in self.points(count):
+                self.assertGreater(point, 0, f"{count} parça")
+                self.assertLess(point, 1, f"{count} parça")
+
+    def test_no_tracks_is_refused(self):
+        with self.assertRaises(ValueError):
+            story_switch_points(0, Fraction(120))
+
+    def test_the_boundaries_are_where_the_planner_actually_turns(self):
+        """The two lists are written apart; this is what keeps them from drifting."""
+        turns, previous = [], _preferred_categories(0.0)
+        for step in range(1, 10001):
+            progress = step / 10000
+            current = _preferred_categories(progress)
+            if current != previous:
+                turns.append(round(progress, 4))
+                previous = current
+
+        self.assertEqual(sorted(float(point) for point in STORY_BOUNDARIES), turns)
+
+
+class ChosenCountTests(unittest.TestCase):
+    """Whatever the count, the tracks are laid end to end over the whole edit."""
+
+    def tracks(self, count):
+        return [
+            MusicTrack(Path(f"/m/{index}.mp3"), grid(bpm=90 + index, seconds=200, beat_gap="1/2"))
+            for index in range(count)
+        ]
+
+    def test_every_count_covers_the_edit_without_a_gap(self):
+        for count in range(1, 7):
+            target = Fraction(120)
+            tracks = self.tracks(count)
+            combined, segments, _ = join_tracks(tracks, story_switch_points(count, target))
+
+            self.assertEqual(len(segments), count, f"{count} parça")
+            self.assertEqual(segments[0].timeline_start, Fraction(0), f"{count} parça")
+            for earlier, later in zip(segments, segments[1:]):
+                self.assertEqual(earlier.timeline_end, later.timeline_start, f"{count} parça")
+            self.assertGreaterEqual(combined.duration, target, f"{count} parça")
+
+    def test_each_track_contributes_its_own_beats(self):
+        count = 3
+        tracks = self.tracks(count)
+        combined, segments, _ = join_tracks(tracks, story_switch_points(count, Fraction(120)))
+
+        for segment in segments:
+            inside = [b for b in combined.beats if segment.timeline_start <= b < segment.timeline_end]
+            self.assertGreater(len(inside), 0)
+            self.assertEqual(inside[0], segment.timeline_start)

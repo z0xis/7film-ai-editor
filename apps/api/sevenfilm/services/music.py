@@ -22,6 +22,41 @@ from typing import Any
 from sevenfilm.domain import BeatGrid
 
 
+# Where the story arc turns, most telling first. These are the points at which
+# planner._preferred_categories changes its answer, and test_music_join keeps the two in step.
+# The order is what a wedding film is built out of: the party is the one break every edit has,
+# then the ceremony, then the portraits, and so on down to the smaller hinges.
+STORY_BOUNDARIES: tuple[Fraction, ...] = (
+    Fraction(82, 100),   # the party starts
+    Fraction(42, 100),   # the ceremony block starts
+    Fraction(62, 100),   # the couple and portraits
+    Fraction(28, 100),   # preparation gives way to the family
+    Fraction(95, 100),   # the closing
+    Fraction(10, 100),   # the venue intro ends
+)
+
+
+def story_switch_points(track_count: int, target_duration: Fraction) -> tuple[Fraction, ...]:
+    """When each track after the first takes over, read off the story arc.
+
+    The editor chooses how many tracks to use; where they change is a consequence of the film,
+    not another setting. Two tracks change at the party, which is the one break every wedding
+    edit has. A third takes the ceremony as well, a fourth the portraits, and so on down the
+    arc. Past the hinges the arc actually has, the remaining tracks are spaced evenly — there
+    is nothing left to read, and saying so honestly beats inventing a structural meaning.
+    """
+    if track_count < 1:
+        raise ValueError("En az bir müzik parçası gerekiyor.")
+    switches = track_count - 1
+    if switches == 0:
+        return ()
+    if switches <= len(STORY_BOUNDARIES):
+        chosen = sorted(STORY_BOUNDARIES[:switches])
+    else:
+        chosen = [Fraction(index, track_count) for index in range(1, track_count)]
+    return tuple(point * target_duration for point in chosen)
+
+
 @dataclass(frozen=True)
 class MusicSegment:
     """One track's turn: which file, where it starts on the timeline, and how long it plays."""
