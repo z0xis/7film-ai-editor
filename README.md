@@ -26,7 +26,17 @@ Bu çalışma alanındaki izole kurulum hazırsa macOS'ta `7Film AI Editor.comma
 ./scripts/run_app.sh
 ```
 
-Arayüz `http://127.0.0.1:8000/` adresinde açılır. İzole ortamı yeniden kurmanız gerekirse:
+Arayüz `http://127.0.0.1:8000/` adresinde açılır. Masaüstü arayüzü bir derleme çıktısıdır ve
+depoda tutulmaz; `run_app.sh` eksikse kendisi derler. Bağımlılıkları hiç kurulmadıysa bir kez:
+
+```bash
+cd apps/desktop && npm install && npm run build
+```
+
+Derlenmemişse motor basit bir sayfa sunar ve bunu sayfanın başında söyler: eski analiz uyarısı,
+çalışan işi yeniden yakalama ve iş sürerken düğmelerin kilitlenmesi orada yoktur.
+
+İzole ortamı yeniden kurmanız gerekirse:
 
 ```bash
 cd 7film-ai-editor
@@ -44,7 +54,15 @@ Bu sürüm DaVinci Resolve 21'in resmi Workflow Integration API'sini kullanır. 
 ./scripts/install_resolve_plugin.sh
 ```
 
-Resolve'u yeniden başlattıktan sonra `Workspace → Workflow Integrations → 7Film AI Editor` yolunu açın. Panel yerel analiz motorunu otomatik başlatır. Kaba kurgu hazır olduğunda **Resolve'a gönder** düğmesi FCPXML'i açık projeye doğrudan aktarır, Edit sayfasına geçer ve seçim gerekçelerini timeline marker'larına yazar.
+Resolve'u yeniden başlattıktan sonra `Workspace → Workflow Integrations → 7Film AI Editor` yolunu
+açın. Panel yerel analiz motorunu otomatik başlatır. Kaba kurgu hazır olduğunda **Resolve'a gönder**
+düğmesi timeline'ı Resolve'un kendi API'siyle kurar: klipler yalnızca görüntü olarak gelir, seçilen
+müzik A1'e kare 0'dan yerleşir, A2 ve A3 kamera sesi ve konuşmalar için boş bırakılır, ve her kesime
+seçim gerekçesini taşıyan bir marker eklenir. Ardından Edit sayfasına geçer.
+
+Bu, Resolve Studio 21.0.2 üzerinde gerçek malzemeyle uçtan uca doğrulanmıştır. FCPXML içe aktarma
+yedek yol olarak durur; **Dosya olarak dışa aktar** ile alınan FCPXML ve OTIO dosyaları da
+Resolve'a ve OpenTimelineIO'ya ayrıca aktarılabilir.
 
 API dokümantasyonu `http://127.0.0.1:8000/docs`, arayüz ise `http://127.0.0.1:8000/` altında açılır.
 
