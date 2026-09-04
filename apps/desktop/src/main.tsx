@@ -74,6 +74,72 @@ function PathField({
   );
 }
 
+/**
+ * The songs an edit is cut to, in the order they play. One song is the common case and stays a
+ * single row; a second turns the opening into a slow passage and hands the party its own track,
+ * with the change falling where the story arc turns.
+ */
+function SongList({
+  songs,
+  onChange,
+  disabled,
+}: {
+  songs: string[];
+  onChange: (songs: string[]) => void;
+  disabled: boolean;
+}) {
+  const replace = (index: number, value: string) =>
+    onChange(songs.map((song, position) => (position === index ? value : song)));
+
+  async function browse(index: number) {
+    if (!window.resolveAPI) return;
+    const selected = await window.resolveAPI.selectMusic();
+    if (selected) replace(index, selected);
+  }
+
+  return (
+    <div className="song-list">
+      <span className="song-list-label">
+        {songs.length > 1 ? `Şarkılar (${songs.length}, sırayla çalar)` : "Müzik dosyası"}
+      </span>
+      {songs.map((song, index) => (
+        <span className="path-control" key={index}>
+          {songs.length > 1 && <span className="song-order">{index + 1}</span>}
+          <input
+            required
+            value={song}
+            onChange={(event) => replace(index, event.target.value)}
+            placeholder={index === 0 ? "Açılış şarkısı" : "Sonraki şarkı"}
+          />
+          {window.resolveAPI && (
+            <button type="button" className="browse-button" onClick={() => browse(index)}>
+              Finder’dan seç
+            </button>
+          )}
+          {songs.length > 1 && (
+            <button
+              type="button"
+              className="browse-button"
+              title="Bu şarkıyı çıkar"
+              onClick={() => onChange(songs.filter((_, position) => position !== index))}
+            >
+              ×
+            </button>
+          )}
+        </span>
+      ))}
+      <button
+        type="button"
+        className="secondary"
+        disabled={disabled}
+        onClick={() => onChange([...songs, ""])}
+      >
+        + Şarkı ekle
+      </button>
+    </div>
+  );
+}
+
 /** A stale analysis looks like a finished one, and quietly cuts the edit wrong. */
 function staleWarning(project: Project): string | null {
   const stale = project.stale_analysis;
@@ -96,7 +162,7 @@ function App() {
   const [resolveMessage, setResolveMessage] = useState("");
   const [workspacePath, setWorkspacePath] = useState("");
   const [rawFolder, setRawFolder] = useState("");
-  const [musicPath, setMusicPath] = useState("");
+  const [songs, setSongs] = useState<string[]>([""]);
 
   useEffect(() => {
     api.projects().then(async (availableProjects) => {
@@ -115,6 +181,8 @@ function App() {
       const detailedProject = await api.getProject(selected.id);
       localStorage.setItem("sevenfilm.projectId", detailedProject.id);
       setProject(detailedProject);
+      // Show the running order back, so re-analysing does not silently drop the second song.
+      setSongs(detailedProject.music_paths?.length ? detailedProject.music_paths : [""]);
       setTimeline(await api.latestTimeline(detailedProject.id).catch(() => null));
       setError("");
       const running = await api.latestJob(detailedProject.id).catch(() => null);
@@ -243,8 +311,9 @@ function App() {
               <form onSubmit={(event) => { event.preventDefault(); run("index", Object.fromEntries(new FormData(event.currentTarget))); }}>
                 <PathField label="Ham video klasörü" name="folder" value={rawFolder} onChange={setRawFolder} picker="folder" /><button disabled={busy}>1. İndeksle</button>
               </form>
-              <form onSubmit={(event) => { event.preventDefault(); run("music", Object.fromEntries(new FormData(event.currentTarget))); }}>
-                <PathField label="Müzik dosyası" name="path" value={musicPath} onChange={setMusicPath} picker="music" /><button disabled={busy}>2. Müziği analiz et</button>
+              <form onSubmit={(event) => { event.preventDefault(); run("music", { paths: songs.map((song) => song.trim()).filter(Boolean) }); }}>
+                <SongList songs={songs} onChange={setSongs} disabled={busy} />
+                <button disabled={busy || !songs.some((song) => song.trim())}>2. Müziği analiz et</button>
               </form>
               <div className="actions">
                 <button disabled={busy} onClick={() => run("shots")}>3. Shot’ları çıkar</button>

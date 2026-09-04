@@ -8,3 +8,34 @@
   color: #e6c98a;
   font-size: .85rem;
 }
+
+/* Songs play in the order they are listed, so the list has to read as an order. */
+.song-list {
+  display: grid;
+  gap: 8px;
+  color: #a59e93;
+  font-size: .84rem;
+}
+
+.song-list-label {
+  color: #a59e93;
+}
+
+.song-order {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  border: 1px solid #4a4742;
+  border-radius: 8px;
+  background: #121211;
+  color: #e39760;
+  font-weight: 700;
+  font-size: .8rem;
+}
+
+.song-list > button {
+  justify-self: start;
+  padding: 8px 12px;
+  font-size: .82rem;
+}

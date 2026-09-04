@@ -229,7 +229,11 @@ def get_project(project_id: str) -> dict[str, Any]:
     project = _project(project_id)
     project["assets"] = len(project_assets(DATABASE, project_id))
     project["shots"] = len(project_shots(DATABASE, project_id))
-    project["latest_music"] = bool(project_music(DATABASE, project_id))
+    songs = project_music(DATABASE, project_id)
+    # The running order the editor chose, so the app can show it back rather than one file name.
+    project["music_paths"] = [str(track.path) for track in songs]
+    project["music_path"] = str(songs[0].path) if songs else None
+    project["latest_music"] = bool(songs)
     profile = _style_profile()
     project["style_reference_count"] = int(profile.get("reference_count", 0)) if profile else 0
     project["stale_analysis"] = stale_analysis(DATABASE, project_id)

@@ -112,3 +112,76 @@ class MusicRequestTests(unittest.TestCase):
 
     def test_an_empty_request_chooses_nothing(self):
         self.assertEqual(self.request().chosen(), [])
+
+
+class MusicEndpointTests(unittest.TestCase):
+    """What the desktop app sends when the editor lists more than one song."""
+
+    @classmethod
+    def setUpClass(cls):
+        from fastapi.testclient import TestClient
+        from sevenfilm import api
+        cls.api = api
+        cls.client = TestClient(api.app)
+        api.DATABASE.migrate()
+        cls.folder = tempfile.TemporaryDirectory()
+        root = Path(cls.folder.name)
+        cls.songs = []
+        for name in ("yavaş.mp3", "hareketli.mp3"):
+            path = root / name
+            path.touch()
+            cls.songs.append(str(path))
+        response = cls.client.post("/api/projects", json={
+            "name": "iki şarkı", "workspace_path": str(root),
+            "target_duration_seconds": "120", "frame_rate": "25/1"})
+        cls.project = response.json()["id"]
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.folder.cleanup()
+
+    def post(self, body):
+        return self.client.post(f"/api/projects/{self.project}/music", json=body)
+
+    def rows(self):
+        return self.api.DATABASE.fetch_all(
+            "SELECT path, position FROM music_tracks WHERE project_id = ? ORDER BY position",
+            (self.project,))
+
+    def seed(self, paths):
+        self.api.DATABASE.execute(
+            "DELETE FROM music_tracks WHERE project_id = ?", (self.project,))
+        for position, path in enumerate(paths):
+            self.api.DATABASE.insert("music_tracks", {
+                "id": f"{self.project}-{position}", "project_id": self.project, "path": path,
+                "duration_seconds": "100", "bpm": 120.0, "beats_json": [], "sections_json": [],
+                "position": position, "created_at": now()})
+
+    def test_a_list_of_songs_is_accepted(self):
+        response = self.post({"paths": self.songs})
+
+        self.assertEqual(response.status_code, 202)
+        self.assertIn("job_id", response.json())
+
+    def test_a_single_path_is_still_accepted(self):
+        self.assertEqual(self.post({"path": self.songs[0]}).status_code, 202)
+
+    def test_an_empty_request_is_refused_rather_than_queued(self):
+        self.assertEqual(self.post({"paths": []}).status_code, 422)
+        self.assertEqual(self.post({}).status_code, 422)
+
+    def test_choosing_songs_replaces_the_previous_selection(self):
+        """Leaving the old rows would put back a song the editor had taken out."""
+        self.seed(["/m/eski.mp3"])
+
+        self.post({"paths": self.songs})
+
+        self.assertNotIn("/m/eski.mp3", [row["path"] for row in self.rows()])
+
+    def test_the_project_payload_lists_the_songs_in_order(self):
+        self.seed(self.songs)
+
+        payload = self.client.get(f"/api/projects/{self.project}").json()
+
+        self.assertEqual(payload.get("music_paths"), self.songs)
+        self.assertEqual(payload.get("music_path"), self.songs[0])
