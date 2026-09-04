@@ -8,6 +8,7 @@ from sevenfilm.services.music import (
     STORY_BOUNDARIES,
     MusicSegment,
     MusicTrack,
+    choose_window,
     join_tracks,
     story_switch_points,
 )
@@ -194,3 +195,127 @@ class ChosenCountTests(unittest.TestCase):
             inside = [b for b in combined.beats if segment.timeline_start <= b < segment.timeline_end]
             self.assertGreater(len(inside), 0)
             self.assertEqual(inside[0], segment.timeline_start)
+
+
+def two_part_grid(*, bpm, seconds, beat_gap, quiet_until):
+    """A song that starts calm and opens up, which is what most of them do."""
+    gap = Fraction(beat_gap)
+    beats = tuple(Fraction(i) * gap for i in range(int(Fraction(seconds) / gap)))
+    return BeatGrid(
+        bpm=bpm, beats=beats, duration=Fraction(seconds),
+        sections=(
+            {"energy": "low", "start": Fraction(0), "end": Fraction(quiet_until)},
+            {"energy": "high", "start": Fraction(quiet_until), "end": Fraction(seconds)},
+        ))
+
+
+class ChooseWindowTests(unittest.TestCase):
+    """A song does not have to be used from its first second to its last."""
+
+    def setUp(self):
+        self.grid = two_part_grid(bpm=120, seconds=200, beat_gap="1/2", quiet_until=60)
+
+    def test_the_party_takes_the_part_that_moves(self):
+        self.assertEqual(choose_window(self.grid, Fraction(40), "high"), Fraction(60))
+
+    def test_the_opening_takes_the_calm_part(self):
+        self.assertEqual(choose_window(self.grid, Fraction(40), "low"), Fraction(0))
+
+    def test_asking_for_nothing_uses_the_song_from_its_start(self):
+        self.assertEqual(choose_window(self.grid, Fraction(40), None), Fraction(0))
+
+    def test_a_song_no_longer_than_the_slot_is_used_whole(self):
+        self.assertEqual(choose_window(self.grid, Fraction(200), "high"), Fraction(0))
+        self.assertEqual(choose_window(self.grid, Fraction(400), "high"), Fraction(0))
+
+    def test_the_window_never_runs_past_the_end_of_the_song(self):
+        for length in (Fraction(10), Fraction(90), Fraction(150)):
+            start = choose_window(self.grid, length, "high")
+            self.assertLessEqual(start + length, self.grid.duration, f"{length} sn")
+
+    def test_the_song_comes_in_on_a_beat(self):
+        odd = BeatGrid(
+            bpm=120, beats=tuple(Fraction(1, 4) + Fraction(i, 2) for i in range(400)),
+            duration=Fraction(200),
+            sections=({"energy": "low", "start": Fraction(0), "end": Fraction(61)},
+                      {"energy": "high", "start": Fraction(61), "end": Fraction(200)}))
+
+        start = choose_window(odd, Fraction(40), "high")
+
+        self.assertIn(start, odd.beats)
+        self.assertLessEqual(start, Fraction(61))
+
+    def test_a_song_with_no_energy_to_choose_between_is_used_from_the_start(self):
+        flat = BeatGrid(bpm=120, beats=tuple(Fraction(i, 2) for i in range(400)),
+                        duration=Fraction(200),
+                        sections=({"energy": "medium", "start": Fraction(0), "end": Fraction(200)},))
+
+        self.assertEqual(choose_window(flat, Fraction(40), "high"), Fraction(0))
+
+
+class WindowedJoinTests(unittest.TestCase):
+    """The chosen window has to reach the segments, the beats and the sections alike."""
+
+    def setUp(self):
+        self.slow = MusicTrack(Path("/m/yavas.mp3"),
+                               two_part_grid(bpm=80, seconds=240, beat_gap="3/4", quiet_until=150))
+        self.fast = MusicTrack(Path("/m/hareketli.mp3"),
+                               two_part_grid(bpm=140, seconds=200, beat_gap="1/2", quiet_until=90))
+
+    def joined(self, total=Fraction(120)):
+        return join_tracks([self.slow, self.fast], story_switch_points(2, total), total)
+
+    def test_the_party_song_is_taken_from_its_loud_part(self):
+        _, segments, _ = self.joined()
+
+        self.assertEqual(segments[1].source_start, Fraction(90))
+        self.assertEqual(segments[1].source_end, Fraction(90) + segments[1].duration)
+
+    def test_the_opening_song_still_starts_at_its_own_beginning(self):
+        _, segments, _ = self.joined()
+
+        self.assertEqual(segments[0].source_start, Fraction(0))
+
+    def test_the_edit_ends_where_it_was_asked_to(self):
+        combined, segments, _ = self.joined()
+
+        self.assertEqual(combined.duration, Fraction(120))
+        self.assertEqual(segments[-1].timeline_end, Fraction(120))
+
+    def test_the_beats_of_the_windowed_song_land_on_the_edit_not_on_the_song(self):
+        combined, segments, _ = self.joined()
+        party = segments[1]
+        inside = [beat for beat in combined.beats if beat >= party.timeline_start]
+
+        # The song's 90th second is the party's first frame, so its beat lands there.
+        self.assertEqual(inside[0], party.timeline_start)
+        self.assertLessEqual(max(inside), Fraction(120))
+
+    def test_no_beat_from_the_unused_part_of_the_song_comes_along(self):
+        combined, segments, _ = self.joined()
+        party = segments[1]
+
+        self.assertEqual(
+            len([b for b in combined.beats if b >= party.timeline_start]),
+            len([b for b in self.fast.grid.beats
+                 if party.source_start <= b < party.source_end]))
+
+    def test_the_sections_describe_the_window_that_plays(self):
+        combined, _, _ = self.joined()
+
+        self.assertEqual(
+            [(s["energy"], s["start"], s["end"]) for s in combined.sections],
+            [("low", Fraction(0), Fraction(984, 10)),
+             ("high", Fraction(984, 10), Fraction(120))])
+
+    def test_using_part_of_a_song_is_reported(self):
+        _, _, warnings = self.joined()
+
+        self.assertTrue(any("hareketli.mp3" in w and "90" in w for w in warnings))
+
+    def test_without_a_total_the_last_song_plays_out(self):
+        combined, segments, _ = join_tracks(
+            [self.slow, self.fast], story_switch_points(2, Fraction(120)))
+
+        self.assertEqual(segments[1].duration, Fraction(200))
+        self.assertEqual(combined.duration, Fraction(984, 10) + Fraction(200))
