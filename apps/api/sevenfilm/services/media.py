@@ -91,6 +91,29 @@ def _first_video_stream(payload: dict[str, Any]) -> dict[str, Any]:
     return picture
 
 
+def _display_rotation(stream: dict[str, Any]) -> int:
+    """The angle the camera wrote beside the picture, normalised to 0, 90, 180 or 270.
+
+    A phone shooting vertically still codes a landscape frame and attaches a display matrix
+    saying to turn it. ffprobe reports the coded size; ffmpeg, Resolve and every player apply
+    the matrix first. Reading the coded size alone made the tool the only part of the chain
+    that thought the clip was landscape.
+    """
+    for side_data in stream.get("side_data_list") or []:
+        if "rotation" not in side_data:
+            continue
+        try:
+            rotation = round(float(side_data["rotation"]))
+        except (TypeError, ValueError):
+            continue
+        return rotation % 360
+    raw = (stream.get("tags") or {}).get("rotate")
+    try:
+        return round(float(raw)) % 360
+    except (TypeError, ValueError):
+        return 0
+
+
 def _start_timecode(payload: dict[str, Any]) -> str | None:
     """Find the recorded start timecode wherever the camera put it.
 
@@ -115,11 +138,18 @@ def metadata_from_probe(path: Path, payload: dict[str, Any]) -> dict[str, Any]:
     raw_duration = stream.get("duration") or payload.get("format", {}).get("duration")
     if raw_duration is None:
         raise ValueError(f"Süre bilgisi bulunamadı: {path}")
+    width = int(stream.get("width") or 0)
+    height = int(stream.get("height") or 0)
+    # Store the shape the clip is watched in. Everything downstream — the proxy ffmpeg writes,
+    # the frames the classifier sees, the format the FCPXML declares — is already upright, so
+    # recording the display size leaves nothing to rotate: the clip's own rotation stays 0.
+    if _display_rotation(stream) in (90, 270):
+        width, height = height, width
     return {
         "duration": Fraction(str(raw_duration)),
         "frame_rate": frame_rate,
-        "width": int(stream.get("width") or 0),
-        "height": int(stream.get("height") or 0),
+        "width": width,
+        "height": height,
         "codec": stream.get("codec_name"),
         "timecode": _start_timecode(payload),
         "raw": payload,

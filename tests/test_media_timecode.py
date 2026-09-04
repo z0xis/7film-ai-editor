@@ -112,3 +112,40 @@ class CoverImageTests(unittest.TestCase):
         """Which the indexer then skips, rather than treating a thumbnail as footage."""
         with self.assertRaises(ValueError):
             metadata_from_probe(Path("/m/x.mp4"), self.payload([self.cover()]))
+
+
+class DisplayRotationTests(unittest.TestCase):
+    """A vertical phone clip codes a landscape frame and attaches the angle beside it."""
+
+    def payload(self, *, rotation=None, tag=None, width=1920, height=1080):
+        stream = {"codec_type": "video", "codec_name": "h264", "width": width, "height": height,
+                  "avg_frame_rate": "25/1", "duration": "4.0", "tags": {}}
+        if rotation is not None:
+            stream["side_data_list"] = [
+                {"side_data_type": "Display Matrix", "rotation": rotation}]
+        if tag is not None:
+            stream["tags"]["rotate"] = tag
+        return {"streams": [stream], "format": {"duration": "4.0", "filename": "/m/x.mp4"}}
+
+    def shape(self, payload):
+        details = metadata_from_probe(Path("/m/x.mp4"), payload)
+        return details["width"], details["height"]
+
+    def test_a_quarter_turn_is_stored_as_the_shape_it_is_watched_in(self):
+        """ffmpeg writes an upright 1080x1920 proxy; the database said 1920x1080."""
+        self.assertEqual(self.shape(self.payload(rotation=90)), (1080, 1920))
+
+    def test_the_other_quarter_turn_too(self):
+        self.assertEqual(self.shape(self.payload(rotation=-90)), (1080, 1920))
+
+    def test_an_upside_down_clip_keeps_its_shape(self):
+        self.assertEqual(self.shape(self.payload(rotation=180)), (1920, 1080))
+
+    def test_an_unrotated_clip_is_untouched(self):
+        self.assertEqual(self.shape(self.payload()), (1920, 1080))
+
+    def test_the_older_rotate_tag_is_honoured_when_there_is_no_display_matrix(self):
+        self.assertEqual(self.shape(self.payload(tag="270")), (1080, 1920))
+
+    def test_an_unreadable_angle_is_treated_as_none(self):
+        self.assertEqual(self.shape(self.payload(rotation="sideways")), (1920, 1080))
