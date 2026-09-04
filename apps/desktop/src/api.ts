@@ -4,10 +4,30 @@ export type Job = { id: string; kind: string; status: "queued" | "running" | "co
 export type TimelineItem = { clip_name: string; source_path: string; score: number; category: string; shot_scale: string; selection_reason: string; source_in: { start_seconds: string; duration_seconds: string }; timeline_in: { start_seconds: string; duration_seconds: string } };
 export type Timeline = { id: string; name: string; actual_duration_seconds: string; frame_rate: string; music_path?: string | null; warnings: string[]; items: TimelineItem[] };
 
+/**
+ * FastAPI answers a rejected body with `detail` as a list of objects, not a string, and
+ * `new Error(list)` reads as "[object Object]" — which is what the status panel showed when a
+ * request was refused, telling the user nothing at all about what was wrong.
+ */
+function describe(detail: unknown): string {
+  if (typeof detail === "string") return detail;
+  if (Array.isArray(detail)) {
+    const lines = detail.map((item) => {
+      if (typeof item === "string") return item;
+      const where = Array.isArray(item?.loc) ? item.loc.filter((part: unknown) => part !== "body").join(".") : "";
+      const message = item?.msg ?? JSON.stringify(item);
+      return where ? `${where}: ${message}` : String(message);
+    });
+    if (lines.length) return lines.join("; ");
+  }
+  if (detail && typeof detail === "object") return JSON.stringify(detail);
+  return "İstek tamamlanamadı.";
+}
+
 async function call<T>(path: string, init?: RequestInit): Promise<T> {
   const response = await fetch(path, { headers: { "Content-Type": "application/json" }, ...init });
   const body = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(body.detail ?? "İstek tamamlanamadı.");
+  if (!response.ok) throw new Error(describe(body.detail));
   return body as T;
 }
 export const api = {

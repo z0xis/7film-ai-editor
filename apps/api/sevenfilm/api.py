@@ -165,6 +165,10 @@ def _run_job(job_id: str) -> None:
     if job is None:
         return
     checkpoint = json.loads(job["checkpoint_json"])
+    # Cheap, and it closes a failure that cost an evening: a backend left running from before a
+    # release serves the old schema, and the first job that writes a new column dies with a
+    # message no one can read. Adding a missing column is a PRAGMA and an ALTER, nothing more.
+    DATABASE.migrate()
     DATABASE.update_job(job_id, status="running", progress=float(job["progress"]), checkpoint=checkpoint)
     try:
         if job["kind"] == "index":
