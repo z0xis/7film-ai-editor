@@ -104,6 +104,32 @@ Kurgudaki close_up oranı (1/120) havuzdakinin (%6,1) altında; planlayıcının
 diye bir kavramı yok, havuzu olduğu gibi yansıtıyor. Bunu değiştirmek için önce güvenilir bir
 hedef gerekiyor — yani ya etiketli bir doğruluk seti ya da referansların ham hallerine erişim.
 
+## FCPXML Resolve'da ölçüldü — 4 Eylül
+
+Resolve Studio 21.0.2 açıkken, sekiz gerçek klip ve iki şarkıdan üretilen FCPXML içe aktarıldı
+(tek kullanımlık projeler, sonra silindi).
+
+```
+V1: 8 klip, her biri 5 sn, kaynak offset 25 kare   (planın koyduğu gibi)
+A1: yavas.mp3       0,0 - 30,0 sn   kaynak 0
+    hareketli.mp3  30,0 - 40,0 sn   kaynak 1000 kare = 40. saniye
+```
+
+**İliştirilmiş (anchored) öğenin `offset` değeri ebeveyn klibin kendi zaman eksenindedir**, yani
+sıfırı klibin `start` değeri — kayıt timecode'u. Karşı deney: aynı dosyada müzik klipleri
+`offset="0s"` yapıldığında şarkılar **23,8-53,8 sn** ve **0-10 sn**'ye düştü; sıra ters, ve
+yavaş şarkı 40 saniyelik kurgunun 13,8 saniye dışına taştı.
+
+**Tek şarkıda eski biçim çalışıyordu**: Resolve negatif offset'i sıfıra kırpıyor. Hata bu yüzden
+hiç görünmemiş. İki şarkıyla kırpma kurtarmıyor.
+
+### Marker'lar FCPXML ile gelmiyor
+
+Sekiz klip marker'ının hiçbiri içe aktarılmadı. `start` değeri ebeveynin `start`'ına eşitlenince
+de gelmedi; aynı noktalar sequence'ın kendisine yazılınca da gelmedi. Yani bu, yukarıdaki
+anchored-time sorusu değil — Resolve'un FCPXML içe aktarıcısı marker taşımıyor. Eklenti yolu
+marker'ları API üzerinden koyuyor ve orada doğru yerlere düşüyorlar (141 marker, ölçüldü).
+
 ## Çalışma biçimi
 
 Önce ölç, sonra değiştir. Bu turda dört iddia ölçümle çürütüldü: sınır dışı karelerin batch'i reddettirdiği, batch'in ya hep ya hiç olduğu, yavaş şarkının yavaş kurgu ürettiği, dinamik aralığı olmayan parçanın "high" sayılmaması gerektiği. Görsel kararlar (kategori, kalite) ekrana bakılarak denetlendi.

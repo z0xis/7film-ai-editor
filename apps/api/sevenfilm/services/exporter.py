@@ -288,6 +288,8 @@ def _sequence_resolution(plan: TimelinePlan) -> tuple[int, int]:
 def _anchors_here(segment: MusicSegment, item, plan: TimelinePlan) -> bool:
     """Each song hangs off the picture clip that is on screen when it comes in.
 
+    Verified by import: eight clips, two songs, every one where the plan put it.
+
     FCPXML has no free-floating clip: an anchored item belongs to one clip of the spine. A
     second song entering forty seconds in has to hang off whatever is playing there, and the
     first song hangs off the first clip whether or not the edit starts at zero.
@@ -422,6 +424,13 @@ def export_fcpxml(plan: TimelinePlan, destination: Path) -> Path:
             # An anchored item's offset is measured in the parent clip's own timeline, whose
             # origin is that clip's `start` — the media clock, not zero. The music therefore
             # begins at the parent's start plus however far into that clip the song comes in.
+            #
+            # Measured in Resolve Studio 21.0.2, importing this file: two songs meant for
+            # 0-30s and 30-40s land exactly there, the second one entering at its own 40th
+            # second. Written the old way, at offset="0s", they landed at 23.8-53.8s and
+            # 0-10s — swapped, and running 13.8s past the end of a 40 second edit. With a
+            # single song at the edit's start the old form did work, because Resolve clamps
+            # a negative offset to zero; that is why it was never noticed.
             parent_start = _asset_start(item.asset) + item.source_range.start_seconds
             into_clip = segment.timeline_start - item.timeline_range.start_seconds
             playing = min(segment.duration, plan.duration - segment.timeline_start)
@@ -436,6 +445,11 @@ def export_fcpxml(plan: TimelinePlan, destination: Path) -> Path:
                 lane="-1",
                 audioRole="music",
             )
+        # Resolve's FCPXML importer drops markers on the floor: measured on 21.0.2, none of
+        # eight clip markers arrived, and neither did the same points written on the sequence.
+        # Setting start to the parent's own start made no difference either, so this is not the
+        # anchored-time question above. They are written for hosts that do read them; the
+        # Resolve plugin path places its markers through the API, where they do land.
         ET.SubElement(
             clip,
             "marker",
