@@ -365,6 +365,80 @@ class FcpxmlTimecodeTests(unittest.TestCase):
             Fraction(asset.attrib["start"].removesuffix("s")), Fraction(600 * 30 - 18) / ntsc.value)
 
 
+class FcpxmlFormatTests(unittest.TestCase):
+    """A shoot mixing frame rates must not declare every source at the timeline's rate."""
+
+    def setUp(self):
+        self.rate = FrameRate(50)
+
+    def plan_of(self, *rates):
+        plan = TimelinePlan(id="t", project_id="p", name="AI", frame_rate=self.rate,
+                            target_duration=Fraction(2 * len(rates)))
+        for index, rate in enumerate(rates):
+            asset = MediaAsset(
+                id=f"a{index}", project_id="p", path=Path(f"/m/A{index}.mov"),
+                name=f"A{index}.mov", duration=Fraction(20), frame_rate=rate,
+                width=3840, height=2160)
+            shot = Shot(id=f"s{index}", asset_id=asset.id,
+                        source_range=TimeRange(0, 500, rate))
+            plan.items.append(TimelineItem(
+                id=f"i{index}", shot=shot, asset=asset, source_range=TimeRange(0, 50, rate),
+                timeline_range=TimeRange(100 * index, 100, self.rate), score=.9,
+                selection_reason="r"))
+        return plan
+
+    def exported(self, plan):
+        folder = tempfile.TemporaryDirectory()
+        self.addCleanup(folder.cleanup)
+        return ET.parse(export_all(plan, Path(folder.name))["fcpxml"]).getroot()
+
+    def test_each_frame_rate_gets_its_own_format(self):
+        root = self.exported(self.plan_of(FrameRate(50), FrameRate(25), FrameRate(50)))
+
+        durations = {f.attrib["frameDuration"] for f in root.findall("./resources/format")}
+
+        self.assertEqual(durations, {"1/50s", "1/25s"})
+
+    def test_a_source_points_at_the_format_that_matches_it(self):
+        root = self.exported(self.plan_of(FrameRate(50), FrameRate(25)))
+        formats = {f.attrib["id"]: f.attrib["frameDuration"]
+                   for f in root.findall("./resources/format")}
+
+        for asset in root.findall("./resources/asset"):
+            if asset.attrib["name"] == "A1.mov":
+                self.assertEqual(formats[asset.attrib["format"]], "1/25s")
+            elif asset.attrib["name"] == "A0.mov":
+                self.assertEqual(formats[asset.attrib["format"]], "1/50s")
+
+    def test_the_sequence_keeps_the_timeline_rate(self):
+        root = self.exported(self.plan_of(FrameRate(25), FrameRate(25)))
+        sequence = root.find("./library/event/project/sequence")
+        formats = {f.attrib["id"]: f.attrib["frameDuration"]
+                   for f in root.findall("./resources/format")}
+
+        # Every source is 25 fps, but the timeline is 50.
+        self.assertEqual(formats[sequence.attrib["format"]], "1/50s")
+
+    def test_one_rate_throughout_still_writes_the_pair(self):
+        root = self.exported(self.plan_of(FrameRate(50), FrameRate(50)))
+
+        self.assertEqual(len(root.findall("./resources/format")), 2)
+
+    def test_sources_of_the_same_rate_and_size_share_one_format(self):
+        root = self.exported(self.plan_of(*([FrameRate(50)] * 6)))
+
+        references = {a.attrib["format"] for a in root.findall("./resources/asset")}
+        self.assertEqual(len(references), 1)
+
+    def test_the_clip_carries_its_source_format_too(self):
+        root = self.exported(self.plan_of(FrameRate(25)))
+        formats = {f.attrib["id"]: f.attrib["frameDuration"]
+                   for f in root.findall("./resources/format")}
+        clip = root.find("./library/event/project/sequence/spine/asset-clip")
+
+        self.assertEqual(formats[clip.attrib["format"]], "1/25s")
+
+
 class FootageQualityTests(unittest.TestCase):
     """A blurry blown-out frame reads to CLIP as a bride; it must never reach the timeline."""
 

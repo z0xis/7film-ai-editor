@@ -230,17 +230,41 @@ def export_fcpxml(plan: TimelinePlan, destination: Path) -> Path:
     destination.parent.mkdir(parents=True, exist_ok=True)
     root = ET.Element("fcpxml", version="1.10")
     resources = ET.SubElement(root, "resources")
-    frame_duration = _rational_time(Fraction(1, 1) / plan.frame_rate.value)
-    format_element = ET.SubElement(
+    # The sequence has one format; each source has its own. A shoot mixing 25 and 50 fps was
+    # declaring every clip at the timeline's rate, which tells Resolve to read a start timecode
+    # at a rate the file does not have. Resolve's own export writes a format per combination.
+    sequence_format = "r0"
+    ET.SubElement(
         resources,
         "format",
-        id="r1",
+        id=sequence_format,
         name="FFVideoFormat",
-        frameDuration=frame_duration,
+        frameDuration=_rational_time(Fraction(1, 1) / plan.frame_rate.value),
         width=str(max((item.asset.width for item in plan.items), default=1920)),
         height=str(max((item.asset.height for item in plan.items), default=1080)),
     )
-    del format_element  # Keep the generated resource visible while avoiding an unused-variable warning.
+    asset_formats: dict[tuple[str, int, int], str] = {}
+    for item in plan.items:
+        rate = item.asset.frame_rate.value
+        key = (f"{rate.numerator}/{rate.denominator}", item.asset.width, item.asset.height)
+        if key in asset_formats:
+            continue
+        reference = f"f{len(asset_formats) + 1}"
+        asset_formats[key] = reference
+        ET.SubElement(
+            resources,
+            "format",
+            id=reference,
+            name=f"FFVideoFormat{item.asset.width}x{item.asset.height}p{float(rate):g}",
+            frameDuration=_rational_time(Fraction(1, 1) / rate),
+            width=str(item.asset.width),
+            height=str(item.asset.height),
+        )
+
+    def format_of(asset: MediaAsset) -> str:
+        rate = asset.frame_rate.value
+        return asset_formats[(f"{rate.numerator}/{rate.denominator}", asset.width, asset.height)]
+
     assets: dict[str, str] = {}
     for index, item in enumerate(plan.items, start=1):
         if item.asset.id in assets:
@@ -259,7 +283,7 @@ def export_fcpxml(plan: TimelinePlan, destination: Path) -> Path:
             # land on an audio track, the user's music owns A1.
             hasAudio="0",
             audioSources="0",
-            format="r1",
+            format=format_of(item.asset),
         )
         ET.SubElement(
             asset_element,
@@ -293,7 +317,7 @@ def export_fcpxml(plan: TimelinePlan, destination: Path) -> Path:
     sequence = ET.SubElement(
         project,
         "sequence",
-        format="r1",
+        format=sequence_format,
         duration=_rational_time(plan.duration),
         tcStart="0s",
         tcFormat="NDF",
@@ -309,6 +333,7 @@ def export_fcpxml(plan: TimelinePlan, destination: Path) -> Path:
             # The clip's start is on the media's clock too, not counted from zero.
             start=_rational_time(_asset_start(item.asset) + item.source_range.start_seconds),
             duration=_rational_time(item.timeline_range.duration_seconds),
+            format=format_of(item.asset),
         )
         if i == 0 and plan.music_path:
             ET.SubElement(
