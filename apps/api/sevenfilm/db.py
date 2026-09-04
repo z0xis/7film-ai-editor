@@ -151,6 +151,9 @@ ADDED_COLUMNS = (
     # older version can be recognised instead of quietly producing a worse edit.
     ("shots", "analysis_version", "TEXT NOT NULL DEFAULT ''"),
     ("music_tracks", "analysis_version", "TEXT NOT NULL DEFAULT ''"),
+    # A saved rough cut keeps the songs it was cut to, and which part of each was used. Reading
+    # "the newest music row" back instead would hand an old timeline whatever was imported since.
+    ("timeline_versions", "music_segments_json", "TEXT NOT NULL DEFAULT '[]'"),
 )
 
 

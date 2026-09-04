@@ -7,9 +7,9 @@ from pathlib import Path
 from xml.etree import ElementTree as ET
 
 from sevenfilm.db import Database, now
-from sevenfilm.domain import BeatGrid, MediaAsset, Shot, TimelineItem, TimelinePlan
+from sevenfilm.domain import BeatGrid, MediaAsset, MusicSegment, Shot, TimelineItem, TimelinePlan
 from sevenfilm.services.exporter import export_all, plan_as_dict
-from sevenfilm.services.planner import build_timeline, get_timeline
+from sevenfilm.services.planner import build_timeline, get_timeline, persist_timeline
 from sevenfilm.timebase import FrameRate, TimeRange
 
 
@@ -766,3 +766,98 @@ class SequenceResolutionTests(unittest.TestCase):
 
     def test_an_empty_plan_still_exports(self):
         self.assertEqual(self.sequence_format(self.plan([])), (1920, 1080))
+
+
+class MusicRoundTripTests(unittest.TestCase):
+    """The songs an edit was cut to belong to the edit, not to whatever was imported since."""
+
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        self.database = Database(Path(self.temporary.name) / "sevenfilm.sqlite3")
+        self.database.migrate()
+        self.rate = FrameRate(25)
+        self.asset = MediaAsset(
+            id="asset-1", project_id="project-1", path=Path("/media/A001.mov"), name="A001.mov",
+            duration=Fraction(10), frame_rate=self.rate, width=1920, height=1080)
+        self.shot = Shot(id="shot-1", asset_id="asset-1", source_range=TimeRange(0, 250, self.rate),
+                         technical_quality=.8, aesthetic_score=.8, motion_score=.5, confidence=.8)
+
+    def segments(self):
+        return (
+            MusicSegment(path=Path("/m/yavaş şarkı.mp3"), timeline_start=Fraction(0),
+                         duration=Fraction(984, 10)),
+            MusicSegment(path=Path("/m/hareketli.mp3"), timeline_start=Fraction(984, 10),
+                         duration=Fraction(216, 10), source_start=Fraction(90)),
+        )
+
+    def save(self, segments):
+        plan = TimelinePlan(id="timeline-1", project_id="project-1", name="AI Rough Cut",
+                            frame_rate=self.rate, target_duration=Fraction(120),
+                            music_segments=segments,
+                            music_path=segments[0].path if segments else None,
+                            music_duration=segments[0].duration if segments else None)
+        plan.items.append(TimelineItem(
+            id="item-1", shot=self.shot, asset=self.asset,
+            source_range=TimeRange(25, 50, self.rate), timeline_range=TimeRange(0, 50, self.rate),
+            score=.9, selection_reason="r"))
+        self.database.insert("projects", {
+            "id": "project-1", "name": "p", "workspace_path": "/media",
+            "target_duration_seconds": "120", "frame_rate": "25/1",
+            "created_at": now(), "updated_at": now()})
+        self.database.insert("media_assets", {
+            "id": "asset-1", "project_id": "project-1", "path": "/media/A001.mov",
+            "file_name": "A001.mov", "content_hash": "h", "duration_seconds": "10",
+            "frame_rate": "25/1", "width": 1920, "height": 1080, "codec": "h264",
+            "timecode": None, "metadata_json": {}, "created_at": now()})
+        self.database.insert("shots", {
+            "id": "shot-1", "asset_id": "asset-1", "start_frame": 0, "duration_frames": 250,
+            "frame_rate": "25/1", "category": "couple", "shot_scale": "medium",
+            "technical_quality": .8, "aesthetic_score": .8, "motion_score": .5, "confidence": .8,
+            "duplicate_group": None, "labels_json": [], "created_at": now()})
+        persist_timeline(self.database, plan)
+        return get_timeline(self.database, "timeline-1")
+
+    def test_both_songs_come_back(self):
+        restored = self.save(self.segments())
+
+        self.assertEqual([s.path.name for s in restored.music_segments],
+                         ["yavaş şarkı.mp3", "hareketli.mp3"])
+
+    def test_the_part_of_the_song_that_was_used_comes_back_exactly(self):
+        restored = self.save(self.segments())
+
+        self.assertEqual(restored.music_segments[1].source_start, Fraction(90))
+        self.assertEqual(restored.music_segments[1].timeline_start, Fraction(984, 10))
+        self.assertEqual(restored.music_segments[1].duration, Fraction(216, 10))
+
+    def test_the_first_song_still_answers_the_old_single_track_callers(self):
+        restored = self.save(self.segments())
+
+        self.assertEqual(restored.music_path, Path("/m/yavaş şarkı.mp3"))
+        self.assertEqual(restored.music_duration, Fraction(984, 10))
+
+    def test_importing_another_song_afterwards_does_not_change_a_saved_edit(self):
+        restored = self.save(self.segments())
+        self.database.insert("music_tracks", {
+            "id": "later", "project_id": "project-1", "path": "/m/başka.mp3",
+            "duration_seconds": "200", "bpm": 120.0, "beats_json": [], "sections_json": [],
+            "created_at": now()})
+
+        again = get_timeline(self.database, "timeline-1")
+
+        self.assertEqual([s.path.name for s in again.music_segments],
+                         [s.path.name for s in restored.music_segments])
+
+    def test_an_edit_saved_before_multiple_songs_falls_back_to_the_music_row(self):
+        self.save(())
+        self.database.insert("music_tracks", {
+            "id": "only", "project_id": "project-1", "path": "/m/tek.mp3",
+            "duration_seconds": "150", "bpm": 120.0, "beats_json": [], "sections_json": [],
+            "created_at": now()})
+
+        restored = get_timeline(self.database, "timeline-1")
+
+        self.assertEqual(restored.music_path, Path("/m/tek.mp3"))
+        self.assertEqual(restored.music_duration, Fraction(150))
+        self.assertEqual(len(restored.music_segments), 1)

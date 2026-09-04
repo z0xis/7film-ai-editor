@@ -12,7 +12,7 @@ from fractions import Fraction
 from pathlib import Path
 
 from ..db import Database, now
-from ..domain import BeatGrid, MediaAsset, Shot, TimelineItem, TimelinePlan
+from ..domain import BeatGrid, MediaAsset, MusicSegment, Shot, TimelineItem, TimelinePlan
 from ..timebase import FrameRate, TimeRange
 
 MIN_TARGET_DURATION = Fraction(120, 1)
@@ -732,6 +732,25 @@ def _append_rhythm_report(
     plan.warnings.append(message + ".")
 
 
+def _segment_as_dict(segment: MusicSegment) -> dict[str, str]:
+    """Exact rationals, as strings: a segment start read back as a float would drift."""
+    return {
+        "path": str(segment.path),
+        "timeline_start": str(segment.timeline_start),
+        "duration": str(segment.duration),
+        "source_start": str(segment.source_start),
+    }
+
+
+def _segment_from_dict(payload: Mapping[str, object]) -> MusicSegment:
+    return MusicSegment(
+        path=Path(str(payload["path"])),
+        timeline_start=Fraction(str(payload["timeline_start"])),
+        duration=Fraction(str(payload["duration"])),
+        source_start=Fraction(str(payload.get("source_start", 0))),
+    )
+
+
 def persist_timeline(database: Database, plan: TimelinePlan) -> None:
     database.insert(
         "timeline_versions",
@@ -743,6 +762,7 @@ def persist_timeline(database: Database, plan: TimelinePlan) -> None:
             "frame_rate": f"{plan.frame_rate.numerator}/{plan.frame_rate.denominator}",
             "seed": plan.seed,
             "warnings_json": plan.warnings,
+            "music_segments_json": [_segment_as_dict(segment) for segment in plan.music_segments],
             "created_at": now(),
         },
     )
@@ -790,12 +810,23 @@ def get_timeline(database: Database, timeline_id: str) -> TimelinePlan:
     if header is None:
         raise KeyError(f"Timeline bulunamadı: {timeline_id}")
     rate = FrameRate.parse(header["frame_rate"])
-    music = database.fetch_one(
-        "SELECT path, duration_seconds FROM music_tracks WHERE project_id = ? ORDER BY created_at DESC LIMIT 1",
-        (header["project_id"],),
+    segments = tuple(
+        _segment_from_dict(item) for item in json.loads(header["music_segments_json"] or "[]")
     )
-    music_path = Path(music["path"]) if music else None
-    music_duration = Fraction(music["duration_seconds"]) if music else None
+    if not segments:
+        # Timelines saved before the edit could hold more than one song. The newest music row
+        # is the only record those have.
+        music = database.fetch_one(
+            "SELECT path, duration_seconds FROM music_tracks WHERE project_id = ?"
+            " ORDER BY created_at DESC LIMIT 1",
+            (header["project_id"],),
+        )
+        if music:
+            segments = (MusicSegment(
+                path=Path(music["path"]),
+                timeline_start=Fraction(0),
+                duration=Fraction(music["duration_seconds"]),
+            ),)
 
     plan = TimelinePlan(
         id=header["id"],
@@ -805,8 +836,9 @@ def get_timeline(database: Database, timeline_id: str) -> TimelinePlan:
         target_duration=Fraction(header["target_duration_seconds"]),
         warnings=json.loads(header["warnings_json"]),
         seed=int(header["seed"]),
-        music_path=music_path,
-        music_duration=music_duration,
+        music_segments=segments,
+        music_path=segments[0].path if segments else None,
+        music_duration=segments[0].duration if segments else None,
     )
     rows = database.fetch_all(
         """SELECT timeline_items.*, shots.technical_quality, shots.aesthetic_score,

@@ -19,7 +19,11 @@ from fractions import Fraction
 from pathlib import Path
 from typing import Any
 
-from sevenfilm.domain import BeatGrid
+from sevenfilm.domain import BeatGrid, MusicSegment
+
+# Re-exported: the segment is part of a plan, so it lives in domain, but it is this module
+# that produces one and callers naturally reach for it here.
+__all__ = ["MusicSegment", "MusicTrack", "choose_window", "join_tracks", "story_switch_points"]
 
 # Where the story arc turns, most telling first. These are the points at which
 # planner._preferred_categories changes its answer, and test_music_join keeps the two in step.
@@ -114,24 +118,6 @@ def choose_window(grid: BeatGrid, length: Fraction, energy: str | None = None) -
     )
     earlier_beats = [beat for beat in grid.beats if beat <= best]
     return max(earlier_beats) if earlier_beats else best
-
-
-@dataclass(frozen=True)
-class MusicSegment:
-    """One track's turn: which file, which part of it, and where that part sits on the edit."""
-
-    path: Path
-    timeline_start: Fraction
-    duration: Fraction
-    source_start: Fraction = Fraction(0)
-
-    @property
-    def timeline_end(self) -> Fraction:
-        return self.timeline_start + self.duration
-
-    @property
-    def source_end(self) -> Fraction:
-        return self.source_start + self.duration
 
 
 @dataclass(frozen=True)

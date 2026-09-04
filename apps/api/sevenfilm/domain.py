@@ -69,6 +69,24 @@ class TimelineItem:
     alternatives: tuple[str, ...] = ()
 
 
+@dataclass(frozen=True)
+class MusicSegment:
+    """One song's turn: which file, which part of it, and where that part sits on the edit."""
+
+    path: Path
+    timeline_start: Fraction
+    duration: Fraction
+    source_start: Fraction = Fraction(0)
+
+    @property
+    def timeline_end(self) -> Fraction:
+        return self.timeline_start + self.duration
+
+    @property
+    def source_end(self) -> Fraction:
+        return self.source_start + self.duration
+
+
 @dataclass
 class TimelinePlan:
     id: str
@@ -79,6 +97,9 @@ class TimelinePlan:
     items: list[TimelineItem] = field(default_factory=list)
     warnings: list[str] = field(default_factory=list)
     seed: int = 0
+    # Every song under the edit, in order. music_path and music_duration describe the first
+    # of them and stay for the callers that only ever knew about one.
+    music_segments: tuple[MusicSegment, ...] = ()
     music_path: Path | None = None
     music_duration: Fraction | None = None
 
