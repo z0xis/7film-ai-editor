@@ -36,7 +36,11 @@ from .timebase import FrameRate
 LOGGER = logging.getLogger("sevenfilm")
 ROOT = data_root()
 DATABASE = Database(database_path())
-ENGINE_VERSION = "0.3.0"
+# The plugin refuses to reuse a running engine whose version differs from its own, so this is
+# what replaces a backend left over from an earlier release. Bump it whenever the HTTP contract
+# changes: an engine started twelve hours before this line moved was still answering, and the
+# app's new "several songs" request came back as "path: Field required".
+ENGINE_VERSION = "0.4.0"
 
 
 def _normalize_path(raw: str) -> Path:

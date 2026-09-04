@@ -15,7 +15,9 @@ const {
 } = require("./timeline-builder");
 
 const PLUGIN_ID = "com.sevenfilm.ai.editor";
-const ENGINE_VERSION = "0.3.0";
+// Must match apps/api/sevenfilm/api.py. ensureBackend will not reuse an engine that reports a
+// different version, which is what stops a process from an earlier release serving the app.
+const ENGINE_VERSION = "0.4.0";
 const BACKEND_PORTS = [17865, 17866, 17867, 17868, 17869];
 const APP_ROOT_LINK = path.join(__dirname, "app-root");
 

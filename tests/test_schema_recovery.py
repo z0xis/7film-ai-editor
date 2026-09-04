@@ -5,6 +5,7 @@ the code it serves: its schema migration ran with the previous column list, so t
 that writes a new column dies — and the app showed "Error: [object Object]", which says nothing.
 """
 
+import re
 import tempfile
 import unittest
 from pathlib import Path
@@ -68,3 +69,29 @@ class MigrationRecoveryTests(unittest.TestCase):
 
         source = inspect.getsource(api._run_job)
         self.assertIn("DATABASE.migrate()", source)
+
+
+class EngineVersionTests(unittest.TestCase):
+    """The plugin replaces a running engine only when the two versions disagree."""
+
+    def plugin_version(self):
+        source = Path("integrations/resolve/com.sevenfilm.ai.editor/main.js").read_text()
+        match = re.search(r'const ENGINE_VERSION = "([^"]+)"', source)
+        self.assertIsNotNone(match, "main.js'de ENGINE_VERSION bulunamadı")
+        return match.group(1)
+
+    def test_the_plugin_and_the_engine_agree_on_the_version(self):
+        """They are written apart, and a mismatch means the plugin can never reuse the engine
+        it just started — while agreeing when the contract has changed means it keeps an old
+        one, which is how "path: Field required" reached the user."""
+        from sevenfilm.api import ENGINE_VERSION
+
+        self.assertEqual(self.plugin_version(), ENGINE_VERSION)
+
+    def test_the_health_endpoint_reports_it(self):
+        from fastapi.testclient import TestClient
+        from sevenfilm import api
+
+        body = TestClient(api.app).get("/api/health").json()
+
+        self.assertEqual(body["engine_version"], api.ENGINE_VERSION)
