@@ -119,7 +119,7 @@ class CategoryPriorTests(unittest.TestCase):
         features = np.zeros((4, 8))
 
         raw = classifier.classify_features(features, self.metrics(4))
-        prior = classifier.category_prior(features)
+        prior = classifier.prompt_priors(features)
         corrected = classifier.classify_features(features, self.metrics(4), prior)
 
         self.assertEqual({r["category"] for r in raw}, {"bride"})
@@ -130,10 +130,10 @@ class CategoryPriorTests(unittest.TestCase):
                 [0.3, 0.3, 0.1, 0.1, 0.05, 0.05, 0.05, 0.05]]
         classifier = self.FakeClassifier(rows)
 
-        prior = classifier.category_prior(np.zeros((2, 8)))
+        priors = classifier.prompt_priors(np.zeros((2, 8)))
 
-        self.assertAlmostEqual(prior[0], 0.4)
-        self.assertAlmostEqual(prior[1], 0.2)
+        self.assertAlmostEqual(priors.category[0], 0.4)
+        self.assertAlmostEqual(priors.category[1], 0.2)
 
     def test_a_genuinely_distinctive_frame_keeps_its_category(self):
         """Correction removes a standing offset, it does not overturn a clear winner."""
@@ -146,7 +146,7 @@ class CategoryPriorTests(unittest.TestCase):
         features = np.zeros((3, 8))
 
         corrected = classifier.classify_features(features, self.metrics(3),
-                                                 classifier.category_prior(features))
+                                                 classifier.prompt_priors(features))
 
         self.assertEqual(corrected[2]["category"], "couple")
 
@@ -157,7 +157,7 @@ class CategoryPriorTests(unittest.TestCase):
         features = np.zeros((2, 8))
 
         for result in classifier.classify_features(features, self.metrics(2),
-                                                   classifier.category_prior(features)):
+                                                   classifier.prompt_priors(features)):
             self.assertGreaterEqual(result["confidence"], 0.0)
             self.assertLessEqual(result["confidence"], 1.0)
 
@@ -214,7 +214,79 @@ class ProbabilityPathTests(unittest.TestCase):
         features = np.random.rand(4, 16).astype(np.float32)
         metrics = [measure_frames([np.full((16, 16, 3), 100, dtype=np.uint8)]) for _ in range(4)]
 
-        results = classifier.classify_features(features, metrics, classifier.category_prior(features))
+        results = classifier.classify_features(features, metrics, classifier.prompt_priors(features))
 
         self.assertEqual(len(results), 4)
         self.assertTrue(all("clip_vision" in r["labels"] for r in results))
+
+
+class ScalePriorTests(unittest.TestCase):
+    """The shot scale carries the same standing offset the categories do."""
+
+    class FakeClassifier(VisionClassifier):
+        def __init__(self, scales):
+            super().__init__()
+            self._scales = np.asarray(scales, dtype=float)
+
+        def _load(self):
+            return True
+
+        def _probabilities(self, features):
+            count = len(self._scales)
+            categories = np.full((count, len(CATEGORY_PROMPTS)), 1 / len(CATEGORY_PROMPTS))
+            aesthetics = np.full((count, len(AESTHETIC_PROMPTS)), 1 / len(AESTHETIC_PROMPTS))
+            return categories, self._scales.copy(), aesthetics
+
+    def metrics(self, count):
+        return [measure_frames([np.full((32, 32, 3), 120, dtype=np.uint8)]) for _ in range(count)]
+
+    def rows(self):
+        """Columns are wide, medium, close_up, detail. "medium" sits high on every frame.
+
+        Measured on this shoot: "a medium shot showing people from the waist up" took 60.8%
+        of the probability on average against 3.9% for the close-up phrase, and the edit came
+        out with 141 clips and no close-up in it.
+        """
+        return [
+            [0.30, 0.62, 0.05, 0.03],
+            [0.25, 0.60, 0.12, 0.03],
+            [0.20, 0.58, 0.04, 0.18],
+            [0.40, 0.55, 0.03, 0.02],
+        ]
+
+    def test_a_scale_that_always_scores_high_stops_winning_everything(self):
+        classifier = self.FakeClassifier(self.rows())
+        features = np.zeros((4, 8))
+
+        raw = classifier.classify_features(features, self.metrics(4))
+        corrected = classifier.classify_features(
+            features, self.metrics(4), classifier.prompt_priors(features))
+
+        self.assertEqual({r["shot_scale"] for r in raw}, {"medium"})
+        self.assertEqual([r["shot_scale"] for r in corrected][1], "close_up")
+        self.assertEqual([r["shot_scale"] for r in corrected][2], "detail")
+
+    def test_the_scale_prior_is_the_average_share_each_phrase_takes(self):
+        priors = self.FakeClassifier(self.rows()).prompt_priors(np.zeros((4, 8)))
+
+        self.assertAlmostEqual(float(priors.scale[1]), 0.5875)
+        self.assertAlmostEqual(float(priors.scale[2]), 0.06)
+
+    def test_a_frame_that_really_is_medium_keeps_its_scale(self):
+        rows = [*self.rows(), [0.02, 0.94, 0.02, 0.02]]
+        classifier = self.FakeClassifier(rows)
+        features = np.zeros((5, 8))
+
+        corrected = classifier.classify_features(
+            features, self.metrics(5), classifier.prompt_priors(features))
+
+        self.assertEqual(corrected[4]["shot_scale"], "medium")
+
+    def test_the_scale_labels_follow_the_corrected_choice(self):
+        classifier = self.FakeClassifier(self.rows())
+        features = np.zeros((4, 8))
+
+        corrected = classifier.classify_features(
+            features, self.metrics(4), classifier.prompt_priors(features))
+
+        self.assertIn("close_up", corrected[1]["labels"])

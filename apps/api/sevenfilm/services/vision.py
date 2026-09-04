@@ -54,6 +54,27 @@ AESTHETIC_PROMPTS = (
 
 
 @dataclass(frozen=True)
+class PromptPriors:
+    """CLIP's standing preference among each set of phrases, measured over a whole shoot."""
+
+    category: np.ndarray
+    scale: np.ndarray
+
+
+def _without_prior(probabilities: np.ndarray, prior: np.ndarray) -> np.ndarray:
+    """Take the standing offset off, keeping only the shape.
+
+    Shifting the least likely phrase to zero and renormalising turns the corrected scores
+    back into a distribution.
+    """
+    corrected = probabilities - prior
+    corrected = corrected - corrected.min(axis=1, keepdims=True)
+    total = corrected.sum(axis=1, keepdims=True)
+    width = probabilities.shape[1]
+    return np.divide(corrected, total, out=np.full_like(corrected, 1 / width), where=total > 0)
+
+
+@dataclass(frozen=True)
 class FrameMetrics:
     technical_quality: float
     motion_score: float
@@ -249,39 +270,40 @@ class VisionClassifier:
             logits[:, scale_end:].softmax(dim=1).numpy().copy(),
         )
 
-    def category_prior(self, features: np.ndarray) -> np.ndarray | None:
-        """The share of every category CLIP awards on average across a whole shoot.
+    def prompt_priors(self, features: np.ndarray) -> PromptPriors | None:
+        """The share of every phrase CLIP awards on average across a whole shoot.
 
         CLIP does not answer "which of these is it" so much as "how close is each phrase", and
         some phrases sit closer to wedding footage than others whatever the frame shows. On this
         project's own material a wide, blurred white ceiling and a hotel room sign both came back
         as the bride, with the model confident: 93% of frames were bride or groom, at a median
-        confidence of 0.59. Averaging each category over the shoot measures that standing offset
+        confidence of 0.59. Averaging each phrase over the shoot measures that standing offset
         so it can be taken back off, which leaves the part of the score that is about the frame.
+
+        The shot scale has the same standing offset and was left uncorrected: measured over this
+        shoot's 1405 frames, "a medium shot showing people from the waist up" took 60.8% of the
+        probability on average against 3.9% for the close-up phrase, and the edit that came out
+        held 141 clips without a single close-up in it.
         """
         if features is None or not len(features) or not self._load():
             return None
-        return self._probabilities(features)[0].mean(axis=0)
+        categories, scales, _ = self._probabilities(features)
+        return PromptPriors(category=categories.mean(axis=0), scale=scales.mean(axis=0))
 
     def classify_features(
         self,
         features: np.ndarray,
         metrics: list[FrameMetrics],
-        category_prior: np.ndarray | None = None,
+        priors: PromptPriors | None = None,
     ) -> list[dict[str, object]]:
         if features is None or not self._load():
             return [self._fallback(item) for item in metrics]
         category_names = list(CATEGORY_PROMPTS)
         scale_names = list(SCALE_PROMPTS)
         categories, scales, aesthetics = self._probabilities(features)
-        if category_prior is not None:
-            # Only the shape is kept: shifting the least likely category to zero and
-            # renormalising turns the corrected scores back into a distribution.
-            corrected = categories - category_prior
-            corrected = corrected - corrected.min(axis=1, keepdims=True)
-            total = corrected.sum(axis=1, keepdims=True)
-            categories = np.divide(corrected, total, out=np.full_like(corrected, 1 / len(category_names)),
-                                   where=total > 0)
+        if priors is not None:
+            categories = _without_prior(categories, priors.category)
+            scales = _without_prior(scales, priors.scale)
         results = []
         for index, frame_metrics in enumerate(metrics):
             category_index = int(categories[index].argmax())
@@ -307,8 +329,8 @@ class VisionClassifier:
         self,
         frames: list[np.ndarray],
         metrics: list[FrameMetrics],
-        category_prior: np.ndarray | None = None,
+        priors: PromptPriors | None = None,
     ) -> list[dict[str, object]]:
         if not frames:
             return []
-        return self.classify_features(self.encode(frames), metrics, category_prior)
+        return self.classify_features(self.encode(frames), metrics, priors)

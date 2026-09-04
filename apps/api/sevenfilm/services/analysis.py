@@ -23,7 +23,10 @@ LOGGER = logging.getLogger(__name__)
 # Bumped whenever measuring or labelling changes in a way that makes older rows worse rather
 # than merely different. "2" added the highlight and flatness vetoes, the five second shot cap,
 # the CLIP prompt prior, and energy sections that follow the track instead of its four quarters.
-ANALYSIS_VERSION = "2"
+# "3" takes that prompt prior off the shot scale as well, which is what put close-ups back in
+# reach: uncorrected, CLIP gave "medium" 60.8% of the probability on average against 3.9% for
+# the close-up phrase, and no close-up survived into the edit.
+ANALYSIS_VERSION = "3"
 # A continuous take is detected as one scene, and judging it by three frames at its midpoint
 # throws the whole clip away when that midpoint happens to be a blurred pan, and lets a clip in
 # when only its midpoint is good. Long scenes are split into segments this size so each part of
@@ -208,7 +211,7 @@ def _asset_features(database: Database, asset_id: str) -> list[dict[str, Any]]:
 
 
 def _project_prior(database: Database, classifier: VisionClassifier, project_id: str):
-    """The prompt prior, measured over every encoded frame in the project."""
+    """The prompt priors, measured over every encoded frame in the project."""
     rows = database.fetch_all(
         """SELECT shot_features.embedding FROM shot_features
            JOIN media_assets ON media_assets.id = shot_features.asset_id
@@ -219,13 +222,13 @@ def _project_prior(database: Database, classifier: VisionClassifier, project_id:
         return None
     stacked = np.stack([np.frombuffer(row["embedding"], dtype=np.float32) for row in rows])
     LOGGER.info(json.dumps(
-        {"event": "category_prior_measured", "project_id": project_id, "frames": len(stacked)}
+        {"event": "prompt_priors_measured", "project_id": project_id, "frames": len(stacked)}
     ))
-    return classifier.category_prior(stacked)
+    return classifier.prompt_priors(stacked)
 
 
-def _label_asset(database: Database, classifier: VisionClassifier, asset: MediaAsset, prior) -> None:
-    """Turn stored measurements into shots. Cheap, so it re-runs whenever the prior moves."""
+def _label_asset(database: Database, classifier: VisionClassifier, asset: MediaAsset, priors) -> None:
+    """Turn stored measurements into shots. Cheap, so it re-runs whenever the priors move."""
     rows = _asset_features(database, asset.id)
     if not rows:
         return
@@ -237,7 +240,7 @@ def _label_asset(database: Database, classifier: VisionClassifier, asset: MediaA
         else None
     )
     classifications = classifier.classify_features(
-        encoded, [metrics[index] for index in positions], prior
+        encoded, [metrics[index] for index in positions], priors
     )
     features_by_position = dict(zip(positions, classifications))
     database.execute("DELETE FROM shots WHERE asset_id = ?", (asset.id,))
@@ -272,10 +275,10 @@ def _label_asset(database: Database, classifier: VisionClassifier, asset: MediaA
 def analyze_shots(database: Database, project_id: str, job_id: str) -> list[Shot]:
     """Measure and label every shot, in two passes over the project.
 
-    Categories are read against a prior measured across the whole shoot, so nothing can be
-    labelled until everything is encoded. The encoding is persisted as it goes, which keeps the
+    Categories and shot scales are read against priors measured across the whole shoot, so
+    nothing can be labelled until everything is encoded. The encoding is persisted as it goes, which keeps the
     job resumable across a crash and makes the second pass cheap enough to re-run whenever the
-    prior moves.
+    priors move.
     """
     assets = project_assets(database, project_id)
     if not assets:
@@ -290,9 +293,9 @@ def analyze_shots(database: Database, project_id: str, job_id: str) -> list[Shot
             progress=index / (2 * len(assets)),
             checkpoint={"last_asset_id": asset.id, "pass": "encode"},
         )
-    prior = _project_prior(database, classifier, project_id)
+    priors = _project_prior(database, classifier, project_id)
     for index, asset in enumerate(assets, start=1):
-        _label_asset(database, classifier, asset, prior)
+        _label_asset(database, classifier, asset, priors)
         database.update_job(
             job_id,
             status="running",

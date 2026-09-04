@@ -11,7 +11,7 @@ import numpy as np
 from sevenfilm.db import Database, now
 from sevenfilm.domain import MediaAsset
 from sevenfilm.services import analysis
-from sevenfilm.services.vision import CATEGORY_PROMPTS, FrameMetrics
+from sevenfilm.services.vision import CATEGORY_PROMPTS, SCALE_PROMPTS, FrameMetrics, PromptPriors
 from sevenfilm.timebase import FrameRate, TimeRange
 
 RATE = FrameRate(25)
@@ -35,11 +35,14 @@ class FakeClassifier:
         self.encode_calls += 1
         return np.asarray([[float(index), 1.0, 0.0] for index in range(len(frames))], dtype=np.float32)
 
-    def category_prior(self, features):
-        return np.full(len(CATEGORY_PROMPTS), 1 / len(CATEGORY_PROMPTS))
+    def prompt_priors(self, features):
+        return PromptPriors(
+            category=np.full(len(CATEGORY_PROMPTS), 1 / len(CATEGORY_PROMPTS)),
+            scale=np.full(len(SCALE_PROMPTS), 1 / len(SCALE_PROMPTS)),
+        )
 
-    def classify_features(self, features, metrics, prior=None):
-        name = "couple" if prior is not None else "bride"
+    def classify_features(self, features, metrics, priors=None):
+        name = "couple" if priors is not None else "bride"
         return [
             {"category": name, "shot_scale": "medium", "aesthetic_score": 0.7,
              "confidence": 0.4, "labels": (name, "medium", "faces:1", "clip_vision")}
