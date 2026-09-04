@@ -18,7 +18,13 @@ from ..domain import MediaAsset
 from ..timebase import FrameRate
 
 LOGGER = logging.getLogger(__name__)
-VIDEO_EXTENSIONS = {".avi", ".m2ts", ".m4v", ".mkv", ".mov", ".mp4", ".mpeg", ".mpg", ".mts", ".webm"}
+# A container missing from this list is skipped without a word, so it errs wide: ffprobe
+# rejects anything here that is not really video, and index_folder now records those as
+# unreadable instead of losing them. MXF alone covers Canon XF, Sony XDCAM and Panasonic P2.
+VIDEO_EXTENSIONS = {
+    ".3gp", ".avi", ".dv", ".m2t", ".m2ts", ".m4v", ".mkv", ".mod", ".mov", ".mp4", ".mpeg",
+    ".mpg", ".mts", ".mxf", ".tod", ".webm", ".wmv",
+}
 AUDIO_EXTENSIONS = {".aac", ".aif", ".aiff", ".flac", ".m4a", ".mp3", ".ogg", ".wav"}
 
 
