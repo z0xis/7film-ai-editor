@@ -451,6 +451,70 @@ def _quality_gates(
     return max(ABSOLUTE_MIN_QUALITY, typical * RELATIVE_MIN_QUALITY), ceiling
 
 
+# A wedding film is made of sequences: an entrance, the cake, a table of details. The planner
+# used to charge 0.30 for taking the next shot from the same clip and 0.16 for staying on the
+# same subject, so it changed both at every single cut — measured on a 117 clip edit, not one
+# of its 116 transitions kept either. Measured on the 18 references instead: 29% of consecutive
+# shots stay in the same category, a run averages 1.41 shots and reaches 12, and 49% of their
+# running time sits inside a run of two or more.
+# Staying on a subject is simply allowed up to this many shots, and costs from there on. A
+# bonus for staying was tried and rejected by measurement: it locked every sequence to exactly
+# the target length, where the references hold a distribution — most runs are one or two shots
+# and a few go much further. What actually decides the run length here is the share cap below,
+# so this is a ceiling rather than a target: swept from 2 to 6, the figures barely move.
+SEQUENCE_TARGET_RUN = 5
+SEQUENCE_OVERRUN = 0.05
+# What a category already past its measured share of this part of the film costs, per unit of
+# share it is over by. A category the references never show at all is still allowed this much
+# before it starts costing, so a shoot whose labels disagree with theirs is not locked out.
+SHARE_OVERRUN_WEIGHT = 0.9
+MINIMUM_CATEGORY_SHARE = 0.05
+# Same subject at the same size back to back reads as a jump rather than as a second look.
+JUMP_CUT_PENALTY = 0.18
+
+
+def _trailing_run(items: Sequence[TimelineItem], category: str) -> int:
+    """How many shots of this category the edit is already sitting on, counting back."""
+    run = 0
+    for item in reversed(items):
+        if item.shot.category != category:
+            break
+        run += 1
+    return run
+
+
+def _band_shares(style_profile: Mapping[str, object] | None, progress: float) -> Mapping[str, float] | None:
+    """The share each category takes at this point of a reference film."""
+    arc = style_profile.get("story_arc") if style_profile else None
+    if not isinstance(arc, Sequence) or not arc:
+        return None
+    band = arc[min(len(arc) - 1, int(progress * len(arc)))]
+    return band if isinstance(band, Mapping) and band else None
+
+
+def _share_overrun(
+    style_profile: Mapping[str, object] | None,
+    progress: float,
+    category: str,
+    used: Mapping[str, int],
+    total: int,
+) -> float:
+    """How far past its reference share this category already is, in this edit.
+
+    Allowing sequences let the strongest category run away with the film: couple went from 45
+    of 116 clips to 67 the moment staying on a subject stopped being charged for. The arc was
+    measured as shares — couple 40% of the opening band, venue 21%, bride 18% — and only its
+    ranking was being used. Reading the share back keeps a sequence from becoming the film.
+    """
+    shares = _band_shares(style_profile, progress)
+    if not shares or total < 1:
+        return 0.0
+    target = float(shares.get(category, 0.0))
+    if target <= 0:
+        target = MINIMUM_CATEGORY_SHARE
+    return max(0.0, used.get(category, 0) / total - target)
+
+
 def _visual_baseline(shots: Sequence[Shot]) -> tuple[float, float] | None:
     """What this shoot typically looks like, against which an outlier frame stands out."""
     measured = [shot for shot in shots if shot.has_visual_measurements]
@@ -563,6 +627,8 @@ def _score_candidate(
     preferred_scales: tuple[str, ...],
     energy: str,
     recent: tuple[TimelineItem, ...],
+    current_run: int = 0,
+    share_overrun: float = 0.0,
     desired_duration: Fraction,
     random_jitter: float,
     style_profile: Mapping[str, object] | None = None,
@@ -587,16 +653,23 @@ def _score_candidate(
     jump_cut_penalty = 0.0
     previous = recent[-1] if recent else None
     if previous is not None:
-        if previous.shot.category == shot.category and previous.shot.shot_scale == shot.shot_scale:
-            jump_cut_penalty = 0.28
-        elif previous.shot.category == shot.category:
-            jump_cut_penalty = 0.16
-        if previous.shot.asset_id == shot.asset_id:
-            jump_cut_penalty += 0.30
-        sequence_continuity = 0.8 if jump_cut_penalty else 1.0
-    recent_category_count = sum(item.shot.category == shot.category for item in recent)
-    jump_cut_penalty += 0.09 * recent_category_count
-    reuse_penalty = REUSE_PENALTY * reuse_count + ASSET_REUSE_PENALTY * asset_reuse_count
+        continues = previous.shot.category == shot.category
+        if continues and current_run >= SEQUENCE_TARGET_RUN:
+            # Past the length the references hold a subject for, leaving is worth more. Below
+            # it nothing is charged at all: an entrance, the cake, a table of details are each
+            # several shots of one thing, and the film has to be allowed to stay on them.
+            jump_cut_penalty = SEQUENCE_OVERRUN * (current_run - SEQUENCE_TARGET_RUN + 1)
+            sequence_continuity = 0.8
+        if continues and previous.shot.shot_scale == shot.shot_scale:
+            # Same subject at the same size back to back is the cut worth avoiding: it reads
+            # as a jump rather than as a second look. A near-duplicate frame is caught by the
+            # perceptual hash above, which is a measurement rather than a guess.
+            jump_cut_penalty += JUMP_CUT_PENALTY
+    reuse_penalty = (
+        REUSE_PENALTY * reuse_count
+        + ASSET_REUSE_PENALTY * asset_reuse_count
+        + SHARE_OVERRUN_WEIGHT * share_overrun
+    )
     available = _available_duration(shot)
     duration_fit = max(0.0, 1.0 - float(abs(available - desired_duration) / max(desired_duration, Fraction(1, 2))))
     music_fit = music_fit * 0.7 + duration_fit * 0.3
@@ -702,6 +775,7 @@ def build_timeline(
     consumed_source_frames = {shot.id: 0 for shot in candidates}
     usage_count = {shot.id: 0 for shot in candidates}
     asset_usage: dict[str, int] = {shot.asset_id: 0 for shot in candidates}
+    category_uses: dict[str, int] = {}
     # Every shot already in the edit, so a repeat is caught however long ago it played.
     used_hashes: list[int] = []
     exhausted: set[str] = set()
@@ -752,6 +826,9 @@ def build_timeline(
                 preferred_scales=preferred_scales,
                 energy=energy,
                 recent=tuple(plan.items[-4:]),
+                current_run=_trailing_run(plan.items, shot.category),
+                share_overrun=_share_overrun(
+                    style_profile, progress, shot.category, category_uses, len(plan.items)),
                 desired_duration=desired,
                 random_jitter=rng.uniform(-0.015, 0.015),
                 style_profile=style_profile,
@@ -822,6 +899,7 @@ def build_timeline(
         consumed_source_frames[selected_shot.id] += source_range.duration_frames
         usage_count[selected_shot.id] += 1
         asset_usage[selected_shot.asset_id] = asset_usage.get(selected_shot.asset_id, 0) + 1
+        category_uses[selected_shot.category] = category_uses.get(selected_shot.category, 0) + 1
         selected_hash = _perceptual_hash(selected_shot)
         if selected_hash is not None:
             used_hashes.append(selected_hash)
