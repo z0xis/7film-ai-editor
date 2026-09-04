@@ -73,10 +73,22 @@ def probe(path: Path) -> dict[str, Any]:
 
 
 def _first_video_stream(payload: dict[str, Any]) -> dict[str, Any]:
-    stream = next((item for item in payload.get("streams", []) if item.get("codec_type") == "video"), None)
-    if stream is None:
-        raise ValueError(f"Video stream bulunamadı: {payload.get('format', {}).get('filename', 'bilinmeyen dosya')}")
-    return stream
+    """The picture track, not a cover image the camera or a converter embedded.
+
+    An attached picture is a video stream as far as ffprobe is concerned, and it is often
+    listed first. Reading it gives the size of a thumbnail and a duration of a single frame,
+    which is short enough that no shot is ever detected and the clip drops out of the edit
+    without a word.
+    """
+    streams = [item for item in payload.get("streams", []) if item.get("codec_type") == "video"]
+    picture = next(
+        (item for item in streams if not (item.get("disposition") or {}).get("attached_pic")),
+        None,
+    )
+    if picture is None:
+        name = payload.get("format", {}).get("filename", "bilinmeyen dosya")
+        raise ValueError(f"Video stream bulunamadı: {name}")
+    return picture
 
 
 def _start_timecode(payload: dict[str, Any]) -> str | None:

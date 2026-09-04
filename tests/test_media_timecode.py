@@ -65,3 +65,50 @@ class StartTimecodeTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class CoverImageTests(unittest.TestCase):
+    """An embedded cover image is a video stream to ffprobe, and often the first one."""
+
+    def payload(self, streams):
+        return {"streams": streams, "format": {"duration": "10.1", "filename": "/m/x.mp4"}}
+
+    def cover(self):
+        return {"codec_type": "video", "codec_name": "mjpeg", "width": 320, "height": 320,
+                "avg_frame_rate": "0/0", "duration": "0.04",
+                "disposition": {"attached_pic": 1}, "tags": {}}
+
+    def picture(self):
+        return {"codec_type": "video", "codec_name": "h264", "width": 3840, "height": 2160,
+                "avg_frame_rate": "50/1", "duration": "10.1",
+                "disposition": {"attached_pic": 0}, "tags": {"timecode": "08:19:21:02"}}
+
+    def test_the_real_picture_track_is_read_not_the_thumbnail(self):
+        """Reading the cover gave a 320x320 clip lasting one frame, so no shot was ever found."""
+        details = metadata_from_probe(Path("/m/x.mp4"), self.payload([self.cover(), self.picture()]))
+
+        self.assertEqual((details["width"], details["height"]), (3840, 2160))
+        self.assertEqual(float(details["duration"]), 10.1)
+        self.assertEqual(details["codec"], "h264")
+
+    def test_the_frame_rate_comes_from_the_picture_track(self):
+        details = metadata_from_probe(Path("/m/x.mp4"), self.payload([self.cover(), self.picture()]))
+
+        self.assertEqual(
+            (details["frame_rate"].numerator, details["frame_rate"].denominator), (50, 1))
+
+    def test_a_file_without_a_cover_is_unaffected(self):
+        details = metadata_from_probe(Path("/m/x.mp4"), self.payload([self.picture()]))
+
+        self.assertEqual(details["width"], 3840)
+
+    def test_a_stream_with_no_disposition_at_all_is_taken_as_picture(self):
+        stream = self.picture()
+        stream.pop("disposition")
+
+        self.assertEqual(metadata_from_probe(Path("/m/x.mp4"), self.payload([stream]))["width"], 3840)
+
+    def test_nothing_but_a_cover_image_is_no_video_at_all(self):
+        """Which the indexer then skips, rather than treating a thumbnail as footage."""
+        with self.assertRaises(ValueError):
+            metadata_from_probe(Path("/m/x.mp4"), self.payload([self.cover()]))
