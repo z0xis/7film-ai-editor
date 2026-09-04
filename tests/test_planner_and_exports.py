@@ -262,6 +262,70 @@ def _seed_timeline(database, asset, shot, *, source_start, source_duration):
     })
 
 
+class FcpxmlTimecodeTests(unittest.TestCase):
+    """Resolve rejects the whole file if an asset claims to start at zero when it does not."""
+
+    def setUp(self):
+        self.rate = FrameRate(25)
+        self.asset = MediaAsset(
+            id="asset-1", project_id="project-1", path=Path("/media/A001.mov"), name="A001.mov",
+            duration=Fraction(10), frame_rate=self.rate, width=1920, height=1080,
+            timecode="08:19:21:02")
+
+    def plan(self, timecode="08:19:21:02", rate=None):
+        rate = rate or self.rate
+        asset = MediaAsset(
+            id="asset-1", project_id="project-1", path=Path("/media/A001.mov"), name="A001.mov",
+            duration=Fraction(10), frame_rate=rate, width=1920, height=1080, timecode=timecode)
+        shot = Shot(id="shot-1", asset_id="asset-1", source_range=TimeRange(0, 250, rate))
+        plan = TimelinePlan(id="t", project_id="p", name="AI Rough Cut", frame_rate=self.rate,
+                            target_duration=Fraction(4))
+        plan.items.append(TimelineItem(
+            id="i", shot=shot, asset=asset, source_range=TimeRange(50, 50, rate),
+            timeline_range=TimeRange(0, 50, self.rate), score=.9, selection_reason="r"))
+        return plan
+
+    def exported(self, plan):
+        folder = tempfile.TemporaryDirectory()
+        self.addCleanup(folder.cleanup)
+        return ET.parse(export_all(plan, Path(folder.name))["fcpxml"]).getroot()
+
+    def test_the_asset_starts_where_the_camera_says_it_does(self):
+        asset = self.exported(self.plan()).find("./resources/asset")
+
+        # 08:19:21:02 at 25 fps is 749027 frames.
+        self.assertEqual(Fraction(asset.attrib["start"].removesuffix("s")), Fraction(749027, 25))
+
+    def test_the_clip_start_is_on_the_media_clock_too(self):
+        clip = self.exported(self.plan()).find("./library/event/project/sequence/spine/asset-clip")
+
+        # Two seconds into a file that starts at 749027/25s.
+        self.assertEqual(
+            Fraction(clip.attrib["start"].removesuffix("s")), Fraction(749027, 25) + 2)
+
+    def test_the_frame_part_is_read_at_the_footage_rate(self):
+        asset = self.exported(self.plan(rate=FrameRate(50))).find("./resources/asset")
+
+        # At 50 fps the same timecode is 1498052 frames, not 749027.
+        self.assertEqual(Fraction(asset.attrib["start"].removesuffix("s")), Fraction(1498052, 50))
+
+    def test_footage_without_a_timecode_still_starts_at_zero(self):
+        asset = self.exported(self.plan(timecode=None)).find("./resources/asset")
+
+        self.assertEqual(asset.attrib["start"], "0s")
+
+    def test_a_timecode_that_makes_no_sense_is_ignored(self):
+        for timecode in ("", "nonsense", "08:19:21", "08:19:21:02:11", "aa:bb:cc:dd"):
+            with self.subTest(timecode=timecode):
+                asset = self.exported(self.plan(timecode=timecode)).find("./resources/asset")
+                self.assertEqual(asset.attrib["start"], "0s")
+
+    def test_a_drop_frame_separator_is_accepted(self):
+        asset = self.exported(self.plan(timecode="08:19:21;02")).find("./resources/asset")
+
+        self.assertEqual(Fraction(asset.attrib["start"].removesuffix("s")), Fraction(749027, 25))
+
+
 class FootageQualityTests(unittest.TestCase):
     """A blurry blown-out frame reads to CLIP as a bride; it must never reach the timeline."""
 

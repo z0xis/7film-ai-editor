@@ -7,7 +7,7 @@ from fractions import Fraction
 from pathlib import Path
 from xml.etree import ElementTree as ET
 
-from ..domain import TimelinePlan
+from ..domain import MediaAsset, TimelinePlan
 
 
 def _rational_time(value: Fraction) -> str:
@@ -30,6 +30,24 @@ def _otio_range(start: Fraction, duration: Fraction, rate: Fraction) -> dict[str
         "start_time": _otio_time(start, rate),
         "duration": _otio_time(duration, rate),
     }
+
+
+def _asset_start(asset: MediaAsset) -> Fraction:
+    """Where the media begins on its own clock, as Resolve reads it off the file.
+
+    Resolve refuses an FCPXML whose asset claims to start at zero when the file carries a
+    recorded start timecode - measured against Resolve Studio 21.0.2, the same file imports
+    with the timecode and is rejected without it. Sony XAVC records it as time of day, so
+    "0s" is out by more than eight hours on this footage.
+    """
+    if not asset.timecode:
+        return Fraction(0, 1)
+    parts = asset.timecode.replace(";", ":").split(":")
+    if len(parts) != 4 or not all(part.isdigit() for part in parts):
+        return Fraction(0, 1)
+    hours, minutes, seconds, frames = (int(part) for part in parts)
+    rate = asset.frame_rate.value
+    return (Fraction(hours * 3600 + minutes * 60 + seconds) * rate + frames) / rate
 
 
 def plan_as_dict(plan: TimelinePlan) -> dict[str, object]:
@@ -212,7 +230,7 @@ def export_fcpxml(plan: TimelinePlan, destination: Path) -> Path:
             "asset",
             id=ref,
             name=item.asset.name,
-            start="0s",
+            start=_rational_time(_asset_start(item.asset)),
             duration=_rational_time(item.asset.duration),
             hasVideo="1",
             # The rough cut is picture only: the camera audio of the source clips must not
@@ -266,7 +284,8 @@ def export_fcpxml(plan: TimelinePlan, destination: Path) -> Path:
             name=item.asset.name,
             ref=assets[item.asset.id],
             offset=_rational_time(item.timeline_range.start_seconds),
-            start=_rational_time(item.source_range.start_seconds),
+            # The clip's start is on the media's clock too, not counted from zero.
+            start=_rational_time(_asset_start(item.asset) + item.source_range.start_seconds),
             duration=_rational_time(item.timeline_range.duration_seconds),
         )
         if i == 0 and plan.music_path:

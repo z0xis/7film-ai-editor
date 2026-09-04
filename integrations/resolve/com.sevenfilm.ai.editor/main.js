@@ -254,10 +254,10 @@ async function importTimeline(_event, payload) {
   const mediaPool = await project.GetMediaPool();
   const timelineName = String(payload?.timelineName || plan.name || "7Film AI Rough Cut");
   // The Resolve API is the primary path: it is the only one that can say picture-only, put the
-  // music on A1 and leave A2 and A3 for the editor, and it is the one verified end to end
-  // against Resolve Studio 21.0.2. ImportTimelineFromFile is kept as a last resort - it refuses
-  // this FCPXML in every shape tried, including one written to match Resolve's own 1.8 export,
-  // so leading with it only cost a failed attempt before falling through to here anyway.
+  // music on A1 and leave A2 and A3 for the editor, and add the markers. Importing the FCPXML
+  // does work now that its assets carry the media's own start timecode - the same 141 cut file
+  // comes in whole, music included - but it decides the track layout itself, so it is the
+  // fallback rather than the lead.
   let timeline = null;
   let importMethod = "Resolve API";
   try {

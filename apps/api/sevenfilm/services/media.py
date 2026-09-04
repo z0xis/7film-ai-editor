@@ -73,6 +73,21 @@ def _first_video_stream(payload: dict[str, Any]) -> dict[str, Any]:
     return stream
 
 
+def _start_timecode(payload: dict[str, Any]) -> str | None:
+    """Find the recorded start timecode wherever the camera put it.
+
+    Sony XAVC writes it to a separate real-time metadata track, not to the video stream, so
+    reading only the video stream's tags missed it on every clip of this shoot. Resolve reads
+    it, and conforming against the original media depends on the two agreeing.
+    """
+    for stream in payload.get("streams", []):
+        timecode = (stream.get("tags") or {}).get("timecode")
+        if timecode:
+            return str(timecode)
+    timecode = (payload.get("format", {}).get("tags") or {}).get("timecode")
+    return str(timecode) if timecode else None
+
+
 def metadata_from_probe(path: Path, payload: dict[str, Any]) -> dict[str, Any]:
     stream = _first_video_stream(payload)
     raw_rate = stream.get("avg_frame_rate") or stream.get("r_frame_rate") or "25/1"
@@ -82,14 +97,13 @@ def metadata_from_probe(path: Path, payload: dict[str, Any]) -> dict[str, Any]:
     raw_duration = stream.get("duration") or payload.get("format", {}).get("duration")
     if raw_duration is None:
         raise ValueError(f"Süre bilgisi bulunamadı: {path}")
-    tags = stream.get("tags", {})
     return {
         "duration": Fraction(str(raw_duration)),
         "frame_rate": frame_rate,
         "width": int(stream.get("width") or 0),
         "height": int(stream.get("height") or 0),
         "codec": stream.get("codec_name"),
-        "timecode": tags.get("timecode"),
+        "timecode": _start_timecode(payload),
         "raw": payload,
     }
 
