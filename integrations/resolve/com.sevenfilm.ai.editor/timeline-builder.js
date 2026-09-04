@@ -5,17 +5,24 @@ const DEFAULT_BATCH_SIZE = 40;
 // A clip shorter than this reads as a freeze frame on the timeline rather than a shot.
 const MIN_CLIP_SECONDS = 0.25;
 
-function parseFrameRate(raw, fallback = 25) {
+// The engine states every duration as exact rational time, as the blueprint requires, so
+// seconds arrive as strings like "1161665306122449/5000000000000". Number() gives NaN for
+// those, which silently threw away the music length limit.
+function parseRational(raw) {
   const text = String(raw ?? "").trim();
-  const match = /^(\d+)(?:\s*\/\s*(\d+))?$/.exec(text);
-  if (!match) {
-    const numeric = Number(text);
-    return Number.isFinite(numeric) && numeric > 0 ? numeric : fallback;
+  if (!text) return null;
+  const ratio = /^(-?\d+)\s*\/\s*(\d+)$/.exec(text);
+  if (ratio) {
+    const denominator = Number(ratio[2]);
+    return denominator ? Number(ratio[1]) / denominator : null;
   }
-  const numerator = Number(match[1]);
-  const denominator = match[2] === undefined ? 1 : Number(match[2]);
-  if (!numerator || !denominator) return fallback;
-  return numerator / denominator;
+  const numeric = Number(text);
+  return Number.isFinite(numeric) ? numeric : null;
+}
+
+function parseFrameRate(raw, fallback = 25) {
+  const value = parseRational(raw);
+  return value !== null && value > 0 ? value : fallback;
 }
 
 // A media pool item Resolve cannot measure reports 0 (or nothing) for "Frames". That is
@@ -124,8 +131,8 @@ function buildMusicClipInfo({
 
 function musicFrameLimit(plan, mediaFrameCount) {
   const rate = parseFrameRate(plan?.frame_rate);
-  const seconds = Number(plan?.music_duration_seconds);
-  const fromSeconds = Number.isFinite(seconds) && seconds > 0 ? Math.floor(seconds * rate) : null;
+  const seconds = parseRational(plan?.music_duration_seconds);
+  const fromSeconds = seconds !== null && seconds > 0 ? Math.floor(seconds * rate) : null;
   const fromMedia = toFrameCount(mediaFrameCount);
   const limits = [fromSeconds, fromMedia].filter((value) => value !== null);
   return limits.length ? Math.min(...limits) : null;
@@ -187,5 +194,6 @@ module.exports = {
   clampSourceRange,
   musicFrameLimit,
   parseFrameRate,
+  parseRational,
   timelineFrameCount,
 };

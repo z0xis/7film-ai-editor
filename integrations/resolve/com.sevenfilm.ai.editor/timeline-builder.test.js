@@ -3,6 +3,7 @@ const { describe, it } = require("node:test");
 
 const {
   appendClipsInBatches,
+  parseRational,
   buildMusicClipInfo,
   buildVideoClipInfos,
   chunk,
@@ -251,6 +252,38 @@ describe("plan measurements", () => {
 
   it("returns null for an empty plan", () => {
     assert.equal(timelineFrameCount({ items: [] }), null);
+  });
+
+  it("reads the exact rational seconds the engine sends", () => {
+    // The engine states time as exact rationals, as the blueprint requires. Number() gives
+    // NaN for these, which threw the music length limit away without a word.
+    assert.equal(parseRational("1161665306122449/5000000000000"), 232.3330612244898);
+    assert.equal(parseRational("150"), 150);
+    assert.equal(parseRational("47/25"), 1.88);
+    assert.equal(parseRational("232.333"), 232.333);
+  });
+
+  it("returns null rather than a wrong number for something unreadable", () => {
+    for (const value of ["", "  ", "abc", "1/0", null, undefined, {}]) {
+      assert.equal(parseRational(value), null, `parseRational(${JSON.stringify(value)})`);
+    }
+  });
+
+  it("clamps the music with a rational duration, not just a decimal one", () => {
+    const plan = { frame_rate: "50/1", music_duration_seconds: "1161665306122449/5000000000000" };
+
+    assert.equal(musicFrameLimit(plan, null), 11616);
+  });
+
+  it("keeps the music inside a track shorter than the rough cut", () => {
+    // Resolve stretches an audio item that overruns its media rather than refusing it, so
+    // losing this limit lengthens the music instead of stopping it.
+    const plan = { frame_rate: "25/1", music_duration_seconds: "601/10" };  // 60.1s
+    const clip = buildMusicClipInfo({
+      mediaPoolItem: MUSIC, timelineFrames: 3750, musicFrames: musicFrameLimit(plan, null),
+    });
+
+    assert.equal(clip.endFrame, 1502, "60.1s at 25fps");
   });
 
   it("converts the music duration to timeline frames", () => {
