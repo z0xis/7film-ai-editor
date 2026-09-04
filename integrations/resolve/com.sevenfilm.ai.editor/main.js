@@ -9,10 +9,9 @@ const path = require("path");
 const WorkflowIntegration = require("./WorkflowIntegration.node");
 const {
   appendClipsInBatches,
-  buildMusicClipInfo,
+  buildMusicClipInfos,
   buildVideoClipInfos,
-  musicFrameLimit,
-  timelineFrameCount,
+  musicSegments,
 } = require("./timeline-builder");
 
 const PLUGIN_ID = "com.sevenfilm.ai.editor";
@@ -190,32 +189,31 @@ async function ensureAudioTracks(timeline, wanted) {
 }
 
 async function appendMusic(mediaPool, timeline, plan, media) {
-  const musicPath = plan.music_path ? String(plan.music_path) : null;
-  if (!musicPath) return false;
-  const musicMedia = media.get(path.resolve(musicPath));
-  if (!musicMedia?.mediaPoolItem) throw new Error(`Müzik Media Pool öğesi bulunamadı: ${musicPath}`);
+  const segments = musicSegments(plan);
+  if (!segments.length) return false;
   const audioTracks = await ensureAudioTracks(timeline, AUDIO_TRACK_COUNT);
   if (audioTracks < MUSIC_TRACK_INDEX) throw new Error("Resolve timeline'ında müzik için audio track açılamadı.");
   const timelineStart = Number(await timeline.GetStartFrame()) || 0;
-  const clipInfo = buildMusicClipInfo({
-    mediaPoolItem: musicMedia.mediaPoolItem,
-    timelineFrames: timelineFrameCount(plan),
-    musicFrames: musicFrameLimit(plan, musicMedia.frameCount),
+  const { clipInfos, missing } = buildMusicClipInfos({
+    plan,
+    lookup: (musicPath) => media.get(path.resolve(musicPath))?.mediaPoolItem,
+    timelineStart,
     trackIndex: MUSIC_TRACK_INDEX,
-    recordFrame: timelineStart,
   });
-  if (clipInfo === null) throw new Error("Müzik süresi hesaplanamadı; Resolve timeline'ına eklenemedi.");
-  const audioItems = await mediaPool.AppendToTimeline([clipInfo]);
-  if (!audioItems || audioItems.length !== 1) {
-    throw new Error("Müzik Resolve timeline'ına eklenemedi.");
+  if (missing.length) throw new Error(`Müzik Media Pool öğesi bulunamadı: ${missing.join(", ")}`);
+  if (!clipInfos.length) throw new Error("Müzik süresi hesaplanamadı; Resolve timeline'ına eklenemedi.");
+  const audioItems = await mediaPool.AppendToTimeline(clipInfos);
+  // AppendToTimeline drops invalid items and keeps the rest, so the count is the check.
+  if (!audioItems || audioItems.length !== clipInfos.length) {
+    throw new Error(`Müzik Resolve timeline'ına eklenemedi (${audioItems?.length || 0}/${clipInfos.length}).`);
   }
   return true;
 }
 
 async function createTimelineFromPlan(mediaPool, project, plan, timelineName) {
   const sourcePaths = [...new Set((plan.items || []).map((item) => String(item.source_path)))];
-  const musicPath = plan.music_path ? String(plan.music_path) : null;
-  const poolPaths = musicPath ? [...new Set([...sourcePaths, musicPath])] : sourcePaths;
+  const songPaths = musicSegments(plan).map((segment) => segment.path);
+  const poolPaths = [...new Set([...sourcePaths, ...songPaths])];
   const media = await resolveMediaPool(mediaPool, poolPaths);
 
   const { clipInfos, labels, dropped } = buildVideoClipInfos(

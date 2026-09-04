@@ -83,6 +83,20 @@ def plan_as_dict(plan: TimelinePlan) -> dict[str, object]:
         "warnings": plan.warnings,
         "music_path": str(plan.music_path) if plan.music_path else None,
         "music_duration_seconds": str(plan.music_duration) if plan.music_duration else None,
+        # Every song under the edit. music_path above stays for the single-song readers; the
+        # Resolve adapter lays these down one per song, each from the part that was chosen.
+        "music_segments": [
+            {
+                "path": str(segment.path),
+                "timeline_start_seconds": str(segment.timeline_start),
+                "duration_seconds": str(segment.duration),
+                "source_start_seconds": str(segment.source_start),
+                "source_total_seconds": (
+                    str(segment.source_total) if segment.source_total is not None else None
+                ),
+            }
+            for segment in _plan_segments(plan)
+        ],
         "items": [
             {
                 "id": item.id,

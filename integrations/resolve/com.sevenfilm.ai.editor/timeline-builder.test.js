@@ -5,10 +5,12 @@ const {
   appendClipsInBatches,
   parseRational,
   buildMusicClipInfo,
+  buildMusicClipInfos,
   buildVideoClipInfos,
   chunk,
   clampSourceRange,
   musicFrameLimit,
+  musicSegments,
   parseFrameRate,
   timelineFrameCount,
 } = require("./timeline-builder");
@@ -420,5 +422,162 @@ describe("Resolve handoff (regression: clips 81-120 rejected as invalid items)",
         return true;
       },
     );
+  });
+});
+
+describe("buildMusicClipInfos", () => {
+  const plan = (segments, extra = {}) => ({
+    frame_rate: "25/1",
+    items: Array.from({ length: 4 }, () => ({ timeline_in: { duration_frames: 750 } })),
+    music_segments: segments,
+    ...extra,
+  });
+  const lookup = (name) => ({ id: name });
+
+  it("lays one clip per song, each where the plan put it", () => {
+    const { clipInfos } = buildMusicClipInfos({
+      plan: plan([
+        { path: "/m/yavas.mp3", timeline_start_seconds: "0", duration_seconds: "90",
+          source_start_seconds: "0", source_total_seconds: "200" },
+        { path: "/m/hareketli.mp3", timeline_start_seconds: "90", duration_seconds: "30",
+          source_start_seconds: "40", source_total_seconds: "150" },
+      ]),
+      lookup,
+    });
+
+    assert.equal(clipInfos.length, 2);
+    assert.deepEqual(
+      clipInfos.map((c) => [c.recordFrame, c.startFrame, c.endFrame]),
+      [[0, 0, 2250], [2250, 1000, 1750]],
+    );
+  });
+
+  it("puts every song on the music track as audio", () => {
+    const { clipInfos } = buildMusicClipInfos({
+      plan: plan([
+        { path: "/m/a.mp3", timeline_start_seconds: "0", duration_seconds: "60",
+          source_start_seconds: "0", source_total_seconds: "200" },
+        { path: "/m/b.mp3", timeline_start_seconds: "60", duration_seconds: "60",
+          source_start_seconds: "0", source_total_seconds: "200" },
+      ]),
+      lookup,
+      trackIndex: 1,
+    });
+
+    for (const clip of clipInfos) {
+      assert.equal(clip.mediaType, 2);
+      assert.equal(clip.trackIndex, 1);
+    }
+  });
+
+  it("offsets every record frame by where the timeline starts", () => {
+    const { clipInfos } = buildMusicClipInfos({
+      plan: plan([
+        { path: "/m/a.mp3", timeline_start_seconds: "0", duration_seconds: "60",
+          source_start_seconds: "0", source_total_seconds: "200" },
+        { path: "/m/b.mp3", timeline_start_seconds: "60", duration_seconds: "60",
+          source_start_seconds: "0", source_total_seconds: "200" },
+      ]),
+      lookup,
+      timelineStart: 90000,
+    });
+
+    assert.deepEqual(clipInfos.map((c) => c.recordFrame), [90000, 91500]);
+  });
+
+  it("never runs a song past the end of the picture", () => {
+    const { clipInfos } = buildMusicClipInfos({
+      plan: plan([
+        { path: "/m/a.mp3", timeline_start_seconds: "0", duration_seconds: "500",
+          source_start_seconds: "0", source_total_seconds: "900" },
+      ]),
+      lookup,
+    });
+
+    // Four clips of 750 frames is 3000 frames of picture.
+    assert.equal(clipInfos[0].endFrame - clipInfos[0].startFrame, 3000);
+  });
+
+  it("never runs a song past the end of its own file", () => {
+    const { clipInfos } = buildMusicClipInfos({
+      plan: plan([
+        { path: "/m/a.mp3", timeline_start_seconds: "0", duration_seconds: "90",
+          source_start_seconds: "40", source_total_seconds: "60" },
+      ]),
+      lookup,
+    });
+
+    assert.equal(clipInfos[0].startFrame, 1000);
+    assert.equal(clipInfos[0].endFrame, 1500);
+  });
+
+  it("drops a song that starts after the picture ends", () => {
+    const { clipInfos } = buildMusicClipInfos({
+      plan: plan([
+        { path: "/m/a.mp3", timeline_start_seconds: "0", duration_seconds: "120",
+          source_start_seconds: "0", source_total_seconds: "200" },
+        { path: "/m/late.mp3", timeline_start_seconds: "500", duration_seconds: "30",
+          source_start_seconds: "0", source_total_seconds: "200" },
+      ]),
+      lookup,
+    });
+
+    assert.equal(clipInfos.length, 1);
+  });
+
+  it("reports a song the media pool does not hold instead of skipping it", () => {
+    const { clipInfos, missing } = buildMusicClipInfos({
+      plan: plan([
+        { path: "/m/a.mp3", timeline_start_seconds: "0", duration_seconds: "60",
+          source_start_seconds: "0", source_total_seconds: "200" },
+        { path: "/m/yok.mp3", timeline_start_seconds: "60", duration_seconds: "60",
+          source_start_seconds: "0", source_total_seconds: "200" },
+      ]),
+      lookup: (name) => (name === "/m/yok.mp3" ? null : { id: name }),
+    });
+
+    assert.deepEqual(missing, ["/m/yok.mp3"]);
+    assert.equal(clipInfos.length, 1);
+  });
+
+  it("reads the exact rationals the engine emits", () => {
+    const { clipInfos } = buildMusicClipInfos({
+      plan: plan([
+        { path: "/m/a.mp3", timeline_start_seconds: "0",
+          duration_seconds: "1161665306122449/29000000000000",
+          source_start_seconds: "0", source_total_seconds: "200" },
+      ]),
+      lookup,
+    });
+
+    // 40.05... seconds at 25 fps.
+    assert.equal(clipInfos[0].endFrame, 1001);
+  });
+});
+
+describe("musicSegments", () => {
+  it("reads the songs a plan carries", () => {
+    const segments = musicSegments({
+      music_segments: [{ path: "/m/a.mp3" }, { path: "/m/b.mp3" }],
+    });
+
+    assert.deepEqual(segments.map((s) => s.path), ["/m/a.mp3", "/m/b.mp3"]);
+  });
+
+  it("falls back to the single music_path of an older plan", () => {
+    const segments = musicSegments({ music_path: "/m/tek.mp3", music_duration_seconds: "150" });
+
+    assert.equal(segments.length, 1);
+    assert.equal(segments[0].path, "/m/tek.mp3");
+    assert.equal(segments[0].sourceTotalSeconds, "150");
+  });
+
+  it("returns nothing for a plan with no music at all", () => {
+    assert.deepEqual(musicSegments({}), []);
+    assert.deepEqual(musicSegments(null), []);
+  });
+
+  it("ignores an entry with no path", () => {
+    assert.deepEqual(musicSegments({ music_segments: [{ duration_seconds: "10" }] }), []);
   });
 });

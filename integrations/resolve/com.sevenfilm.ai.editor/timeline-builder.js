@@ -129,6 +129,80 @@ function buildMusicClipInfo({
   };
 }
 
+/**
+ * One clipInfo per song, each laid at its own place on the timeline and starting from the part
+ * of the file that was chosen. An edit can open on a slow song and move to a fast one, so the
+ * adapter cannot assume a single track starting at zero.
+ *
+ * Frames are counted at the timeline's rate: Resolve expresses an audio clip's source offset
+ * that way, measured on an FCPXML import where a song entering at its own fortieth second came
+ * back as source frame 1000 at 25 fps.
+ */
+function buildMusicClipInfos({ plan, lookup, timelineStart = 0, trackIndex = 1 }) {
+  const segments = musicSegments(plan);
+  if (!segments.length) return { clipInfos: [], missing: [] };
+  const rate = parseFrameRate(plan?.frame_rate);
+  const timelineLimit = toFrameCount(timelineFrameCount(plan));
+  const clipInfos = [];
+  const missing = [];
+  for (const segment of segments) {
+    const mediaPoolItem = lookup(segment.path);
+    if (!mediaPoolItem) {
+      missing.push(segment.path);
+      continue;
+    }
+    const offset = secondsToFrames(segment.timelineStartSeconds, rate);
+    if (timelineLimit !== null && offset >= timelineLimit) continue;
+    let duration = secondsToFrames(segment.durationSeconds, rate);
+    if (timelineLimit !== null) duration = Math.min(duration, timelineLimit - offset);
+    const total = secondsToFrames(segment.sourceTotalSeconds, rate);
+    const start = secondsToFrames(segment.sourceStartSeconds, rate);
+    if (total !== null && total > 0) duration = Math.min(duration, total - start);
+    if (duration === null || duration < 1) continue;
+    clipInfos.push({
+      mediaPoolItem,
+      startFrame: start ?? 0,
+      endFrame: (start ?? 0) + duration,
+      mediaType: 2,
+      trackIndex,
+      recordFrame: timelineStart + offset,
+    });
+  }
+  return { clipInfos, missing };
+}
+
+/**
+ * The songs a plan carries, newest field first. A plan saved before an edit could hold more
+ * than one still has only music_path, and it has to keep working.
+ */
+function musicSegments(plan) {
+  const raw = Array.isArray(plan?.music_segments) ? plan.music_segments : [];
+  const segments = raw
+    .map((item) => ({
+      path: item?.path ? String(item.path) : null,
+      timelineStartSeconds: item?.timeline_start_seconds,
+      durationSeconds: item?.duration_seconds,
+      sourceStartSeconds: item?.source_start_seconds,
+      sourceTotalSeconds: item?.source_total_seconds,
+    }))
+    .filter((item) => item.path);
+  if (segments.length) return segments;
+  if (!plan?.music_path) return [];
+  return [{
+    path: String(plan.music_path),
+    timelineStartSeconds: "0",
+    durationSeconds: plan.music_duration_seconds,
+    sourceStartSeconds: "0",
+    sourceTotalSeconds: plan.music_duration_seconds,
+  }];
+}
+
+function secondsToFrames(value, rate) {
+  const seconds = parseRational(value);
+  if (seconds === null || !(rate > 0)) return null;
+  return Math.max(0, Math.floor(seconds * rate));
+}
+
 function musicFrameLimit(plan, mediaFrameCount) {
   const rate = parseFrameRate(plan?.frame_rate);
   const seconds = parseRational(plan?.music_duration_seconds);
@@ -189,10 +263,12 @@ module.exports = {
   MIN_CLIP_SECONDS,
   appendClipsInBatches,
   buildMusicClipInfo,
+  buildMusicClipInfos,
   buildVideoClipInfos,
   chunk,
   clampSourceRange,
   musicFrameLimit,
+  musicSegments,
   parseFrameRate,
   parseRational,
   timelineFrameCount,
