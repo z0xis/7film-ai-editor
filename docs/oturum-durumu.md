@@ -1,6 +1,6 @@
 # 7Film AI Editor — oturum durumu
 
-Son güncelleme: 4 Eylül 2026, 02:45. Bu dosya, çalışmayı devralan bir sonraki oturum içindir.
+Son güncelleme: 4 Eylül 2026, 03:20. Bu dosya, çalışmayı devralan bir sonraki oturum içindir.
 
 ## Bu turda kapatılan hatalar
 
@@ -15,23 +15,31 @@ Son güncelleme: 4 Eylül 2026, 02:45. Bu dosya, çalışmayı devralan bir sonr
 | `a244d2a` | Analiz devam ettirilebilir; yeniden etiketleme 162 sn yerine 5,4 sn |
 | `37769f2` | Kayıtlı kurgular yeniden analizde sessizce boşalıyordu |
 | `4bc5b62` | Eklenti `timeline-builder.js`'i kurmuyordu — hiç açılmazdı |
+| `5ea3a9c` | Eski analizler sessizdi; artık damgalanıp arayüzde bildiriliyor |
 
-## Şu an arka planda çalışan iş
+## Yeniden analiz tamamlandı
 
-Gerçek projenin (`df2a4a62-e821-40f7-86fc-b6a9259e9ee9`, 345 klip) yeniden analizi.
+`df2a4a62-e821-40f7-86fc-b6a9259e9ee9` (elenora mustafa) projesi 4 Eylül 03:01'de bitti.
 
-- Çalıştırıcı: `data/.reanalysis.py`, ayrık bir bash sarmalayıcı içinden, 5 denemeye kadar yeniden dener
-- Günlük: `data/reanalysis.log`
-- Yedek: `data/sevenfilm.sqlite3.backup-20260904-023304` (690 medya, 1700 shot, 20 timeline, 6120 item)
-- İlerleme sorgusu: `SELECT COUNT(DISTINCT asset_id) FROM shot_features` — hedef 345
+- 345 klip, **1405 shot** (önce ~850), en uzun shot tam 5,0 sn — bölme tavanı çalışıyor
+- Kategori: **8/8 kullanılıyor**, en büyük sınıf %37 (önce %58 bride), bride+groom %64 (önce %92)
+- Müzik de yeniden analiz edildi: 4 eşit çeyrek yerine **9 gerçek bölüm** (%47 low, %28 medium, %26 high)
+- Yedek: `data/sevenfilm.sqlite3.backup-20260904-023304`
+- Diğer proje (`İS`, 850 shot) hâlâ eski — arayüz bunu bildiriyor
 
-Kesilirse zararsız: `analyze_shots` kodlanmış klipleri atlar, yeniden çalıştırmak kaldığı yerden devam eder.
+### Üretilen kaba kurgunun ölçümü
 
-## Bittiğinde yapılacaklar
+| ölçüt | üretilen | referans |
+|---|---|---|
+| medyan kesim | 0,92 sn | 1,00 sn |
+| p25 / p75 | 0,48 / 1,40 sn | 0,64 / 1,60 sn |
+| beat hizası ≤120ms | %90 | %61 |
+| kesim/saniye | 1,03 | 0,74 |
+| 1 karelik flaş | 0 | — |
 
-1. Kategori dağılımını ölç: düzeltme öncesi %92 bride+groom idi, örneklemde %67'ye indi. Tam veride ne çıktığını gör.
-2. Yeni bir kurgu üret ve `beat_alignment_ratio` ile medyan kesim süresini referans profiliyle karşılaştır (ölçüt: referans medyan 1,00 sn, p25/p75 0,64/1,60, beat hizası %61).
-3. Resolve'da eklentiyi gerçekten çalıştır: Workspace > Workflow Integrations > 7Film AI Editor. Bu, JS köprüsünün doğrulanmadığı tek katman.
+Kalan en belirgin fark **kesim yoğunluğu**: hâlâ referanslardan ~%40 daha sık kesiyor. Sıradaki
+iş bu. Beat hizasının referanstan yüksek olması kasıtlı (makine grid'e oturur, insan editör
+bilerek kaydırır) ama isteğe bağlı bir off-beat oranı eklenebilir.
 
 ## Doğrulanmamış kalanlar
 
@@ -40,6 +48,7 @@ Kesilirse zararsız: `analyze_shots` kodlanmış klipleri atlar, yeniden çalı�
 - Öncül projeye özgü: aynı klip farklı projede farklı etiketlenebilir.
 - Mevcut 6120 timeline item'ın kategorisi `b_roll`'a düştü (kesim noktaları sağlam). O eski kurguları yeniden üretmek daha iyi sonuç verir.
 - Eşikler tek gerçek projede kalibre edildi.
+- Kesim yoğunluğu referansın ~%140'ı; enerji bölümlerinin dağılımına duyarlı.
 
 ## Çalışma biçimi
 
