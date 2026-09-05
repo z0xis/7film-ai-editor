@@ -156,6 +156,10 @@ ADDED_COLUMNS = (
     ("timeline_versions", "music_segments_json", "TEXT NOT NULL DEFAULT '[]'"),
     # Where a song sits in the running order the editor chose. One song leaves it at 0.
     ("music_tracks", "position", "INTEGER NOT NULL DEFAULT 0"),
+    # What the face detector already knew and nothing kept: how big the subject is, and whether
+    # the frame cuts it. Zero reads as "no face" and as "measured before this existed" alike.
+    ("shots", "face_ratio", "REAL NOT NULL DEFAULT 0"),
+    ("shots", "face_edge", "REAL NOT NULL DEFAULT 0"),
 )
 
 

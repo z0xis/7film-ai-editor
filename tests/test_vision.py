@@ -11,6 +11,17 @@ from sevenfilm.services.vision import (
 )
 
 
+def row(dominant: int, *others: tuple[int, float], base: float = 0.05) -> list[float]:
+    """A probability row over the real category vocabulary, so adding a category cannot break
+    these tests the way hard-coded widths of eight did."""
+    values = [base] * len(CATEGORY_PROMPTS)
+    values[dominant] = 0.6
+    for index, value in others:
+        values[index] = value
+    total = sum(values)
+    return [value / total for value in values]
+
+
 class VisionTests(unittest.TestCase):
     def test_measures_real_frame_content_deterministically(self):
         frame = np.zeros((180, 320, 3), dtype=np.uint8)
@@ -108,13 +119,9 @@ class CategoryPriorTests(unittest.TestCase):
         return [measure_frames([np.full((32, 32, 3), 120, dtype=np.uint8)]) for _ in range(count)]
 
     def test_a_category_that_always_scores_high_stops_winning_everything(self):
-        # "bride" is the second column and sits high on every frame regardless of content.
-        rows = [
-            [0.05, 0.60, 0.10, 0.05, 0.05, 0.05, 0.05, 0.05],
-            [0.05, 0.55, 0.05, 0.05, 0.20, 0.05, 0.03, 0.02],
-            [0.05, 0.52, 0.05, 0.05, 0.05, 0.23, 0.03, 0.02],
-            [0.05, 0.58, 0.05, 0.05, 0.05, 0.05, 0.15, 0.02],
-        ]
+        # One category sits high on every frame regardless of content.
+        high = list(CATEGORY_PROMPTS).index("bride")
+        rows = [row(high, (index, 0.3)) for index in (2, 4, 5, 6)]
         classifier = self.FakeClassifier(rows)
         features = np.zeros((4, 8))
 
@@ -151,8 +158,8 @@ class CategoryPriorTests(unittest.TestCase):
         self.assertEqual(corrected[2]["category"], "couple")
 
     def test_confidence_stays_a_share_between_zero_and_one(self):
-        rows = [[0.05, 0.60, 0.10, 0.05, 0.05, 0.05, 0.05, 0.05],
-                [0.05, 0.55, 0.05, 0.05, 0.20, 0.05, 0.03, 0.02]]
+        high = list(CATEGORY_PROMPTS).index("bride")
+        rows = [row(high, (2, 0.3)), row(high, (4, 0.3))]
         classifier = self.FakeClassifier(rows)
         features = np.zeros((2, 8))
 
@@ -162,7 +169,7 @@ class CategoryPriorTests(unittest.TestCase):
             self.assertLessEqual(result["confidence"], 1.0)
 
     def test_without_a_prior_nothing_changes(self):
-        rows = [[0.05, 0.60, 0.10, 0.05, 0.05, 0.05, 0.05, 0.05]]
+        rows = [row(list(CATEGORY_PROMPTS).index("bride"))]
         classifier = self.FakeClassifier(rows)
 
         self.assertEqual(

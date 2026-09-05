@@ -24,8 +24,14 @@ MODEL_NAME = "openai/clip-vit-base-patch32"
 CLIPPING_LIMIT = 0.25
 FLAT_CONTRAST_LIMIT = 0.15
 
+# The preparation shots were indexed, measured well and never once reached an edit: nothing
+# here could tell the bride having her makeup done from the bride at the reception, so nine
+# good files competed as "bride" against 198 and lost every time. A wedding film opens on the
+# preparation, and the vocabulary has to be able to say so.
 CATEGORY_PROMPTS = {
     "couple": "a cinematic wedding shot of the bride and groom together",
+    "bride_prep": "the bride getting ready, hair and makeup, putting on the wedding dress",
+    "groom_prep": "the groom getting ready, putting on his suit, tie, cufflinks or watch",
     "bride": "a cinematic wedding shot focused on the bride",
     "groom": "a cinematic wedding shot focused on the groom",
     "family": "a wedding shot of family members or wedding guests",
@@ -80,6 +86,10 @@ class FrameMetrics:
     motion_score: float
     perceptual_hash: str
     face_count: int
+    # The largest face's share of the frame, and how close that face sits to the edge. Both
+    # come out of the detector that was already running; only the count was being kept.
+    face_ratio: float = 0.0
+    face_edge: float = 0.0
     brightness: float = 0.0
     saturation: float = 0.0
     highlight_clipping: float = 0.0
@@ -89,6 +99,32 @@ class FrameMetrics:
 
 def _clamp(value: float) -> float:
     return max(0.0, min(1.0, value))
+
+
+def _face_framing(faces: list, width: int, height: int) -> tuple[float, float]:
+    """How big the subject is, and how close it sits to the edge of the frame.
+
+    A face is what a wedding shot is about, and both of these are things a viewer sees at once
+    and no score here could: a couple across a hotel atrium behind a hanging lamp reads as a
+    couple to a semantic model and as nothing at all to a person, and a head cut by the frame
+    edge is a shot an editor would never hold.
+
+    The ratio is the largest face's area over the frame's. The edge figure is 0 when that face
+    sits clear of the border and rises to 1 as it touches it, measured against a margin of a
+    twentieth of the frame — enough to catch a head against the edge without complaining about
+    an ordinary portrait near the rule-of-thirds line.
+    """
+    if not faces or width <= 0 or height <= 0:
+        return 0.0, 0.0
+    boxes = [(float(f[0]), float(f[1]), float(f[2]), float(f[3])) for f in faces]
+    x, y, w, h = max(boxes, key=lambda box: box[2] * box[3])
+    ratio = _clamp(w * h / (width * height))
+    margin_x = width / 20
+    margin_y = height / 20
+    gaps = (x, y, width - (x + w), height - (y + h))
+    margins = (margin_x, margin_y, margin_x, margin_y)
+    edge = max(_clamp(1.0 - gap / margin) for gap, margin in zip(gaps, margins, strict=True))
+    return round(ratio, 5), round(edge, 3)
 
 
 def _perceptual_hash(frame: np.ndarray) -> str:
@@ -167,11 +203,14 @@ def measure_frames(frames: list[np.ndarray]) -> FrameMetrics:
             if detected_faces is not None:
                 faces = list(detected_faces)
 
+    face_ratio, face_edge = _face_framing(faces, middle.shape[1], middle.shape[0])
     return FrameMetrics(
         technical_quality=round(technical, 3),
         motion_score=round(motion, 3),
         perceptual_hash=_perceptual_hash(middle),
         face_count=len(faces),
+        face_ratio=face_ratio,
+        face_edge=face_edge,
         brightness=round(median("brightness"), 3),
         saturation=round(median("saturation"), 3),
         highlight_clipping=round(median("highlight_clipping"), 3),

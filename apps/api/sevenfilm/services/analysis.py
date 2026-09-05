@@ -27,7 +27,11 @@ LOGGER = logging.getLogger(__name__)
 # "3" takes that prompt prior off the shot scale as well, which is what put close-ups back in
 # reach: uncorrected, CLIP gave "medium" 60.8% of the probability on average against 3.9% for
 # the close-up phrase, and no close-up survived into the edit.
-ANALYSIS_VERSION = "3"
+# "4" keeps the face box the detector already produced: how much of the frame the subject
+# fills, and whether the frame cuts it. Both are things a viewer sees at once and nothing here
+# could measure — a couple across a hotel atrium read as a couple, and a head against the frame
+# edge was held for four seconds.
+ANALYSIS_VERSION = "4"
 # A continuous take is detected as one scene, and judging it by three frames at its midpoint
 # throws the whole clip away when that midpoint happens to be a blurred pan, and lets a clip in
 # when only its midpoint is good. Long scenes are split into segments this size so each part of
@@ -131,6 +135,8 @@ def row_to_shot(row: dict[str, object]) -> Shot:
         brightness=float(row.get("brightness") or 0.0),
         saturation=float(row.get("saturation") or 0.0),
         highlight_clipping=float(row.get("highlight_clipping") or 0.0),
+        face_ratio=float(row.get("face_ratio") or 0.0),
+        face_edge=float(row.get("face_edge") or 0.0),
     )
 
 
@@ -268,6 +274,8 @@ def _label_asset(database: Database, classifier: VisionClassifier, asset: MediaA
                 "brightness": measured.brightness,
                 "saturation": measured.saturation,
                 "highlight_clipping": measured.highlight_clipping,
+                "face_ratio": measured.face_ratio,
+                "face_edge": measured.face_edge,
                 "created_at": now(),
             },
         )

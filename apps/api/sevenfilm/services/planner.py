@@ -69,8 +69,8 @@ def _energy_at(grid: BeatGrid, second: Fraction) -> str:
 # film to `ceremony`, which those films spend between 0% and 5% of every band on, and puts
 # `detail` at the start, where they have almost none.
 FALLBACK_STORY_ARC = (
-    (0.10, ("venue", "detail")),
-    (0.28, ("bride", "groom", "detail")),
+    (0.10, ("venue", "bride_prep", "detail")),
+    (0.28, ("bride_prep", "groom_prep", "bride")),
     (0.42, ("family", "ceremony", "venue")),
     (0.62, ("ceremony", "couple", "family")),
     (0.82, ("couple", "bride", "groom")),
@@ -80,6 +80,56 @@ FALLBACK_STORY_ARC = (
 # How many categories a band puts forward. _score_candidate ranks the first three and treats
 # everything else alike, so a longer list would change nothing.
 STORY_CATEGORIES_PER_BAND = 3
+# A category has to hold at least this much of the film overall before its concentration in one
+# band means anything: a category seen twice in total will show a huge lift somewhere by chance.
+MEANINGFUL_CATEGORY_SHARE = 0.005
+# How far above its own average a category has to sit in a band to count as what that band is
+# about, rather than something present everywhere.
+CHARACTERISTIC_LIFT = 1.2
+
+
+def _band_preferences(bands: Sequence[Mapping[str, object]], index: int) -> tuple[str, ...]:
+    """What this part of the film is about: its backbone, and what it alone leans on.
+
+    Ranking a band purely by share names the same categories everywhere, because the couple is
+    the backbone of every band — measured on the references, `couple` is first in all ten. That
+    hid the structure completely: the preparation shows up at 1.8% and 4.5% in the second band
+    and almost nowhere else, which is the whole reason it exists, and a top-three-by-share rule
+    could never see it. Nine good preparation files were indexed, scored above this shoot's
+    median, and reached no edit at all.
+
+    So the band keeps its largest category and adds what it favours relative to the rest of the
+    film. Across the references that reads as: venue and ceremony to open, the two preparations
+    next, details, the ceremony again, the party, and family to close.
+    """
+    band = bands[index]
+    names = sorted({name for other in bands for name in other})
+    means = {
+        name: sum(float(other.get(name, 0.0)) for other in bands) / len(bands)
+        for name in names
+    }
+    ranked_by_share = sorted(band.items(), key=lambda item: (-float(item[1]), item[0]))
+    chosen = [name for name, share in ranked_by_share[:1] if float(share) > 0]
+    lifts = sorted(
+        (
+            (float(band.get(name, 0.0)) / means[name], name)
+            for name in names
+            if means[name] >= MEANINGFUL_CATEGORY_SHARE and name not in chosen
+        ),
+        reverse=True,
+    )
+    for lift, name in lifts:
+        if lift < CHARACTERISTIC_LIFT or len(chosen) >= STORY_CATEGORIES_PER_BAND:
+            break
+        chosen.append(name)
+    # Fill out of what the band actually holds, and stop rather than name something the film
+    # barely contains: two categories that mean something beat three where one is noise.
+    for name, share in ranked_by_share:
+        if len(chosen) >= STORY_CATEGORIES_PER_BAND:
+            break
+        if name not in chosen and float(share) >= MEANINGFUL_CATEGORY_SHARE:
+            chosen.append(name)
+    return tuple(chosen)
 
 
 def _preferred_categories(
@@ -94,10 +144,9 @@ def _preferred_categories(
     """
     arc = style_profile.get("story_arc") if style_profile else None
     if isinstance(arc, Sequence) and arc:
-        band = arc[min(len(arc) - 1, int(progress * len(arc)))]
-        if isinstance(band, Mapping) and band:
-            ranked = sorted(band.items(), key=lambda item: (-float(item[1]), item[0]))
-            chosen = tuple(name for name, share in ranked[:STORY_CATEGORIES_PER_BAND] if share > 0)
+        bands = [band for band in arc if isinstance(band, Mapping) and band]
+        if len(bands) == len(arc):
+            chosen = _band_preferences(bands, _band_index(style_profile, progress))
             if chosen:
                 return chosen
     for limit, categories in FALLBACK_STORY_ARC:
@@ -477,6 +526,12 @@ SEQUENCE_SHARE_RELIEF = 0.85
 MINIMUM_CATEGORY_SHARE = 0.05
 # Same subject at the same size back to back reads as a jump rather than as a second look.
 JUMP_CUT_PENALTY = 0.18
+# A face against the frame edge is a head the frame cuts. Charged in full at the border and
+# fading to nothing a twentieth of the frame in, which is where the measurement itself stops.
+CUT_HEAD_PENALTY = 0.25
+# A face smaller than this fills so little of the frame that the shot is about the room, not
+# the people in it — a couple across a hotel atrium measures well under it.
+READABLE_FACE_RATIO = 0.004
 
 
 def _trailing_run(items: Sequence[TimelineItem], category: str) -> int:
@@ -690,6 +745,7 @@ def _score_candidate(
     # The share cap is about the whole film; a sequence is a local structure. Charging it in
     # full mid-sequence is what held consecutive same category down.
     share_weight = SHARE_OVERRUN_WEIGHT * (SEQUENCE_SHARE_RELIEF if in_sequence else 1.0)
+    framing_penalty = CUT_HEAD_PENALTY * shot.face_edge
     reuse_penalty = (
         REUSE_PENALTY * reuse_count
         + ASSET_REUSE_PENALTY * asset_reuse_count
@@ -707,6 +763,7 @@ def _score_candidate(
         + 0.10 * sequence_continuity
         - duplicate_penalty
         - jump_cut_penalty
+        - framing_penalty
         - reuse_penalty
         + random_jitter
     )
@@ -720,6 +777,7 @@ def _score_candidate(
         "sequence_continuity": sequence_continuity,
         "duplicate_penalty": duplicate_penalty,
         "jump_cut_penalty": jump_cut_penalty,
+        "framing_penalty": framing_penalty,
         "reuse_penalty": reuse_penalty,
     }
 
@@ -796,6 +854,10 @@ def build_timeline(
     visual_baseline = _visual_baseline(candidates)
     beat_debt = Fraction(0)
     hold_debt = Fraction(0)
+    # The bar a shot has to clear to be held: this shoot's own median, so it travels to
+    # footage that is better or worse than this without a number being retuned.
+    qualities = sorted(shot.technical_quality for shot in candidates)
+    hold_bar = qualities[len(qualities) // 2] if qualities else 0.0
     current_frame = 0
     consumed_source_frames = {shot.id: 0 for shot in candidates}
     usage_count = {shot.id: 0 for shot in candidates}
@@ -833,7 +895,26 @@ def build_timeline(
                 frame_rate.seconds_from_frames(remaining_frames),
             )
             if held is not None:
-                desired = held
+                # A shot held for four seconds has to bear four seconds of looking. The longest
+                # cut of one 116 clip edit was a couple across a hotel atrium behind a hanging
+                # lamp, at 0.334 technical quality against the shoot's 0.399 median — held
+                # longer than anything else in the film. So a hold picks from the better half
+                # of what is left, and where that leaves nothing it simply does not hold.
+                # A held shot has to bear four seconds of looking: better than half this
+                # shoot's footage, its subject readable rather than a figure across a room,
+                # and not cut by the frame edge.
+                worthy = [
+                    shot for shot in available_shots
+                    if shot.technical_quality >= hold_bar
+                    and shot.face_edge < 0.5
+                    and (shot.face_ratio == 0.0 or shot.face_ratio >= READABLE_FACE_RATIO)
+                ]
+                if worthy:
+                    available_shots = worthy
+                    desired = held
+                else:
+                    hold = False
+                    hold_debt += frequency
             else:
                 # No room left to hold: give the frequency back so it is spent at a cut where
                 # a beat does land, rather than lost.
@@ -1120,6 +1201,7 @@ def get_timeline(database: Database, timeline_id: str) -> TimelinePlan:
         """SELECT timeline_items.*, shots.technical_quality, shots.aesthetic_score,
                   shots.motion_score, shots.confidence, shots.duplicate_group, shots.labels_json,
                   shots.brightness, shots.saturation, shots.highlight_clipping,
+                  shots.face_ratio, shots.face_edge,
                   media_assets.project_id, media_assets.path, media_assets.file_name,
                   media_assets.duration_seconds, media_assets.frame_rate AS asset_rate,
                   media_assets.width, media_assets.height, media_assets.codec, media_assets.timecode,
@@ -1155,6 +1237,8 @@ def get_timeline(database: Database, timeline_id: str) -> TimelinePlan:
             labels=tuple(json.loads(row["labels_json"] or "[]")),
             brightness=float(row["brightness"] or 0.0), saturation=float(row["saturation"] or 0.0),
             highlight_clipping=float(row["highlight_clipping"] or 0.0),
+            face_ratio=float(row["face_ratio"] or 0.0),
+            face_edge=float(row["face_edge"] or 0.0),
         )
         plan.items.append(TimelineItem(
             id=row["id"], shot=shot, asset=asset, source_range=source_range,

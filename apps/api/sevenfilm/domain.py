@@ -43,6 +43,10 @@ class Shot:
     brightness: float = 0.0
     saturation: float = 0.0
     highlight_clipping: float = 0.0
+    # How much of the frame the largest face fills, and how close it sits to the edge. Zero for
+    # a shot with no face in it, and for one measured before these existed.
+    face_ratio: float = 0.0
+    face_edge: float = 0.0
 
     @property
     def has_visual_measurements(self) -> bool:

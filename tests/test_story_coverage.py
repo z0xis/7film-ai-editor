@@ -38,6 +38,20 @@ def plan_of(*categories):
     return plan
 
 
+def every_wanted_category() -> tuple[str, ...]:
+    """Everything the fallback arc asks for anywhere, read off the arc itself.
+
+    Written out by hand this was a list of eight, and adding bride_prep and groom_prep to the
+    vocabulary broke two tests that were describing the old list rather than the arc.
+    """
+    wanted: list[str] = []
+    for _, categories in FALLBACK_STORY_ARC:
+        for name in categories:
+            if name not in wanted:
+                wanted.append(name)
+    return tuple(wanted)
+
+
 class StoryCoverageWarningTests(unittest.TestCase):
     def test_a_shoot_missing_a_whole_part_of_the_story_is_named(self):
         # 98 couple shots and one venue: the opening cannot be built from this.
@@ -58,8 +72,8 @@ class StoryCoverageWarningTests(unittest.TestCase):
         self.assertLess(warning.index("ceremony"), warning.index("venue"))
 
     def test_a_well_covered_shoot_says_nothing(self):
-        categories = ("venue", "detail", "bride", "groom", "family", "ceremony", "couple", "party")
-        candidates = [shot(index, categories[index % 8]) for index in range(80)]
+        categories = every_wanted_category()
+        candidates = [shot(index, categories[index % len(categories)]) for index in range(160)]
 
         self.assertIsNone(_story_coverage_warning(candidates))
 
@@ -68,9 +82,9 @@ class StoryCoverageWarningTests(unittest.TestCase):
 
     def test_a_category_the_story_never_asks_for_is_not_reported(self):
         """b_roll is preferred nowhere, so its being thin is not worth telling anyone."""
-        categories = ("venue", "detail", "bride", "groom", "family", "ceremony", "couple", "party")
-        candidates = [shot(index, categories[index % 8]) for index in range(80)]
-        candidates.append(shot(80, "b_roll"))
+        categories = every_wanted_category()
+        candidates = [shot(index, categories[index % len(categories)]) for index in range(160)]
+        candidates.append(shot(160, "b_roll"))
 
         warning = _story_coverage_warning(candidates)
 
