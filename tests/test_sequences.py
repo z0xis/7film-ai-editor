@@ -19,6 +19,7 @@ from sevenfilm.services.planner import (
     SEQUENCE_SHARE_RELIEF,
     SEQUENCE_TARGET_RUN,
     _score_candidate,
+    _scene_of_asset,
     _share_overrun,
     _trailing_run,
     build_timeline,
@@ -218,3 +219,89 @@ class SequenceReliefTests(unittest.TestCase):
         self.assertAlmostEqual(self.score(run=1, overrun=0.0),
                                self.score(run=SEQUENCE_TARGET_RUN + 2, overrun=0.0) + 0.0,
                                delta=0.5)
+
+
+class SceneGroupingTests(unittest.TestCase):
+    """A sequence is several shots of one moment, and the camera's clock says which."""
+
+    def asset(self, identifier, timecode):
+        return MediaAsset(id=identifier, project_id="p", path=Path(f"/m/{identifier}.mov"),
+                          name=f"{identifier}.mov", duration=Fraction(10), frame_rate=RATE,
+                          width=1920, height=1080, timecode=timecode)
+
+    def test_clips_minutes_apart_are_the_same_scene(self):
+        """The bride's makeup is 08:23 to 08:25 across three files."""
+        scenes = _scene_of_asset([
+            self.asset("a", "08:23:21:04"),
+            self.asset("b", "08:23:36:46"),
+            self.asset("c", "08:23:58:26"),
+        ])
+
+        self.assertEqual(len({scenes["a"], scenes["b"], scenes["c"]}), 1)
+
+    def test_a_long_gap_starts_a_new_scene(self):
+        scenes = _scene_of_asset([self.asset("a", "08:23:21:04"), self.asset("b", "08:56:10:02")])
+
+        self.assertNotEqual(scenes["a"], scenes["b"])
+
+    def test_continuous_shooting_does_not_chain_into_one_scene(self):
+        """Grouping on the gap alone made every clip of the shoot one scene: a wedding is
+        filmed continuously, so almost every clip starts within three minutes of the last."""
+        assets = [self.asset(f"a{i}", f"08:{20 + i // 2:02}:{(i * 30) % 60:02}:00")
+                  for i in range(40)]
+
+        scenes = _scene_of_asset(assets)
+
+        self.assertGreater(len(set(scenes.values())), 1)
+
+    def test_a_clip_with_no_timecode_stands_alone(self):
+        scenes = _scene_of_asset([
+            self.asset("a", "08:23:21:04"), self.asset("b", None), self.asset("c", "08:23:30:00")])
+
+        self.assertNotEqual(scenes["b"], scenes["a"])
+        self.assertEqual(scenes["a"], scenes["c"])
+
+    def test_an_unreadable_timecode_stands_alone_rather_than_joining_by_accident(self):
+        scenes = _scene_of_asset([self.asset("a", "08:23:21:04"), self.asset("b", "bozuk")])
+
+        self.assertNotEqual(scenes["a"], scenes["b"])
+
+    def test_every_clip_lands_in_exactly_one_scene(self):
+        assets = [self.asset(f"a{i}", f"0{8 + i // 30}:{i % 60:02}:00:00") for i in range(60)]
+
+        scenes = _scene_of_asset(assets)
+
+        self.assertEqual(len(scenes), 60)
+
+
+class StayingInTheSceneTests(unittest.TestCase):
+    def score(self, *, scene, previous_scene, run=1):
+        previous = shot("p", "couple", "medium", asset="a1")
+        value, _ = _score_candidate(
+            shot("s", "couple", "wide", asset="a2"),
+            preferred_categories=("couple", "bride", "groom"),
+            preferred_scales=("medium", "wide"),
+            energy="medium",
+            recent=(item(previous),),
+            desired_duration=Fraction(1),
+            random_jitter=0.0,
+            current_run=run,
+            asset_reuse_count=3,
+            scene=scene,
+            previous_scene=previous_scene,
+        )
+        return value
+
+    def test_staying_in_the_scene_is_worth_more_than_leaving_it(self):
+        self.assertGreater(self.score(scene=1, previous_scene=1),
+                           self.score(scene=2, previous_scene=1))
+
+    def test_a_shot_with_no_scene_is_treated_as_leaving(self):
+        self.assertAlmostEqual(self.score(scene=None, previous_scene=None),
+                               self.score(scene=2, previous_scene=1), places=6)
+
+    def test_past_the_ceiling_the_scene_stops_paying(self):
+        inside = self.score(scene=1, previous_scene=1, run=1)
+        past = self.score(scene=1, previous_scene=1, run=SEQUENCE_TARGET_RUN + 2)
+
+        self.assertGreater(inside, past)

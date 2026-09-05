@@ -460,7 +460,7 @@ def _perceptual_hash(shot: Shot) -> int | None:
         return None
 
 
-def _visual_repeat_penalty(shot: Shot, used: Sequence[int]) -> float:
+def _visual_repeat_penalty(shot: Shot, used: Sequence[int], same_scene: bool = False) -> float:
     """How much this shot looks like one already in the edit, whatever file it came from.
 
     Falls to nothing at NEAR_DUPLICATE_BITS, so only a shot that genuinely repeats one already
@@ -474,7 +474,16 @@ def _visual_repeat_penalty(shot: Shot, used: Sequence[int]) -> float:
     current = _perceptual_hash(shot)
     if current is None or not used:
         return 0.0
-    closest = min((current ^ other).bit_count() for other in used)
+    # Another segment of the clip that just played is the one exception: that is a sequence,
+    # and the same moment coming back forty cuts later is the repetition this guards against.
+    # Measured on the references, 7% of their consecutive pairs sit above 0.85 semantic
+    # similarity against 2% of random pairs — that 7% is the sequences, and charging for them
+    # left this edit with 3%. A near-identical frame from a *different* file is still charged:
+    # that is a second take cut against the first, which is a jump rather than a sequence.
+    history = used[:-1] if same_scene and used else used
+    if not history:
+        return 0.0
+    closest = min((current ^ other).bit_count() for other in history)
     if closest >= NEAR_DUPLICATE_BITS:
         return 0.0
     return DUPLICATE_PENALTY * (1.0 - closest / NEAR_DUPLICATE_BITS)
@@ -523,6 +532,14 @@ SHARE_OVERRUN_WEIGHT = 0.9
 # to 42%. The category spread barely moves across the whole range, so the sequences are close
 # to free.
 SEQUENCE_SHARE_RELIEF = 0.85
+# What staying in the scene is worth while a sequence is running. Swept: 0 lands on the
+# references' own figures (8% of consecutive pairs very similar against their 7%, 30% same
+# category against their 29%) and the editor still reported no sequence in the film; 0.10
+# reaches 69% same category, which is monotony. 0.02 doubles the scene-to-scene continuity —
+# 40 adjacent pairs from one scene against 22 — at 41% same category. Deliberately above the
+# measured reference, because the reference figure is a floor: the scene detector used to take
+# it cannot see a cut *within* a scene, which is exactly what a sequence is made of.
+TAKE_CONTINUITY_BONUS = 0.02
 MINIMUM_CATEGORY_SHARE = 0.05
 # Same subject at the same size back to back reads as a jump rather than as a second look.
 JUMP_CUT_PENALTY = 0.18
@@ -588,6 +605,61 @@ def _share_overrun(
     if target <= 0:
         target = MINIMUM_CATEGORY_SHARE
     return max(0.0, used.get(category, 0) / total - target)
+
+
+# Two clips recorded within this much of each other are the same moment of the day. The camera
+# writes time of day, and the shoot reads straight off it: the bride's makeup is 08:23 to 08:25
+# across three files, the groom's preparation 08:26 to 08:29 across four, the cake 08:56, the
+# dance 09:09. Without this a sequence could only ever be several shots of one file, so the
+# makeup arrived as single clips scattered through the film.
+SCENE_WINDOW_SECONDS = 180
+# And a scene may not run longer than this, however continuously the camera rolled.
+SCENE_SPAN_SECONDS = 300
+
+
+def _scene_of_asset(assets: Sequence[MediaAsset]) -> dict[str, int]:
+    """Group the shoot into scenes by when each clip was recorded.
+
+    A clip with no timecode is its own scene: guessing that it belongs beside its neighbours
+    would join two moments that may be hours apart.
+    """
+    timed: list[tuple[int, str]] = []
+    scene_by_asset: dict[str, int] = {}
+    next_scene = 0
+    for asset in assets:
+        seconds = _timecode_seconds(asset)
+        if seconds is None:
+            scene_by_asset[asset.id] = next_scene
+            next_scene += 1
+        else:
+            timed.append((seconds, asset.id))
+    previous = None
+    started = None
+    for seconds, asset_id in sorted(timed):
+        # A gap ends a scene, and so does length. Grouping on the gap alone chained the whole
+        # shoot into one scene — a wedding is filmed continuously, so almost every clip starts
+        # within three minutes of the one before it, and single-linkage joins them all.
+        gap = previous is None or seconds - previous > SCENE_WINDOW_SECONDS
+        overlong = started is not None and seconds - started > SCENE_SPAN_SECONDS
+        if gap or overlong:
+            next_scene += 1
+            started = seconds
+        scene_by_asset[asset_id] = next_scene
+        previous = seconds
+    return scene_by_asset
+
+
+def _timecode_seconds(asset: MediaAsset) -> int | None:
+    """Time of day in whole seconds, ignoring the frame field."""
+    raw = (asset.timecode or "").strip()
+    parts = raw.replace(";", ":").split(":")
+    if len(parts) < 3:
+        return None
+    try:
+        hours, minutes, seconds = (int(parts[index]) for index in range(3))
+    except ValueError:
+        return None
+    return hours * 3600 + minutes * 60 + seconds
 
 
 def _visual_baseline(shots: Sequence[Shot]) -> tuple[float, float] | None:
@@ -704,6 +776,8 @@ def _score_candidate(
     recent: tuple[TimelineItem, ...],
     current_run: int = 0,
     share_overrun: float = 0.0,
+    scene: int | None = None,
+    previous_scene: int | None = None,
     desired_duration: Fraction,
     random_jitter: float,
     style_profile: Mapping[str, object] | None = None,
@@ -724,10 +798,11 @@ def _score_candidate(
     target_motion = {"low": 0.3, "medium": 0.55, "high": 0.78}.get(energy, 0.55)
     music_fit = max(0.0, 1.0 - abs(shot.motion_score - target_motion))
     sequence_continuity = 1.0
-    duplicate_penalty = _visual_repeat_penalty(shot, used_hashes)
+    previous = recent[-1] if recent else None
+    same_scene = previous is not None and previous_scene is not None and previous_scene == scene
+    duplicate_penalty = _visual_repeat_penalty(shot, used_hashes, same_scene)
     jump_cut_penalty = 0.0
     in_sequence = False
-    previous = recent[-1] if recent else None
     if previous is not None:
         continues = previous.shot.category == shot.category
         in_sequence = continues and current_run < SEQUENCE_TARGET_RUN
@@ -746,9 +821,15 @@ def _score_candidate(
     # full mid-sequence is what held consecutive same category down.
     share_weight = SHARE_OVERRUN_WEIGHT * (SEQUENCE_SHARE_RELIEF if in_sequence else 1.0)
     framing_penalty = CUT_HEAD_PENALTY * shot.face_edge
+    # Taking the next shot from the clip just used is a sequence, not a repetition, so the file
+    # is not charged for it — and is pulled towards, because removing the charge alone changed
+    # nothing: the edit still took every one of its 113 cuts from a different file, everything
+    # else in the score preferring a fresh one. Coming back to that clip later still costs.
+    staying = same_scene and in_sequence
+    take_bonus = TAKE_CONTINUITY_BONUS if staying else 0.0
     reuse_penalty = (
         REUSE_PENALTY * reuse_count
-        + ASSET_REUSE_PENALTY * asset_reuse_count
+        + (0.0 if staying else ASSET_REUSE_PENALTY) * asset_reuse_count
         + share_weight * share_overrun
     )
     available = _available_duration(shot)
@@ -764,6 +845,7 @@ def _score_candidate(
         - duplicate_penalty
         - jump_cut_penalty
         - framing_penalty
+        + take_bonus
         - reuse_penalty
         + random_jitter
     )
@@ -856,6 +938,7 @@ def build_timeline(
     hold_debt = Fraction(0)
     # The bar a shot has to clear to be held: this shoot's own median, so it travels to
     # footage that is better or worse than this without a number being retuned.
+    scene_by_asset = _scene_of_asset(list(asset_by_id.values()))
     qualities = sorted(shot.technical_quality for shot in candidates)
     hold_bar = qualities[len(qualities) // 2] if qualities else 0.0
     current_frame = 0
@@ -935,6 +1018,9 @@ def build_timeline(
                 current_run=_trailing_run(plan.items, shot.category),
                 share_overrun=_share_overrun(
                     style_profile, progress, shot.category, category_uses, len(plan.items)),
+                scene=scene_by_asset.get(shot.asset_id),
+                previous_scene=(
+                    scene_by_asset.get(plan.items[-1].shot.asset_id) if plan.items else None),
                 desired_duration=desired,
                 random_jitter=rng.uniform(-0.015, 0.015),
                 style_profile=style_profile,
