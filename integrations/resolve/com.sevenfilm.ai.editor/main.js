@@ -235,6 +235,35 @@ async function resolveMediaPool(mediaPool, poolPaths) {
   return media;
 }
 
+/**
+ * Point each clip at its proxy, where one has been made.
+ *
+ * This footage is 4K 10 bit 4:2:2 H.264 at 141 Mbit/s, which no hardware decoder on this
+ * machine touches, so a cut every second stops playback dead. Resolve plays a linked proxy
+ * instead. LinkProxyMedia is strict about what it will accept — a proxy without the source's
+ * audio and start timecode is refused outright, measured — so a refusal is reported rather
+ * than passed over: a proxy nobody can use is worse than none, because it looks like one.
+ */
+async function linkProxies(media, items) {
+  let linked = 0;
+  const refused = [];
+  const seen = new Set();
+  for (const item of items || []) {
+    const proxyPath = item?.proxy_path ? String(item.proxy_path) : null;
+    const sourcePath = item?.source_path ? path.resolve(String(item.source_path)) : null;
+    if (!proxyPath || !sourcePath || seen.has(sourcePath)) continue;
+    seen.add(sourcePath);
+    const mediaPoolItem = media.get(sourcePath)?.mediaPoolItem;
+    if (!mediaPoolItem || !fs.existsSync(proxyPath)) continue;
+    if (await mediaPoolItem.LinkProxyMedia(proxyPath)) linked += 1;
+    else refused.push(path.basename(proxyPath));
+  }
+  if (refused.length) {
+    console.warn(`7Film: ${refused.length} proxy Resolve tarafından kabul edilmedi: ${refused.slice(0, 3).join(", ")}`);
+  }
+  return { linked, refused };
+}
+
 // Blueprint track layout for the Resolve adapter: A1 Music, A2 sync audio / ambience,
 // A3 voice / vows / speeches. The rough cut only fills A1; A2 and A3 stay empty so the
 // editor can drop camera audio and speeches in without rebuilding the timeline.
@@ -277,6 +306,8 @@ async function createTimelineFromPlan(mediaPool, project, plan, timelineName) {
   const songPaths = musicSegments(plan).map((segment) => segment.path);
   const poolPaths = [...new Set([...sourcePaths, ...songPaths])];
   const media = await resolveMediaPool(mediaPool, poolPaths);
+  const proxies = await linkProxies(media, plan.items);
+  if (proxies.linked) console.log(`7Film: ${proxies.linked} klip proxy'ye bağlandı.`);
 
   const { clipInfos, labels, dropped } = buildVideoClipInfos(
     plan.items || [],

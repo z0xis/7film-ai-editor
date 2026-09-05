@@ -326,16 +326,21 @@ def generate_derivatives(database: Database, project_id: str, cache_root: Path, 
         try:
             if not proxy.exists():
                 proxy_temp = proxy.with_suffix(".partial.mp4")
-                subprocess.run(
-                    [
-                        ffmpeg, "-y", "-i", str(asset.path), "-map", "0:v:0", "-an", "-vf",
-                        "scale='min(1280,iw)':-2", "-c:v", "libx264", "-preset", "veryfast", "-crf", "28",
-                        "-movflags", "+faststart", str(proxy_temp),
-                    ],
-                    check=True,
-                    capture_output=True,
-                    text=True,
-                )
+                # Resolve will only accept a proxy that carries the source's audio and its
+                # start timecode. Written without them — video only, no timecode, which is what
+                # this did — LinkProxyMedia returns false and the proxies this step exists to
+                # produce cannot be used by the one application they are for. Measured on this
+                # shoot: false without, true with, and the clip then reports Proxy 1280x720.
+                command = [
+                    ffmpeg, "-y", "-i", str(asset.path), "-map", "0:v:0", "-map", "0:a?",
+                    "-vf", "scale='min(1280,iw)':-2",
+                    "-c:v", "libx264", "-preset", "veryfast", "-crf", "26",
+                    "-c:a", "aac", "-b:a", "128k",
+                ]
+                if asset.timecode:
+                    command += ["-timecode", asset.timecode]
+                command += ["-movflags", "+faststart", str(proxy_temp)]
+                subprocess.run(command, check=True, capture_output=True, text=True)
                 proxy_temp.replace(proxy)
             if not thumbnail.exists():
                 thumbnail_temp = thumbnail.with_suffix(".partial.jpg")

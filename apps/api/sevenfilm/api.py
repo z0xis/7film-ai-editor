@@ -128,15 +128,25 @@ def _project_cache(project_id: str) -> Path:
     return path
 
 
-def _plan_payload(plan) -> dict[str, Any]:
-    payload = plan_as_dict(plan)
-    music = DATABASE.fetch_one(
-        "SELECT path, duration_seconds FROM music_tracks WHERE project_id = ? ORDER BY created_at DESC LIMIT 1",
-        (plan.project_id,),
-    )
-    payload["music_path"] = music["path"] if music else None
-    payload["music_duration_seconds"] = music["duration_seconds"] if music else None
+def _with_proxies(payload: dict[str, Any], project_id: str) -> dict[str, Any]:
+    """Name each clip's proxy, when one has been made.
+
+    The 4K 10 bit 4:2:2 H.264 this shoot is in has no hardware decoder on this machine, so a
+    cut every second brings playback to a stop. Resolve plays the proxy instead once the clip
+    is linked to it, and the adapter can only link what the payload names.
+    """
+    cache = _project_cache(project_id)
+    for item in payload.get("items", []):
+        proxy = cache / "proxies" / f"{item['asset_id']}.mp4"
+        item["proxy_path"] = str(proxy) if proxy.exists() else None
     return payload
+
+
+def _plan_payload(plan) -> dict[str, Any]:
+    # The music comes from the plan, which knows the songs it was actually cut to. This used to
+    # overwrite it with the newest music_tracks row, which contradicted the segments beside it
+    # the moment an edit held more than one song.
+    return _with_proxies(plan_as_dict(plan), plan.project_id)
 
 
 def _style_profile() -> dict[str, Any] | None:
