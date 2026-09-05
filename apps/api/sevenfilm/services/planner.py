@@ -483,12 +483,20 @@ def _trailing_run(items: Sequence[TimelineItem], category: str) -> int:
     return run
 
 
+def _band_index(style_profile: Mapping[str, object] | None, progress: float) -> int:
+    """Which band of the measured arc this point of the edit falls in."""
+    arc = style_profile.get("story_arc") if style_profile else None
+    if not isinstance(arc, Sequence) or not arc:
+        return 0
+    return min(len(arc) - 1, int(progress * len(arc)))
+
+
 def _band_shares(style_profile: Mapping[str, object] | None, progress: float) -> Mapping[str, float] | None:
     """The share each category takes at this point of a reference film."""
     arc = style_profile.get("story_arc") if style_profile else None
     if not isinstance(arc, Sequence) or not arc:
         return None
-    band = arc[min(len(arc) - 1, int(progress * len(arc)))]
+    band = arc[_band_index(style_profile, progress)]
     return band if isinstance(band, Mapping) and band else None
 
 
@@ -499,12 +507,18 @@ def _share_overrun(
     used: Mapping[str, int],
     total: int,
 ) -> float:
-    """How far past its reference share this category already is, in this edit.
+    """How far past its reference share this category already is, in this band of the edit.
 
     Allowing sequences let the strongest category run away with the film: couple went from 45
     of 116 clips to 67 the moment staying on a subject stopped being charged for. The arc was
     measured as shares — couple 40% of the opening band, venue 21%, bride 18% — and only its
     ranking was being used. Reading the share back keeps a sequence from becoming the film.
+
+    The count is kept over the whole edit, not per band. Per band was tried and measured worse:
+    a band's first clips give the share a denominator of one or two, so the second shot of any
+    category reads as far past its quota and no sequence can form at all — consecutive same
+    category fell from 21% to 3%. Over the whole edit the denominator is large enough for the
+    share to mean something.
     """
     shares = _band_shares(style_profile, progress)
     if not shares or total < 1:

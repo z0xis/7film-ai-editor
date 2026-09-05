@@ -157,3 +157,28 @@ class SequencesReachThePlanTests(unittest.TestCase):
         biggest = max(categories.count(name) for name in set(categories))
 
         self.assertLess(biggest / len(categories), 0.6)
+
+
+class ShareIsCountedOverTheWholeEditTests(unittest.TestCase):
+    """Per band was tried and measured worse; this is what keeps it from coming back."""
+
+    def profile(self):
+        return {"story_arc": [{"couple": 0.40, "venue": 0.21, "bride": 0.18} for _ in range(10)]}
+
+    def test_a_small_denominator_does_not_make_a_second_shot_look_excessive(self):
+        """A band's first clips give a share of 1.0 to whatever was taken, which reads as far
+        past any quota. Consecutive same category fell from 21% to 3% when counted that way."""
+        early = _share_overrun(self.profile(), 0.0, "couple", {"couple": 1}, 2)
+
+        self.assertLess(early, 0.2)
+
+    def test_a_category_that_really_has_run_long_still_costs(self):
+        over = _share_overrun(self.profile(), 0.0, "couple", {"couple": 60}, 100)
+
+        self.assertAlmostEqual(over, 0.2)
+
+    def test_the_share_is_read_from_the_band_the_edit_is_in(self):
+        arc = {"story_arc": [{"couple": 0.9}, {"couple": 0.1}]}
+
+        self.assertEqual(_share_overrun(arc, 0.0, "couple", {"couple": 50}, 100), 0.0)
+        self.assertAlmostEqual(_share_overrun(arc, 0.9, "couple", {"couple": 50}, 100), 0.4)
