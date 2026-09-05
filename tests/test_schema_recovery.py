@@ -102,7 +102,6 @@ class SourceFingerprintTests(unittest.TestCase):
 
     def test_the_health_endpoint_reports_it(self):
         from fastapi.testclient import TestClient
-
         from sevenfilm import api
 
         body = TestClient(api.app).get("/api/health").json()
