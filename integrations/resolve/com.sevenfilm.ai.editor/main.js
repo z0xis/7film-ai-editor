@@ -3,6 +3,7 @@
 
 const { app, BrowserWindow, dialog, ipcMain } = require("electron");
 const { spawn } = require("child_process");
+const crypto = require("crypto");
 const fs = require("fs");
 const http = require("http");
 const path = require("path");
@@ -68,12 +69,48 @@ async function backendHealth(origin) {
   }
 }
 
+/**
+ * The same digest apps/api/sevenfilm/api.py computes over its own source: every .py under the
+ * package, sorted by path, each contributing "relative path\0contents\0". A running engine
+ * serves the modules it imported at startup, so without this an edit is cut by whatever the
+ * code was when the process began — which is how a planner change made at 02:34 never reached
+ * an edit built at 07:50 by an engine started at 02:05.
+ */
+function sourceFingerprint(root) {
+  const packageRoot = path.join(root, "apps", "api", "sevenfilm");
+  const files = [];
+  const walk = (directory) => {
+    for (const entry of fs.readdirSync(directory, { withFileTypes: true }).sort((a, b) => (a.name < b.name ? -1 : 1))) {
+      const full = path.join(directory, entry.name);
+      if (entry.isDirectory()) walk(full);
+      else if (entry.name.endsWith(".py")) files.push(full);
+    }
+  };
+  try {
+    walk(packageRoot);
+  } catch (_error) {
+    return null;
+  }
+  const digest = crypto.createHash("sha256");
+  for (const file of files.sort((a, b) => (path.relative(packageRoot, a) < path.relative(packageRoot, b) ? -1 : 1))) {
+    digest.update(path.relative(packageRoot, file).split(path.sep).join("/"));
+    digest.update(Buffer.from([0]));
+    digest.update(fs.readFileSync(file));
+    digest.update(Buffer.from([0]));
+  }
+  return digest.digest("hex").slice(0, 16);
+}
+
 async function ensureBackend() {
+  const wanted = sourceFingerprint(applicationRoot());
   let availableOrigin = null;
   for (const port of BACKEND_PORTS) {
     const origin = `http://127.0.0.1:${port}`;
     const health = await backendHealth(origin);
-    if (health?.status === "ok" && health?.engine_version === ENGINE_VERSION) {
+    const current = health?.status === "ok"
+      && health?.engine_version === ENGINE_VERSION
+      && (wanted === null || health?.source_fingerprint === wanted);
+    if (current) {
       backendOrigin = origin;
       return;
     }
@@ -102,7 +139,8 @@ async function ensureBackend() {
   for (let attempt = 0; attempt < 40; attempt += 1) {
     const health = await backendHealth(backendOrigin);
     if (health?.status === "ok") {
-      if (health.engine_version === ENGINE_VERSION) return;
+      if (health.engine_version === ENGINE_VERSION
+        && (wanted === null || health.source_fingerprint === wanted)) return;
       mismatched = health.engine_version;
     }
     await new Promise((resolve) => setTimeout(resolve, 500));

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import logging
 import uuid
@@ -201,9 +202,36 @@ def startup() -> None:
     DATABASE.migrate()
 
 
+def source_fingerprint() -> str:
+    """A digest of the engine's own Python source, as it was when this process imported it.
+
+    A running engine holds the modules it imported at startup, so editing the planner does not
+    change what it serves. That has now cost three evenings: the sequence work landed 29
+    minutes after this process began, and every edit built afterwards was cut by the code from
+    before it. The plugin compares this against the source on disk and starts a fresh engine
+    when they differ, which is the only thing that makes an edit reflect the code.
+    """
+    root = Path(__file__).resolve().parent
+    digest = hashlib.sha256()
+    for path in sorted(root.rglob("*.py"), key=lambda item: item.relative_to(root).as_posix()):
+        digest.update(path.relative_to(root).as_posix().encode("utf-8"))
+        digest.update(b"\0")
+        digest.update(path.read_bytes())
+        digest.update(b"\0")
+    return digest.hexdigest()[:16]
+
+
+SOURCE_FINGERPRINT = source_fingerprint()
+
+
 @app.get("/api/health")
 def health() -> dict[str, str]:
-    return {"status": "ok", "engine_version": ENGINE_VERSION, "data_root": str(ROOT)}
+    return {
+        "status": "ok",
+        "engine_version": ENGINE_VERSION,
+        "source_fingerprint": SOURCE_FINGERPRINT,
+        "data_root": str(ROOT),
+    }
 
 
 @app.get("/api/projects")

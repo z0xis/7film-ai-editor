@@ -95,3 +95,60 @@ class EngineVersionTests(unittest.TestCase):
         body = TestClient(api.app).get("/api/health").json()
 
         self.assertEqual(body["engine_version"], api.ENGINE_VERSION)
+
+
+class SourceFingerprintTests(unittest.TestCase):
+    """A running engine serves the modules it imported, whatever the files say now."""
+
+    def test_the_health_endpoint_reports_it(self):
+        from fastapi.testclient import TestClient
+
+        from sevenfilm import api
+
+        body = TestClient(api.app).get("/api/health").json()
+
+        self.assertEqual(body["source_fingerprint"], api.SOURCE_FINGERPRINT)
+        self.assertEqual(len(body["source_fingerprint"]), 16)
+
+    def test_it_is_the_same_twice_in_a_row(self):
+        from sevenfilm.api import source_fingerprint
+
+        self.assertEqual(source_fingerprint(), source_fingerprint())
+
+    def test_it_moves_when_the_source_moves(self):
+        import sevenfilm
+        from sevenfilm.api import source_fingerprint
+
+        scratch = Path(sevenfilm.__file__).parent / "_fingerprint_probe.py"
+        before = source_fingerprint()
+        scratch.write_text("# geçici\n")
+        self.addCleanup(scratch.unlink, missing_ok=True)
+
+        self.assertNotEqual(source_fingerprint(), before)
+
+        scratch.unlink()
+        self.assertEqual(source_fingerprint(), before)
+
+    def test_the_plugin_computes_the_same_digest(self):
+        """The two are written in different languages; a mismatch would restart the engine on
+        every launch, and a silent drift would stop restarting it at all."""
+        import shutil
+        import subprocess
+
+        node = shutil.which("node")
+        if not node:
+            self.skipTest("node yok")
+        root = Path(__file__).resolve().parents[1]
+        main_js = root / "integrations" / "resolve" / "com.sevenfilm.ai.editor" / "main.js"
+        script = (
+            "const crypto=require('crypto'),fs=require('fs'),path=require('path');"
+            f"const src=fs.readFileSync({str(main_js)!r},'utf8');"
+            "const fn=src.match(/function sourceFingerprint[\\s\\S]*?\\n}\\n/)[0];"
+            "eval(fn);"
+            f"process.stdout.write(sourceFingerprint({str(root)!r}));"
+        )
+        completed = subprocess.run([node, "-e", script], capture_output=True, text=True, check=True)
+
+        from sevenfilm.api import source_fingerprint
+
+        self.assertEqual(completed.stdout.strip(), source_fingerprint())
