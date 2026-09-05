@@ -468,6 +468,12 @@ SEQUENCE_OVERRUN = 0.05
 # share it is over by. A category the references never show at all is still allowed this much
 # before it starts costing, so a shoot whose labels disagree with theirs is not locked out.
 SHARE_OVERRUN_WEIGHT = 0.9
+# How much of that cap still applies while a sequence is running. Swept against the
+# references' own figures: 1.00 (no relief) holds consecutive same category at 21% against
+# their 29%, 0.85 lands on 31% with a mean run of 1.45 against their 1.41, and 0.60 overshoots
+# to 42%. The category spread barely moves across the whole range, so the sequences are close
+# to free.
+SEQUENCE_SHARE_RELIEF = 0.85
 MINIMUM_CATEGORY_SHARE = 0.05
 # Same subject at the same size back to back reads as a jump rather than as a second look.
 JUMP_CUT_PENALTY = 0.18
@@ -665,9 +671,11 @@ def _score_candidate(
     sequence_continuity = 1.0
     duplicate_penalty = _visual_repeat_penalty(shot, used_hashes)
     jump_cut_penalty = 0.0
+    in_sequence = False
     previous = recent[-1] if recent else None
     if previous is not None:
         continues = previous.shot.category == shot.category
+        in_sequence = continues and current_run < SEQUENCE_TARGET_RUN
         if continues and current_run >= SEQUENCE_TARGET_RUN:
             # Past the length the references hold a subject for, leaving is worth more. Below
             # it nothing is charged at all: an entrance, the cake, a table of details are each
@@ -679,10 +687,13 @@ def _score_candidate(
             # as a jump rather than as a second look. A near-duplicate frame is caught by the
             # perceptual hash above, which is a measurement rather than a guess.
             jump_cut_penalty += JUMP_CUT_PENALTY
+    # The share cap is about the whole film; a sequence is a local structure. Charging it in
+    # full mid-sequence is what held consecutive same category down.
+    share_weight = SHARE_OVERRUN_WEIGHT * (SEQUENCE_SHARE_RELIEF if in_sequence else 1.0)
     reuse_penalty = (
         REUSE_PENALTY * reuse_count
         + ASSET_REUSE_PENALTY * asset_reuse_count
-        + SHARE_OVERRUN_WEIGHT * share_overrun
+        + share_weight * share_overrun
     )
     available = _available_duration(shot)
     duration_fit = max(0.0, 1.0 - float(abs(available - desired_duration) / max(desired_duration, Fraction(1, 2))))

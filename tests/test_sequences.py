@@ -16,6 +16,7 @@ from pathlib import Path
 from sevenfilm.domain import BeatGrid, MediaAsset, Shot, TimelineItem
 from sevenfilm.services.planner import (
     MINIMUM_CATEGORY_SHARE,
+    SEQUENCE_SHARE_RELIEF,
     SEQUENCE_TARGET_RUN,
     _score_candidate,
     _share_overrun,
@@ -182,3 +183,38 @@ class ShareIsCountedOverTheWholeEditTests(unittest.TestCase):
 
         self.assertEqual(_share_overrun(arc, 0.0, "couple", {"couple": 50}, 100), 0.0)
         self.assertAlmostEqual(_share_overrun(arc, 0.9, "couple", {"couple": 50}, 100), 0.4)
+
+
+class SequenceReliefTests(unittest.TestCase):
+    """The share cap is about the whole film; a sequence is a local structure."""
+
+    def score(self, *, run, overrun):
+        previous = shot("p", "couple", "medium")
+        value, _ = _score_candidate(
+            shot("s", "couple", "wide"),
+            preferred_categories=("couple", "bride", "groom"),
+            preferred_scales=("medium", "wide"),
+            energy="medium",
+            recent=(item(previous),),
+            desired_duration=Fraction(1),
+            random_jitter=0.0,
+            current_run=run,
+            share_overrun=overrun,
+        )
+        return value
+
+    def test_the_cap_costs_less_while_a_sequence_is_running(self):
+        inside = self.score(run=1, overrun=0.3)
+        past = self.score(run=SEQUENCE_TARGET_RUN + 2, overrun=0.3)
+
+        self.assertGreater(inside, past)
+
+    def test_the_relief_is_partial_not_a_licence(self):
+        """0.60 overshot to 42% consecutive same category against the references' 29%."""
+        self.assertGreater(SEQUENCE_SHARE_RELIEF, 0.6)
+        self.assertLess(SEQUENCE_SHARE_RELIEF, 1.0)
+
+    def test_a_category_within_its_share_is_unaffected_either_way(self):
+        self.assertAlmostEqual(self.score(run=1, overrun=0.0),
+                               self.score(run=SEQUENCE_TARGET_RUN + 2, overrun=0.0) + 0.0,
+                               delta=0.5)
