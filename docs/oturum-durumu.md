@@ -130,13 +130,94 @@ de gelmedi; aynı noktalar sequence'ın kendisine yazılınca da gelmedi. Yani b
 anchored-time sorusu değil — Resolve'un FCPXML içe aktarıcısı marker taşımıyor. Eklenti yolu
 marker'ları API üzerinden koyuyor ve orada doğru yerlere düşüyorlar (141 marker, ölçüldü).
 
+## 5 Eylül: kurgunun kendisi
+
+Kullanıcının üç şikâyeti ölçüldü ve üçü de gerçek çıktı.
+
+### "Daima aşk yazısı birden fazla, aynı klip sürekli"
+
+Kaydedilmiş kurgunun her klibi kare olarak çıkarılıp bakıldı. `C2075.MP4` — 121 saniyelik tek
+pasta çekimi — 137 klibin **16'sını** vermişti; shot dedektörü onu 92 parçaya bölmüş, her parça
+"yeni aday" sayılmıştı. Tekrar cezası **shot'u** sayıyordu, dosyayı kimse saymıyordu. Ayrıca
+benzerlik kontrolü yalnızca **son 4 kesime** bakıyordu, bu yüzden aynı neon yazı 37, 41, 48 ve
+55'te dördüncü kez göründü. Şimdi: 115 klip / 115 farklı dosya, 10 bitten yakın çift yok.
+
+### "Referanslara hiç bakmıyor, sadece beate oturtuyor"
+
+Doğruydu. Profilin planlayıcıya verdiği **her şey** ritim ve renkti; ne gösterileceği ve ne zaman
+gösterileceği hakkında tek veri yoktu. Hikâye akışı elle yazılmıştı. `analyze_references` artık
+18 filmi 1,5 saniyede bir örnekleyip her dilimde hangi kategorinin ne kadar yer tuttuğunu
+ölçüyor ve profile `story_arc` olarak yazıyor. Güvenmeden önce 12 kare gözle denetlendi: 11'i
+açıkça doğru, 1'i tartışmalı. **Kategoriler renklendirmeyi aşıyor, ölçek aşmıyor** — bu yüzden
+akış kategori üzerine kuruldu, ölçek üzerine değil.
+
+### "Girişi yok, hep ritmik geçiyor"
+
+Teaser oldukları için uzun plan yoktur dedim; **yanlıştı**. 18 referansın kesim süreleri
+ölçüldü: p90 2,44 sn, en uzun 19,16 sn ve toplam sürenin **%25'i** 3 saniyeden uzun planlarda.
+Bizim kurguda bu oran sıfırdı. Uzun planlar da rastgele değil — açılışın %38'i, finalin %56'sı.
+Profil artık bunu dilim dilim taşıyor. İki şey ölçümle bulundu: bir *zaman* payı bir *kesim*
+payı değildir (ilk deneme %25 yerine %38 verdi), ve tutulan plan da beat'e oturmazsa
+sonrasındaki her kesim ızgaradan düşüyor (kurgunun ortasında 0,36 saniyelik flaş).
+
+### "Çok karmaşık, sekans yok"
+
+Ölçüldü: 117 kesimin **116'sında** hem dosya hem kategori değişiyordu — sıfır sekans. Kodda
+yazıyordu: aynı dosyadan devam 0,30, aynı kategoride devam 0,16 ceza. Referanslar sahne
+tespitiyle ölçüldü (1044 plan): ardışık aynı kategori **%29**, ortalama seri 1,41, sürenin
+%49'u 2+ serilerin içinde. Sekans izni + pay sınırı gerilimi süpürülerek çözüldü; sekans
+sırasında pay sınırı %85 uygulanıyor. Sonuç: %31 / 1,45 / %49.
+
+### "Gelin hazırlık, damat hazırlık hiç yok"
+
+Klasör adlarına bakıp "görüntü yok" denildi — **yanlıştı**, dosyalar aynı klasörde sıralı kamera
+adlarıyla duruyordu. Dokuzu da indekslenmiş, 24 shot vermiş, kaliteleri çekimin medyanının
+üstündeydi, ve hiçbiri kurguya girmemişti. İki sebep: sözlükte hazırlık diye bir kategori yoktu
+(makyajdaki gelin de salondaki gelin de `bride`, salon 198 dosya), ve bant en büyük
+kategorileriyle okunuyordu — `couple` on bandın hepsinde birinci olduğu için yapı görünmezdi.
+Bant artık omurgasını + filmin geri kalanına göre yaslandığını veriyor.
+
+## Resolve tarafı, 5 Eylül
+
+- **FCPXML anchored offset ölçüldü**: iliştirilmiş öğenin `offset`'i ebeveyn klibin zaman
+  eksenindedir. İki şarkı `offset="0s"` ile 23,8-53,8 ve 0-10 sn'ye düştü; ebeveyne göre
+  yazılınca ikisi de tam yerine oturdu. Tek şarkıda eski biçim Resolve negatif offset'i sıfıra
+  kırptığı için çalışıyordu — hata bu yüzden görünmemişti.
+- **Resolve FCPXML marker taşımıyor.** Klip ve sequence seviyesinde denendi, `start` değeri
+  değiştirildi: hiçbiri gelmiyor. Eklenti yolu marker'ları API üzerinden koyuyor, orada doğru.
+- **Timeline kare hızı**: plan 50 fps, proje 24 fps olunca 114 klip 113 boşlukla düşüyordu.
+  Adapter artık projeyi planın hızına ayarlıyor; Resolve timeline'ı olan projede reddediyor
+  (`SetSetting` False, ölçüldü) ve o durumda net hata veriyor.
+- **Proxy**: `LinkProxyMedia` kaynağın sesini ve timecode'unu taşımayan proxy'yi reddediyor
+  (ölçüldü: False → True). Araç baştan beri video-only, timecode'suz proxy üretiyordu — yani
+  tek amacı hızlı oynatma olan adım, kullanılamayan dosyalar yazıyordu.
+
+## Sessiz kod tuzağı üç kez vurdu
+
+1. Uygulama eski kodu servis ediyordu → etiketlerde `groom` ve `party` hiç yoktu.
+2. Eski süreç yeni sütunları hiç oluşturmadı → müzik analizi çöktü, ekranda `[object Object]`.
+3. Motor 12 saat 38 dakikadır ayaktaydı → sekans düzeltmesi hiç çalışmadı.
+
+Kapatıldı: iş başlamadan şema onarılıyor, hata metni gerçekten okunuyor, sürüm el sıkışması
+yükseltiliyor, ve motor `/api/health`'te **kaynak kodunun parmak izini** bildiriyor — eklenti
+diskteki kaynakla karşılaştırıp farklıysa taze motor başlatıyor. İki dilin aynı özeti ürettiği
+testle sabit.
+
+## Ölçüp attıklarım
+
+Bu oturumda dört hipotez ölçümle çürütüldü ve **uygulanmadı**: kaynak başına format bir fark
+yaratmıyordu; estetik skoru doymuş olsa da doğru ayırt ediyor (uçlara bakıldı); kurguya çöp
+girmiyor (0,5 altı estetik hiç yok); kategori payını bant bazlı saymak sekansı %21'den %3'e
+düşürüyor. Referans filmlerden **ölçek** hedefi de çıkarılamadı — dört kareden ikisi yanlış
+etiketliydi.
+
 ## Çalışma biçimi
 
 Önce ölç, sonra değiştir. Bu turda dört iddia ölçümle çürütüldü: sınır dışı karelerin batch'i reddettirdiği, batch'in ya hep ya hiç olduğu, yavaş şarkının yavaş kurgu ürettiği, dinamik aralığı olmayan parçanın "high" sayılmaması gerektiği. Görsel kararlar (kategori, kalite) ekrana bakılarak denetlendi.
 
 ## Testler
 
-`.venv/bin/python -m pytest -q` — 94
-`node --test integrations/resolve/com.sevenfilm.ai.editor/` — 41
+`.venv/bin/python -m pytest -q` — 371 (ve aynısı `.runtime/mamba-root/envs/sevenfilm` içinde)
+`node --test integrations/resolve/com.sevenfilm.ai.editor/` — 67
 `cd apps/desktop && npm run build`
 `.venv/bin/ruff check apps tests integrations` (`tests/test_path_normalization.py` önceden beri kirli)
