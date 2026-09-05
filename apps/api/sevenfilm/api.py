@@ -355,7 +355,7 @@ def create_timeline(project_id: str, request: TimelineRequest) -> dict[str, Any]
     music_segments: tuple[MusicSegment, ...] = ()
     music_warnings: list[str] = []
     if songs:
-        music_grid, music_segments, music_warnings = plan_music(songs, target)
+        music_grid, music_segments, music_warnings = plan_music(songs, target, _style_profile())
     else:
         music_grid = _missing_music()
     try:

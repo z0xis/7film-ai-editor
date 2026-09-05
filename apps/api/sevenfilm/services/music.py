@@ -13,7 +13,7 @@ segments.
 
 from __future__ import annotations
 
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from fractions import Fraction
 from pathlib import Path
@@ -39,22 +39,68 @@ STORY_BOUNDARIES: tuple[Fraction, ...] = (
 )
 
 
-def story_switch_points(track_count: int, target_duration: Fraction) -> tuple[Fraction, ...]:
-    """When each track after the first takes over, read off the story arc.
+# The one break every wedding edit has. Naming it is not a shortcut: the categories are a
+# wedding vocabulary, and where the party starts is what a second song is for.
+PARTY_CATEGORY = "party"
 
-    The editor chooses how many tracks to use; where they change is a consequence of the film,
-    not another setting. Two tracks change at the party, which is the one break every wedding
-    edit has. A third takes the ceremony as well, a fourth the portraits, and so on down the
-    arc. Past the hinges the arc actually has, the remaining tracks are spaced evenly — there
-    is nothing left to read, and saying so honestly beats inventing a structural meaning.
+
+def _arc_boundaries(style_profile: Mapping[str, object] | None) -> list[Fraction] | None:
+    """Where the measured arc turns, the break that matters most first.
+
+    The party comes first because that is the change a second song is chosen for — measured on
+    the references, `party` enters the top three at 60% and holds through 80%, while the
+    hand-written list put the switch at 82% and left the upbeat song the last fifth of the
+    film. The rest follow by how much the shares move across the boundary, which is the arc's
+    own account of where the film changes.
+    """
+    arc = style_profile.get("story_arc") if style_profile else None
+    if not isinstance(arc, Sequence) or len(arc) < 2:
+        return None
+    bands = [band for band in arc if isinstance(band, Mapping) and band]
+    if len(bands) != len(arc):
+        return None
+    names = sorted({name for band in bands for name in band})
+
+    def top_three(band: Mapping[str, object]) -> set[str]:
+        return {name for name, _ in sorted(band.items(), key=lambda kv: -float(kv[1]))[:3]}
+
+    party_at = None
+    for index in range(1, len(bands)):
+        if PARTY_CATEGORY in top_three(bands[index]) and PARTY_CATEGORY not in top_three(bands[index - 1]):
+            party_at = index
+            break
+    moved = sorted(
+        (
+            sum(abs(float(bands[i].get(n, 0)) - float(bands[i - 1].get(n, 0))) for n in names) / 2,
+            i,
+        )
+        for i in range(1, len(bands))
+        if i != party_at
+    )
+    order = ([party_at] if party_at is not None else []) + [i for _, i in reversed(moved)]
+    return [Fraction(index, len(bands)) for index in order]
+
+
+def story_switch_points(
+    track_count: int,
+    target_duration: Fraction,
+    style_profile: Mapping[str, object] | None = None,
+) -> tuple[Fraction, ...]:
+    """When each song after the first takes over, read off the story arc.
+
+    The editor chooses how many songs to use; where they change is a consequence of the film,
+    not another setting. Past the turns the arc actually has, the remaining songs are spaced
+    evenly — there is nothing left to read, and saying so beats inventing a structural meaning.
     """
     if track_count < 1:
-        raise ValueError("En az bir müzik parçası gerekiyor.")
+        raise ValueError("En az bir şarkı gerekiyor.")
     switches = track_count - 1
     if switches == 0:
         return ()
-    if switches <= len(STORY_BOUNDARIES):
-        chosen = sorted(STORY_BOUNDARIES[:switches])
+    measured = _arc_boundaries(style_profile)
+    available = measured if measured else list(STORY_BOUNDARIES)
+    if switches <= len(available):
+        chosen = sorted(available[:switches])
     else:
         chosen = [Fraction(index, track_count) for index in range(1, track_count)]
     return tuple(point * target_duration for point in chosen)
@@ -229,12 +275,14 @@ def join_tracks(
 
 
 def plan_music(
-    tracks: Sequence[MusicTrack], target_duration: Fraction
+    tracks: Sequence[MusicTrack],
+    target_duration: Fraction,
+    style_profile: Mapping[str, object] | None = None,
 ) -> tuple[BeatGrid, tuple[MusicSegment, ...], list[str]]:
     """Everything the planner needs from however many songs the editor chose.
 
     One song behaves exactly as it did before there could be more than one: no switch points,
     nothing to prefer, so it plays from its own beginning.
     """
-    switches = story_switch_points(len(tracks), target_duration)
+    switches = story_switch_points(len(tracks), target_duration, style_profile)
     return join_tracks(tracks, switches, target_duration)

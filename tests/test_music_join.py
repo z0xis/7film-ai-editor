@@ -323,3 +323,68 @@ class WindowedJoinTests(unittest.TestCase):
 
         self.assertEqual(segments[1].duration, Fraction(200))
         self.assertEqual(combined.duration, Fraction(984, 10) + Fraction(200))
+
+
+class ArcSwitchPointTests(unittest.TestCase):
+    """Where the songs change is read off the measured arc, not off a written list."""
+
+    def arc(self, *bands):
+        return {"story_arc": list(bands)}
+
+    def band(self, **shares):
+        base = dict.fromkeys(
+            ("bride", "groom", "couple", "family", "venue", "detail", "ceremony", "party"), 0.0)
+        base.update(shares)
+        return base
+
+    def measured(self):
+        """The 18 references: party enters the top three at 60% and holds to 80%."""
+        return self.arc(
+            self.band(couple=.40, venue=.21, bride=.18, groom=.09),
+            self.band(bride=.26, couple=.25, groom=.19, venue=.15),
+            self.band(couple=.38, groom=.20, bride=.12, venue=.12),
+            self.band(couple=.32, venue=.19, groom=.16, family=.12),
+            self.band(couple=.28, bride=.21, venue=.18, family=.12),
+            self.band(couple=.29, bride=.23, venue=.15, party=.13),
+            self.band(couple=.38, party=.25, bride=.13, groom=.09),
+            self.band(couple=.38, party=.18, groom=.15, bride=.13),
+            self.band(couple=.29, party=.25, groom=.17, bride=.12),
+            self.band(couple=.35, bride=.21, family=.15, party=.15),
+        )
+
+    def shares(self, count, profile):
+        return [point / Fraction(150) for point in
+                story_switch_points(count, Fraction(150), profile)]
+
+    def test_two_songs_change_where_the_party_starts(self):
+        """The written list said 82%, which left the upbeat song the last fifth of the film."""
+        self.assertEqual(self.shares(2, self.measured()), [Fraction(6, 10)])
+
+    def test_more_songs_add_the_boundaries_the_shares_move_most_across(self):
+        points = self.shares(4, self.measured())
+
+        self.assertIn(Fraction(6, 10), points)
+        self.assertEqual(points, sorted(points))
+        self.assertEqual(len(points), 3)
+
+    def test_one_song_never_switches_whatever_the_arc_says(self):
+        self.assertEqual(story_switch_points(1, Fraction(150), self.measured()), ())
+
+    def test_an_arc_with_no_party_still_produces_switches(self):
+        without = self.arc(self.band(couple=.5, bride=.3), self.band(venue=.6, couple=.2))
+
+        self.assertEqual(len(self.shares(2, without)), 1)
+
+    def test_no_profile_falls_back_to_the_written_list(self):
+        self.assertEqual(self.shares(2, None), [Fraction(82, 100)])
+        self.assertEqual(self.shares(2, {"median_shot_duration_seconds": 1.0}), [Fraction(82, 100)])
+
+    def test_a_broken_arc_falls_back_too(self):
+        for arc in ([], [{}], "nonsense", [{"couple": 1.0}]):
+            self.assertEqual(self.shares(2, {"story_arc": arc}), [Fraction(82, 100)],
+                             repr(arc))
+
+    def test_more_songs_than_the_arc_has_turns_are_spaced_evenly(self):
+        points = self.shares(12, self.measured())
+
+        self.assertEqual(points, [Fraction(index, 12) for index in range(1, 12)])
