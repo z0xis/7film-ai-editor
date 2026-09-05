@@ -12,7 +12,9 @@ const {
   appendClipsInBatches,
   buildMusicClipInfos,
   buildVideoClipInfos,
+  frameRatesAgree,
   musicSegments,
+  resolveFrameRateSetting,
 } = require("./timeline-builder");
 
 const PLUGIN_ID = "com.sevenfilm.ai.editor";
@@ -283,6 +285,23 @@ async function createTimelineFromPlan(mediaPool, project, plan, timelineName) {
   if (!clipInfos.length) throw new Error("Kurgu planında video klibi bulunamadı.");
   if (dropped.length) {
     console.warn(`7Film: ${dropped.length} klip tek kare uzunluğunda kalacağı için atlandı.`);
+  }
+  // A plan is a list of frame numbers. Laid into a timeline running at another rate, every
+  // clip lands at the wrong place: the user's project was at 24 fps and the plan at 50, and
+  // the timeline came out with 114 clips, 113 gaps and 3837 frames of black between them.
+  const wantedRate = plan.frame_rate;
+  const currentRate = await project.GetSetting("timelineFrameRate");
+  if (!frameRatesAgree(currentRate, wantedRate)) {
+    const setting = resolveFrameRateSetting(wantedRate);
+    const changed = setting ? await project.SetSetting("timelineFrameRate", setting) : false;
+    const nowRate = changed ? await project.GetSetting("timelineFrameRate") : currentRate;
+    if (!frameRatesAgree(nowRate, wantedRate)) {
+      throw new Error(
+        `Resolve projesi ${currentRate} fps, kurgu ${setting || wantedRate} fps. `
+        + "Resolve bu ayarı yalnızca timeline'ı olmayan projede değiştirebiliyor: "
+        + "yeni bir proje açıp tekrar gönderin.",
+      );
+    }
   }
   const suffix = new Date().toISOString().slice(11, 19).replaceAll(":", "");
   // CreateTimelineFromClips ignores mediaType and pulls the camera audio of every source clip

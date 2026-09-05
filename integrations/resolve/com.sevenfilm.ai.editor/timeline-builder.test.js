@@ -9,9 +9,11 @@ const {
   buildVideoClipInfos,
   chunk,
   clampSourceRange,
+  frameRatesAgree,
   musicFrameLimit,
   musicSegments,
   parseFrameRate,
+  resolveFrameRateSetting,
   timelineFrameCount,
 } = require("./timeline-builder");
 
@@ -579,5 +581,37 @@ describe("musicSegments", () => {
 
   it("ignores an entry with no path", () => {
     assert.deepEqual(musicSegments({ music_segments: [{ duration_seconds: "10" }] }), []);
+  });
+});
+
+describe("frame rate agreement", () => {
+  it("accepts the same rate written either way", () => {
+    assert.equal(frameRatesAgree("50", "50/1"), true);
+    assert.equal(frameRatesAgree("23.976", "24000/1001"), true);
+  });
+
+  it("refuses a plan cut at another rate", () => {
+    // The user's project was 24 and the plan 50: 114 clips, 113 gaps, 3837 frames of black.
+    assert.equal(frameRatesAgree("24", "50/1"), false);
+    assert.equal(frameRatesAgree("25", "50/1"), false);
+  });
+
+  it("refuses anything it cannot read rather than guessing", () => {
+    assert.equal(frameRatesAgree(null, "50/1"), false);
+    assert.equal(frameRatesAgree("", "50/1"), false);
+    assert.equal(frameRatesAgree("24", "0/0"), false);
+  });
+
+  it("writes a rate the way Resolve spells it", () => {
+    assert.equal(resolveFrameRateSetting("50/1"), "50");
+    assert.equal(resolveFrameRateSetting("25/1"), "25");
+    assert.equal(resolveFrameRateSetting("24000/1001"), "23.976");
+    assert.equal(resolveFrameRateSetting("30000/1001"), "29.97");
+    assert.equal(resolveFrameRateSetting("60000/1001"), "59.94");
+  });
+
+  it("has nothing to write for a rate it cannot read", () => {
+    assert.equal(resolveFrameRateSetting("0/0"), null);
+    assert.equal(resolveFrameRateSetting(undefined), null);
   });
 });
