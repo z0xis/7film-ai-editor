@@ -8,6 +8,7 @@ import uuid
 from bisect import bisect_left
 from collections import Counter
 from collections.abc import Iterable, Mapping, Sequence
+from dataclasses import replace
 from fractions import Fraction
 from pathlib import Path
 
@@ -783,6 +784,41 @@ def _reference_duration_bounds(
     return Fraction(str(low)), Fraction(str(high))
 
 
+# The operator lowers the camera as they stop recording, so a clip's last frames are a whip.
+# Measured over 70 clips of this shoot, against each clip's own median frame-to-frame motion:
+# the last frame runs 1.88x, the second-to-last 2.30x and the third 2.00x, falling to 1.21x by
+# the fifth and to the baseline by the twenty-fifth. 71% of clips spike past twice their own
+# median in their last eight frames, 56% past three times. The head is calm by comparison, at
+# 0.80-0.94x, so nothing is taken off the front.
+#
+# The handle below could not cover this: it is a share of the shot's length, so the 44 frame
+# shot that opened an edit got five frames of handle and its cut ended four frames from the
+# whip. This is a property of the recording stopping, so the margin is a fixed length.
+RECORDING_TAIL_SECONDS = Fraction(1, 4)
+
+
+def _without_recording_tail(shot: Shot, asset: MediaAsset) -> Shot:
+    """Pull a shot back from the end of its clip, where the camera is being lowered."""
+    rate = shot.source_range.rate
+    total = rate.frames_from_seconds(asset.duration, rounding="floor")
+    end = shot.source_range.start_frame + shot.source_range.duration_frames
+    if end > total:
+        # The shot runs past the clip's recorded length, so the two disagree and there is no
+        # knowing where the recording actually stopped. Trimming against a length that is
+        # wrong would cut real footage away.
+        return shot
+    margin = rate.frames_from_seconds(RECORDING_TAIL_SECONDS, rounding="ceil")
+    overrun = end - (total - margin)
+    if overrun <= 0:
+        return shot
+    # A shot that is nothing but the whip empties, and the caller drops it on the length filter.
+    duration = max(0, shot.source_range.duration_frames - overrun)
+    return replace(
+        shot,
+        source_range=TimeRange(shot.source_range.start_frame, duration, rate),
+    )
+
+
 def _available_duration(shot: Shot) -> Fraction:
     handle = min(shot.source_range.duration_frames // 8, shot.source_range.rate.frames_from_seconds(Fraction(1, 5)))
     usable = max(0, shot.source_range.duration_frames - handle * 2)
@@ -951,8 +987,10 @@ def build_timeline(
         raise ValueError("Seçilen müzik hedef süreden kısa; müzik edit noktası seçin veya hedefi azaltın.")
     asset_by_id = {asset.id: asset for asset in assets}
     long_enough = [
-        shot for shot in shots
-        if shot.asset_id in asset_by_id and _available_duration(shot) >= Fraction(1, 2)
+        trimmed for shot in shots
+        if shot.asset_id in asset_by_id
+        for trimmed in (_without_recording_tail(shot, asset_by_id[shot.asset_id]),)
+        if _available_duration(trimmed) >= Fraction(1, 2)
     ]
     if not long_enough:
         raise InsufficientFootageError("Kullanılabilir shot adayı bulunamadı.")
