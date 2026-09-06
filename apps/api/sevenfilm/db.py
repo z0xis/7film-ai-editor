@@ -124,6 +124,29 @@ CREATE TABLE IF NOT EXISTS timeline_items (
     shot_scale TEXT NOT NULL DEFAULT ''
 );
 
+-- What a shot looks like along its length, half a second at a time.
+--
+-- Until this existed a shot was judged on three frames spanning 0.2 seconds taken from its
+-- middle, and its framing on the single frame between them; the planner then cut a segment
+-- out of it by arithmetic, always starting a fixed handle after the shot began. Measured on
+-- six clips the editor complained about, the bad moment was inside the cut and the
+-- measurement had never looked at it: a head against the frame edge (0.76 and 1.00 where the
+-- stored value was 0.00), a whip at 9 sharpness against the shoot's 45-78, a bystander
+-- standing in a doorway.
+--
+-- Rows are optional. A shot with none is planned the way it always was.
+CREATE TABLE IF NOT EXISTS shot_windows (
+    shot_id TEXT NOT NULL,
+    offset_frames INTEGER NOT NULL,
+    sharpness REAL NOT NULL DEFAULT 0,
+    motion REAL NOT NULL DEFAULT 0,
+    face_ratio REAL NOT NULL DEFAULT 0,
+    face_edge REAL NOT NULL DEFAULT 0,
+    face_count INTEGER NOT NULL DEFAULT 0,
+    bystanders INTEGER NOT NULL DEFAULT 0,
+    PRIMARY KEY (shot_id, offset_frames)
+);
+
 CREATE TABLE IF NOT EXISTS jobs (
     id TEXT PRIMARY KEY,
     project_id TEXT NOT NULL REFERENCES projects(id) ON DELETE CASCADE,

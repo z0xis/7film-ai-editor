@@ -15,6 +15,7 @@ from pathlib import Path
 from ..db import Database, now
 from ..domain import BeatGrid, MediaAsset, MusicSegment, Shot, TimelineItem, TimelinePlan
 from ..timebase import FrameRate, TimeRange
+from .windows import ShotWindow
 
 MIN_TARGET_DURATION = Fraction(120, 1)
 # An editor never cuts to a smeared or blown out frame, whatever the semantic model called it:
@@ -831,12 +832,88 @@ def _remaining_source_frames(shot: Shot, consumed_frames: int) -> int:
     return max(0, shot.source_range.duration_frames - handle * 2 - consumed_frames)
 
 
+# What a half second of picture has to be free of. Both are measured, not guessed: the edit
+# the editor picked apart had a head against the frame edge at 0.76 and 1.00 where the stored
+# whole-shot value was 0.00, and a whip at 9 sharpness against the shoot's 45 to 78.
+FRAME_EDGE_PENALTY = 1.0
+# Someone else's face, small and behind the subject. Three is a crowd and the scale stops.
+BYSTANDER_PENALTY = 0.35
+BYSTANDER_LIMIT = 3
+# A shot whose best stretch scores below this has no moment worth cutting to. C2181 sat at
+# frame-edge 1.00 across its whole length with six to nine faces in it; moving the in-point
+# would only have found another bad moment.
+UNUSABLE_WINDOW_SCORE = 0.0
+# What a shot with no good moment in it gives up against one that has. Swept below.
+WINDOW_QUALITY_WEIGHT = 0.0
+
+
+def _window_score(window: ShotWindow, sharpness_bar: float) -> float:
+    """How good this half second is as picture, on the shoot's own scale.
+
+    Laplacian variance has no absolute meaning — it moves with resolution, grade and content —
+    so crispness is read against this shoot's median rather than a number written here.
+    """
+    crisp = min(1.0, window.sharpness / sharpness_bar) if sharpness_bar > 0 else 1.0
+    crowd = min(window.bystanders, BYSTANDER_LIMIT) / BYSTANDER_LIMIT
+    return crisp - FRAME_EDGE_PENALTY * window.face_edge - BYSTANDER_PENALTY * crowd
+
+
+def _run_score(
+    windows: Sequence[ShotWindow], first: int, last: int, sharpness_bar: float
+) -> float:
+    """The worst half second decides. A cut is only as good as the frame that spoils it."""
+    covered = windows[first : last + 1]
+    if not covered:
+        return 0.0
+    return min(_window_score(window, sharpness_bar) for window in covered)
+
+
+def _best_offset(
+    shot: Shot,
+    windows: Sequence[ShotWindow],
+    frames: int,
+    *,
+    floor: int,
+    ceiling: int,
+    sharpness_bar: float,
+) -> tuple[int, float]:
+    """Where in the shot to start, and how good the result is.
+
+    Only forward of what the shot has already given, so the segments a shot supplies stay in
+    order and never overlap — a second cut from a clip is a later moment, not the same one.
+    """
+    if not windows:
+        return floor, 1.0
+    best_offset, best_value = floor, None
+    for window in windows:
+        offset = window.offset_frames
+        if offset < floor or offset > ceiling:
+            continue
+        first = next(
+            index for index, other in enumerate(windows) if other.offset_frames == offset
+        )
+        last = first
+        while (
+            last + 1 < len(windows)
+            and windows[last + 1].offset_frames < offset + frames
+        ):
+            last += 1
+        value = _run_score(windows, first, last, sharpness_bar)
+        if best_value is None or value > best_value:
+            best_offset, best_value = offset, value
+    if best_value is None:
+        return floor, 1.0
+    return best_offset, best_value
+
+
 def _source_range_for_duration(
     shot: Shot,
     wanted: Fraction,
     *,
     consumed_frames: int = 0,
     allow_short: bool = False,
+    windows: Sequence[ShotWindow] | None = None,
+    sharpness_bar: float = 0.0,
 ) -> TimeRange | None:
     """Take the wanted length from a shot, or nothing if what is left is too short to cut to.
 
@@ -853,7 +930,18 @@ def _source_range_for_duration(
         minimum = min(minimum, requested_frames)
     if frames < minimum:
         return None
-    return TimeRange(shot.source_range.start_frame + handle + consumed_frames, frames, rate)
+    # Where the cut used to begin, unconditionally: a fixed handle after the shot started, or
+    # after whatever the shot had already given. That is the moment the scene detector cut on,
+    # which is where the framing is still settling, and it is where every shot the editor
+    # objected to went wrong.
+    floor = handle + consumed_frames
+    offset, _ = _best_offset(
+        shot, windows or (), frames,
+        floor=floor,
+        ceiling=max(floor, shot.source_range.duration_frames - handle - frames),
+        sharpness_bar=sharpness_bar,
+    )
+    return TimeRange(shot.source_range.start_frame + offset, frames, rate)
 
 
 def _score_candidate(
@@ -869,6 +957,7 @@ def _score_candidate(
     previous_scene: int | None = None,
     progress: float = 0.0,
     day_position: float | None = None,
+    window_quality: float = 1.0,
     desired_duration: Fraction,
     random_jitter: float,
     style_profile: Mapping[str, object] | None = None,
@@ -915,6 +1004,9 @@ def _score_candidate(
     # The film is allowed to move around the day, but not to lose it: measured on the last
     # edit, order and time of day correlated at 0.11, sixty-two of a hundred and seventeen
     # cuts went backwards, and a table of flowers shot at 08:21 landed at 125 seconds of 150.
+    # A shot measured to have no usable moment anywhere along it. Moving the in-point cannot
+    # save it: C2181 held a face against the frame edge across its whole length.
+    window_penalty = WINDOW_QUALITY_WEIGHT * max(0.0, 1.0 - window_quality)
     chronology_penalty = 0.0
     if day_position is not None:
         distance = abs(day_position - progress)
@@ -948,6 +1040,7 @@ def _score_candidate(
         - jump_cut_penalty
         - framing_penalty
         - chronology_penalty
+        - window_penalty
         + take_bonus
         - reuse_penalty
         + random_jitter
@@ -964,6 +1057,7 @@ def _score_candidate(
         "jump_cut_penalty": jump_cut_penalty,
         "framing_penalty": framing_penalty,
         "chronology_penalty": chronology_penalty,
+        "window_penalty": window_penalty,
         "reuse_penalty": reuse_penalty,
     }
 
@@ -979,8 +1073,10 @@ def build_timeline(
     style_profile: Mapping[str, object] | None = None,
     seed: int = 1,
     name: str = "AI Rough Cut",
+    windows_by_shot: Mapping[str, Sequence[ShotWindow]] | None = None,
 ) -> TimelinePlan:
     """Plan a varied edit and retain each score's human-readable rationale."""
+    windows_by_shot = windows_by_shot or {}
     if target_duration < MIN_TARGET_DURATION:
         raise ValueError("Hedef süre v0.1 için en az 120 saniye olmalıdır.")
     if music.duration < target_duration:
@@ -1046,6 +1142,20 @@ def build_timeline(
     # footage that is better or worse than this without a number being retuned.
     scene_by_asset = _scene_of_asset(list(asset_by_id.values()))
     day_by_asset = _day_position(list(asset_by_id.values()))
+    # Laplacian variance has no absolute meaning, so crispness is judged against this shoot's
+    # own median. A shoot with no measured windows leaves this at zero and nothing changes.
+    measured = [
+        window for shot in candidates for window in windows_by_shot.get(shot.id, ())
+    ]
+    sharpness_values = sorted(window.sharpness for window in measured)
+    sharpness_bar = (
+        sharpness_values[len(sharpness_values) // 2] if sharpness_values else 0.0
+    )
+    quality_by_shot = {
+        shot.id: max(_window_score(window, sharpness_bar) for window in measured_windows)
+        for shot in candidates
+        if (measured_windows := windows_by_shot.get(shot.id))
+    }
     qualities = sorted(shot.technical_quality for shot in candidates)
     hold_bar = qualities[len(qualities) // 2] if qualities else 0.0
     current_frame = 0
@@ -1130,6 +1240,7 @@ def build_timeline(
                     scene_by_asset.get(plan.items[-1].shot.asset_id) if plan.items else None),
                 progress=progress,
                 day_position=day_by_asset.get(shot.asset_id),
+                window_quality=quality_by_shot.get(shot.id, 1.0),
                 desired_duration=desired,
                 random_jitter=rng.uniform(-0.015, 0.015),
                 style_profile=style_profile,
@@ -1171,6 +1282,8 @@ def build_timeline(
             requested_duration,
             consumed_frames=consumed_source_frames[selected_shot.id],
             allow_short=remaining_frames <= minimum_cut_frames,
+            windows=windows_by_shot.get(selected_shot.id),
+            sharpness_bar=sharpness_bar,
         )
         if source_range is None:
             exhausted.add(selected_shot.id)
@@ -1203,7 +1316,13 @@ def build_timeline(
         )
         plan.items.append(item)
         current_frame += timeline_duration
-        consumed_source_frames[selected_shot.id] += source_range.duration_frames
+        # Charge the shot everything up to where this segment ended, not just its length:
+        # skipping forward over a bad stretch means those frames are behind the edit now, and
+        # the next segment from this clip has to start after them or the two would overlap.
+        consumed_source_frames[selected_shot.id] = (
+            source_range.start_frame - selected_shot.source_range.start_frame
+            + source_range.duration_frames
+        )
         usage_count[selected_shot.id] += 1
         asset_usage[selected_shot.asset_id] = asset_usage.get(selected_shot.asset_id, 0) + 1
         category_uses[selected_shot.category] = category_uses.get(selected_shot.category, 0) + 1

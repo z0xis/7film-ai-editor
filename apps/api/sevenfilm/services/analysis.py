@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import logging
 import uuid
-from collections.abc import Iterable
+from collections.abc import Iterable, Sequence
 from dataclasses import asdict
 from fractions import Fraction
 from pathlib import Path
@@ -19,6 +19,7 @@ from ..timebase import FrameRate, TimeRange
 from .media import project_assets
 from .music import MusicTrack
 from .vision import FrameMetrics, VisionClassifier, measure_frames
+from .windows import measure_windows, store_windows
 
 LOGGER = logging.getLogger(__name__)
 # Bumped whenever measuring or labelling changes in a way that makes older rows worse rather
@@ -312,8 +313,36 @@ def analyze_shots(database: Database, project_id: str, job_id: str) -> list[Shot
             checkpoint={"last_asset_id": asset.id, "pass": "label"},
         )
     shots = project_shots(database, project_id)
+    _measure_shot_windows(database, project_id, assets, shots)
     LOGGER.info(json.dumps({"event": "shots_analyzed", "project_id": project_id, "count": len(shots)}))
     return shots
+
+
+def _measure_shot_windows(
+    database: Database, project_id: str, assets: Sequence[MediaAsset], shots: Sequence[Shot]
+) -> None:
+    """Walk every shot half a second at a time, so the planner can choose the moment.
+
+    Read off the proxies where they exist. Nothing measured here depends on the grade, and the
+    sources are 4K 10-bit S-Log3 with no hardware decode on this machine.
+
+    A failure here leaves the shot unmeasured rather than failing the job: without windows the
+    planner cuts the way it did before, which is worse but not broken.
+    """
+    by_id = {asset.id: asset for asset in assets}
+    cache = Path("data") / "projects" / project_id / "proxies"
+    for shot in shots:
+        asset = by_id.get(shot.asset_id)
+        if asset is None:
+            continue
+        proxy = cache / f"{asset.id}.mp4"
+        try:
+            windows = measure_windows(asset, shot, proxy if proxy.exists() else asset.path)
+        except Exception:
+            LOGGER.exception(json.dumps({"event": "shot_windows_failed", "shot_id": shot.id}))
+            continue
+        if windows:
+            store_windows(database, shot.id, windows)
 
 
 def _fallback_beats(duration: Fraction, bpm: float = 120.0) -> tuple[Fraction, ...]:
