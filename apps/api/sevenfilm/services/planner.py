@@ -649,6 +649,45 @@ def _scene_of_asset(assets: Sequence[MediaAsset]) -> dict[str, int]:
     return scene_by_asset
 
 
+# How far the edit may sit from the moment it is drawing on before the distance is charged.
+# The references intercut freely, so a film is not the day played back in order; but a table
+# laid before anyone arrived has no business at eighty-four per cent of the running time.
+# Swept: at 0.30 six or seven morning shots still closed the film, at 0.15 none did.
+CHRONOLOGY_SLACK = 0.15
+# What that distance costs per unit beyond the slack. This is the lightest weight that reaches
+# zero misplaced shots over five seeds; heavier settings only tie the edit closer to the clock,
+# and a film is not the day played back in order.
+CHRONOLOGY_WEIGHT = 0.2
+
+
+def _day_position(assets: Sequence[MediaAsset]) -> dict[str, float]:
+    """Where in the shooting day each clip sits, from 0 at the first frame rolled to 1 at the
+    last. A clip with no timecode is left out rather than guessed at, and carries no pressure.
+
+    The day is cut at its largest silence rather than at midnight, so a reception that runs
+    past twelve stays one continuous evening instead of splitting into two ends of a clock.
+    """
+    timed = sorted(
+        (seconds, asset.id)
+        for asset in assets
+        if (seconds := _timecode_seconds(asset)) is not None
+    )
+    if len(timed) < 2:
+        return {asset_id: 0.5 for _, asset_id in timed}
+    day = 24 * 3600
+    gaps = [(timed[i + 1][0] - timed[i][0], i) for i in range(len(timed) - 1)]
+    gaps.append((timed[0][0] + day - timed[-1][0], len(timed) - 1))
+    _, last = max(gaps)
+    origin = timed[(last + 1) % len(timed)][0]
+    shifted = {
+        asset_id: (seconds - origin) % day for seconds, asset_id in timed
+    }
+    span = max(shifted.values())
+    if span <= 0:
+        return {asset_id: 0.5 for asset_id in shifted}
+    return {asset_id: offset / span for asset_id, offset in shifted.items()}
+
+
 def _timecode_seconds(asset: MediaAsset) -> int | None:
     """Time of day in whole seconds, ignoring the frame field."""
     raw = (asset.timecode or "").strip()
@@ -778,6 +817,8 @@ def _score_candidate(
     share_overrun: float = 0.0,
     scene: int | None = None,
     previous_scene: int | None = None,
+    progress: float = 0.0,
+    day_position: float | None = None,
     desired_duration: Fraction,
     random_jitter: float,
     style_profile: Mapping[str, object] | None = None,
@@ -821,6 +862,13 @@ def _score_candidate(
     # full mid-sequence is what held consecutive same category down.
     share_weight = SHARE_OVERRUN_WEIGHT * (SEQUENCE_SHARE_RELIEF if in_sequence else 1.0)
     framing_penalty = CUT_HEAD_PENALTY * shot.face_edge
+    # The film is allowed to move around the day, but not to lose it: measured on the last
+    # edit, order and time of day correlated at 0.11, sixty-two of a hundred and seventeen
+    # cuts went backwards, and a table of flowers shot at 08:21 landed at 125 seconds of 150.
+    chronology_penalty = 0.0
+    if day_position is not None:
+        distance = abs(day_position - progress)
+        chronology_penalty = CHRONOLOGY_WEIGHT * max(0.0, distance - CHRONOLOGY_SLACK)
     # Taking the next shot from the clip just used is a sequence, not a repetition, so the file
     # is not charged for it — and is pulled towards, because removing the charge alone changed
     # nothing: the edit still took every one of its 113 cuts from a different file, everything
@@ -845,6 +893,7 @@ def _score_candidate(
         - duplicate_penalty
         - jump_cut_penalty
         - framing_penalty
+        - chronology_penalty
         + take_bonus
         - reuse_penalty
         + random_jitter
@@ -860,6 +909,7 @@ def _score_candidate(
         "duplicate_penalty": duplicate_penalty,
         "jump_cut_penalty": jump_cut_penalty,
         "framing_penalty": framing_penalty,
+        "chronology_penalty": chronology_penalty,
         "reuse_penalty": reuse_penalty,
     }
 
@@ -939,6 +989,7 @@ def build_timeline(
     # The bar a shot has to clear to be held: this shoot's own median, so it travels to
     # footage that is better or worse than this without a number being retuned.
     scene_by_asset = _scene_of_asset(list(asset_by_id.values()))
+    day_by_asset = _day_position(list(asset_by_id.values()))
     qualities = sorted(shot.technical_quality for shot in candidates)
     hold_bar = qualities[len(qualities) // 2] if qualities else 0.0
     current_frame = 0
@@ -1021,6 +1072,8 @@ def build_timeline(
                 scene=scene_by_asset.get(shot.asset_id),
                 previous_scene=(
                     scene_by_asset.get(plan.items[-1].shot.asset_id) if plan.items else None),
+                progress=progress,
+                day_position=day_by_asset.get(shot.asset_id),
                 desired_duration=desired,
                 random_jitter=rng.uniform(-0.015, 0.015),
                 style_profile=style_profile,
