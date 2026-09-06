@@ -42,9 +42,13 @@ REUSE_PENALTY = 0.22
 # Measured on this shoot at 120 seconds, sweeping the value: 0 leaves one file used 5 times,
 # 0.03 caps it at 2 across 105 files, 0.06 and above allow each file exactly once. Mean shot
 # quality moves from 0.424 to 0.420 over that whole range, so the variety is nearly free.
-# 0.03 is the one that still lets a genuinely strong clip come back, which is what taking a
-# second segment is for.
-ASSET_REUSE_PENALTY = 0.03
+# 0.03 was chosen there as the one that still lets a genuinely strong clip come back, which is
+# what taking a second segment is for. That sweep predates sequences: once the run the edit is
+# inside stopped being charged, 0.03 let a cake supply seven of 123 cuts and 28 cuts in all
+# were returns. Re-swept with that in place, 0.06 halves the returns to 10 and caps any one
+# file at 3, while scene runs hold at 40 and the day's order at 0.84; 0.10 buys three fewer
+# returns and costs the chronology.
+ASSET_REUSE_PENALTY = 0.06
 # Perceptual hashes are compared by Hamming distance, not equality: two frames of the same
 # moment differ in a few bits, and the odds of a 64 bit hash matching exactly are nil, which is
 # why the duplicate penalty had never once fired. This footage holds 56 pairs within 5 bits and
@@ -561,6 +565,16 @@ def _trailing_run(items: Sequence[TimelineItem], category: str) -> int:
     return run
 
 
+def _trailing_asset_run(items: Sequence[TimelineItem], asset_id: str) -> int:
+    """How many shots the edit has just taken from this clip without leaving it."""
+    run = 0
+    for item in reversed(items):
+        if item.shot.asset_id != asset_id:
+            break
+        run += 1
+    return run
+
+
 def _band_index(style_profile: Mapping[str, object] | None, progress: float) -> int:
     """Which band of the measured arc this point of the edit falls in."""
     arc = style_profile.get("story_arc") if style_profile else None
@@ -869,15 +883,19 @@ def _score_candidate(
     if day_position is not None:
         distance = abs(day_position - progress)
         chronology_penalty = CHRONOLOGY_WEIGHT * max(0.0, distance - CHRONOLOGY_SLACK)
-    # Taking the next shot from the clip just used is a sequence, not a repetition, so the file
-    # is not charged for it — and is pulled towards, because removing the charge alone changed
-    # nothing: the edit still took every one of its 113 cuts from a different file, everything
-    # else in the score preferring a fresh one. Coming back to that clip later still costs.
+    # Taking the next shot from the clip just used is a sequence, not a repetition, so it is
+    # pulled towards: removing the charge alone changed nothing, the edit still took every one
+    # of its 113 cuts from a different file, everything else in the score preferring a fresh
+    # one. The run the edit is inside is already excluded from asset_reuse_count by the caller,
+    # so what remains is every earlier visit — and coming back to a clip still costs all of
+    # them. Exempting the whole history instead let one cake take seven cuts across 55 seconds,
+    # three of them back to back after a 27 second absence, each free because the return had
+    # made itself a sequence.
     staying = same_scene and in_sequence
     take_bonus = TAKE_CONTINUITY_BONUS if staying else 0.0
     reuse_penalty = (
         REUSE_PENALTY * reuse_count
-        + (0.0 if staying else ASSET_REUSE_PENALTY) * asset_reuse_count
+        + ASSET_REUSE_PENALTY * asset_reuse_count
         + share_weight * share_overrun
     )
     available = _available_duration(shot)
@@ -1078,7 +1096,13 @@ def build_timeline(
                 random_jitter=rng.uniform(-0.015, 0.015),
                 style_profile=style_profile,
                 reuse_count=usage_count[shot.id],
-                asset_reuse_count=asset_usage[shot.asset_id],
+                # The run the edit is inside is free, up to the length a sequence runs to.
+                # Without that ceiling a clip the edit never leaves is never charged at all,
+                # and one long take took every cut of a test edit.
+                asset_reuse_count=(
+                    asset_usage[shot.asset_id]
+                    - min(_trailing_asset_run(plan.items, shot.asset_id),
+                          SEQUENCE_TARGET_RUN)),
                 used_hashes=used_hashes,
                 visual_baseline=visual_baseline,
             )

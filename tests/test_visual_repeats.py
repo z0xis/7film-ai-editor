@@ -9,6 +9,7 @@ from sevenfilm.domain import BeatGrid, MediaAsset, Shot, TimelineItem
 from sevenfilm.services.planner import (
     DUPLICATE_PENALTY,
     NEAR_DUPLICATE_BITS,
+    SEQUENCE_TARGET_RUN,
     _perceptual_hash,
     _visual_repeat_penalty,
     build_timeline,
@@ -222,6 +223,23 @@ class AssetReuseTests(unittest.TestCase):
         # It is the highest scoring footage in the set, so it should appear — but not run away
         # with the edit the way an uncounted file did with sixteen of 137 clips.
         self.assertLessEqual(from_long, len(plan.items) // 4)
+
+    def test_a_clip_the_edit_never_leaves_is_charged_once_the_sequence_is_over(self):
+        """The run the edit is inside is free, but only up to the length a sequence runs to.
+
+        Exempting the whole run instead let the one long take supply every cut of this edit:
+        each shot from it extended the run, and an extended run forgave the next.
+        """
+        plan = self.build()
+        longest = 0
+        run = 0
+        for item in plan.items:
+            run = run + 1 if item.asset.id == "long" else 0
+            longest = max(longest, run)
+
+        # The ceiling forgives a run of SEQUENCE_TARGET_RUN, so the shot after it is the
+        # first to be charged: bounded is the point, not the exact bound.
+        self.assertLessEqual(longest, SEQUENCE_TARGET_RUN + 1)
 
     def test_the_edit_still_reaches_its_target(self):
         plan = self.build()
