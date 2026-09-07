@@ -102,6 +102,7 @@ geldiğinde veriliyor. 8 seed'de altı anın hepsi, hepsinde, ve sırayla: giri�
 | `d726c51` | Düğünün anları (öpüşme/yüzük/ilk dans/giriş) filme giriyor |
 | `2217daf` | An bonusu kronolojiyi ezmesin — an kendi zamanında gelsin |
 | `1a67fe8` | Yavaş çekim barajı: çekimin ortasının altındaki hiçbir şey uzatılmıyor |
+| `4ce77bc` | İndekslenmiş dosya bir daha okunmuyordu; 16 dikey klip yatay kayıtlıydı |
 
 ---
 
@@ -117,6 +118,11 @@ geldiğinde veriliyor. 8 seed'de altı anın hepsi, hepsinde, ve sırayla: giri�
   ```
 - **Exporter'ın FCPXML'i tam içe aktarılıyor**: 50 fps, 150,0 sn, 111 klip, boşluk 0,
   müzik A1'de, **proxy'ler zaten bağlı**. Yani FCPXML artık gerçek bir yol, yedek değil.
+- **İndekslenmiş dosya bir daha okunmuyordu** (`if existing is None` ve başka hiçbir şey). Bu
+  yüzden sonradan gelen metadata düzeltmeleri eski çekimlere hiç ulaşmıyordu: döndürme
+  düzeltmesi yazıldı, ama bu çekimin 16 dikey klibi ilk verilen yatay şekliyle kaldı.
+  Proxy'leri doğruydu (ffmpeg matrisi uyguluyor), FCPXML ise 3840x2160 ilan ediyordu.
+  Artık her dosya yeniden probe ediliyor (~50 ms) ve değişen alanlar düzeltiliyor.
 - **Kök mount her şeyi yutuyor.** `app.mount("/", StaticFiles…)` kendinden **sonra** tanımlanan
   her yolu yutar. Ret uçları böyle ölü kalmıştı: panel kutuyu gösterir, kutu hiçbir şey yapmaz.
   O mount dosyanın en sonunda kalmalı.
@@ -187,6 +193,9 @@ Bu listenin **ölçülebileni ölçmemenin bahanesi olmadığına** dikkat edin:
 
 ## Değişmeyen çalışma kuralları
 
+- **Kendi ölçüm betiğin de sessizce boş çalışabilir.** "345 klipte 0 uyuşmazlık" sonucu
+  aldım; `ffprobe` PATH'te olmadığı için 345 dosyanın hepsi `except` ile atlanmıştı. Bir
+  ölçüm sıfır sorun bulduğunda, önce kaç şeye gerçekten baktığını yazdır.
 - Ölç, sonra değiştir. Bu turda dört kez ölçüm benim varsayımımı çürüttü:
   proxy'nin yeterli olduğu (değildi), referansların detayı yalnız bırakmadığı (bırakıyor),
   ağırlığın hareket sorununu çözeceği (hedef yanlıştı), sekans ölçümünün kategoriyle
