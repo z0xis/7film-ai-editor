@@ -337,6 +337,32 @@ def _write_time_map(clip: ET.Element, item: TimelineItem) -> None:
                   value=_rational_time(start + played), interp="linear")
 
 
+# How long the music takes to go quiet at the end of the film.
+#
+# Measured on the 18 reference films: 11 of them fade their music out rather than stopping it,
+# over a median 1.5 seconds (quartiles 0.9-2.6). Ours ended the song mid-bar at full volume:
+# "MÜZİK PAT DİYE BİTİYOR FADE OUT FALAN OLSUN YANİ".
+#
+# Written as volume automation on the music clip. Verified against Resolve Studio 21.0.2 by
+# importing the file and having Resolve export the timeline back: the keyframes come back as
+# written. `adjust-opacity` and `<transition>` do not — Resolve drops both silently — so the
+# picture is not faded here.
+MUSIC_FADE_SECONDS = Fraction(3, 2)
+# Silence, in the dB the format speaks.
+SILENT_DB = "-96"
+
+
+def _fade_out(clip: ET.Element, playing: Fraction, over: Fraction) -> None:
+    """Take the music down to silence over the last `over` seconds of `playing`."""
+    if playing <= over:
+        return
+    volume = ET.SubElement(clip, "adjust-volume")
+    parameter = ET.SubElement(volume, "param", name="amount")
+    animation = ET.SubElement(parameter, "keyframeAnimation")
+    ET.SubElement(animation, "keyframe", time=_rational_time(playing - over), value="0")
+    ET.SubElement(animation, "keyframe", time=_rational_time(playing), value=SILENT_DB)
+
+
 def export_fcpxml(plan: TimelinePlan, destination: Path) -> Path:
     """Write FCPXML 1.10; import it to Resolve and relink to unchanged original paths."""
     destination.parent.mkdir(parents=True, exist_ok=True)
@@ -506,7 +532,7 @@ def export_fcpxml(plan: TimelinePlan, destination: Path) -> Path:
             parent_start = _asset_start(item.asset) + item.source_range.start_seconds
             into_clip = segment.timeline_start - item.timeline_range.start_seconds
             playing = min(segment.duration, plan.duration - segment.timeline_start)
-            ET.SubElement(
+            music_clip = ET.SubElement(
                 clip,
                 "asset-clip",
                 name=segment.path.stem,
@@ -517,6 +543,10 @@ def export_fcpxml(plan: TimelinePlan, destination: Path) -> Path:
                 lane="-1",
                 audioRole="music",
             )
+            # Only the song the film ends on fades. A song that hands over to another one in
+            # the middle of the edit is meant to run into it, not die away.
+            if segment.timeline_start + playing >= plan.duration:
+                _fade_out(music_clip, playing, MUSIC_FADE_SECONDS)
         # Resolve's FCPXML importer drops markers on the floor: measured on 21.0.2, none of
         # eight clip markers arrived, and neither did the same points written on the sequence.
         # Setting start to the parent's own start made no difference either, so this is not the
