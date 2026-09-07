@@ -17,14 +17,19 @@ from pathlib import Path
 
 from sevenfilm.domain import BeatGrid, MediaAsset, Shot
 from sevenfilm.services.moments import MOMENT_LIFT, MOMENT_PROMPTS, Moment
-from sevenfilm.services.planner import MOMENT_BONUS, _score_candidate, build_timeline
+from sevenfilm.services.planner import (
+    CHRONOLOGY_SLACK,
+    MOMENT_BONUS,
+    _score_candidate,
+    build_timeline,
+)
 from sevenfilm.timebase import FrameRate, TimeRange
 
 RATE = FrameRate(50)
 
 
 class TheScoreAsksForWhatIsMissingTests(unittest.TestCase):
-    def components(self, missing):
+    def components(self, missing, progress=0.0, day_position=None):
         _, parts = _score_candidate(
             Shot(id="s", asset_id="a", source_range=TimeRange(0, 500, RATE),
                  category="couple", shot_scale="medium", technical_quality=.8,
@@ -34,6 +39,8 @@ class TheScoreAsksForWhatIsMissingTests(unittest.TestCase):
             preferred_categories=("couple",), preferred_scales=("medium",), energy="medium",
             recent=(), desired_duration=Fraction(1), random_jitter=0.0,
             missing_moment=missing,
+            progress=progress,
+            day_position=day_position,
         )
         return parts
 
@@ -42,6 +49,17 @@ class TheScoreAsksForWhatIsMissingTests(unittest.TestCase):
 
     def test_an_ordinary_shot_is_worth_nothing_extra(self):
         self.assertEqual(self.components(False)["moment_bonus"], 0.0)
+
+    def test_a_moment_owed_is_not_a_moment_due_now(self):
+        """Offered unconditionally the bonus simply outweighed the chronology term, 0.10
+        against 0.064, and the first twenty-two seconds of the film came out as the kiss, the
+        entrance, the cake, the ring and the first dance one after another.
+        """
+        far = self.components(True, progress=0.05, day_position=0.9)
+        due = self.components(True, progress=0.05, day_position=0.05 + CHRONOLOGY_SLACK / 2)
+
+        self.assertEqual(far["moment_bonus"], 0.0)
+        self.assertAlmostEqual(due["moment_bonus"], MOMENT_BONUS)
 
 
 class EveryMomentReachesTheFilmTests(unittest.TestCase):

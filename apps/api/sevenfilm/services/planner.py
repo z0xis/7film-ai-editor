@@ -1109,12 +1109,16 @@ def _score_candidate(
     # save it: C2181 held a face against the frame edge across its whole length.
     window_penalty = WINDOW_QUALITY_WEIGHT * max(0.0, 1.0 - window_quality)
     still_life_penalty = STILL_LIFE_REPEAT_PENALTY if still_life_repeat else 0.0
-    # The best record of something the film owes its subjects and has not shown yet.
-    moment_bonus = MOMENT_BONUS if missing_moment else 0.0
+    # The best record of something the film owes its subjects and has not shown yet — offered
+    # only where the film has reached that part of the day. Unconditional, the bonus simply
+    # outweighed the chronology term, 0.10 against 0.064, and the first twenty-two seconds
+    # came out as the kiss, the entrance, the cake, the ring and the first dance one after
+    # another. A moment owed is not a moment due now.
     chronology_penalty = 0.0
     if day_position is not None:
         distance = abs(day_position - progress)
         chronology_penalty = CHRONOLOGY_WEIGHT * max(0.0, distance - CHRONOLOGY_SLACK)
+    moment_bonus = MOMENT_BONUS if (missing_moment and chronology_penalty == 0.0) else 0.0
     # Taking the next shot from the clip just used is a sequence, not a repetition, so it is
     # pulled towards: removing the charge alone changed nothing, the edit still took every one
     # of its 113 cuts from a different file, everything else in the score preferring a fresh
