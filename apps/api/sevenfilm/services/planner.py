@@ -843,14 +843,22 @@ BYSTANDER_LIMIT = 3
 # frame-edge 1.00 across its whole length with six to nine faces in it; moving the in-point
 # would only have found another bad moment.
 UNUSABLE_WINDOW_SCORE = 0.0
-# What a shot with no good moment in it gives up against one that has. Swept over three seeds
-# on the measured shoot: the share of cuts containing a bad half second falls from 40% to 15%
-# at 0.15 and 13% at 0.30, so this is the lighter of the two that reach it.
+# What a shot with no good moment in it gives up against one that has.
 #
-# It is not free. Scene runs fall from 34 to 25 and consecutive same-category cuts from 28% to
-# 23%, because a sequence's later shots are often the worse-framed ones and this now declines
-# them. A sequence built out of shots with a head against the frame edge is not a sequence
-# worth keeping, so the trade is taken deliberately rather than by accident.
+# Swept twice: first against windows measured off the proxies, then again against the same
+# shoot measured at full resolution, where the detector finds far more faces and the scores
+# come out harder. The value held both times.
+#
+#   weight   bad cuts   scene runs   day's order   returns to a clip
+#     none        43%         29.3          0.83                 8.3
+#     0.15        19%         27.0          0.81                 8.7
+#     0.30        18%         22.0          0.79                12.7
+#     0.50        15%         22.7          0.70                16.0
+#
+# Past 0.15 the bad cuts barely move while the day's order and the return count — the two
+# things the editor complained about by name — come apart. Sequence runs still cost something
+# here, 29 to 27, because a sequence's later shots are often the worse-framed ones; a sequence
+# built out of shots with a head against the frame edge is not one worth keeping.
 WINDOW_QUALITY_WEIGHT = 0.15
 # The length a shot is judged over: what the edit takes is a stretch, not an instant. This is
 # about the median cut of an edit at this shoot's pace.
