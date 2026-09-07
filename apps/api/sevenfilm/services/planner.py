@@ -867,6 +867,22 @@ TYPICAL_CUT_SECONDS = Fraction(1)
 # instead would just make the edit sluggish.
 SLOW_MOTION_SPEED = Fraction(1, 2)
 SLOW_MOTION_ENERGY = "low"
+# A shot with nobody in it: a sign, a laid table, a bouquet. Averaged over the shot's windows,
+# because a guest crossing the back of one frame does not make a still life into a portrait.
+FACELESS_FACES = 0.5
+# What the second still life from one moment gives up.
+#
+# The shoot rolls a graphic several times and the film needs one of them. Measured on this
+# edit, one moment at 08:19-08:20 supplied three - the welcome sign twice and the ceremony
+# card - and the editor read them as the same shot coming back. The perceptual hash could not
+# see it: the two takes of that sign sit 17 bits apart, outside the near-duplicate threshold
+# entirely, and CLIP puts them at 0.822 against a random-pair 90th percentile of 0.807. What
+# separates them is not how they look but what they are: two records of one still object.
+#
+# Swept over three seeds: 0.10 is the lightest that leaves no moment giving the edit a second
+# still life, and it costs nothing measurable — the detail and venue share stays at 4% and the
+# edit keeps its clip count.
+STILL_LIFE_REPEAT_PENALTY = 0.1
 
 
 def _window_score(window: ShotWindow, sharpness_bar: float) -> float:
@@ -980,6 +996,7 @@ def _score_candidate(
     progress: float = 0.0,
     day_position: float | None = None,
     window_quality: float = 1.0,
+    still_life_repeat: bool = False,
     desired_duration: Fraction,
     random_jitter: float,
     style_profile: Mapping[str, object] | None = None,
@@ -1029,6 +1046,7 @@ def _score_candidate(
     # A shot measured to have no usable moment anywhere along it. Moving the in-point cannot
     # save it: C2181 held a face against the frame edge across its whole length.
     window_penalty = WINDOW_QUALITY_WEIGHT * max(0.0, 1.0 - window_quality)
+    still_life_penalty = STILL_LIFE_REPEAT_PENALTY if still_life_repeat else 0.0
     chronology_penalty = 0.0
     if day_position is not None:
         distance = abs(day_position - progress)
@@ -1063,6 +1081,7 @@ def _score_candidate(
         - framing_penalty
         - chronology_penalty
         - window_penalty
+        - still_life_penalty
         + take_bonus
         - reuse_penalty
         + random_jitter
@@ -1080,6 +1099,7 @@ def _score_candidate(
         "framing_penalty": framing_penalty,
         "chronology_penalty": chronology_penalty,
         "window_penalty": window_penalty,
+        "still_life_penalty": still_life_penalty,
         "reuse_penalty": reuse_penalty,
     }
 
@@ -1184,6 +1204,14 @@ def build_timeline(
     # Scored over a run rather than a single window: what the edit gets is a stretch of the
     # shot, and taking the best half second on its own let C2181 through — one tolerable
     # window while every run that could actually be cut held a face against the frame edge.
+    # A shot with nobody in it, and the moments that have already given the edit one.
+    faceless = {
+        shot.id
+        for shot in candidates
+        if (measured := windows_by_shot.get(shot.id))
+        and sum(window.face_count for window in measured) / len(measured) < FACELESS_FACES
+    }
+    still_life_scenes: set[int] = set()
     quality_by_shot = {}
     for shot in candidates:
         measured_windows = windows_by_shot.get(shot.id)
@@ -1281,6 +1309,9 @@ def build_timeline(
                 progress=progress,
                 day_position=day_by_asset.get(shot.asset_id),
                 window_quality=quality_by_shot.get(shot.id, 1.0),
+                still_life_repeat=(
+                    shot.id in faceless
+                    and scene_by_asset.get(shot.asset_id) in still_life_scenes),
                 desired_duration=desired,
                 random_jitter=rng.uniform(-0.015, 0.015),
                 style_profile=style_profile,
@@ -1381,6 +1412,8 @@ def build_timeline(
         usage_count[selected_shot.id] += 1
         asset_usage[selected_shot.asset_id] = asset_usage.get(selected_shot.asset_id, 0) + 1
         category_uses[selected_shot.category] = category_uses.get(selected_shot.category, 0) + 1
+        if selected_shot.id in faceless:
+            still_life_scenes.add(scene_by_asset.get(selected_shot.asset_id))
         selected_hash = _perceptual_hash(selected_shot)
         if selected_hash is not None:
             used_hashes.append(selected_hash)
