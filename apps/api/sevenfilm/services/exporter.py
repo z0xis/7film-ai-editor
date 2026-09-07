@@ -7,7 +7,7 @@ from fractions import Fraction
 from pathlib import Path
 from xml.etree import ElementTree as ET
 
-from ..domain import MediaAsset, MusicSegment, TimelinePlan
+from ..domain import MediaAsset, MusicSegment, TimelineItem, TimelinePlan
 
 
 def _rational_time(value: Fraction) -> str:
@@ -316,6 +316,27 @@ def _anchors_here(segment: MusicSegment, item, plan: TimelinePlan) -> bool:
     return start <= segment.timeline_start < end
 
 
+def _write_time_map(clip: ET.Element, item: TimelineItem) -> None:
+    """Retime a clip that plays less source than it occupies of the timeline.
+
+    Both the times and the values are absolute on the media clock, counted from the clip's own
+    start. Measured against Resolve 21.0.2: written this way a clip laid down over two seconds
+    of timeline out of one second of source comes back at exactly 0.50x, while the same map
+    written relative to the clip (0s to the duration) came back at 0.01x — silently wrong, and
+    without an error anywhere.
+    """
+    played = item.source_range.duration_seconds
+    occupied = item.timeline_range.duration_seconds
+    if played == occupied or occupied <= 0:
+        return
+    start = _asset_start(item.asset) + item.source_range.start_seconds
+    time_map = ET.SubElement(clip, "timeMap")
+    ET.SubElement(time_map, "timept", time=_rational_time(start),
+                  value=_rational_time(start), interp="linear")
+    ET.SubElement(time_map, "timept", time=_rational_time(start + occupied),
+                  value=_rational_time(start + played), interp="linear")
+
+
 def export_fcpxml(plan: TimelinePlan, destination: Path) -> Path:
     """Write FCPXML 1.10; import it to Resolve and relink to unchanged original paths."""
     destination.parent.mkdir(parents=True, exist_ok=True)
@@ -433,6 +454,7 @@ def export_fcpxml(plan: TimelinePlan, destination: Path) -> Path:
             duration=_rational_time(item.timeline_range.duration_seconds),
             format=format_of(item.asset),
         )
+        _write_time_map(clip, item)
         for segment in music_segments:
             if not _anchors_here(segment, item, plan):
                 continue

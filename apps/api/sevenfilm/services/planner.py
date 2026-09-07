@@ -855,6 +855,18 @@ WINDOW_QUALITY_WEIGHT = 0.15
 # The length a shot is judged over: what the edit takes is a stretch, not an instant. This is
 # about the median cut of an edit at this shoot's pace.
 TYPICAL_CUT_SECONDS = Fraction(1)
+# Half speed, where the film pauses to look and the music is not driving.
+#
+# The editor asked for it in the quiet passages: "başta müzik daha slow, daha uzun akorlar
+# var, orda slow olabilir". Measured on the chosen song, the opening runs 2.2 to 4.6 onsets a
+# second against 4.4 to 6.2 after the drop, at a third of the energy, and the analyser's own
+# section pass draws the same two quiet stretches, 0 to 63 seconds and 107 to 139.
+#
+# Only a held shot is slowed. A held shot is already the film stopping to look at something,
+# and doubling that look is the gesture the request was about; slowing the cutting rhythm
+# instead would just make the edit sluggish.
+SLOW_MOTION_SPEED = Fraction(1, 2)
+SLOW_MOTION_ENERGY = "low"
 
 
 def _window_score(window: ShotWindow, sharpness_bar: float) -> float:
@@ -1287,6 +1299,9 @@ def build_timeline(
         ranked.sort(key=lambda candidate: candidate[0], reverse=True)
         selected_score, selected_shot, components = ranked[0]
         remaining_seconds = frame_rate.seconds_from_frames(remaining_frames)
+        # A second of timeline costs `speed` seconds of source, so half speed buys twice the
+        # screen time out of the same footage.
+        speed = SLOW_MOTION_SPEED if (hold and energy == SLOW_MOTION_ENERGY) else Fraction(1)
         # Take the whole tail now rather than leaving a stub for the next cut to pick up. Only
         # a shot with enough source left can do that, so in the tail the others stand down:
         # picking one that runs out mid-cut is what leaves the four frame shot at the end.
@@ -1296,7 +1311,8 @@ def build_timeline(
             long_enough_to_finish = [
                 shot for shot in available_shots
                 if _remaining_source_frames(shot, consumed_source_frames[shot.id])
-                >= shot.source_range.rate.frames_from_seconds(remaining_seconds, rounding="ceil")
+                >= shot.source_range.rate.frames_from_seconds(
+                    remaining_seconds * speed, rounding="ceil")
             ]
             if long_enough_to_finish and selected_shot not in long_enough_to_finish:
                 ranked = [entry for entry in ranked if entry[1] in long_enough_to_finish]
@@ -1304,10 +1320,20 @@ def build_timeline(
         remaining_source_seconds = selected_shot.source_range.rate.seconds_from_frames(
             _remaining_source_frames(selected_shot, consumed_source_frames[selected_shot.id])
         )
-        requested_duration = min(desired, remaining_seconds, remaining_source_seconds)
+        requested_duration = min(desired, remaining_seconds, remaining_source_seconds / speed)
+        # At half speed the timeline stays the authority on length. Deriving it back from the
+        # source instead put a held shot 0.04 seconds off the beat: the source rate cannot
+        # always halve a beat-aligned length into whole frames, and doubling that remainder
+        # showed. So the source is asked for enough to cover the request, rounding up, and the
+        # cut is then laid down at the length the beat asked for.
+        wanted_frames = frame_rate.frames_from_seconds(requested_duration, rounding="nearest")
+        source_rate = selected_shot.source_range.rate
+        source_wanted = source_rate.seconds_from_frames(
+            source_rate.frames_from_seconds(requested_duration * speed, rounding="ceil")
+        )
         source_range = _source_range_for_duration(
             selected_shot,
-            requested_duration,
+            source_wanted,
             consumed_frames=consumed_source_frames[selected_shot.id],
             allow_short=remaining_frames <= minimum_cut_frames,
             windows=windows_by_shot.get(selected_shot.id),
@@ -1316,10 +1342,11 @@ def build_timeline(
         if source_range is None:
             exhausted.add(selected_shot.id)
             continue
-        timeline_duration = min(
-            remaining_frames,
-            frame_rate.frames_from_seconds(source_range.duration_seconds, rounding="nearest"),
-        )
+        delivered_frames = frame_rate.frames_from_seconds(
+            source_range.duration_seconds / speed, rounding="nearest")
+        if speed != 1 and delivered_frames >= wanted_frames:
+            delivered_frames = wanted_frames
+        timeline_duration = min(remaining_frames, delivered_frames)
         if timeline_duration <= 0:
             exhausted.add(selected_shot.id)
             continue
