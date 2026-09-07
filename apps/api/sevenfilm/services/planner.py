@@ -1019,6 +1019,24 @@ MOMENT_BONUS = 0.1
 # Scene runs come *up*, 26.7 to 29.7, because the band's stage was pulling the edit back to
 # the same corner of the room from every part of the evening.
 DISTRACTION_PENALTY = 0.05
+# A shot of people who are not doing anything.
+#
+# "öylece duruyorlar shota hazırlık kısmı daha", "yine duruyorlar gelin terini siliyor", and
+# earlier "yine shota hazırlık var damat saçını düzeltiyor". Measured on the edit they picked
+# apart: one of those shots sits in the stillest 2% of the whole shoot and another in the
+# stillest 7%, and 17% of the film's cuts came from the shoot's stillest quarter.
+#
+# Charged only where people are the subject. A ring or a table setting is *supposed* to be
+# still, and the categories that say so are the same ones slow motion already excludes.
+STILLNESS_QUANTILE = 0.25
+STILLNESS_PENALTY = 0.08
+# A cut too short to read a wide shot in.
+#
+# The references cut this short more often than we do — 16% of their shots run under half a
+# second against our 10% — so the length is not the fault. What they do not do is give that
+# half second to a wide shot of a hotel lobby: "kısa kalmış plan". Of our 24 cuts under 0.64
+# seconds, 17 were medium and 7 wide, and not one was a close-up.
+SHORT_CUT_SECONDS = Fraction(16, 25)
 # What a body between the camera and the subject costs.
 #
 # "alakasız sırt var", "çok kötü kafanın arkası görünüyor sadece". These are not weak shots by
@@ -1284,6 +1302,7 @@ def _score_candidate(
     missing_moment: bool = False,
     distraction: bool = False,
     obstructed: bool = False,
+    stillness_bar: float | None = None,
     second_take: bool = False,
     motion_targets: Mapping[str, float] | None = None,
     desired_duration: Fraction,
@@ -1357,6 +1376,18 @@ def _score_candidate(
     obstruction_penalty = (
         OBSTRUCTION_PENALTY if (obstructed and not missing_moment) else 0.0
     )
+    # People who are not doing anything. Only where people are the subject: a ring is
+    # supposed to be still, and a moment the film owes is never suppressed for it either.
+    stillness_penalty = (
+        STILLNESS_PENALTY
+        if (
+            stillness_bar is not None
+            and shot.motion_score < stillness_bar
+            and shot.category not in STILL_CATEGORIES
+            and not missing_moment
+        )
+        else 0.0
+    )
     second_take_penalty = SECOND_TAKE_PENALTY if second_take else 0.0
     # Taking the next shot from the clip just used is a sequence, not a repetition, so it is
     # pulled towards: removing the charge alone changed nothing, the edit still took every one
@@ -1395,6 +1426,7 @@ def _score_candidate(
         + take_bonus
         - reuse_penalty
         - obstruction_penalty
+        - stillness_penalty
         + random_jitter
     )
     return score, {
@@ -1414,6 +1446,7 @@ def _score_candidate(
         "moment_bonus": moment_bonus,
         "distraction_penalty": distraction_penalty,
         "obstruction_penalty": obstruction_penalty,
+        "stillness_penalty": stillness_penalty,
         "second_take_penalty": second_take_penalty,
         "reuse_penalty": reuse_penalty,
     }
@@ -1552,6 +1585,11 @@ def build_timeline(
     # to close on, but never so long that it eats the film: a short target gets a short close.
     closing_seconds = min(CLOSING_SECONDS, target_duration / 20)
     motion_targets = _motion_targets(candidates)
+    # Read off this shoot rather than written here: how still a wedding's footage is varies.
+    shoot_motion = sorted(shot.motion_score for shot in candidates)
+    stillness_bar = (
+        shoot_motion[int(len(shoot_motion) * STILLNESS_QUANTILE)] if shoot_motion else None
+    )
     # A wedding film owes its subjects certain things. Each is carried by whichever of its
     # shots the edit can still use, and stops being owed as soon as one of them is in.
     distractions = distractions or frozenset()
@@ -1735,6 +1773,13 @@ def build_timeline(
                 # is better than filling the rest with the stretches this gate exists to keep
                 # out.
                 break
+        if desired < SHORT_CUT_SECONDS:
+            # A cut this short is a glance, and a wide shot of a hotel lobby cannot be read in
+            # one. The references cut this short more often than we do; what they do not do is
+            # spend it on a wide. Narrowed to whatever is left, so the cut still happens.
+            readable = [shot for shot in available_shots if shot.shot_scale != "wide"]
+            if readable:
+                available_shots = readable
         preferred_categories = _preferred_categories(progress, style_profile)
         preferred_scales = _preferred_scales(progress)
         ranked: list[tuple[float, Shot, dict[str, float]]] = []
@@ -1761,6 +1806,7 @@ def build_timeline(
                 missing_moment=shot.id in wanted_moment_shots,
                 distraction=shot.id in distractions,
                 obstructed=shot.id in obstructions,
+                stillness_bar=stillness_bar,
                 second_take=_is_second_take(
                     shot, plan.items[-1] if plan.items else None,
                     embeddings, same_scene=(
