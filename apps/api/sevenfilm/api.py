@@ -30,9 +30,9 @@ from .services.analysis import (
 )
 from .services.exporter import export_all, plan_as_dict
 from .services.media import generate_derivatives, index_folder, project_assets
+from .services.moments import project_moments
 from .services.music import plan_music
 from .services.planner import build_timeline, get_timeline, persist_timeline
-from .services.moments import project_moments
 from .services.rejections import (
     project_rejections,
     reject_clips,
