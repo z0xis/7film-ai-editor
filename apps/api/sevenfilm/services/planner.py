@@ -990,6 +990,15 @@ SECOND_TAKE_PENALTY = 0.05
 # half a second apart, so a narrow range falling between two of them left nothing to score and
 # the shot came back optimistically clean.
 UNUSABLE_RUN_SCORE = 0.0
+# How much of the asked-for length the edit has to reach before a short film is delivered
+# instead of an error.
+#
+# "görüntü yetersiz geliyorsa duruma göre klibin süresi kısalabilir." Until now running out of
+# usable footage produced no edit at all: the whole build raised, and the editor was told to
+# lower the target and start again. A shorter film made of the good material is worth more
+# than that. Below half the target the target is simply wrong for the footage and saying so is
+# the honest answer.
+MINIMUM_DELIVERABLE_SHARE = Fraction(1, 2)
 # How long the film holds its last image.
 #
 # Measured across the 18 reference films, 1219 shots: their median shot runs 1.00 second and
@@ -1381,7 +1390,10 @@ def build_timeline(
             f"{rejected_count} düşük kaliteli plan da kullanıldı. Hedefi kısaltmayı düşünün."
         ) if rejected_count else None
     total_candidate_duration = sum((_available_duration(shot) for shot in candidates), Fraction(0, 1))
-    if total_candidate_duration < target_duration:
+    # Short of the target is not the same as too short to be worth cutting. The edit is built
+    # out of what there is and handed over with its length said out loud; only under half the
+    # asked-for length is the target wrong enough to stop for.
+    if total_candidate_duration < target_duration * MINIMUM_DELIVERABLE_SHARE:
         raise InsufficientFootageError(
             f"Yeterli benzersiz görüntü yok: {float(total_candidate_duration):.1f} sn kullanılabilir, "
             f"{float(target_duration):.1f} sn gerekli."
@@ -1570,6 +1582,13 @@ def build_timeline(
             ]
             if usable:
                 available_shots = usable
+            elif current_frame >= frame_rate.frames_from_seconds(
+                target_duration * MINIMUM_DELIVERABLE_SHARE
+            ):
+                # Nothing left worth cutting to, and enough film to hand over. Stopping here
+                # is better than filling the rest with the stretches this gate exists to keep
+                # out.
+                break
         preferred_categories = _preferred_categories(progress, style_profile)
         preferred_scales = _preferred_scales(progress)
         ranked: list[tuple[float, Shot, dict[str, float]]] = []
@@ -1795,9 +1814,17 @@ def build_timeline(
         )
     if current_frame < target_frames:
         available_seconds = frame_rate.seconds_from_frames(current_frame)
-        raise InsufficientFootageError(
-            f"Kaba kurgu hedef süresine erişemedi: {float(available_seconds):.1f} sn oluşturuldu. "
-            "Hedef süreyi azaltın veya daha fazla görüntü ekleyin."
+        if available_seconds < target_duration * MINIMUM_DELIVERABLE_SHARE:
+            raise InsufficientFootageError(
+                f"Kaba kurgu hedef süresine erişemedi: {float(available_seconds):.1f} sn "
+                "oluşturuldu. Hedef süreyi azaltın veya daha fazla görüntü ekleyin."
+            )
+        # Short, and said so. A film made of the material that is actually usable beats no
+        # film at all, which is what an error left the editor with.
+        plan.warnings.append(
+            f"Kurgu {float(available_seconds):.1f} saniyede bitti; hedef "
+            f"{float(target_duration):.1f} saniyeydi. Kalan görüntüde bu kesim için "
+            "kullanılabilir bir yer kalmadı."
         )
     if plan.duration != target_duration:
         plan.warnings.append("Son plan kare sınırına yuvarlandı; süre hedefe en yakın frame-accurate değerdedir.")
