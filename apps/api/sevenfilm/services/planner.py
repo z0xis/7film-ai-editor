@@ -876,6 +876,8 @@ TYPICAL_CUT_SECONDS = Fraction(1)
 # instead would just make the edit sluggish.
 SLOW_MOTION_SPEED = Fraction(1, 2)
 SLOW_MOTION_ENERGY = "low"
+# The categories that are a thing or a place rather than somebody. Nothing here is slowed.
+STILL_CATEGORIES = frozenset({"detail", "venue"})
 # A shot with nobody in it: a sign, a laid table, a bouquet. Averaged over the shot's windows,
 # because a guest crossing the back of one frame does not make a still life into a portrait.
 FACELESS_FACES = 0.5
@@ -1375,9 +1377,22 @@ def build_timeline(
                     # had a median worst window of 0.44 against 0.77 for the film as a whole —
                     # two of them held a face against the frame edge, doubled. Nothing gets
                     # stretched unless it is better than the film's own middle.
+                    #
+                    # And only what the film is about gets stretched. Slowing is a way of
+                    # looking at someone for longer; a vase of flowers at half speed is only a
+                    # longer shot of a vase. The editor found one, four seconds of a table
+                    # centrepiece: "gereksiz yerde çiçek".
+                    #
+                    # Judged on the category rather than on faces. The detector reads both
+                    # ways round here: it found 2.2 faces a frame in that table setting, in
+                    # the place mats and the flowers, while the couple spinning across an
+                    # atrium — a shot worth slowing — carries a largest face of 0.001 of the
+                    # frame. The classifier calls the first `detail` and the second `groom`,
+                    # which is the distinction that was wanted.
                     steady = [
                         shot for shot in worthy
                         if quality_by_shot.get(shot.id, 1.0) >= window_quality_bar
+                        and shot.category not in STILL_CATEGORIES
                     ]
                     if steady:
                         worthy = steady
