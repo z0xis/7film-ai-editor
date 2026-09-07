@@ -1,223 +1,158 @@
 # 7Film AI Editor — oturum durumu
 
-Son güncelleme: 4 Eylül 2026, 04:10. Bu dosya, çalışmayı devralan bir sonraki oturum içindir.
+Son güncelleme: 7 Eylül 2026, 04:30. Bu dosya, çalışmayı devralan bir sonraki oturum içindir.
 
-## Bu turda kapatılan hatalar
+Bu tur, kurgucunun Resolve'da kurguyu izleyip **plan plan** şikâyet etmesiyle geçti. Yedi ayrı
+şikâyet geldi; hepsi ölçüldü, beşi tek bir kök sebepten çıktı.
+
+---
+
+## Kök sebep: şot 0,2 saniyeden yargılanıyordu
+
+Bir şotun kalitesi, ortasından alınan üç kareden ölçülüyordu — üçü **0,1 saniye arayla**, yani
+toplam 0,2 saniye. Kadraj (yüz oranı, kenar) ise bunlardan **tek ortancasından**. Sonra
+planlayıcı, şotun neresinin iyi olduğunu hiç sormadan, parçayı **aritmetikle** kesiyordu:
+her zaman "şot başı + sabit pay". Yani kesim, sahne dedektörünün kestiği yerin dibinden
+başlıyordu — kadrajın en oynak olduğu yer tam orası.
+
+Kurgucunun gösterdiği altı klipte de kötü an kesimin içindeydi ve ölçüm oraya bakmamıştı:
+
+| klip | şikâyet | saklanan | gerçek |
+|---|---|---|---|
+| C2075 | kafa kesik | kenar 0,00 | **0,76** |
+| C2076 | kadraj kenarı | kenar 0,00 | **1,00** |
+| C2155 | estetik değil | — | keskinlik **9** (çekim 45–78) |
+| C2181 | kalabalık arasından | kenar 0,00 | **1,00 baştan sona** |
+| C1968 | kapıda duran adam | 2 yüz | **3 yüz** |
+
+**Çözüm:** `shot_windows` tablosu — her şot boyunca yarım saniyede bir keskinlik, yüz oranı,
+kadraj kenarı, yüz sayısı, arkadaki insan sayısı. Planlayıcı girişi bu pencerelerden seçiyor;
+bir dizideki **en kötü yarım saniye** diziyi belirliyor (bir kesim, onu bozan kare kadar
+iyidir). Şot boydan boya kötüyse "burada kullanılabilir an yok" deyip eleniyor — yoksa giriş
+başka bir kötü ana kayardı.
+
+```
+kötü yarım saniye içeren kesim   %40 → %15
+çok kötü (<0)                    %19 →  %6
+C2181 ve C2155                   kurgudan tamamen elendi
+```
+
+**Bedeli:** sahne serisi 34 → 25, ardışık aynı kategori %28 → %23. Sekansın sonraki planları
+çoğu kez daha kötü kadrajlı olanlar ve artık reddediliyorlar. Bilerek yapılan bir takas.
+
+### Proxy'den ölçmek hataydı
+
+Pencereler önce hız için proxy'den ölçüldü. Ölçüm bunu yakaladı:
+
+```
+orijinal 3840×2160 → kapıdaki adam 3 karede de BULUNDU (0,38 / 0,57 / 0,69)
+proxy    1280×720  → 3 karede de BULUNAMADI
+proxy ×2, ×3       → geri gelmiyor; ×3'te bulduğu şeyler yanlış boyutta
+```
+
+Adamın yüzü kadrajın on binde 1,5'i. Bilgi proxy'de yok. Artık **orijinallerden** ölçülüyor:
+kare başına 661 ms, 1405 şot için ~2 saat, tek seferlik. `analyze_shots` sonunda otomatik.
+
+---
+
+## Bu turda kapatılanlar
 
 | Commit | Ne düzeltildi |
 |---|---|
-| `9d20f2b` | Kamera sesi A1'e geliyordu (`CreateTimelineFromClips` mediaType'ı yok sayıyor); müzik A1'e, kare 0'a |
-| `dc57ed8` | Kullanılamaz görüntü (bulanık/patlamış) elemesi; referans görünümüne göre seçim |
-| `92c2dde` | Kesimler müziğin gerçek yapısına ve referans temposuna oturuyor |
-| `2f8b5e6` | Donuk kareler; kalite eşiği gerçek malzemeye göre kalibre |
-| `3bc5a0a` | `endFrame` HARİÇ (dahil değil) — gerçek Resolve Studio 21.0.2'de doğrulandı |
-| `a597f0a` | CLIP her şeye "bride" diyordu; öncül çekim genelinden ölçülüp çıkarılıyor |
-| `a244d2a` | Analiz devam ettirilebilir; yeniden etiketleme 162 sn yerine 5,4 sn |
-| `37769f2` | Kayıtlı kurgular yeniden analizde sessizce boşalıyordu |
-| `4bc5b62` | Eklenti `timeline-builder.js`'i kurmuyordu — hiç açılmazdı |
-| `5ea3a9c` | Eski analizler sessizdi; artık damgalanıp arayüzde bildiriliyor |
-| `c8a0af9` | Referans tempo her kesimde aşağı yuvarlanıyordu; kesirli tutulup artık devrediliyor |
-| `51e87ed` | Adapter rasyonel saniyeyi okuyamıyordu (müzik sınırı kayboluyordu); API sözleşme testi |
+| `88d88d6` | Kurgu günü kaybediyordu; sabahki masa 125. sn'deydi. Klip günün neresinde, artık puanda |
+| `a99ee63` | Sekans muafiyeti klibin **tüm geçmişini** affediyordu; pasta 7 kesim veriyordu → 3 |
+| `f3f5ef9` | Kayıt sonu savrulması; klip sonunun son 4 karesi 2× oynak, kesim oraya düşüyordu |
+| `6e2fc3f` | `shot_windows`: şot boydan boya ölçülüyor, kesim ana göre seçiliyor |
+| `9ab9420` | Kullanılabilir anı olmayan şot eleniyor (tek pencere değil, **dizi** üzerinden) |
+| `7a5fb26` | Ret listesi: kurgucunun "bu klibi kullanma" dediği klipler |
+| `db6934f` | Pencereler orijinalden ölçülüyor (proxy arkadaki insanı göremiyor) |
+| `64c022f` | Yavaş çekim: müziğin sakin bölümünde tutulan planlar %50 hızda |
+| `f6393bd` | Retime'lı plan FCPXML ile teslim ediliyor (API hız veremiyor) |
+| `2c79be7` | 50 fps kurgu 25'lik monitörde oynatılıyordu — takılmanın sebebi |
+| `17d364f` | Bir andan filme tek insansız plan (aynı tabela iki kez giriyordu) |
+| `79ff9a2` | Film **bitiyor**: son plan referanslardaki gibi tutuluyor |
+| `218a1bf` | "Hareketli müzik" hedefi elle yazılmıştı ve bu çekimde karşılığı yoktu |
 
-## Yeniden analiz tamamlandı
+---
 
-`df2a4a62-e821-40f7-86fc-b6a9259e9ee9` (elenora mustafa) projesi 4 Eylül 03:01'de bitti.
+## Ölçülmüş Resolve gerçekleri (bu turda eklenenler)
 
-- 345 klip, **1405 shot** (önce ~850), en uzun shot tam 5,0 sn — bölme tavanı çalışıyor
-- Kategori: **8/8 kullanılıyor**, en büyük sınıf %37 (önce %58 bride), bride+groom %64 (önce %92)
-- Müzik de yeniden analiz edildi: 4 eşit çeyrek yerine **9 gerçek bölüm** (%47 low, %28 medium, %26 high)
-- Yedek: `data/sevenfilm.sqlite3.backup-20260904-023304`
-- Diğer proje (`İS`, 850 shot) hâlâ eski — arayüz bunu bildiriyor
+- **`TimelineItem.SetProperty` hız veremiyor.** Yalnız Pan/Tilt/Zoom/Crop/RetimeProcess.
+  Dokümandaki "Speed" seslendirme ayarı. Yani `AppendToTimeline` yolu yavaş çekim üretemez.
+- **FCPXML `timeMap` çalışıyor** — ama `time` ve `value` klibin **medya saatinde mutlak**
+  olmalı. Göreli yazılınca Resolve **0,01×** döndürüyor: sessizce yanlış, hata yok.
+  ```
+  timept time="{start}"                    value="{start}"
+  timept time="{start + timeline_süresi}"  value="{start + kaynak_süresi}"
+  ```
+- **Exporter'ın FCPXML'i tam içe aktarılıyor**: 50 fps, 150,0 sn, 111 klip, boşluk 0,
+  müzik A1'de, **proxy'ler zaten bağlı**. Yani FCPXML artık gerçek bir yol, yedek değil.
+- **`videoMonitorFormat` yazılabiliyor**, `timelinePlaybackFrameRate` yazılamıyor.
+  Yeni timeline projenin monitör formatını alıyor, kendi hızını değil.
+- **`MediaPoolItem.SetClipProperty('FPS', …)` çalışıyor** ama klibin *tüm proje* boyunca
+  yorumunu değiştirir — yavaş çekim için kullanılmadı, kullanılmamalı.
 
-### Üretilen kaba kurgunun ölçümü
+---
 
-| ölçüt | üretilen | referans |
-|---|---|---|
-| medyan kesim | **1,00 sn** | 1,00 sn |
-| p25 / p75 | 0,52 / 1,48 sn | 0,64 / 1,60 sn |
-| beat hizası ≤120ms | %86 | %61 |
-| kesim/saniye | 0,92 | 0,74 |
-| 1 karelik flaş | 0 | — |
+## Referans ölçümleri (18 film, 1219 plan)
 
-## Gerçek Resolve'da uçtan uca doğrulandı
+| ölçüt | referans |
+|---|---|
+| medyan plan | 1,00 sn |
+| **son plan** | **3,17 sn** (genelin 3,17 katı) |
+| son 5 plan | 1,62 sn |
+| 3 sn+ ile biten | 9/18 |
+| tutulan planların %20'si | `detail` |
+| detay planlarının %49'u | yalnız duruyor |
 
-Eklentinin `importTimeline` akışının tamamı, gönderilen adapter koduyla, gerçek malzeme
-üzerinde Resolve Studio 21.0.2'de çalıştırıldı (geçici proje, sonra silindi):
+Son satır önemli: "dans arasına tek çiçek" deseni bu stilde **normal**. Oradaki sorun yerleşim
+değil, o belirli planın kendisiydi.
 
-```
-V1 klip     : 141 / 141   batch hatası yok
-en kısa klip: 14 kare     1 karelik klip yok
-ses         : A1 müzik (kare 0'dan), A2/A3 boş, kamera sesi yok
-marker      : 141 adet, hepsi tam kesim başlarında, gerekçe metniyle
-```
+> Uyarı: referans sınıflandırması zayıf. 1219 planda hiç `party` veya `groom` çıkmadı,
+> yalnız 5 kategori göründü. Kategori tabanlı referans çıkarımlarına güvenmeyin; **süre**
+> tabanlı olanlar (yukarıdaki ilk üç satır) sağlam.
 
-Ayrıca `AddMarker` ölçüldü: **timeline başlangıcına göreli kare** alıyor, yani `main.js`'in ham
-`timeline_in.start_frame` kullanması doğru. (Timeline 90000'de başlıyor; mutlak kare vermek
-marker'ı timeline'ın dışına atardı. Kod doğruydu, "düzeltmek" hata olurdu.)
+---
 
-Testler eklentinin gerçekten kullandığı ortamda da geçiyor:
-`.runtime/mamba-root/envs/sevenfilm/bin/python -m pytest -q` — bu, `.venv` değil.
+## Ölçülemeyenler — ve ret listesi
 
-## Doğrulanmamış kalanlar
+İki şey hiçbir çözünürlükte ölçülemedi:
 
-- **JS Workflow Integration köprüsü**: Resolve menüsünden tıklama gerektirdiği için doğrudan
-  çalıştırılamadı. Adapter mantığının tamamı Python scripting API'si üzerinden gerçek Resolve'da
-  doğrulandı; kalan tek fark köprünün hata biçimi (`errorCode: 2` exception olarak gelir,
-  Python'da kısmi ekleme olur). Kullanıcı eklentiyi bir kez açtığında bu da kapanır.
-- **CLIP düzeltmesi 11 karelik görsel denetime dayanıyor**; etiketli doğruluk seti yok. `ceremony` az temsil ediliyor olabilir.
-- Öncül projeye özgü: aynı klip farklı projede farklı etiketlenebilir.
-- Mevcut 6120 timeline item'ın kategorisi `b_roll`'a düştü (kesim noktaları sağlam). O eski kurguları yeniden üretmek daha iyi sonuç verir.
-- Eşikler tek gerçek projede kalibre edildi.
-- Kesim yoğunluğu referansın ~%140'ı; enerji bölümlerinin dağılımına duyarlı.
+- **"Gelin takılıyor"** — bir tökezlemenin hareket/keskinlik/yüz karşılığı yok.
+- **"Shota hazırlık"** (damat saçını düzeltiyor) — kadraj ve keskinlik temiz, sorun anlamda.
 
-## Ölçek (shot scale) denetimi — 4 Eylül
+Kurgucu bunları bir saniyede görüyor. Bu yüzden **ret listesi** var: klip adı yazılıyor
+(`C1968`, `C1968.MP4`, büyük-küçük fark etmez — Resolve'un gösterdiği gibi), o proje için
+hiçbir kurguya bir daha girmiyor. Puanlamadan **önce** çıkarılıyor. Panelde "Kullanılmasın".
 
-Kaydedilmiş kurguda **141 klipte tek bir yakın plan yoktu**. Nedeni: prompt-prior düzeltmesi
-yalnızca kategorilere uygulanıyordu, ölçeğe uygulanmıyordu. Bu shoot'un 1405 karesi üzerinde
-ölçüldü — "a medium shot showing people from the waist up" olasılığın ortalama %60,8'ini,
-yakın plan cümlesi %3,9'unu alıyor. Düzeltmeden sonra havuz 791 medium / 479 wide / 86 close_up
-/ 49 detail oldu (öncesi 948 / 384 / 45 / 28). Ham görüntüden çıkarılan 10 karenin 6'sına
-bakıldı, 5'i doğruydu; yanlış olan tek kare zaten kalite kapısının reddetmesi gereken bulanık
-bir tavan pan'ı. `ANALYSIS_VERSION` "3" oldu, yeniden etiketleme 7 saniye sürdü (encoding'ler
-saklı olduğu için ikinci geçiş ucuz).
+Bu listenin **ölçülebileni ölçmemenin bahanesi olmadığına** dikkat edin: arkadaki adam
+ölçülebiliyordu ve ölçüldü (orijinal çözünürlük). Liste yalnız ölçülemeyen için.
 
-Yeni kurgu ölçümü (120 sn hedef, seed 1):
+Şu an listede: `C1968`, `C1989`, `C2155`, `C2181`, `C1891`.
 
-```
-medyan kesim 0,96 (ref 1,00)   p25/p75 0,50/1,29 (ref 0,64/1,60)
-kesim/sn     1,00 (ref 0,74)   beat 120ms %84 (ref %61), 200ms %92 (ref %80)
-ölçek        medium 76, wide 39, detail 4, close_up 1
-kategori     8/8 kullanılıyor, en büyüğü couple 34
-```
+---
 
-### Referanslardan ölçek hedefi çıkarılamadı
+## Şu an çalışan / bekleyen
 
-18 referans filmden 835 kare örneklenip aynı sınıflandırıcıdan geçirildi: %60 wide, %37 medium,
-%3 close_up. Bu, ham malzemedeki dağılımın tersi. Ama **bu ölçüm güvenilmez**: örneklenen
-4 kareye bakıldığında ikisi açıkça yanlış etiketliydi (yüzlerin kareyi doldurduğu bir plan
-"wide", bel üstü bir plan "close_up"). Referans filmler renklendirilmiş, altyazı yakılmış ve
-film-kenarı overlay'i eklenmiş — CLIP için ham kamera görüntüsünden farklı bir alan. Bu yüzden
-planlayıcıya referanstan türetilmiş bir ölçek hedefi **konmadı**. Ham malzeme üzerindeki
-düzeltme ayrı bir şey ve kendi alanında doğrulandı.
+- **Tam çözünürlüklü pencere ölçümü** arka planda sürüyor (1405 şot, ~2 saat).
+  Bitince: etkisini yeniden ölç, `WINDOW_QUALITY_WEIGHT`'i gerekirse yeniden tara,
+  Resolve'a gönder ve **kontakt sayfasıyla gözle bak**.
+- **Eklenti yeniden kuruldu** (`scripts/install_resolve_plugin.sh`) — kurulu kopya repo'nun
+  kopyasıdır ve repo değişince kendiliğinden değişmez. Yavaş çekim ve monitör düzeltmesi
+  ancak yeniden kurulumla gelir. Eski motorlar kapatıldı; panel açılınca yenisi doğar.
+- `İS` projesinin 850 şotu hâlâ analiz edilmemiş.
+- Hazırlık setinde 3 yanlış etiket duruyor; dört düzeltme denemesi de ölçümde daha kötü çıktı.
 
-Kurgudaki close_up oranı (1/120) havuzdakinin (%6,1) altında; planlayıcının ölçek çeşitliliği
-diye bir kavramı yok, havuzu olduğu gibi yansıtıyor. Bunu değiştirmek için önce güvenilir bir
-hedef gerekiyor — yani ya etiketli bir doğruluk seti ya da referansların ham hallerine erişim.
+---
 
-## FCPXML Resolve'da ölçüldü — 4 Eylül
+## Değişmeyen çalışma kuralları
 
-Resolve Studio 21.0.2 açıkken, sekiz gerçek klip ve iki şarkıdan üretilen FCPXML içe aktarıldı
-(tek kullanımlık projeler, sonra silindi).
-
-```
-V1: 8 klip, her biri 5 sn, kaynak offset 25 kare   (planın koyduğu gibi)
-A1: yavas.mp3       0,0 - 30,0 sn   kaynak 0
-    hareketli.mp3  30,0 - 40,0 sn   kaynak 1000 kare = 40. saniye
-```
-
-**İliştirilmiş (anchored) öğenin `offset` değeri ebeveyn klibin kendi zaman eksenindedir**, yani
-sıfırı klibin `start` değeri — kayıt timecode'u. Karşı deney: aynı dosyada müzik klipleri
-`offset="0s"` yapıldığında şarkılar **23,8-53,8 sn** ve **0-10 sn**'ye düştü; sıra ters, ve
-yavaş şarkı 40 saniyelik kurgunun 13,8 saniye dışına taştı.
-
-**Tek şarkıda eski biçim çalışıyordu**: Resolve negatif offset'i sıfıra kırpıyor. Hata bu yüzden
-hiç görünmemiş. İki şarkıyla kırpma kurtarmıyor.
-
-### Marker'lar FCPXML ile gelmiyor
-
-Sekiz klip marker'ının hiçbiri içe aktarılmadı. `start` değeri ebeveynin `start`'ına eşitlenince
-de gelmedi; aynı noktalar sequence'ın kendisine yazılınca da gelmedi. Yani bu, yukarıdaki
-anchored-time sorusu değil — Resolve'un FCPXML içe aktarıcısı marker taşımıyor. Eklenti yolu
-marker'ları API üzerinden koyuyor ve orada doğru yerlere düşüyorlar (141 marker, ölçüldü).
-
-## 5 Eylül: kurgunun kendisi
-
-Kullanıcının üç şikâyeti ölçüldü ve üçü de gerçek çıktı.
-
-### "Daima aşk yazısı birden fazla, aynı klip sürekli"
-
-Kaydedilmiş kurgunun her klibi kare olarak çıkarılıp bakıldı. `C2075.MP4` — 121 saniyelik tek
-pasta çekimi — 137 klibin **16'sını** vermişti; shot dedektörü onu 92 parçaya bölmüş, her parça
-"yeni aday" sayılmıştı. Tekrar cezası **shot'u** sayıyordu, dosyayı kimse saymıyordu. Ayrıca
-benzerlik kontrolü yalnızca **son 4 kesime** bakıyordu, bu yüzden aynı neon yazı 37, 41, 48 ve
-55'te dördüncü kez göründü. Şimdi: 115 klip / 115 farklı dosya, 10 bitten yakın çift yok.
-
-### "Referanslara hiç bakmıyor, sadece beate oturtuyor"
-
-Doğruydu. Profilin planlayıcıya verdiği **her şey** ritim ve renkti; ne gösterileceği ve ne zaman
-gösterileceği hakkında tek veri yoktu. Hikâye akışı elle yazılmıştı. `analyze_references` artık
-18 filmi 1,5 saniyede bir örnekleyip her dilimde hangi kategorinin ne kadar yer tuttuğunu
-ölçüyor ve profile `story_arc` olarak yazıyor. Güvenmeden önce 12 kare gözle denetlendi: 11'i
-açıkça doğru, 1'i tartışmalı. **Kategoriler renklendirmeyi aşıyor, ölçek aşmıyor** — bu yüzden
-akış kategori üzerine kuruldu, ölçek üzerine değil.
-
-### "Girişi yok, hep ritmik geçiyor"
-
-Teaser oldukları için uzun plan yoktur dedim; **yanlıştı**. 18 referansın kesim süreleri
-ölçüldü: p90 2,44 sn, en uzun 19,16 sn ve toplam sürenin **%25'i** 3 saniyeden uzun planlarda.
-Bizim kurguda bu oran sıfırdı. Uzun planlar da rastgele değil — açılışın %38'i, finalin %56'sı.
-Profil artık bunu dilim dilim taşıyor. İki şey ölçümle bulundu: bir *zaman* payı bir *kesim*
-payı değildir (ilk deneme %25 yerine %38 verdi), ve tutulan plan da beat'e oturmazsa
-sonrasındaki her kesim ızgaradan düşüyor (kurgunun ortasında 0,36 saniyelik flaş).
-
-### "Çok karmaşık, sekans yok"
-
-Ölçüldü: 117 kesimin **116'sında** hem dosya hem kategori değişiyordu — sıfır sekans. Kodda
-yazıyordu: aynı dosyadan devam 0,30, aynı kategoride devam 0,16 ceza. Referanslar sahne
-tespitiyle ölçüldü (1044 plan): ardışık aynı kategori **%29**, ortalama seri 1,41, sürenin
-%49'u 2+ serilerin içinde. Sekans izni + pay sınırı gerilimi süpürülerek çözüldü; sekans
-sırasında pay sınırı %85 uygulanıyor. Sonuç: %31 / 1,45 / %49.
-
-### "Gelin hazırlık, damat hazırlık hiç yok"
-
-Klasör adlarına bakıp "görüntü yok" denildi — **yanlıştı**, dosyalar aynı klasörde sıralı kamera
-adlarıyla duruyordu. Dokuzu da indekslenmiş, 24 shot vermiş, kaliteleri çekimin medyanının
-üstündeydi, ve hiçbiri kurguya girmemişti. İki sebep: sözlükte hazırlık diye bir kategori yoktu
-(makyajdaki gelin de salondaki gelin de `bride`, salon 198 dosya), ve bant en büyük
-kategorileriyle okunuyordu — `couple` on bandın hepsinde birinci olduğu için yapı görünmezdi.
-Bant artık omurgasını + filmin geri kalanına göre yaslandığını veriyor.
-
-## Resolve tarafı, 5 Eylül
-
-- **FCPXML anchored offset ölçüldü**: iliştirilmiş öğenin `offset`'i ebeveyn klibin zaman
-  eksenindedir. İki şarkı `offset="0s"` ile 23,8-53,8 ve 0-10 sn'ye düştü; ebeveyne göre
-  yazılınca ikisi de tam yerine oturdu. Tek şarkıda eski biçim Resolve negatif offset'i sıfıra
-  kırptığı için çalışıyordu — hata bu yüzden görünmemişti.
-- **Resolve FCPXML marker taşımıyor.** Klip ve sequence seviyesinde denendi, `start` değeri
-  değiştirildi: hiçbiri gelmiyor. Eklenti yolu marker'ları API üzerinden koyuyor, orada doğru.
-- **Timeline kare hızı**: plan 50 fps, proje 24 fps olunca 114 klip 113 boşlukla düşüyordu.
-  Adapter artık projeyi planın hızına ayarlıyor; Resolve timeline'ı olan projede reddediyor
-  (`SetSetting` False, ölçüldü) ve o durumda net hata veriyor.
-- **Proxy**: `LinkProxyMedia` kaynağın sesini ve timecode'unu taşımayan proxy'yi reddediyor
-  (ölçüldü: False → True). Araç baştan beri video-only, timecode'suz proxy üretiyordu — yani
-  tek amacı hızlı oynatma olan adım, kullanılamayan dosyalar yazıyordu.
-
-## Sessiz kod tuzağı üç kez vurdu
-
-1. Uygulama eski kodu servis ediyordu → etiketlerde `groom` ve `party` hiç yoktu.
-2. Eski süreç yeni sütunları hiç oluşturmadı → müzik analizi çöktü, ekranda `[object Object]`.
-3. Motor 12 saat 38 dakikadır ayaktaydı → sekans düzeltmesi hiç çalışmadı.
-
-Kapatıldı: iş başlamadan şema onarılıyor, hata metni gerçekten okunuyor, sürüm el sıkışması
-yükseltiliyor, ve motor `/api/health`'te **kaynak kodunun parmak izini** bildiriyor — eklenti
-diskteki kaynakla karşılaştırıp farklıysa taze motor başlatıyor. İki dilin aynı özeti ürettiği
-testle sabit.
-
-## Ölçüp attıklarım
-
-Bu oturumda dört hipotez ölçümle çürütüldü ve **uygulanmadı**: kaynak başına format bir fark
-yaratmıyordu; estetik skoru doymuş olsa da doğru ayırt ediyor (uçlara bakıldı); kurguya çöp
-girmiyor (0,5 altı estetik hiç yok); kategori payını bant bazlı saymak sekansı %21'den %3'e
-düşürüyor. Referans filmlerden **ölçek** hedefi de çıkarılamadı — dört kareden ikisi yanlış
-etiketliydi.
-
-## Çalışma biçimi
-
-Önce ölç, sonra değiştir. Bu turda dört iddia ölçümle çürütüldü: sınır dışı karelerin batch'i reddettirdiği, batch'in ya hep ya hiç olduğu, yavaş şarkının yavaş kurgu ürettiği, dinamik aralığı olmayan parçanın "high" sayılmaması gerektiği. Görsel kararlar (kategori, kalite) ekrana bakılarak denetlendi.
-
-## Testler
-
-`.venv/bin/python -m pytest -q` — 371 (ve aynısı `.runtime/mamba-root/envs/sevenfilm` içinde)
-`node --test integrations/resolve/com.sevenfilm.ai.editor/` — 67
-`cd apps/desktop && npm run build`
-`.venv/bin/ruff check apps tests integrations` (`tests/test_path_normalization.py` önceden beri kirli)
+- Ölç, sonra değiştir. Bu turda dört kez ölçüm benim varsayımımı çürüttü:
+  proxy'nin yeterli olduğu (değildi), referansların detayı yalnız bırakmadığı (bırakıyor),
+  ağırlığın hareket sorununu çözeceği (hedef yanlıştı), sekans ölçümünün kategoriyle
+  yapılabileceği (yapılamaz).
+- Sabitler **taranarak** seçilir ve yorumunda ölçüm yazar. En hafif yeterli değer alınır.
+- Test düşerse önce **testin önermesi** doğru mu diye bakılır; davranış kötüleşmediyse
+  test düzeltilir ve commit mesajında neden düzeltildiği yazılır.
+- Her iş ayrı commit; iki Python ortamı + node + ruff + `git diff --check` yeşil olmadan
+  commit yok.
