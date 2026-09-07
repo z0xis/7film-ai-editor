@@ -169,7 +169,10 @@ class HeldShotsReachThePlanTests(unittest.TestCase):
 
     def test_a_zero_share_produces_none(self):
         plan = self.plan({"held_shots": {"share_by_band": [0.0] * 10, "median_seconds": 4.0}})
-        held = [i for i in plan.items if i.timeline_range.duration_seconds > HELD_SHOT_SECONDS]
+        # The closing shot is not a held shot: the references hold their last image for three
+        # times their own median whatever else the film does, so it is excluded here.
+        held = [i for i in plan.items[:-1]
+                if i.timeline_range.duration_seconds > HELD_SHOT_SECONDS]
 
         self.assertEqual(held, [])
 

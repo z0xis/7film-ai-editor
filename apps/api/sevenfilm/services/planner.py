@@ -883,6 +883,13 @@ FACELESS_FACES = 0.5
 # still life, and it costs nothing measurable — the detail and venue share stays at 4% and the
 # edit keeps its clip count.
 STILL_LIFE_REPEAT_PENALTY = 0.1
+# How long the film holds its last image.
+#
+# Measured across the 18 reference films, 1219 shots: their median shot runs 1.00 second and
+# their *last* shot 3.17, three times as long, with the last five already lengthening to 1.62.
+# Half of them close on a shot of three seconds or more and two hold for over twelve. Our edits
+# were ending on an ordinary 0.98 second cut — the film stopped rather than finished.
+CLOSING_SECONDS = Fraction(317, 100)
 
 
 def _window_score(window: ShotWindow, sharpness_bar: float) -> float:
@@ -1226,6 +1233,9 @@ def build_timeline(
         )
     qualities = sorted(shot.technical_quality for shot in candidates)
     hold_bar = qualities[len(qualities) // 2] if qualities else 0.0
+    # The references hold their last image for three times their own median shot. Long enough
+    # to close on, but never so long that it eats the film: a short target gets a short close.
+    closing_seconds = min(CLOSING_SECONDS, target_duration / 20)
     current_frame = 0
     consumed_source_frames = {shot.id: 0 for shot in candidates}
     usage_count = {shot.id: 0 for shot in candidates}
@@ -1336,7 +1346,13 @@ def build_timeline(
         # Take the whole tail now rather than leaving a stub for the next cut to pick up. Only
         # a shot with enough source left can do that, so in the tail the others stand down:
         # picking one that runs out mid-cut is what leaves the four frame shot at the end.
-        finishing = remaining_frames - frame_rate.frames_from_seconds(desired) < minimum_cut_frames
+        # Reserve the closing shot rather than letting it be whatever happened to be left. The
+        # trigger used to be a quarter of a second, so the film ended on an ordinary cut; now
+        # an ordinary cut that would leave less than a closing behind hands the rest over.
+        # The last shot therefore runs between one closing and one closing plus a cut, which
+        # is where the references sit.
+        closing_frames = frame_rate.frames_from_seconds(closing_seconds, rounding="nearest")
+        finishing = remaining_frames - frame_rate.frames_from_seconds(desired) < closing_frames
         if finishing:
             desired = remaining_seconds
             long_enough_to_finish = [
@@ -1345,6 +1361,15 @@ def build_timeline(
                 >= shot.source_range.rate.frames_from_seconds(
                     remaining_seconds * speed, rounding="ceil")
             ]
+            # A film is not left on a shot nobody could hold: the closing image bears several
+            # seconds of looking, so it clears the same bar a held shot does.
+            worthy_to_close = [
+                shot for shot in long_enough_to_finish
+                if shot.technical_quality >= hold_bar
+                and shot.face_edge < 0.5
+                and (shot.face_ratio == 0.0 or shot.face_ratio >= READABLE_FACE_RATIO)
+            ]
+            long_enough_to_finish = worthy_to_close or long_enough_to_finish
             if long_enough_to_finish and selected_shot not in long_enough_to_finish:
                 ranked = [entry for entry in ranked if entry[1] in long_enough_to_finish]
                 selected_score, selected_shot, components = ranked[0]

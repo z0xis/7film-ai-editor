@@ -84,7 +84,8 @@ class WhereTheEditSlowsDownTests(unittest.TestCase):
         """Slowing the cutting rhythm instead would only make the edit sluggish."""
         plan = _plan(SLOW_MOTION_ENERGY, self.tmp)
         slowed = _slowed(plan)
-        ordinary = [item for item in plan.items if item not in slowed]
+        # The closing shot is deliberately the longest cut in the film and is not a held shot.
+        ordinary = [item for item in plan.items[:-1] if item not in slowed]
         longest_ordinary = max(item.timeline_range.duration_seconds for item in ordinary)
 
         for item in slowed:
