@@ -404,6 +404,41 @@ def export_fcpxml(plan: TimelinePlan, destination: Path) -> Path:
             kind="original-media",
             src=item.asset.path.resolve().as_uri(),
         )
+    # A retimed clip needs an asset of its own, starting where the cut starts.
+    #
+    # Measured against Resolve 21.0.2: an asset-clip carrying a timeMap has its `start` — its
+    # in point — ignored, and plays from the beginning of the media whatever the map says.
+    # Four ways of writing the map were tried and all four did it; the two that Resolve
+    # retimed at all both landed on the media start. So the slow motion was silently playing
+    # the opening of a clip instead of the moment chosen 76 seconds in. Declaring a separate
+    # asset whose own start *is* the in point makes "the beginning of the media" the right
+    # place, and the cut comes back at 32246.12 seconds and 0.50x, which is what was asked for.
+    retimed_refs: dict[str, str] = {}
+    for index, item in enumerate(plan.items, start=1):
+        if item.source_range.duration_seconds == item.timeline_range.duration_seconds:
+            continue
+        reference = f"s{index}"
+        retimed_refs[item.id] = reference
+        opening = _asset_start(item.asset) + item.source_range.start_seconds
+        retimed = ET.SubElement(
+            resources,
+            "asset",
+            id=reference,
+            name=item.asset.name,
+            start=_rational_time(opening),
+            duration=_rational_time(
+                max(Fraction(0), item.asset.duration - item.source_range.start_seconds)),
+            hasVideo="1",
+            hasAudio="0",
+            audioSources="0",
+            format=format_of(item.asset),
+        )
+        ET.SubElement(
+            retimed,
+            "media-rep",
+            kind="original-media",
+            src=item.asset.path.resolve().as_uri(),
+        )
     music_segments = [
         segment for segment in _plan_segments(plan) if segment.timeline_start < plan.duration
     ]
@@ -447,7 +482,7 @@ def export_fcpxml(plan: TimelinePlan, destination: Path) -> Path:
             spine,
             "asset-clip",
             name=item.asset.name,
-            ref=assets[item.asset.id],
+            ref=retimed_refs.get(item.id, assets[item.asset.id]),
             offset=_rational_time(item.timeline_range.start_seconds),
             # The clip's start is on the media's clock too, not counted from zero.
             start=_rational_time(_asset_start(item.asset) + item.source_range.start_seconds),

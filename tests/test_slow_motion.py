@@ -141,6 +141,46 @@ class TheRetimeReachesTheFileTests(unittest.TestCase):
         self.assertEqual(occupied, seconds(clip.get("duration")))
         self.assertAlmostEqual(float(played / occupied), float(SLOW_MOTION_SPEED), places=3)
 
+    def test_a_retimed_clip_keeps_the_moment_it_was_cut_from(self):
+        """The fault this exists to catch, found in Resolve rather than here.
+
+        An asset-clip carrying a timeMap has its `start` — its in point — ignored by Resolve
+        21.0.2, and plays from the beginning of the media whatever the map says. Four ways of
+        writing the map were tried and all four did it. So the slow motion was quietly playing
+        the opening of a clip where the cut had been chosen 76 seconds in, and the editor saw a
+        man in a grey shirt crossing the foreground instead of the cake being cut.
+
+        A retimed clip therefore gets an asset of its own whose start *is* the in point, so
+        that "the beginning of the media" is the right place. Verified back out of Resolve:
+        source 32246.12 seconds at 0.50x, which is the frame the plan asked for.
+        """
+        plan = _plan(SLOW_MOTION_ENERGY, self.tmp)
+        written = export_fcpxml(plan, self.tmp / "edit.fcpxml")
+        root = ET.parse(written).getroot()
+        assets = {element.get("id"): element for element in root.findall(".//asset")}
+
+        def seconds(raw: str) -> Fraction:
+            return Fraction(raw.rstrip("s"))
+
+        retimed = [
+            element for element in root.findall(".//asset-clip")
+            if element.find("timeMap") is not None
+        ]
+        self.assertTrue(retimed)
+        for clip in retimed:
+            source = assets[clip.get("ref")]
+            self.assertEqual(
+                seconds(source.get("start")), seconds(clip.get("start")),
+                "retime edilen klip kendi giriş noktasından başlayan bir asset'e bakmalı")
+
+    def test_an_ordinary_clip_still_shares_its_asset(self):
+        """One asset per file, or a hundred and ten clips become a hundred and ten assets."""
+        plan = _plan("high", self.tmp)
+        written = export_fcpxml(plan, self.tmp / "edit.fcpxml")
+        root = ET.parse(written).getroot()
+
+        self.assertLess(len(root.findall(".//asset")), len(plan.items))
+
     def test_a_plan_at_normal_speed_writes_none(self):
         plan = _plan("high", self.tmp)
         written = export_fcpxml(plan, self.tmp / "edit.fcpxml")
