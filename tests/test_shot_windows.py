@@ -13,7 +13,9 @@ from fractions import Fraction
 
 from sevenfilm.services.planner import (
     BYSTANDER_PENALTY,
+    WINDOW_QUALITY_WEIGHT,
     _best_offset,
+    _score_candidate,
     _source_range_for_duration,
     _window_score,
 )
@@ -116,6 +118,39 @@ class SourceRangeTests(unittest.TestCase):
         self.assertIsNotNone(plain)
         # The handle is min(an eighth of the shot, a fifth of a second) — ten frames here.
         self.assertEqual(plain.start_frame, 1010)
+
+
+class UnusableShotsLoseTests(unittest.TestCase):
+    """A shot with no cuttable stretch has to give way, not be cut to a different bad moment."""
+
+    def test_the_weight_is_the_one_that_was_swept(self):
+        # 40% of cuts held a bad half second; 0.15 brings that to 15% and 0.30 to 13%.
+        self.assertAlmostEqual(WINDOW_QUALITY_WEIGHT, 0.15)
+
+    def test_a_shot_with_no_usable_run_is_charged_and_a_clean_one_is_not(self):
+        common = {
+            "preferred_categories": ("couple",),
+            "preferred_scales": ("medium",),
+            "energy": "medium",
+            "recent": (),
+            "desired_duration": Fraction(1),
+            "random_jitter": 0.0,
+        }
+        clean, clean_parts = _score_candidate(make_shot(0, 100), window_quality=1.0, **common)
+        bad, bad_parts = _score_candidate(make_shot(0, 100), window_quality=0.0, **common)
+
+        self.assertEqual(clean_parts["window_penalty"], 0.0)
+        self.assertAlmostEqual(bad_parts["window_penalty"], WINDOW_QUALITY_WEIGHT)
+        self.assertLess(bad, clean)
+
+    def test_an_unmeasured_shot_is_not_charged(self):
+        _, parts = _score_candidate(
+            make_shot(0, 100),
+            preferred_categories=("couple",), preferred_scales=("medium",), energy="medium",
+            recent=(), desired_duration=Fraction(1), random_jitter=0.0,
+        )
+
+        self.assertEqual(parts["window_penalty"], 0.0)
 
 
 if __name__ == "__main__":

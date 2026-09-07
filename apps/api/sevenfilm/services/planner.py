@@ -843,8 +843,18 @@ BYSTANDER_LIMIT = 3
 # frame-edge 1.00 across its whole length with six to nine faces in it; moving the in-point
 # would only have found another bad moment.
 UNUSABLE_WINDOW_SCORE = 0.0
-# What a shot with no good moment in it gives up against one that has. Swept below.
-WINDOW_QUALITY_WEIGHT = 0.0
+# What a shot with no good moment in it gives up against one that has. Swept over three seeds
+# on the measured shoot: the share of cuts containing a bad half second falls from 40% to 15%
+# at 0.15 and 13% at 0.30, so this is the lighter of the two that reach it.
+#
+# It is not free. Scene runs fall from 34 to 25 and consecutive same-category cuts from 28% to
+# 23%, because a sequence's later shots are often the worse-framed ones and this now declines
+# them. A sequence built out of shots with a head against the frame edge is not a sequence
+# worth keeping, so the trade is taken deliberately rather than by accident.
+WINDOW_QUALITY_WEIGHT = 0.15
+# The length a shot is judged over: what the edit takes is a stretch, not an instant. This is
+# about the median cut of an edit at this shoot's pace.
+TYPICAL_CUT_SECONDS = Fraction(1)
 
 
 def _window_score(window: ShotWindow, sharpness_bar: float) -> float:
@@ -1151,11 +1161,21 @@ def build_timeline(
     sharpness_bar = (
         sharpness_values[len(sharpness_values) // 2] if sharpness_values else 0.0
     )
-    quality_by_shot = {
-        shot.id: max(_window_score(window, sharpness_bar) for window in measured_windows)
-        for shot in candidates
-        if (measured_windows := windows_by_shot.get(shot.id))
-    }
+    # Scored over a run rather than a single window: what the edit gets is a stretch of the
+    # shot, and taking the best half second on its own let C2181 through — one tolerable
+    # window while every run that could actually be cut held a face against the frame edge.
+    quality_by_shot = {}
+    for shot in candidates:
+        measured_windows = windows_by_shot.get(shot.id)
+        if not measured_windows:
+            continue
+        rate = shot.source_range.rate
+        typical = rate.frames_from_seconds(TYPICAL_CUT_SECONDS, rounding="nearest")
+        _, quality_by_shot[shot.id] = _best_offset(
+            shot, measured_windows, typical,
+            floor=0, ceiling=shot.source_range.duration_frames,
+            sharpness_bar=sharpness_bar,
+        )
     qualities = sorted(shot.technical_quality for shot in candidates)
     hold_bar = qualities[len(qualities) // 2] if qualities else 0.0
     current_frame = 0
