@@ -13,6 +13,7 @@ const {
   buildMusicClipInfos,
   buildVideoClipInfos,
   frameRatesAgree,
+  hasRetiming,
   musicSegments,
   resolveFrameRateSetting,
 } = require("./timeline-builder");
@@ -366,17 +367,32 @@ async function importTimeline(_event, payload) {
   // does work now that its assets carry the media's own start timecode - the same 141 cut file
   // comes in whole, music included - but it decides the track layout itself, so it is the
   // fallback rather than the lead.
+  //
+  // Except when the plan holds a retimed clip. AppendToTimeline lays a clip down at its own
+  // speed and there is no way to change that afterwards: TimelineItem.SetProperty offers pan,
+  // tilt, zoom, crop and the retime method, and no speed. Taking the API path anyway would
+  // drop the slow motion silently and, worse, lay the clip down at the wrong length. So a plan
+  // that asks for a speed goes through FCPXML, where the map comes back at exactly 0.50x.
   let timeline = null;
-  let importMethod = "Resolve API";
-  try {
-    timeline = await createTimelineFromPlan(mediaPool, project, plan, timelineName);
-  } catch (error) {
-    importMethod = "FCPXML";
+  const retimed = hasRetiming(plan);
+  let importMethod = retimed ? "FCPXML (yavaş çekim)" : "Resolve API";
+  if (retimed) {
     timeline = await mediaPool.ImportTimelineFromFile(importFile, {
       timelineName,
       importSourceClips: true,
     });
-    if (!timeline) throw error;
+    if (!timeline) throw new Error("Yavaş çekimli kurgu Resolve'a aktarılamadı (FCPXML).");
+  } else {
+    try {
+      timeline = await createTimelineFromPlan(mediaPool, project, plan, timelineName);
+    } catch (error) {
+      importMethod = "FCPXML";
+      timeline = await mediaPool.ImportTimelineFromFile(importFile, {
+        timelineName,
+        importSourceClips: true,
+      });
+      if (!timeline) throw error;
+    }
   }
 
   await project.SetCurrentTimeline(timeline);

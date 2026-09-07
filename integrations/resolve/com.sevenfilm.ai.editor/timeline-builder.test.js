@@ -3,6 +3,7 @@ const { describe, it } = require("node:test");
 
 const {
   appendClipsInBatches,
+  hasRetiming,
   parseRational,
   buildMusicClipInfo,
   buildMusicClipInfos,
@@ -613,5 +614,33 @@ describe("frame rate agreement", () => {
   it("has nothing to write for a rate it cannot read", () => {
     assert.equal(resolveFrameRateSetting("0/0"), null);
     assert.equal(resolveFrameRateSetting(undefined), null);
+  });
+});
+
+describe("hasRetiming", () => {
+  const plan = (played, occupied) => ({
+    frame_rate: "50/1",
+    items: [{
+      source_in: { duration_seconds: String(played) },
+      timeline_in: { duration_seconds: String(occupied) },
+    }],
+  });
+
+  it("sees a clip stretched over more timeline than the source it plays", () => {
+    assert.equal(hasRetiming(plan(1, 2)), true);
+  });
+
+  it("leaves an ordinary cut alone", () => {
+    assert.equal(hasRetiming(plan(2, 2)), false);
+  });
+
+  it("does not call a frame of rounding a retime", () => {
+    // The two clocks need not share a rate, so rational seconds round differently.
+    assert.equal(hasRetiming(plan(2, 2 + 1 / 60)), false);
+  });
+
+  it("says no about a plan with nothing in it", () => {
+    assert.equal(hasRetiming({}), false);
+    assert.equal(hasRetiming({ items: [] }), false);
   });
 });

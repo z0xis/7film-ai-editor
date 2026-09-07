@@ -51,13 +51,25 @@ describe("the import path the plugin leads with", () => {
   const source = fs.readFileSync(path.join(PLUGIN_DIR, "main.js"), "utf8");
   const flow = source.slice(source.indexOf("async function importTimeline"));
 
-  it("builds through the Resolve API before trying the FCPXML file", () => {
+  it("builds an ordinary plan through the Resolve API before trying the FCPXML file", () => {
     // Only the API path can say picture-only, place the music on A1 and add the markers, and
-    // it is the one verified against real Resolve. Resolve's own importer refuses this FCPXML.
-    const api = flow.indexOf("createTimelineFromPlan(");
-    const fcpxml = flow.indexOf("ImportTimelineFromFile(");
+    // it is the one verified against real Resolve.
+    const ordinary = flow.slice(flow.indexOf("} else {"));
+    const api = ordinary.indexOf("createTimelineFromPlan(");
+    const fcpxml = ordinary.indexOf("ImportTimelineFromFile(");
     assert.ok(api > -1 && fcpxml > -1, "both paths should still be present");
     assert.ok(api < fcpxml, "the verified Resolve API path must be attempted first");
+  });
+
+  it("sends a retimed plan straight to FCPXML, which is the only path that can carry it", () => {
+    // AppendToTimeline lays a clip down at its own speed and nothing can change that after:
+    // TimelineItem.SetProperty offers pan, tilt, zoom, crop and the retime method, no speed.
+    // Taking the API path anyway would drop the slow motion and mis-time the cut.
+    const guard = flow.indexOf("hasRetiming(plan)");
+    const fcpxml = flow.indexOf("ImportTimelineFromFile(");
+    const api = flow.indexOf("createTimelineFromPlan(");
+    assert.ok(guard > -1, "the plan has to be asked whether it holds a retimed clip");
+    assert.ok(guard < fcpxml && guard < api, "and asked before either path is taken");
   });
 
   it("still downloads the FCPXML, which the fallback needs", () => {
@@ -66,7 +78,8 @@ describe("the import path the plugin leads with", () => {
 
   it("reports which path built the timeline", () => {
     assert.match(flow, /importMethod/);
-    assert.match(flow, /importMethod: "Resolve API"|importMethod = "Resolve API"/);
+    assert.match(flow, /"Resolve API"/);
+    assert.match(flow, /FCPXML/);
   });
 });
 

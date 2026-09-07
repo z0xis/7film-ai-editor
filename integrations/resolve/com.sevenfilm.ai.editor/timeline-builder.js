@@ -289,7 +289,30 @@ function chunk(values, size = DEFAULT_BATCH_SIZE) {
   return batches;
 }
 
+/**
+ * Whether the plan asks for any clip to play at a speed other than its own.
+ *
+ * The Resolve scripting API cannot express this: TimelineItem.SetProperty offers pan, tilt,
+ * zoom, crop and the retime *method*, and no speed at all. Measured against Resolve 21.0.2.
+ * So a plan holding a retimed clip has to come in as FCPXML, where an imported timeMap comes
+ * back at exactly the speed it asks for.
+ *
+ * A clip is retimed when it occupies more (or less) of the timeline than the source it plays.
+ * Compared in seconds rather than frames, because the two need not share a rate.
+ */
+function hasRetiming(plan) {
+  const items = Array.isArray(plan?.items) ? plan.items : [];
+  return items.some((item) => {
+    const played = parseRational(item?.source_in?.duration_seconds);
+    const occupied = parseRational(item?.timeline_in?.duration_seconds);
+    if (!Number.isFinite(played) || !Number.isFinite(occupied) || occupied <= 0) return false;
+    // A frame of slack: rational seconds round differently on the two clocks.
+    return Math.abs(played - occupied) > 1 / parseFrameRate(plan?.frame_rate, 25);
+  });
+}
+
 module.exports = {
+  hasRetiming,
   DEFAULT_BATCH_SIZE,
   MIN_CLIP_SECONDS,
   appendClipsInBatches,
