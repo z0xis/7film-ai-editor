@@ -1019,6 +1019,14 @@ MOMENT_BONUS = 0.1
 # Scene runs come *up*, 26.7 to 29.7, because the band's stage was pulling the edit back to
 # the same corner of the room from every part of the evening.
 DISTRACTION_PENALTY = 0.05
+# What a body between the camera and the subject costs.
+#
+# "alakasız sırt var", "çok kötü kafanın arkası görünüyor sadece". These are not weak shots by
+# any measure the planner already had: the face detector reads a blurred shoulder across the
+# lens as no face at all, which is what an empty room reads as too. Set alongside the band's
+# charge rather than above it — an obstructed shot is still a shot of the wedding, and this is
+# a preference for the clear one, not a ban.
+OBSTRUCTION_PENALTY = 0.05
 # How alike two shots have to look, coming from different files of one moment, before the
 # second reads as another take of the first rather than as the next shot of a sequence.
 #
@@ -1275,6 +1283,7 @@ def _score_candidate(
     still_life_repeat: bool = False,
     missing_moment: bool = False,
     distraction: bool = False,
+    obstructed: bool = False,
     second_take: bool = False,
     motion_targets: Mapping[str, float] | None = None,
     desired_duration: Fraction,
@@ -1343,6 +1352,11 @@ def _score_candidate(
     distraction_penalty = (
         DISTRACTION_PENALTY if (distraction and not missing_moment) else 0.0
     )
+    # A moment is never suppressed for this either: if the only record of the ring is over a
+    # guest's shoulder, the film still owes the ring.
+    obstruction_penalty = (
+        OBSTRUCTION_PENALTY if (obstructed and not missing_moment) else 0.0
+    )
     second_take_penalty = SECOND_TAKE_PENALTY if second_take else 0.0
     # Taking the next shot from the clip just used is a sequence, not a repetition, so it is
     # pulled towards: removing the charge alone changed nothing, the edit still took every one
@@ -1380,6 +1394,7 @@ def _score_candidate(
         - second_take_penalty
         + take_bonus
         - reuse_penalty
+        - obstruction_penalty
         + random_jitter
     )
     return score, {
@@ -1398,6 +1413,7 @@ def _score_candidate(
         "still_life_penalty": still_life_penalty,
         "moment_bonus": moment_bonus,
         "distraction_penalty": distraction_penalty,
+        "obstruction_penalty": obstruction_penalty,
         "second_take_penalty": second_take_penalty,
         "reuse_penalty": reuse_penalty,
     }
@@ -1418,6 +1434,7 @@ def build_timeline(
     rejected: tuple[frozenset[str], frozenset[str]] | None = None,
     moments: Sequence[Moment] | None = None,
     distractions: frozenset[str] | None = None,
+    obstructions: frozenset[str] | None = None,
     embeddings: Mapping[str, Any] | None = None,
 ) -> TimelinePlan:
     """Plan a varied edit and retain each score's human-readable rationale."""
@@ -1538,6 +1555,7 @@ def build_timeline(
     # A wedding film owes its subjects certain things. Each is carried by whichever of its
     # shots the edit can still use, and stops being owed as soon as one of them is in.
     distractions = distractions or frozenset()
+    obstructions = obstructions or frozenset()
     embeddings = embeddings or {}
     moments = tuple(moments or ())
     moment_of_shot: dict[str, set[str]] = {}
@@ -1742,6 +1760,7 @@ def build_timeline(
                     and scene_by_asset.get(shot.asset_id) in still_life_scenes),
                 missing_moment=shot.id in wanted_moment_shots,
                 distraction=shot.id in distractions,
+                obstructed=shot.id in obstructions,
                 second_take=_is_second_take(
                     shot, plan.items[-1] if plan.items else None,
                     embeddings, same_scene=(

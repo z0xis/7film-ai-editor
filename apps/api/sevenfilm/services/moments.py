@@ -205,6 +205,51 @@ def project_distractions(database: Database, project_id: str) -> frozenset[str]:
     return frozenset(found)
 
 
+
+# A body between the camera and what the shot is of.
+#
+# The editor kept finding these: "alakasız sırt var", "çok kötü kafanın arkası görünüyor
+# sadece", "kötü kadraj". Nothing in the planner could see them — the face detector reads a
+# blurred shoulder across the lens as no face at all, which is also what an empty room looks
+# like.
+#
+# CLIP can, and the vectors are already stored, so this costs a read. Read as a share of the
+# shoot rather than an absolute score, because how crowded a wedding is varies. Verified by
+# looking: the top of this shoot is an arm sweeping across the lens over a table of guests and
+# a blurred head filling the right third of the frame, and the bottom is the couple facing the
+# camera with their faces clear.
+OBSTRUCTION_PROMPTS = (
+    "the back of a person's head filling the frame, blocking the view",
+    "a person's back turned to the camera in the foreground",
+)
+# Subtracted, so a shot that also shows faces is not condemned for having a guest in it.
+OBSTRUCTION_AGAINST = "a photo of the wedding couple, faces visible"
+OBSTRUCTION_QUANTILE = 0.90
+
+
+def project_obstructions(database: Database, project_id: str) -> frozenset[str]:
+    """The shots with something in front of the subject rather than the subject."""
+    rows = database.fetch_all(
+        """SELECT shot_features.shot_id, shot_features.embedding FROM shot_features
+           JOIN media_assets ON media_assets.id = shot_features.asset_id
+           WHERE media_assets.project_id = ? AND shot_features.embedding IS NOT NULL""",
+        (project_id,),
+    )
+    if not rows:
+        return frozenset()
+    text = _text_features([*OBSTRUCTION_PROMPTS, OBSTRUCTION_AGAINST])
+    if text is None:
+        return frozenset()
+    shot_ids = [str(row["shot_id"]) for row in rows]
+    vectors = np.stack([np.frombuffer(row["embedding"], dtype=np.float32) for row in rows])
+    vectors = vectors / (np.linalg.norm(vectors, axis=1, keepdims=True) + 1e-9)
+    similarity = vectors @ text.T
+    score = similarity[:, :-1].sum(axis=1) - similarity[:, -1]
+    bar = float(np.quantile(score, OBSTRUCTION_QUANTILE))
+    return frozenset(
+        shot_id for shot_id, value in zip(shot_ids, score, strict=True) if value >= bar
+    )
+
 def _moment_text_features() -> np.ndarray | None:
     """Encode the moment prompts. Only text, so the images never have to be read again."""
     return _text_features(list(MOMENT_PROMPTS.values()))
