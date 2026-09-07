@@ -11,6 +11,7 @@ from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import replace
 from fractions import Fraction
 from pathlib import Path
+from typing import Any
 
 from ..db import Database, now
 from ..domain import BeatGrid, MediaAsset, MusicSegment, Shot, TimelineItem, TimelinePlan
