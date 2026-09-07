@@ -890,6 +890,37 @@ STILL_LIFE_REPEAT_PENALTY = 0.1
 # Half of them close on a shot of three seconds or more and two hold for over twelve. Our edits
 # were ending on an ordinary 0.98 second cut — the film stopped rather than finished.
 CLOSING_SECONDS = Fraction(317, 100)
+# How much the edit cares that a shot moves the way the music does. The rest of the score is
+# fixed alongside it, so raising this takes from the technical bar rather than floating free.
+#
+# Left where it was. With the targets read off the shoot instead of written by hand, raising
+# this to 0.25 buys the driving passages three points of still shots — 27% to 24% — and pays
+# for it in technical quality, 0.427 to 0.416. The target was the fault, not the weight.
+MUSIC_FIT_WEIGHT = 0.15
+TECHNICAL_WEIGHT = 0.25
+# What "moving with the music" means, read off the shoot rather than written here.
+#
+# The targets used to be 0.30, 0.55 and 0.78. Measured on this footage, the median shot moves
+# 0.283, 9% reach 0.5 and 1% reach 0.78 — nineteen shots out of 1405. A driving passage was
+# therefore asking for something the shoot barely contains, and no weight can conjure it:
+# pushing the term from 0.15 to 0.25 moved the still-shot share in the loud passages only from
+# 33% to 29% and cost technical quality to do it.
+#
+# So a passage asks for a quartile of this shoot's own movement instead. On footage that is
+# livelier or calmer than this the same three words keep meaning the same three things.
+MOTION_QUANTILES = {"low": 0.25, "medium": 0.5, "high": 0.75}
+FALLBACK_MOTION_TARGETS = {"low": 0.3, "medium": 0.55, "high": 0.78}
+
+
+def _motion_targets(shots: Sequence[Shot]) -> dict[str, float]:
+    """The movement a low, medium and driving passage should look for, on this shoot's scale."""
+    values = sorted(shot.motion_score for shot in shots)
+    if not values:
+        return dict(FALLBACK_MOTION_TARGETS)
+    return {
+        energy: values[min(len(values) - 1, int(quantile * len(values)))]
+        for energy, quantile in MOTION_QUANTILES.items()
+    }
 
 
 def _window_score(window: ShotWindow, sharpness_bar: float) -> float:
@@ -1004,6 +1035,7 @@ def _score_candidate(
     day_position: float | None = None,
     window_quality: float = 1.0,
     still_life_repeat: bool = False,
+    motion_targets: Mapping[str, float] | None = None,
     desired_duration: Fraction,
     random_jitter: float,
     style_profile: Mapping[str, object] | None = None,
@@ -1021,7 +1053,8 @@ def _score_candidate(
     scale_fit = 1.0 if shot.shot_scale in preferred_scales else 0.4
     visual_fit = _reference_visual_fit(shot, visual_baseline, style_profile)
     style_fit = 0.5 * scale_fit + 0.5 * visual_fit
-    target_motion = {"low": 0.3, "medium": 0.55, "high": 0.78}.get(energy, 0.55)
+    targets = motion_targets or FALLBACK_MOTION_TARGETS
+    target_motion = targets.get(energy, targets.get("medium", 0.55))
     music_fit = max(0.0, 1.0 - abs(shot.motion_score - target_motion))
     sequence_continuity = 1.0
     previous = recent[-1] if recent else None
@@ -1077,10 +1110,10 @@ def _score_candidate(
     duration_fit = max(0.0, 1.0 - float(abs(available - desired_duration) / max(desired_duration, Fraction(1, 2))))
     music_fit = music_fit * 0.7 + duration_fit * 0.3
     score = (
-        0.25 * shot.technical_quality
+        TECHNICAL_WEIGHT * shot.technical_quality
         + 0.20 * shot.aesthetic_score
         + 0.20 * story_relevance
-        + 0.15 * music_fit
+        + MUSIC_FIT_WEIGHT * music_fit
         + 0.10 * style_fit
         + 0.10 * sequence_continuity
         - duplicate_penalty
@@ -1236,6 +1269,7 @@ def build_timeline(
     # The references hold their last image for three times their own median shot. Long enough
     # to close on, but never so long that it eats the film: a short target gets a short close.
     closing_seconds = min(CLOSING_SECONDS, target_duration / 20)
+    motion_targets = _motion_targets(candidates)
     current_frame = 0
     consumed_source_frames = {shot.id: 0 for shot in candidates}
     usage_count = {shot.id: 0 for shot in candidates}
@@ -1319,6 +1353,7 @@ def build_timeline(
                 progress=progress,
                 day_position=day_by_asset.get(shot.asset_id),
                 window_quality=quality_by_shot.get(shot.id, 1.0),
+                motion_targets=motion_targets,
                 still_life_repeat=(
                     shot.id in faceless
                     and scene_by_asset.get(shot.asset_id) in still_life_scenes),
