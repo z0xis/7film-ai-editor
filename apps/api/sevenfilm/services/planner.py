@@ -1387,12 +1387,54 @@ def build_timeline(
         # The last shot therefore runs between one closing and one closing plus a cut, which
         # is where the references sit.
         closing_frames = frame_rate.frames_from_seconds(closing_seconds, rounding="nearest")
-        finishing = remaining_frames - frame_rate.frames_from_seconds(desired) < closing_frames
+        # The tail is only handed over when a single shot can carry all of it. Shots are split
+        # at five seconds and lose a handle at each end, so nothing supplies more than about
+        # 4.6; asking for 4.92 left the closing shot 1.26 seconds short and that leftover
+        # became the real last shot of the film. Where the tail is still too long the edit
+        # takes one more ordinary cut and asks again a beat later.
+        # Measured against everything still holding source, not the pool this cut was drawn
+        # from: a held cut narrows that pool to the better half, and reading the supply off it
+        # said the tail was uncarriable when it was not.
+        longest_supply = max(
+            (
+                shot.source_range.rate.seconds_from_frames(
+                    _remaining_source_frames(shot, consumed_source_frames[shot.id]))
+                for shot in candidates
+                if shot.id not in exhausted
+            ),
+            default=Fraction(0),
+        )
+        crowding_the_close = (
+            remaining_frames - frame_rate.frames_from_seconds(desired) < closing_frames
+        )
+        if crowding_the_close and remaining_seconds > longest_supply:
+            # The tail is longer than any one shot can carry, so it cannot be handed over yet;
+            # and taking the cut as asked would eat all but a stub of it. Traced on this shoot:
+            # 4.82 seconds left against a 4.60 supply, a 3.90 cut asked for, 3.66 delivered,
+            # and the film ended on the 1.16 that was left. So this cut stands back to the
+            # nearest beat that leaves a whole closing behind.
+            room = remaining_seconds - closing_seconds
+            landings = [
+                beat - current_time for beat in music.beats
+                if MIN_CUT_SECONDS <= beat - current_time <= room
+            ]
+            if landings:
+                desired = max(landings)
+                crowding_the_close = False
+        finishing = (
+            crowding_the_close and remaining_seconds <= longest_supply
+        ) or remaining_frames - frame_rate.frames_from_seconds(desired) < minimum_cut_frames
         if finishing:
             desired = remaining_seconds
+            # Every shot that still has source, not the pool this cut happened to be drawn
+            # from. A closing that lands on a held shot was choosing out of the hold's own
+            # narrowed pool, and where nothing in it could carry the whole tail the cut came up
+            # short and the leftover became the real last shot — 1.16 seconds on one seed,
+            # against the 3.17 the references hold.
             long_enough_to_finish = [
-                shot for shot in available_shots
-                if _remaining_source_frames(shot, consumed_source_frames[shot.id])
+                shot for shot in candidates
+                if shot.id not in exhausted
+                and _remaining_source_frames(shot, consumed_source_frames[shot.id])
                 >= shot.source_range.rate.frames_from_seconds(
                     remaining_seconds * speed, rounding="ceil")
             ]
@@ -1406,8 +1448,19 @@ def build_timeline(
             ]
             long_enough_to_finish = worthy_to_close or long_enough_to_finish
             if long_enough_to_finish and selected_shot not in long_enough_to_finish:
-                ranked = [entry for entry in ranked if entry[1] in long_enough_to_finish]
-                selected_score, selected_shot, components = ranked[0]
+                allowed = {shot.id for shot in long_enough_to_finish}
+                closing = [entry for entry in ranked if entry[1].id in allowed]
+                if closing:
+                    selected_score, selected_shot, components = closing[0]
+                else:
+                    # None of them was ranked, because this cut was drawn from a narrowed pool.
+                    # Take the best of what can carry the tail on the quality this film is
+                    # already being cut on, rather than ending on a stub.
+                    selected_shot = max(
+                        long_enough_to_finish,
+                        key=lambda shot: (shot.technical_quality, shot.aesthetic_score),
+                    )
+                    selected_score, components = 0.0, {}
         remaining_source_seconds = selected_shot.source_range.rate.seconds_from_frames(
             _remaining_source_frames(selected_shot, consumed_source_frames[selected_shot.id])
         )

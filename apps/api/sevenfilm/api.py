@@ -468,12 +468,6 @@ def read_job(job_id: str) -> dict[str, Any]:
     return _job_payload(job)
 
 
-REACT_ROOT = Path(__file__).resolve().parents[2] / "desktop" / "dist"
-STATIC_ROOT = REACT_ROOT if (REACT_ROOT / "index.html").is_file() else Path(__file__).parent / "static"
-if STATIC_ROOT.is_dir():
-    app.mount("/", StaticFiles(directory=STATIC_ROOT, html=True), name="frontend")
-
-
 class RejectionRequest(BaseModel):
     """Clips the editor has looked at and does not want the edit to use."""
 
@@ -510,3 +504,12 @@ def remove_rejections(project_id: str, request: RejectionRequest) -> dict[str, A
     DATABASE.migrate()
     restore_clips(DATABASE, project_id, request.clips)
     return {"clips": rejected_names(DATABASE, project_id)}
+
+
+# The panel is served from "/", which swallows every route declared after it, so this mount
+# stays the last thing in the file. Endpoints added below it are silently dead: the rejection
+# routes were, and answered 404 on a freshly started engine.
+REACT_ROOT = Path(__file__).resolve().parents[2] / "desktop" / "dist"
+STATIC_ROOT = REACT_ROOT if (REACT_ROOT / "index.html").is_file() else Path(__file__).parent / "static"
+if STATIC_ROOT.is_dir():
+    app.mount("/", StaticFiles(directory=STATIC_ROOT, html=True), name="frontend")

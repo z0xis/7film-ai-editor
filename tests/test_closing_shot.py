@@ -77,5 +77,42 @@ class TheFilmHoldsItsLastImageTests(unittest.TestCase):
         self.assertEqual(plan.duration, Fraction(120))
 
 
+class TheTailIsOnlyHandedOverWhenAShotCanCarryItTests(unittest.TestCase):
+    """Shots are split at five seconds and lose a handle at each end, so nothing supplies more
+    than about 4.6. Traced on the shoot: 4.82 seconds left, a 3.90 cut asked for, 3.66
+    delivered because the source ran out, and the film ended on the 1.16 that was left.
+    """
+
+    def build(self):
+        assets, shots = [], []
+        categories = ("couple", "bride", "groom", "party", "venue", "detail")
+        for index in range(200):
+            one = MediaAsset(id=f"a{index}", project_id="p", path=Path(f"/m/{index}.mov"),
+                             name=f"{index}.mov", duration=Fraction(6), frame_rate=RATE,
+                             width=1920, height=1080)
+            assets.append(one)
+            # Five second shots, as the splitter caps them: no single one can carry a long tail.
+            shots.append(Shot(
+                id=f"s{index}", asset_id=one.id, source_range=TimeRange(0, 250, RATE),
+                category=categories[index % len(categories)], shot_scale="medium",
+                technical_quality=.8, aesthetic_score=.8, motion_score=.5, confidence=.9,
+                duplicate_group=f"visual:{index:016x}", brightness=.36, saturation=.15,
+                highlight_clipping=.01, face_ratio=0.05, face_edge=0.0))
+        beats = tuple(Fraction(i, 2) for i in range(900))
+        music = BeatGrid(bpm=120, beats=beats, duration=Fraction(450),
+                         sections=({"energy": "medium", "start": "0", "end": "450"},))
+        profile = {"held_shots": {"share_by_band": [0.3] * 10, "median_seconds": 4.0}}
+        return build_timeline(project_id="p", assets=assets, shots=shots, music=music,
+                              frame_rate=RATE, target_duration=Fraction(150), seed=1,
+                              style_profile=profile)
+
+    def test_the_film_does_not_end_on_what_was_left_over(self):
+        plan = self.build()
+
+        self.assertGreaterEqual(
+            plan.items[-1].timeline_range.duration_seconds, CLOSING_SECONDS)
+        self.assertEqual(plan.duration, Fraction(150))
+
+
 if __name__ == "__main__":
     unittest.main()
