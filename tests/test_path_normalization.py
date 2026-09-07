@@ -1,10 +1,11 @@
-import os
-from pathlib import Path
 import sys
+from pathlib import Path
 
-# Add project root to path for absolute imports if needed
+# The import below is absolute from the repository root rather than from apps/api, so the
+# root has to be on the path before it runs. Ruff sorts around the statement, not through it.
 sys.path.insert(0, str(Path(__file__).parent.parent))
-from apps.api.sevenfilm.api import _normalize_path
+
+from apps.api.sevenfilm.api import _normalize_path  # noqa: I001
 
 def test_normalize_path_plain():
     path = "/Users/foo/bar.mp3"
