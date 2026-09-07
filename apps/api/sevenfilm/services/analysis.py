@@ -323,21 +323,22 @@ def _measure_shot_windows(
 ) -> None:
     """Walk every shot half a second at a time, so the planner can choose the moment.
 
-    Read off the proxies where they exist. Nothing measured here depends on the grade, and the
-    sources are 4K 10-bit S-Log3 with no hardware decode on this machine.
+    Read off the originals, which costs 661 milliseconds a frame on this footage and is worth
+    it. The proxies were tried first and measured wrong: a man standing in a doorway behind a
+    couple is fifteen ten-thousandths of the frame, and the face detector finds him in every
+    frame of the 4K original and in none of the 1280x720 proxy. Upscaling the proxy two and
+    three times does not bring him back, because the information is not in it.
 
     A failure here leaves the shot unmeasured rather than failing the job: without windows the
     planner cuts the way it did before, which is worse but not broken.
     """
     by_id = {asset.id: asset for asset in assets}
-    cache = Path("data") / "projects" / project_id / "proxies"
     for shot in shots:
         asset = by_id.get(shot.asset_id)
         if asset is None:
             continue
-        proxy = cache / f"{asset.id}.mp4"
         try:
-            windows = measure_windows(asset, shot, proxy if proxy.exists() else asset.path)
+            windows = measure_windows(asset, shot, asset.path)
         except Exception:
             LOGGER.exception(json.dumps({"event": "shot_windows_failed", "shot_id": shot.id}))
             continue
