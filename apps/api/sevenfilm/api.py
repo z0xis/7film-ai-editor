@@ -32,6 +32,13 @@ from .services.exporter import export_all, plan_as_dict
 from .services.media import generate_derivatives, index_folder, project_assets
 from .services.music import plan_music
 from .services.planner import build_timeline, get_timeline, persist_timeline
+from .services.rejections import (
+    project_rejections,
+    reject_clips,
+    rejected_names,
+    restore_clips,
+)
+from .services.windows import project_windows
 from .timebase import FrameRate
 
 LOGGER = logging.getLogger("sevenfilm")
@@ -369,6 +376,8 @@ def create_timeline(project_id: str, request: TimelineRequest) -> dict[str, Any]
             style_profile=_style_profile(),
             seed=request.seed,
             name=request.name,
+            windows_by_shot=project_windows(DATABASE, project_id),
+            rejected=project_rejections(DATABASE, project_id),
         )
         plan.music_segments = music_segments
         plan.music_path = music_segments[0].path if music_segments else None
@@ -463,3 +472,41 @@ REACT_ROOT = Path(__file__).resolve().parents[2] / "desktop" / "dist"
 STATIC_ROOT = REACT_ROOT if (REACT_ROOT / "index.html").is_file() else Path(__file__).parent / "static"
 if STATIC_ROOT.is_dir():
     app.mount("/", StaticFiles(directory=STATIC_ROOT, html=True), name="frontend")
+
+
+class RejectionRequest(BaseModel):
+    """Clips the editor has looked at and does not want the edit to use."""
+
+    clips: list[str] = Field(default_factory=list)
+    reason: str = ""
+
+
+@app.get("/api/projects/{project_id}/rejections")
+def list_rejections(project_id: str) -> dict[str, Any]:
+    _project(project_id)
+    return {"clips": rejected_names(DATABASE, project_id)}
+
+
+@app.post("/api/projects/{project_id}/rejections")
+def add_rejections(project_id: str, request: RejectionRequest) -> dict[str, Any]:
+    """Take clips out of every future edit of this project.
+
+    Unrecognised names come back rather than failing the call: the editor is typing clip names
+    off a Resolve timeline and a typo should say so, not lose the ones that were right.
+    """
+    _project(project_id)
+    DATABASE.migrate()
+    taken, unknown = reject_clips(DATABASE, project_id, request.clips, request.reason)
+    return {
+        "clips": rejected_names(DATABASE, project_id),
+        "added": taken,
+        "unknown": unknown,
+    }
+
+
+@app.delete("/api/projects/{project_id}/rejections")
+def remove_rejections(project_id: str, request: RejectionRequest) -> dict[str, Any]:
+    _project(project_id)
+    DATABASE.migrate()
+    restore_clips(DATABASE, project_id, request.clips)
+    return {"clips": rejected_names(DATABASE, project_id)}

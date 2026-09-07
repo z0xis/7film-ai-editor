@@ -1084,6 +1084,7 @@ def build_timeline(
     seed: int = 1,
     name: str = "AI Rough Cut",
     windows_by_shot: Mapping[str, Sequence[ShotWindow]] | None = None,
+    rejected: tuple[frozenset[str], frozenset[str]] | None = None,
 ) -> TimelinePlan:
     """Plan a varied edit and retain each score's human-readable rationale."""
     windows_by_shot = windows_by_shot or {}
@@ -1092,6 +1093,13 @@ def build_timeline(
     if music.duration < target_duration:
         raise ValueError("Seçilen müzik hedef süreden kısa; müzik edit noktası seçin veya hedefi azaltın.")
     asset_by_id = {asset.id: asset for asset in assets}
+    # What the editor has said not to use. Taken out before anything is scored: a rejected
+    # clip is not a weak candidate, it is not a candidate.
+    rejected_assets, rejected_shots = rejected or (frozenset(), frozenset())
+    shots = [
+        shot for shot in shots
+        if shot.asset_id not in rejected_assets and shot.id not in rejected_shots
+    ]
     long_enough = [
         trimmed for shot in shots
         if shot.asset_id in asset_by_id

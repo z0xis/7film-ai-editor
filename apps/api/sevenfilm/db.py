@@ -147,6 +147,26 @@ CREATE TABLE IF NOT EXISTS shot_windows (
     PRIMARY KEY (shot_id, offset_frames)
 );
 
+-- Clips and shots the editor has told the edit to leave alone.
+--
+-- Some of what makes a shot unusable is not measurable here at any sensible cost. A man
+-- standing in a doorway is fifteen ten-thousandths of the frame and vanishes in the proxies;
+-- finding him needs the 4K originals, at 661ms a frame. A bride catching her step has no
+-- measure at all. The editor sees both in a second, so this is where that judgement is kept.
+--
+-- A row with shot_id NULL rejects the whole clip, which is the usual case: what is wrong is
+-- normally wrong throughout.
+CREATE TABLE IF NOT EXISTS rejections (
+    project_id TEXT NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
+    asset_id TEXT NOT NULL REFERENCES media_assets(id) ON DELETE CASCADE,
+    shot_id TEXT,
+    reason TEXT NOT NULL DEFAULT '',
+    created_at TEXT NOT NULL
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS rejections_unique
+    ON rejections (project_id, asset_id, IFNULL(shot_id, ''));
+
 CREATE TABLE IF NOT EXISTS jobs (
     id TEXT PRIMARY KEY,
     project_id TEXT NOT NULL REFERENCES projects(id) ON DELETE CASCADE,

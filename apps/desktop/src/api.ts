@@ -30,6 +30,8 @@ async function call<T>(path: string, init?: RequestInit): Promise<T> {
   if (!response.ok) throw new Error(describe(body.detail));
   return body as T;
 }
+export type Rejections = { clips: string[]; added?: string[]; unknown?: string[] };
+
 export const api = {
   projects: () => call<Project[]>("/api/projects"),
   project: (payload: CreateProject) => call<Project>("/api/projects", { method: "POST", body: JSON.stringify(payload) }),
@@ -40,4 +42,9 @@ export const api = {
   latestJob: (projectId: string) => call<Job>(`/api/projects/${projectId}/jobs/latest`),
   timeline: (projectId: string, payload: object) => call<Timeline>(`/api/projects/${projectId}/timelines`, { method: "POST", body: JSON.stringify(payload) }),
   export: (timelineId: string) => call<Record<string, string>>(`/api/timelines/${timelineId}/export`, { method: "POST" }),
+  rejections: (projectId: string) => call<Rejections>(`/api/projects/${projectId}/rejections`),
+  reject: (projectId: string, clips: string[], reason = "") =>
+    call<Rejections>(`/api/projects/${projectId}/rejections`, { method: "POST", body: JSON.stringify({ clips, reason }) }),
+  restore: (projectId: string, clips: string[]) =>
+    call<Rejections>(`/api/projects/${projectId}/rejections`, { method: "DELETE", body: JSON.stringify({ clips }) }),
 };

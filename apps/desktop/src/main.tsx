@@ -160,6 +160,71 @@ function staleWarning(project: Project): string | null {
   return `${parts.join(" ve ")} eski sürümle yapılmış — kurgu kalitesi için yeniden çalıştırın.`;
 }
 
+
+function RejectList({ projectId, disabled }: { projectId: string; disabled: boolean }) {
+  const [clips, setClips] = useState<string[]>([]);
+  const [entry, setEntry] = useState("");
+  const [note, setNote] = useState("");
+
+  useEffect(() => {
+    api.rejections(projectId).then((result) => setClips(result.clips)).catch(() => undefined);
+  }, [projectId]);
+
+  async function add(event: FormEvent) {
+    event.preventDefault();
+    const names = entry.split(/[\s,]+/).filter(Boolean);
+    if (!names.length) return;
+    try {
+      const result = await api.reject(projectId, names);
+      setClips(result.clips);
+      setEntry("");
+      // A typo should say so rather than quietly losing the names beside it that were right.
+      setNote(result.unknown?.length ? `bu projede yok: ${result.unknown.join(", ")}` : "");
+    } catch (error) {
+      setNote(error instanceof Error ? error.message : String(error));
+    }
+  }
+
+  async function restore(name: string) {
+    try {
+      setClips((await api.restore(projectId, [name])).clips);
+    } catch (error) {
+      setNote(error instanceof Error ? error.message : String(error));
+    }
+  }
+
+  return (
+    <div className="reject-list">
+      <form onSubmit={add}>
+        <span className="song-list-label">Kullanılmasın</span>
+        <span className="path-control">
+          <input
+            value={entry}
+            onChange={(event) => setEntry(event.target.value)}
+            placeholder="C1968, C2181"
+            disabled={disabled}
+          />
+          <button disabled={disabled || !entry.trim()}>Ekle</button>
+        </span>
+      </form>
+      <p className="reject-hint">
+        Resolve’da beğenmediğiniz klibin adını yazın; bundan sonraki hiçbir kurguya girmez.
+      </p>
+      {note && <p className="reject-note">{note}</p>}
+      {clips.length > 0 && (
+        <ul className="reject-clips">
+          {clips.map((name) => (
+            <li key={name}>
+              <span>{name}</span>
+              <button type="button" className="link" onClick={() => restore(name)}>geri al</button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
 function App() {
   const [project, setProject] = useState<Project | null>(null);
   const [projects, setProjects] = useState<Project[]>([]);
@@ -328,6 +393,7 @@ function App() {
                 <button disabled={busy} onClick={() => run("shots")}>3. Shot’ları çıkar</button>
                 <button className="secondary" disabled={busy} onClick={() => run("derivatives")}>Proxy + thumbnail</button>
               </div>
+              <RejectList projectId={project.id} disabled={busy} />
               <form onSubmit={build}>
                 <Field label="Alternatif seed" name="seed" type="number" value="1" /><button>4. Kaba kurgu oluştur</button>
               </form>
