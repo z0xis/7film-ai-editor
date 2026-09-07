@@ -320,6 +320,9 @@ OPENING_CATEGORIES = frozenset({"detail"})
 # alone is too soft to keep the opening out of the evening, being 0.2 of a score that a strong
 # shot clears easily.
 OPENING_DAY_LIMIT = 0.25
+# How many of the opening cuts are steered to a detail. The references run two in
+# five; one gave us one in five, five gave us five.
+OPENING_DETAIL_CUTS = 2
 # One beat at the references' own median tempo, for a profile that carries no BPM.
 REFERENCE_BEAT_SECONDS = Fraction(60, 123)
 # How far past the asked-for opening a beat may land and still be taken. Without slack the
@@ -1676,18 +1679,22 @@ def build_timeline(
             # all five opening shots details where the references run 40%, and the day limit
             # pinned the pool to the earliest minutes of the shoot hard enough to override
             # the still-life rule and put two records of one sign into the opening.
-            narrowers = (
-                # Steering the first cut to a detail can hand the film a still life, and the
-                # ordinary repeat penalty is too small to stop a second record of the same
-                # object arriving in the very next cut — a shoot that rolled its welcome sign
-                # twice put both into the opening. Inside the ramp the scene is refused
-                # outright rather than charged for.
-                (lambda shot: scene_by_asset.get(shot.asset_id) not in still_life_scenes,)
-                if plan.items else (
-                    lambda shot: day_by_asset.get(shot.asset_id, 0.0) <= OPENING_DAY_LIMIT,
-                    lambda shot: shot.category in OPENING_CATEGORIES,
+            # Steering a cut to a detail can hand the film a still life, and the ordinary
+            # repeat penalty is too small to stop a second record of the same object arriving
+            # in the very next cut — a shoot that rolled its welcome sign twice put both into
+            # the opening. Inside the ramp the scene is refused outright rather than charged.
+            narrowers = [
+                lambda shot: scene_by_asset.get(shot.asset_id) not in still_life_scenes
+            ]
+            if len(plan.items) < OPENING_DETAIL_CUTS:
+                # The references run 40% detail across their first five shots, two in five.
+                # Steering only the first cut left us at one in five, and steering the whole
+                # ramp made all five details.
+                narrowers.append(lambda shot: shot.category in OPENING_CATEGORIES)
+            if not plan.items:
+                narrowers.append(
+                    lambda shot: day_by_asset.get(shot.asset_id, 0.0) <= OPENING_DAY_LIMIT
                 )
-            )
             for narrower in narrowers:
                 narrowed = [shot for shot in available_shots if narrower(shot)]
                 if narrowed:

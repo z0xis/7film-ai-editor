@@ -343,11 +343,16 @@ def _write_time_map(clip: ET.Element, item: TimelineItem) -> None:
 # over a median 1.5 seconds (quartiles 0.9-2.6). Ours ended the song mid-bar at full volume:
 # "MÜZİK PAT DİYE BİTİYOR FADE OUT FALAN OLSUN YANİ".
 #
+# Set at the top of that measured range rather than its middle. At the median the editor still
+# read the ending as abrupt — "outro olmamış yine sert" — and the picture cannot help: Resolve
+# drops every fade the exporter can write for it (see below), so the music is carrying the
+# whole ending on its own.
+#
 # Written as volume automation on the music clip. Verified against Resolve Studio 21.0.2 by
 # importing the file and having Resolve export the timeline back: the keyframes come back as
 # written. `adjust-opacity` and `<transition>` do not — Resolve drops both silently — so the
 # picture is not faded here.
-MUSIC_FADE_SECONDS = Fraction(3, 2)
+MUSIC_FADE_SECONDS = Fraction(13, 5)
 # Silence, in the dB the format speaks.
 SILENT_DB = "-96"
 

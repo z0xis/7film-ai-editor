@@ -18,6 +18,7 @@ from pathlib import Path
 from sevenfilm.domain import BeatGrid, MediaAsset, Shot
 from sevenfilm.services.planner import (
     OPENING_CATEGORIES,
+    OPENING_DETAIL_CUTS,
     OPENING_SECONDS,
     _duration_from_beats,
     _opening_beats,
@@ -154,11 +155,12 @@ class OpeningRampTests(unittest.TestCase):
         their films, 2.18 times its own weight. Nothing else is lifted."""
         self.assertIn(_opening_shoot().items[0].shot.category, OPENING_CATEGORIES)
 
-    def test_only_the_first_cut_is_steered_to_detail(self):
-        """Applied across the whole ramp it made all five opening shots details."""
-        opening = [i.shot.category for i in _opening_shoot().items[1:len(OPENING_SECONDS)]]
-        self.assertTrue(
-            any(category not in OPENING_CATEGORIES for category in opening), opening)
+    def test_the_detail_steer_stops_short_of_the_whole_ramp(self):
+        """The references run 40% detail across their first five shots. Steering only the
+        first cut left us at one in five; steering the whole ramp made all five details."""
+        opening = [i.shot.category for i in _opening_shoot().items[:len(OPENING_SECONDS)]]
+        details = sum(1 for category in opening if category in OPENING_CATEGORIES)
+        self.assertEqual(details, OPENING_DETAIL_CUTS, opening)
 
     def test_no_hold_lands_inside_the_opening(self):
         plan = _plan()
