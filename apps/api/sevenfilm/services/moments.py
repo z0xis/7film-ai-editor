@@ -153,6 +153,27 @@ def project_moments(database: Database, project_id: str) -> tuple[Moment, ...]:
     return tuple(found)
 
 
+def project_embeddings(database: Database, project_id: str) -> dict[str, np.ndarray]:
+    """Every shot's CLIP vector, unit length, for comparing shots to each other.
+
+    Already stored, so this costs a read. The perceptual hash cannot do this job: two takes of
+    one setup sit 17 bits apart on it, outside the near-duplicate threshold entirely.
+    """
+    rows = database.fetch_all(
+        """SELECT shot_features.shot_id, shot_features.embedding FROM shot_features
+           JOIN media_assets ON media_assets.id = shot_features.asset_id
+           WHERE media_assets.project_id = ? AND shot_features.embedding IS NOT NULL""",
+        (project_id,),
+    )
+    vectors: dict[str, np.ndarray] = {}
+    for row in rows:
+        vector = np.frombuffer(row["embedding"], dtype=np.float32)
+        norm = float(np.linalg.norm(vector))
+        if norm > 0:
+            vectors[str(row["shot_id"])] = vector / norm
+    return vectors
+
+
 def project_distractions(database: Database, project_id: str) -> frozenset[str]:
     """The shots this shoot holds that are about something the film is not about.
 

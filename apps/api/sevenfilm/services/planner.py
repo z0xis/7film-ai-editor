@@ -568,6 +568,30 @@ def _trailing_run(items: Sequence[TimelineItem], category: str) -> int:
     return run
 
 
+def _is_second_take(
+    shot: Shot,
+    previous: TimelineItem | None,
+    embeddings: Mapping[str, Any],
+    *,
+    same_scene: bool,
+) -> bool:
+    """Whether this shot is another take of the one just played rather than its next moment.
+
+    A sequence continues *within* a take, so a shot from the same file is never a second take
+    of itself however alike the two look. What this catches is the camera rolling twice on one
+    setup and both takes reaching the edit back to back.
+    """
+    if previous is None or not same_scene or not embeddings:
+        return False
+    if shot.asset_id == previous.shot.asset_id:
+        return False
+    here = embeddings.get(shot.id)
+    there = embeddings.get(previous.shot.id)
+    if here is None or there is None:
+        return False
+    return float(here @ there) >= SECOND_TAKE_SIMILARITY
+
+
 def _trailing_asset_run(items: Sequence[TimelineItem], asset_id: str) -> int:
     """How many shots the edit has just taken from this clip without leaving it."""
     run = 0
@@ -919,6 +943,22 @@ MOMENT_BONUS = 0.1
 # Scene runs come *up*, 26.7 to 29.7, because the band's stage was pulling the edit back to
 # the same corner of the room from every part of the evening.
 DISTRACTION_PENALTY = 0.05
+# How alike two shots have to look, coming from different files of one moment, before the
+# second reads as another take of the first rather than as the next shot of a sequence.
+#
+# The editor pointed at 36 seconds: "iki plan ard arda çok benziyor". C1974 and C1975, two
+# takes of the couple standing in the same spot, cut back to back at 0.939 similarity.
+#
+# The references do not forbid similar neighbours — measured across their 1201 consecutive
+# pairs they are *more* willing than this edit: 4.7% of theirs sit above 0.90 against 0.9% of
+# ours, and they reach 0.988. So this is not a rule about similarity. It is a rule about a
+# second take: same moment, different file, near-identical framing. Measured on this edit
+# exactly one pair qualifies — the one complained about — and no pair from a single file
+# continuing into itself comes near it, so a sequence is never touched.
+SECOND_TAKE_SIMILARITY = 0.90
+# Swept over three seeds: 0.05 takes the second-take pairs to none and the most alike pair in
+# the film from 0.919 to 0.899, while the six moments and the scene runs are untouched.
+SECOND_TAKE_PENALTY = 0.05
 # How long the film holds its last image.
 #
 # Measured across the 18 reference films, 1219 shots: their median shot runs 1.00 second and
@@ -1073,6 +1113,7 @@ def _score_candidate(
     still_life_repeat: bool = False,
     missing_moment: bool = False,
     distraction: bool = False,
+    second_take: bool = False,
     motion_targets: Mapping[str, float] | None = None,
     desired_duration: Fraction,
     random_jitter: float,
@@ -1140,6 +1181,7 @@ def _score_candidate(
     distraction_penalty = (
         DISTRACTION_PENALTY if (distraction and not missing_moment) else 0.0
     )
+    second_take_penalty = SECOND_TAKE_PENALTY if second_take else 0.0
     # Taking the next shot from the clip just used is a sequence, not a repetition, so it is
     # pulled towards: removing the charge alone changed nothing, the edit still took every one
     # of its 113 cuts from a different file, everything else in the score preferring a fresh
@@ -1173,6 +1215,7 @@ def _score_candidate(
         - still_life_penalty
         + moment_bonus
         - distraction_penalty
+        - second_take_penalty
         + take_bonus
         - reuse_penalty
         + random_jitter
@@ -1193,6 +1236,7 @@ def _score_candidate(
         "still_life_penalty": still_life_penalty,
         "moment_bonus": moment_bonus,
         "distraction_penalty": distraction_penalty,
+        "second_take_penalty": second_take_penalty,
         "reuse_penalty": reuse_penalty,
     }
 
@@ -1212,6 +1256,7 @@ def build_timeline(
     rejected: tuple[frozenset[str], frozenset[str]] | None = None,
     moments: Sequence[Moment] | None = None,
     distractions: frozenset[str] | None = None,
+    embeddings: Mapping[str, Any] | None = None,
 ) -> TimelinePlan:
     """Plan a varied edit and retain each score's human-readable rationale."""
     windows_by_shot = windows_by_shot or {}
@@ -1328,6 +1373,7 @@ def build_timeline(
     # A wedding film owes its subjects certain things. Each is carried by whichever of its
     # shots the edit can still use, and stops being owed as soon as one of them is in.
     distractions = distractions or frozenset()
+    embeddings = embeddings or {}
     moments = tuple(moments or ())
     moment_of_shot: dict[str, set[str]] = {}
     for moment in moments:
@@ -1459,6 +1505,13 @@ def build_timeline(
                     and scene_by_asset.get(shot.asset_id) in still_life_scenes),
                 missing_moment=shot.id in wanted_moment_shots,
                 distraction=shot.id in distractions,
+                second_take=_is_second_take(
+                    shot, plan.items[-1] if plan.items else None,
+                    embeddings, same_scene=(
+                        scene_by_asset.get(shot.asset_id) is not None
+                        and plan.items
+                        and scene_by_asset.get(shot.asset_id)
+                        == scene_by_asset.get(plan.items[-1].shot.asset_id))),
                 desired_duration=desired,
                 random_jitter=rng.uniform(-0.015, 0.015),
                 style_profile=style_profile,

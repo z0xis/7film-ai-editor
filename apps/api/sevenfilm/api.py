@@ -30,7 +30,11 @@ from .services.analysis import (
 )
 from .services.exporter import export_all, plan_as_dict
 from .services.media import generate_derivatives, index_folder, project_assets
-from .services.moments import project_distractions, project_moments
+from .services.moments import (
+    project_distractions,
+    project_embeddings,
+    project_moments,
+)
 from .services.music import plan_music
 from .services.planner import build_timeline, get_timeline, persist_timeline
 from .services.rejections import (
@@ -381,6 +385,7 @@ def create_timeline(project_id: str, request: TimelineRequest) -> dict[str, Any]
             rejected=project_rejections(DATABASE, project_id),
             moments=project_moments(DATABASE, project_id),
             distractions=project_distractions(DATABASE, project_id),
+            embeddings=project_embeddings(DATABASE, project_id),
         )
         plan.music_segments = music_segments
         plan.music_path = music_segments[0].path if music_segments else None
