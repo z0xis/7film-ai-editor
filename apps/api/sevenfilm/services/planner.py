@@ -1600,6 +1600,17 @@ def build_timeline(
         if selected_hash is not None:
             used_hashes.append(selected_hash)
 
+    shown = {name for moment in moments for name in ((moment.name,)) if name not in unshown}
+    doubtful = [moment for moment in moments if moment.uncertain and moment.name in shown]
+    if doubtful:
+        # Better said than quietly wrong: the affinity cannot prove the moment happened, only
+        # that this is the shoot's closest answer to it. Eighteen prompts were tried against
+        # this footage and every one found something, fireworks and a wedding car included.
+        plan.warnings.append(
+            "Şu anlar zayıf eşleşti, göz atın: "
+            + ", ".join(f"{moment.label} ({moment.best:.2f})" for moment in doubtful)
+            + ". Çekimde gerçekten olmayabilir."
+        )
     if current_frame < target_frames:
         available_seconds = frame_rate.seconds_from_frames(current_frame)
         raise InsufficientFootageError(

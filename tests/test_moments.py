@@ -16,7 +16,12 @@ from fractions import Fraction
 from pathlib import Path
 
 from sevenfilm.domain import BeatGrid, MediaAsset, Shot
-from sevenfilm.services.moments import MOMENT_LIFT, MOMENT_PROMPTS, Moment
+from sevenfilm.services.moments import (
+    MOMENT_CONFIDENT,
+    MOMENT_LIFT,
+    MOMENT_PROMPTS,
+    Moment,
+)
 from sevenfilm.services.planner import (
     CHRONOLOGY_SLACK,
     MOMENT_BONUS,
@@ -123,9 +128,42 @@ class EveryMomentReachesTheFilmTests(unittest.TestCase):
 
 
 class WhatTheFootageDoesNotHoldTests(unittest.TestCase):
-    def test_the_lift_is_a_bar_a_missing_moment_cannot_clear(self):
-        """A wedding with no cake should not be given one."""
+    """The affinity cannot prove a moment happened, only that this is the closest answer.
+
+    Eighteen prompts were tried against this shoot — fireworks, a decorated wedding car,
+    signing the register, none of which this wedding has — and every one cleared the lift,
+    scoring 1.26 to 1.94 with no gap anywhere. Two other tests were built and both failed the
+    same way: how many shots cluster near the top (fireworks 21, the ring 1), and how tightly
+    the best shots sit in time, which looked decisive until "a mother helping the bride into
+    her dress" came back with the tightest spread of all and three shots of the dance floor.
+
+    So the tool says so instead of pretending otherwise.
+    """
+
+    def test_the_lift_is_only_a_floor(self):
         self.assertGreater(MOMENT_LIFT, 1.0)
+
+    def test_a_weak_match_is_marked_for_the_editor_to_look_at(self):
+        weak = Moment(name="cake", shot_ids=("s1",), best=MOMENT_CONFIDENT - 0.01)
+        strong = Moment(name="cake", shot_ids=("s1",), best=MOMENT_CONFIDENT + 0.01)
+
+        self.assertTrue(weak.uncertain)
+        self.assertFalse(strong.uncertain)
+
+    def test_every_moment_has_a_name_the_editor_would_use(self):
+        for name in MOMENT_PROMPTS:
+            self.assertNotEqual(Moment(name=name, shot_ids=(), best=0.3).label, name)
+
+    def test_the_plan_says_which_moments_it_is_unsure_of(self):
+        moments = (
+            Moment(name="cake", shot_ids=("s0",), best=MOMENT_CONFIDENT - 0.05),
+            Moment(name="ring", shot_ids=("s1",), best=MOMENT_CONFIDENT + 0.05),
+        )
+        plan = EveryMomentReachesTheFilmTests().build(moments)
+        said = " ".join(plan.warnings)
+
+        self.assertIn("pasta kesme", said)
+        self.assertNotIn("yüzük", said)
 
 
 if __name__ == "__main__":

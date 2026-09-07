@@ -41,13 +41,39 @@ MOMENT_PROMPTS = {
     "cake_feed": "a bride and groom feeding each other a piece of cake",
     "first_dance": "a bride and groom dancing together alone on a dance floor",
 }
-# How far above the footage's own middle a shot has to sit before it counts as showing the
-# moment at all. Measured on this shoot the best match for each moment runs 0.30 to 0.35
-# against a median of 0.20 to 0.25, so the moments that are really there stand well clear —
-# and a wedding with no cake does not get a cake anyway.
+# A floor, and no more than that.
+#
+# It is tempting to read this as a presence test and it is not one. Eighteen prompts were tried
+# against this shoot, including fireworks, a decorated wedding car and signing the register,
+# none of which this wedding has. Every one of them cleared 1.25, scoring 1.26 to 1.94 with no
+# gap anywhere. Two other tests were built and both failed the same way: how many shots cluster
+# near the top (fireworks 21, the ring 1), and how tightly the best shots sit in time — which
+# looked decisive until "a mother helping the bride into her dress" came back with the tightest
+# spread of all and three shots of the dance floor.
+#
+# So on this footage CLIP cannot tell a moment that happened from the nearest thing to it. The
+# six in MOMENT_PROMPTS are trusted because they were checked by eye on this shoot, not because
+# they cleared this. What the floor does is keep out a prompt with no answer at all; a wedding
+# with no cake still gets its closest shot to a cake, one cut out of a hundred and ten, and the
+# warning below says so.
 MOMENT_LIFT = 1.25
 # How many of a moment's best shots are treated as candidates for it.
 MOMENT_SHORTLIST = 8
+
+
+# Below this the best answer is weak enough to be worth a second look. Read off the six checked
+# by eye on this shoot, whose best scores run 0.305 to 0.348.
+MOMENT_CONFIDENT = 0.30
+
+# What to call each moment when telling the editor about it.
+MOMENT_NAMES = {
+    "entrance": "çiftin girişi",
+    "ring": "yüzük",
+    "kiss": "öpücük",
+    "cake": "pasta kesme",
+    "cake_feed": "pasta yedirme",
+    "first_dance": "ilk dans",
+}
 
 
 @dataclass(frozen=True)
@@ -58,12 +84,21 @@ class Moment:
     shot_ids: tuple[str, ...]
     best: float
 
+    @property
+    def uncertain(self) -> bool:
+        """Worth the editor's eye: the footage may not hold this at all."""
+        return self.best < MOMENT_CONFIDENT
+
+    @property
+    def label(self) -> str:
+        return MOMENT_NAMES.get(self.name, self.name)
+
 
 def project_moments(database: Database, project_id: str) -> tuple[Moment, ...]:
-    """The moments this shoot actually contains, best shots first.
+    """The best answer this shoot has for each moment, best shots first.
 
-    A moment the footage does not hold is left out rather than filled with the least bad
-    thing: a wedding without a cake should not be given one.
+    Not a guarantee that the moment happened — see MOMENT_LIFT. `uncertain` marks the ones the
+    editor should look at.
     """
     rows = database.fetch_all(
         """SELECT shot_features.shot_id, shot_features.embedding FROM shot_features
