@@ -39,7 +39,15 @@ MOMENT_PROMPTS = {
     "kiss": "a bride and groom kissing",
     "cake": "a bride and groom cutting a wedding cake together with a knife",
     "cake_feed": "a bride and groom feeding each other a piece of cake",
-    "first_dance": "a bride and groom dancing together alone on a dance floor",
+    # Named by what is in the frame — a white dress, a suit, the two of them holding each
+    # other. "dancing together alone on a dance floor" was the weakest of the six: of its four
+    # best shots two were right, one was a guest with her arms up and one was the entrance
+    # corridor, and its best shots were spread over 7.1 minutes of the day rather than the one
+    # moment. This phrasing puts all four on the couple, inside a single minute.
+    "first_dance": (
+        "a bride in a white dress and a groom in a suit slow dancing together,"
+        " holding each other"
+    ),
 }
 # A floor, and no more than that.
 #
