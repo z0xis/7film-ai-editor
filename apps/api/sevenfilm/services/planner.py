@@ -960,6 +960,36 @@ SECOND_TAKE_SIMILARITY = 0.90
 # Swept over three seeds: 0.05 takes the second-take pairs to none and the most alike pair in
 # the film from 0.919 to 0.899, while the six moments and the scene runs are untouched.
 SECOND_TAKE_PENALTY = 0.05
+# A stretch this bad is not cut to at all, whatever else the shot has going for it.
+#
+# The score already knows about these — the back of a man's head filling the frame scored
+# -0.12 and -0.10 across half its cut — but knowing is not the same as acting, and raising the
+# window weight does not reach them: past 0.15 the day's order and the returns come apart
+# while the bad share barely moves. Charging the shot for the stretch it would use was tried
+# and measured worse on every count, because a shot that has already given the edit a cut has
+# a naturally poorer remainder and was being punished for having been used.
+#
+# So this is a gate rather than a price: a shot with nothing usable left for this cut is not a
+# candidate for it, and is free to come back for the next one.
+#
+# Swept over six seeds. Zero is where the framing and crowd charges exactly cancel a shot's
+# crispness — a stretch below it is one the film should not be sitting on — and it is also
+# where the numbers land best:
+#
+#   gate    bad cuts   very bad   scene runs   day's order
+#   none         19%         7%         24.5          0.83
+#   0.0          10%         0%         27.3          0.83
+#   0.2           6%         1%         27.0          0.84  (and a moment starts to go)
+#   0.3           7%         0%         30.5          0.82
+#
+# Scene runs *rise* — a shot turned away for one cut and taken for the next is how a run gets
+# built out of the good part of a clip.
+#
+# The first version of this table read 16% and 5% at zero. Half the gate was being swallowed
+# by a blind spot in _best_offset, which a test written for this found: window offsets are
+# half a second apart, so a narrow range falling between two of them left nothing to score and
+# the shot came back optimistically clean.
+UNUSABLE_RUN_SCORE = 0.0
 # How long the film holds its last image.
 #
 # Measured across the 18 reference films, 1219 shots: their median shot runs 1.00 second and
@@ -1033,6 +1063,34 @@ def _run_score(
     return min(_window_score(window, sharpness_bar, category) for window in covered)
 
 
+def _cut_run_score(
+    shot: Shot,
+    windows: Sequence[ShotWindow] | None,
+    consumed_frames: int,
+    wanted: Fraction,
+    sharpness_bar: float,
+) -> float:
+    """The best a cut of this length could be, taken from where this shot has got to."""
+    if not windows:
+        return 1.0
+    rate = shot.source_range.rate
+    handle = min(shot.source_range.duration_frames // 8, rate.frames_from_seconds(Fraction(1, 5)))
+    frames = min(
+        _remaining_source_frames(shot, consumed_frames),
+        rate.frames_from_seconds(wanted, rounding="nearest"),
+    )
+    if frames <= 0:
+        return 1.0
+    floor = handle + consumed_frames
+    _, value = _best_offset(
+        shot, windows, frames,
+        floor=floor,
+        ceiling=max(floor, shot.source_range.duration_frames - handle - frames),
+        sharpness_bar=sharpness_bar,
+    )
+    return value
+
+
 def _best_offset(
     shot: Shot,
     windows: Sequence[ShotWindow],
@@ -1050,12 +1108,19 @@ def _best_offset(
     if not windows:
         return floor, 1.0
     best_offset, best_value = floor, None
-    for window in windows:
-        offset = window.offset_frames
-        if offset < floor or offset > ceiling:
-            continue
-        first = next(
-            index for index, other in enumerate(windows) if other.offset_frames == offset
+    # The floor is always one of the candidates. Window offsets are half a second apart, so a
+    # narrow range between two of them used to leave nothing to score and the shot came back
+    # optimistically clean — which is how a stretch with nothing usable in it could still be
+    # offered to a cut.
+    offsets = [floor] + [
+        window.offset_frames for window in windows
+        if floor < window.offset_frames <= ceiling
+    ]
+    for offset in offsets:
+        # The window this run starts inside, which for the floor is the one at or before it.
+        first = max(
+            (index for index, other in enumerate(windows) if other.offset_frames <= offset),
+            default=0,
         )
         last = first
         while (
@@ -1493,6 +1558,18 @@ def build_timeline(
         desired = frame_rate.seconds_from_frames(
             max(1, frame_rate.frames_from_seconds(desired, rounding="nearest"))
         )
+        # A shot with nothing usable left for a cut of this length is not a candidate for it.
+        # It stays in the pool for the next cut, where a different length may reach a better
+        # stretch of it, and the whole pool is never emptied by this.
+        if UNUSABLE_RUN_SCORE is not None and windows_by_shot:
+            usable = [
+                shot for shot in available_shots
+                if _cut_run_score(
+                    shot, windows_by_shot.get(shot.id), consumed_source_frames[shot.id],
+                    desired, sharpness_bar) > UNUSABLE_RUN_SCORE
+            ]
+            if usable:
+                available_shots = usable
         preferred_categories = _preferred_categories(progress, style_profile)
         preferred_scales = _preferred_scales(progress)
         ranked: list[tuple[float, Shot, dict[str, float]]] = []
