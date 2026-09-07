@@ -9,7 +9,12 @@ from xml.etree import ElementTree as ET
 from sevenfilm.db import Database, now
 from sevenfilm.domain import BeatGrid, MediaAsset, MusicSegment, Shot, TimelineItem, TimelinePlan
 from sevenfilm.services.exporter import export_all, plan_as_dict
-from sevenfilm.services.planner import build_timeline, get_timeline, persist_timeline
+from sevenfilm.services.planner import (
+    OPENING_SECONDS,
+    build_timeline,
+    get_timeline,
+    persist_timeline,
+)
 from sevenfilm.timebase import FrameRate, TimeRange
 
 
@@ -55,7 +60,12 @@ class PlannerTests(unittest.TestCase):
             style_profile={"reference_count": 11, "beats_per_cut": {"low": 3, "medium": 2, "high": 1}},
             seed=7,
         )
-        self.assertEqual(plan.items[0].timeline_range.duration_seconds, Fraction(38, 25))
+        # Past the opening ramp, where the pace is the reference style's own rather than the
+        # film's arrival. Two beats of this grid; the ramp starts the body a frame further
+        # along it than it used to, so the beat the cut lands on is 1.48 rather than 1.52.
+        self.assertEqual(
+            plan.items[len(OPENING_SECONDS)].timeline_range.duration_seconds, Fraction(37, 25)
+        )
         self.assertIn("11 referanstan", plan.warnings[0])
 
     def test_export_writes_otio_fcpxml_and_explainable_plan(self):

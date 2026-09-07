@@ -292,6 +292,53 @@ def _target_beats_per_cut(
     return base * section / Fraction(str(median))
 
 
+# How long the film's opening shots run.
+#
+# Measured on the 18 references, 1219 shots: their first shot runs a median 2.36 seconds and
+# the length comes down a step at a time — 2.36, 1.76, 1.26, 1.08 — reaching their own median
+# of 1.00 by the fifth. The film arrives, is looked at, and only then starts cutting.
+#
+# Ours opened at 2.00 and never came down: 2.00, 1.96, 1.10, 0.80, 3.96, 1.96 — no settling,
+# and a four second hold landing inside the opening. "klibin intro ve outrosu kötü hatta yok".
+#
+# Held as seconds rather than beats because that is how they were measured, and turned into a
+# multiple of what the pacing already asked for, so it survives another song's tempo and the
+# profile's own intro section instead of overriding them.
+OPENING_SECONDS = (
+    Fraction(59, 25), Fraction(44, 25), Fraction(63, 50), Fraction(27, 25), Fraction(49, 50),
+)
+# One beat at the references' own median tempo, for a profile that carries no BPM.
+REFERENCE_BEAT_SECONDS = Fraction(60, 123)
+# How far past the asked-for opening a beat may land and still be taken. Without slack the
+# ramp only ever lands on beats at or under its target and the opening comes out short.
+OPENING_SLACK = Fraction(3, 2)
+
+
+def _opening_beats(
+    style_profile: Mapping[str, object] | None, wanted: Fraction
+) -> Fraction:
+    """The opening length in beats, so it carries to a song at another tempo.
+
+    The references were measured in seconds at their own median tempo. Two beats is two beats
+    at any BPM; "2.36 seconds" is five beats of a slow song and eight of a fast one.
+    """
+    bpm = style_profile.get("median_reference_bpm") if style_profile else None
+    if not isinstance(bpm, (int, float)) or bpm <= 0:
+        return wanted / REFERENCE_BEAT_SECONDS
+    return wanted * Fraction(str(bpm)) / 60
+
+
+def _worthy_shots(shots: Sequence[Shot], hold_bar: float) -> list[Shot]:
+    """The shots that can carry a long cut: better than half this shoot, subject readable,
+    and not cut by the frame edge."""
+    return [
+        shot for shot in shots
+        if shot.technical_quality >= hold_bar
+        and shot.face_edge < 0.5
+        and (shot.face_ratio == 0.0 or shot.face_ratio >= READABLE_FACE_RATIO)
+    ]
+
+
 def _beats_for_cut(target: Fraction, debt: Fraction) -> tuple[int, Fraction]:
     """Pick a whole number of beats, carrying the fraction over to the next cut.
 
@@ -414,6 +461,7 @@ def _duration_from_beats(
     style_profile: Mapping[str, object] | None = None,
     progress: float = 0.0,
     beats_per_cut: int | None = None,
+    hold_limit: Fraction | None = None,
 ) -> Fraction:
     """Hold for a whole number of beats, which is what makes an edit feel cut to the music.
 
@@ -434,7 +482,14 @@ def _duration_from_beats(
         )[0]
     if len(future) >= beats_per_cut:
         duration = future[beats_per_cut - 1] - start
-        limit = (preferred if preferred is not None else fallback) * MAX_BEAT_HOLD_FACTOR
+        # The limit keeps a cut from sitting on a dead shot when the grid is sparse. A caller
+        # that already knows how long this cut should run says so, or asking for more beats
+        # past the limit collapses back to `preferred` and comes out *shorter* — which is what
+        # the opening ramp did on its first attempt: eight beats gave 1.87 seconds where six
+        # gave 3.06.
+        limit = hold_limit if hold_limit is not None else (
+            (preferred if preferred is not None else fallback) * MAX_BEAT_HOLD_FACTOR
+        )
         if duration <= limit:
             return duration
     return preferred if preferred is not None else fallback
@@ -856,6 +911,13 @@ def _remaining_source_frames(shot: Shot, consumed_frames: int) -> int:
     rate = shot.source_range.rate
     handle = min(shot.source_range.duration_frames // 8, rate.frames_from_seconds(Fraction(1, 5)))
     return max(0, shot.source_range.duration_frames - handle * 2 - consumed_frames)
+
+
+def source_rate_seconds(shot: Shot, consumed_frames: int) -> Fraction:
+    """How much of this shot is still there to cut from, in seconds."""
+    return shot.source_range.rate.seconds_from_frames(
+        _remaining_source_frames(shot, consumed_frames)
+    )
 
 
 # What a half second of picture has to be free of. Both are measured, not guessed: the edit
@@ -1499,17 +1561,45 @@ def build_timeline(
         current_time = frame_rate.seconds_from_frames(current_frame)
         progress = current_frame / target_frames
         energy = _energy_at(music, current_time)
-        beats_per_cut, beat_debt = _beats_for_cut(
-            _target_beats_per_cut(style_profile, progress, energy), beat_debt
+        # The opening runs long and comes down to the film's own pace over its first few cuts.
+        opening = (
+            OPENING_SECONDS[len(plan.items)] if len(plan.items) < len(OPENING_SECONDS) else None
         )
+        pace = (
+            _opening_beats(style_profile, opening) if opening is not None
+            else _target_beats_per_cut(style_profile, progress, energy)
+        )
+        # The debt is carried through the ramp as everywhere else, and that is what keeps the
+        # opening's shape: paying it forward cut by cut held the measured distance to the
+        # references at 0.46 seconds, against 0.72 when each opening cut was rounded alone.
+        beats_per_cut, beat_debt = _beats_for_cut(pace, beat_debt)
         desired = _duration_from_beats(
-            music, current_time, energy, style_profile, progress, beats_per_cut
+            music, current_time, energy, style_profile, progress, beats_per_cut,
+            hold_limit=opening * OPENING_SLACK if opening is not None else None,
         )
         held_seconds = _held_seconds(style_profile, progress)
         frequency = _hold_frequency(
             _held_share(style_profile, progress), held_seconds, desired
         )
         hold, hold_debt = _hold_this_cut(frequency, hold_debt)
+        if opening is not None:
+            # The ramp is already the long shot here. A four second hold dropped into the
+            # fifth cut broke the settling and read as the edit stalling, not opening.
+            if hold:
+                hold, hold_debt = False, hold_debt + frequency
+            if desired > TYPICAL_CUT_SECONDS:
+                # An opening cut is on screen longer than the film's own median, so it is held
+                # to the same bar as a held shot — and it has to be long enough to fill the
+                # ramp. Without that second condition the pacing asked for 2.50 seconds, a
+                # 1.10 second shot won it, and the opening came out shorter than before the
+                # ramp existed. Where nothing clears both the edit opens on the best it has
+                # rather than refusing to start.
+                worth_opening = [
+                    shot for shot in _worthy_shots(available_shots, hold_bar)
+                    if source_rate_seconds(shot, consumed_source_frames[shot.id]) >= desired
+                ]
+                if worth_opening:
+                    available_shots = worth_opening
         if hold:
             held = _held_duration(
                 music, current_time, held_seconds,
@@ -1524,12 +1614,7 @@ def build_timeline(
                 # A held shot has to bear four seconds of looking: better than half this
                 # shoot's footage, its subject readable rather than a figure across a room,
                 # and not cut by the frame edge.
-                worthy = [
-                    shot for shot in available_shots
-                    if shot.technical_quality >= hold_bar
-                    and shot.face_edge < 0.5
-                    and (shot.face_ratio == 0.0 or shot.face_ratio >= READABLE_FACE_RATIO)
-                ]
+                worthy = _worthy_shots(available_shots, hold_bar)
                 if energy == SLOW_MOTION_ENERGY:
                     # This hold will be played at half speed, so it is on screen twice as long
                     # as it was shot. Measured on an edit that shipped: the six slowed shots

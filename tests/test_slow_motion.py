@@ -19,6 +19,7 @@ from xml.etree import ElementTree as ET
 from sevenfilm.domain import BeatGrid, MediaAsset, Shot
 from sevenfilm.services.exporter import export_fcpxml
 from sevenfilm.services.planner import (
+    OPENING_SECONDS,
     SLOW_MOTION_ENERGY,
     SLOW_MOTION_SPEED,
     build_timeline,
@@ -84,8 +85,11 @@ class WhereTheEditSlowsDownTests(unittest.TestCase):
         """Slowing the cutting rhythm instead would only make the edit sluggish."""
         plan = _plan(SLOW_MOTION_ENERGY, self.tmp)
         slowed = _slowed(plan)
-        # The closing shot is deliberately the longest cut in the film and is not a held shot.
-        ordinary = [item for item in plan.items[:-1] if item not in slowed]
+        # The closing shot and the opening ramp are the film's deliberate long cuts and are
+        # not held shots, so neither is part of "ordinary".
+        ordinary = [
+            item for item in plan.items[len(OPENING_SECONDS):-1] if item not in slowed
+        ]
         longest_ordinary = max(item.timeline_range.duration_seconds for item in ordinary)
 
         for item in slowed:

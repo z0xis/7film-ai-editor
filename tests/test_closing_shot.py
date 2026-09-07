@@ -14,7 +14,12 @@ from fractions import Fraction
 from pathlib import Path
 
 from sevenfilm.domain import BeatGrid, MediaAsset, Shot
-from sevenfilm.services.planner import CLOSING_SECONDS, build_timeline
+from sevenfilm.services.planner import (
+    CLOSING_SECONDS,
+    HELD_SHOT_SECONDS,
+    OPENING_SECONDS,
+    build_timeline,
+)
 from sevenfilm.timebase import FrameRate, TimeRange
 
 RATE = FrameRate(50)
@@ -51,14 +56,21 @@ class TheFilmHoldsItsLastImageTests(unittest.TestCase):
 
         self.assertGreaterEqual(plan.items[-1].timeline_range.duration_seconds, CLOSING_SECONDS)
 
-    def test_it_is_the_longest_cut_in_the_film(self):
+    def test_it_is_longer_than_any_ordinary_cut(self):
+        """Not longer than *every* cut: measured on the 18 references, 13 of them close on
+        something shorter than their own longest shot, and their held shots run a median 4.0
+        seconds against a median close of 3.17. The claim that holds it is that the film
+        finishes rather than stops — so it is measured against the ordinary cutting, with the
+        deliberate long shots (the opening ramp and the held shots) left out."""
         plan = _plan()
-        longest_before = max(
-            item.timeline_range.duration_seconds for item in plan.items[:-1]
-        )
+        ordinary = [
+            item.timeline_range.duration_seconds
+            for item in plan.items[len(OPENING_SECONDS):-1]
+            if item.timeline_range.duration_seconds < HELD_SHOT_SECONDS
+        ]
 
         self.assertGreaterEqual(
-            plan.items[-1].timeline_range.duration_seconds, longest_before)
+            plan.items[-1].timeline_range.duration_seconds, max(ordinary))
 
     def test_the_edit_still_lands_on_its_target_exactly(self):
         self.assertEqual(_plan().duration, Fraction(150))
