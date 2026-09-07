@@ -115,6 +115,9 @@ geldiğinde veriliyor. 8 seed'de altı anın hepsi, hepsinde, ve sırayla: giri�
 | `1a67fe8` | Yavaş çekim barajı: çekimin ortasının altındaki hiçbir şey uzatılmıyor |
 | `4ce77bc` | İndekslenmiş dosya bir daha okunmuyordu; 16 dikey klip yatay kayıtlıydı |
 | `7494d11` | An kapısının varlık ispatladığı iddiası yanlıştı; zayıf eşleşme artık söyleniyor |
+| `08fcfea` | Yavaş çekimli klip **dosyanın başından** oynuyordu, seçilen andan değil |
+| `28ad3cc` | Detay/mekân planı asla yavaşlatılmıyor (masadaki çiçek 4 saniye yavaştı) |
+| `c72a979` | `ilk dans` istemi kadrajda ne olduğuyla adlandırıldı; 4'te 2 → 4'te 4 |
 
 ---
 
@@ -138,6 +141,12 @@ geldiğinde veriliyor. 8 seed'de altı anın hepsi, hepsinde, ve sırayla: giri�
 - **Kök mount her şeyi yutuyor.** `app.mount("/", StaticFiles…)` kendinden **sonra** tanımlanan
   her yolu yutar. Ret uçları böyle ölü kalmıştı: panel kutuyu gösterir, kutu hiçbir şey yapmaz.
   O mount dosyanın en sonunda kalmalı.
+- **timeMap taşıyan klibin `start` giriş noktası yok sayılıyor.** Retime edilen klip
+  medyanın başından oynuyor; dört yazım biçimi denendi, retime üreten ikisi de aynı şeyi
+  yaptı. Çare: retime edilen klibe **kendi `asset` girdisini** vermek, `start`'ı giriş
+  noktası olacak şekilde — o zaman "medyanın başı" doğru yer oluyor.
+- **Kare sayısıyla retime aranmaz.** 25 fps'lik bir klipte 2 saniye 50 kaynak karesi ama
+  50 fps timeline'da 100 karedir; saniye üzerinden karşılaştırın.
 - **`videoMonitorFormat` yazılabiliyor**, `timelinePlaybackFrameRate` yazılamıyor.
   Yeni timeline projenin monitör formatını alıyor, kendi hızını değil.
 - **`MediaPoolItem.SetClipProperty('FPS', …)` çalışıyor** ama klibin *tüm proje* boyunca
@@ -191,7 +200,10 @@ Bu listenin **ölçülebileni ölçmemenin bahanesi olmadığına** dikkat edin:
 - **Eklenti yeniden kuruldu** (`scripts/install_resolve_plugin.sh`) — kurulu kopya repo'nun
   kopyasıdır ve repo değişince kendiliğinden değişmez. Yavaş çekim ve monitör düzeltmesi
   ancak yeniden kurulumla gelir. Eski motorlar kapatıldı; panel açılınca yenisi doğar.
-- `İS` projesinin 850 şotu hâlâ analiz edilmemiş.
+- **`İS` projesi aynı çekimin terk edilmiş kopyası.** Ölçüldü: 345 klibinin 345'i
+  `elenora mustafa` ile aynı dosya, hiç kurgusu ve müziği yok, ondan önce (2 Eylül)
+  oluşturulmuş. Analiz etmek ~5 saatte zaten var olanı üretmek olur — yapılmadı. Kurgucu
+  isterse silinebilir; silme geri alınamaz olduğu için ona bırakıldı.
 - **Ön plan tıkanıklığı ölçülemiyor.** Kurgucu "önden geçen adam" dedi; ölçtüm ve hiçbir
   sinyal yok: pencere puanı 0,77–0,88, yüz oranı şot boyunca düz (0,012), "arkadaki" tanımı
   *küçük ve uzak* yüzler olduğu için önden geçen biri özne sanılıyor. Şikâyet edilen kesimin
@@ -205,6 +217,10 @@ Bu listenin **ölçülebileni ölçmemenin bahanesi olmadığına** dikkat edin:
 
 ## Değişmeyen çalışma kuralları
 
+- **Bir düzeltmeden sonra kurguyu Resolve'a yeniden gönder.** Kurgucu iki tur boyunca eski
+  timeline'a bakarken "düzeldi" dendi. Timeline adına saat koyun.
+- **Doğrularken neyi doğrulamadığını sor.** Yavaş çekimde hız 0.50× diye doğrulandı ve
+  *nereden başladığı* hiç kontrol edilmedi; klip yanlış yerden oynuyordu.
 - **Kendi ölçüm betiğin de sessizce boş çalışabilir.** "345 klipte 0 uyuşmazlık" sonucu
   aldım; `ffprobe` PATH'te olmadığı için 345 dosyanın hepsi `except` ile atlanmıştı. Bir
   ölçüm sıfır sorun bulduğunda, önce kaç şeye gerçekten baktığını yazdır.
