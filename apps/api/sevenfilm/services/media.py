@@ -202,6 +202,59 @@ def project_assets(database: Database, project_id: str) -> list[MediaAsset]:
     return [row_to_asset(row) for row in rows]
 
 
+def _refresh_metadata(
+    database: Database, asset_id: str, path: Path, project_id: str
+) -> None:
+    """Read a file the project already knows about again, and correct what has changed.
+
+    An indexed file used to be skipped outright, so a fix to how metadata is read never
+    reached the footage that had been indexed before it. That is not hypothetical: the
+    rotation fix — a phone shooting vertically codes a landscape frame and attaches a matrix
+    saying to turn it — landed after this shoot was indexed, and sixteen portrait clips kept
+    the landscape shape they were first given. Their proxies came out portrait, because ffmpeg
+    applies the matrix, while the FCPXML went on declaring them 3840x2160.
+
+    A probe is about fifty milliseconds. Being wrong about the shape of a clip forever is not
+    worth saving that.
+    """
+    try:
+        details = metadata_from_probe(path, probe(path))
+    except UNREADABLE_MEDIA:
+        # It was readable when it was indexed and is not now: leave the row alone rather than
+        # blanking an edit's source out of a transient failure.
+        return
+    fields = {
+        "duration_seconds": str(details["duration"]),
+        "frame_rate": f"{details['frame_rate'].numerator}/{details['frame_rate'].denominator}",
+        "width": details["width"],
+        "height": details["height"],
+        "codec": details["codec"],
+        "timecode": details["timecode"],
+    }
+    current = database.fetch_one(
+        "SELECT duration_seconds, frame_rate, width, height, codec, timecode"
+        " FROM media_assets WHERE id = ?",
+        (asset_id,),
+    )
+    if current is None:
+        return
+    changed = {
+        key: value for key, value in fields.items()
+        if str(current[key]) != str(value)
+    }
+    if not changed:
+        return
+    assignments = ", ".join(f"{key} = ?" for key in changed)
+    database.execute(
+        f"UPDATE media_assets SET {assignments} WHERE id = ?",
+        (*changed.values(), asset_id),
+    )
+    LOGGER.info(json.dumps({
+        "event": "media_metadata_corrected", "project_id": project_id,
+        "path": str(path), "changed": sorted(changed),
+    }))
+
+
 def index_folder(database: Database, project_id: str, folder: Path, job_id: str) -> list[MediaAsset]:
     """Index source files. No command in this function writes to source folders."""
     source_folder = folder.expanduser().resolve()
@@ -285,6 +338,8 @@ def index_folder(database: Database, project_id: str, folder: Path, job_id: str)
                     "created_at": now(),
                 },
             )
+        else:
+            _refresh_metadata(database, str(existing["id"]), path, project_id)
         completed_paths.add(str(path))
         database.update_job(
             job_id,
