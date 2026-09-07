@@ -906,6 +906,19 @@ STILL_LIFE_REPEAT_PENALTY = 0.1
 # nothing else — the bad-cut share, the day's order and the mean technical quality are
 # unmoved. A wedding film that does not show the ring is not paying for its sequences.
 MOMENT_BONUS = 0.1
+# What a shot gives up for being about the band rather than about the wedding.
+#
+# The band plays at every wedding and belongs in the background of the party. Measured on an
+# edit the editor watched through: a quarter of its cuts came from this shoot's top tenth for
+# "a wedding band performing on stage" — two and a half times an even hand — and the singer
+# alone ran 17%. "solist çok fazla görünüyor, hem bu planda hem genel."
+#
+# Swept over three seeds: 0.05 brings the band's share of the cuts to exactly 10%, which is
+# the share an even hand would give it, and it stops there — the band is part of the party and
+# is not being banished. 0.20 takes it to nothing and costs the day's order, 0.84 to 0.78.
+# Scene runs come *up*, 26.7 to 29.7, because the band's stage was pulling the edit back to
+# the same corner of the room from every part of the evening.
+DISTRACTION_PENALTY = 0.05
 # How long the film holds its last image.
 #
 # Measured across the 18 reference films, 1219 shots: their median shot runs 1.00 second and
@@ -1059,6 +1072,7 @@ def _score_candidate(
     window_quality: float = 1.0,
     still_life_repeat: bool = False,
     missing_moment: bool = False,
+    distraction: bool = False,
     motion_targets: Mapping[str, float] | None = None,
     desired_duration: Fraction,
     random_jitter: float,
@@ -1121,6 +1135,11 @@ def _score_candidate(
         distance = abs(day_position - progress)
         chronology_penalty = CHRONOLOGY_WEIGHT * max(0.0, distance - CHRONOLOGY_SLACK)
     moment_bonus = MOMENT_BONUS if (missing_moment and chronology_penalty == 0.0) else 0.0
+    # A moment the film owes is never suppressed for happening in front of the band: the first
+    # dance is *in* front of the band. Without this the six moments came out at 5.7 of six.
+    distraction_penalty = (
+        DISTRACTION_PENALTY if (distraction and not missing_moment) else 0.0
+    )
     # Taking the next shot from the clip just used is a sequence, not a repetition, so it is
     # pulled towards: removing the charge alone changed nothing, the edit still took every one
     # of its 113 cuts from a different file, everything else in the score preferring a fresh
@@ -1153,6 +1172,7 @@ def _score_candidate(
         - window_penalty
         - still_life_penalty
         + moment_bonus
+        - distraction_penalty
         + take_bonus
         - reuse_penalty
         + random_jitter
@@ -1172,6 +1192,7 @@ def _score_candidate(
         "window_penalty": window_penalty,
         "still_life_penalty": still_life_penalty,
         "moment_bonus": moment_bonus,
+        "distraction_penalty": distraction_penalty,
         "reuse_penalty": reuse_penalty,
     }
 
@@ -1190,6 +1211,7 @@ def build_timeline(
     windows_by_shot: Mapping[str, Sequence[ShotWindow]] | None = None,
     rejected: tuple[frozenset[str], frozenset[str]] | None = None,
     moments: Sequence[Moment] | None = None,
+    distractions: frozenset[str] | None = None,
 ) -> TimelinePlan:
     """Plan a varied edit and retain each score's human-readable rationale."""
     windows_by_shot = windows_by_shot or {}
@@ -1305,6 +1327,7 @@ def build_timeline(
     motion_targets = _motion_targets(candidates)
     # A wedding film owes its subjects certain things. Each is carried by whichever of its
     # shots the edit can still use, and stops being owed as soon as one of them is in.
+    distractions = distractions or frozenset()
     moments = tuple(moments or ())
     moment_of_shot: dict[str, set[str]] = {}
     for moment in moments:
@@ -1435,6 +1458,7 @@ def build_timeline(
                     shot.id in faceless
                     and scene_by_asset.get(shot.asset_id) in still_life_scenes),
                 missing_moment=shot.id in wanted_moment_shots,
+                distraction=shot.id in distractions,
                 desired_duration=desired,
                 random_jitter=rng.uniform(-0.015, 0.015),
                 style_profile=style_profile,

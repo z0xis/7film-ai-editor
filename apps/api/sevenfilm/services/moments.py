@@ -49,6 +49,20 @@ MOMENT_PROMPTS = {
         " holding each other"
     ),
 }
+# What a wedding film should not dwell on. The band plays at every wedding and belongs in the
+# background of the party; it is not the subject.
+#
+# Measured on an edit the editor watched through: of the shots in this shoot's top tenth for
+# "a wedding band performing on stage", 25% of the film's cuts were among them — two and a half
+# times what an even hand would give. The singer alone ran 17%. "solist çok fazla görünüyor,
+# hem bu planda hem genel."
+DISTRACTION_PROMPTS = {
+    "band": "a wedding band performing on stage with instruments and a singer",
+}
+# Where a shot stops being a party shot with a band behind it and becomes a shot of the band.
+DISTRACTION_QUANTILE = 0.90
+
+
 # A floor, and no more than that.
 #
 # It is tempting to read this as a presence test and it is not one. Eighteen prompts were tried
@@ -139,8 +153,43 @@ def project_moments(database: Database, project_id: str) -> tuple[Moment, ...]:
     return tuple(found)
 
 
+def project_distractions(database: Database, project_id: str) -> frozenset[str]:
+    """The shots this shoot holds that are about something the film is not about.
+
+    Read as a share of the shoot rather than an absolute score, because a band fills more of
+    some weddings than others and the question is which of *these* shots are the band's.
+    """
+    rows = database.fetch_all(
+        """SELECT shot_features.shot_id, shot_features.embedding FROM shot_features
+           JOIN media_assets ON media_assets.id = shot_features.asset_id
+           WHERE media_assets.project_id = ? AND shot_features.embedding IS NOT NULL""",
+        (project_id,),
+    )
+    if not rows:
+        return frozenset()
+    text = _text_features(list(DISTRACTION_PROMPTS.values()))
+    if text is None:
+        return frozenset()
+    shot_ids = [str(row["shot_id"]) for row in rows]
+    vectors = np.stack([np.frombuffer(row["embedding"], dtype=np.float32) for row in rows])
+    vectors = vectors / (np.linalg.norm(vectors, axis=1, keepdims=True) + 1e-9)
+    similarity = vectors @ text.T
+    found: set[str] = set()
+    for index in range(similarity.shape[1]):
+        column = similarity[:, index]
+        bar = float(np.quantile(column, DISTRACTION_QUANTILE))
+        found.update(
+            shot_id for shot_id, value in zip(shot_ids, column, strict=True) if value >= bar
+        )
+    return frozenset(found)
+
+
 def _moment_text_features() -> np.ndarray | None:
-    """Encode the prompts. Only text, so the images never have to be read again."""
+    """Encode the moment prompts. Only text, so the images never have to be read again."""
+    return _text_features(list(MOMENT_PROMPTS.values()))
+
+
+def _text_features(prompts: list[str]) -> np.ndarray | None:
     try:
         import torch
 
@@ -151,7 +200,7 @@ def _moment_text_features() -> np.ndarray | None:
             return None
         with torch.inference_mode():
             inputs = classifier._processor(
-                text=list(MOMENT_PROMPTS.values()), return_tensors="pt", padding=True
+                text=prompts, return_tensors="pt", padding=True
             )
             features = classifier._model.get_text_features(
                 **{key: value.to(classifier._device) for key, value in inputs.items()}
@@ -161,5 +210,5 @@ def _moment_text_features() -> np.ndarray | None:
             encoded = features.cpu().numpy()
         return encoded / (np.linalg.norm(encoded, axis=1, keepdims=True) + 1e-9)
     except Exception as error:  # noqa: BLE001 - optional ML boundary, the edit works without it.
-        LOGGER.warning("Moment prompts unavailable, planning without them: %s", error)
+        LOGGER.warning("CLIP prompts unavailable, planning without them: %s", error)
         return None
