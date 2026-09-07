@@ -241,6 +241,17 @@ class NothingWeakIsStretchedTests(unittest.TestCase):
                               frame_rate=RATE, target_duration=Fraction(150), seed=1,
                               style_profile=profile, windows_by_shot=windows)
 
+    def test_a_cut_that_could_not_hold_is_not_slowed_either(self):
+        """When no beat lands in range there is no hold, and the flag used to stay standing:
+        the cut was slowed to half speed while its candidate pool was never narrowed, so the
+        shot playing at 0.50x had passed none of the tests a slowed shot has to pass. That is
+        how a table centrepiece came to run in slow motion."""
+        plan = self.plan()
+        for item in plan.items:
+            if item.source_range.duration_seconds == item.timeline_range.duration_seconds:
+                continue
+            self.assertNotIn(item.shot.category, ("detail", "venue"), item.shot.id)
+
     def test_a_shot_below_the_shoot_own_middle_is_never_stretched(self):
         plan = self.plan()
         slowed = [

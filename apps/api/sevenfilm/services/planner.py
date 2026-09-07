@@ -307,6 +307,19 @@ def _target_beats_per_cut(
 OPENING_SECONDS = (
     Fraction(59, 25), Fraction(44, 25), Fraction(63, 50), Fraction(27, 25), Fraction(49, 50),
 )
+# What the film opens on.
+#
+# Measured across the 18 references, 1219 shots: detail shots make up 40% of their first five
+# against 18% of their films, 2.18 times their own weight. Nothing else is lifted — venue 0.91,
+# bride 0.86 — and the two categories the opening avoids are the ones ours was opening on:
+# couple 0.56 and family 0.49.
+OPENING_CATEGORIES = frozenset({"detail"})
+# And it opens at the start of the day. The edit runs chronologically, so a detail shot is not
+# enough on its own: the first cut of one edit was a cake and glasses at 0.50 of the way
+# through the shoot — "direkt pasta kadehten başlamış iyi seçim değil". The chronology penalty
+# alone is too soft to keep the opening out of the evening, being 0.2 of a score that a strong
+# shot clears easily.
+OPENING_DAY_LIMIT = 0.25
 # One beat at the references' own median tempo, for a profile that carries no BPM.
 REFERENCE_BEAT_SECONDS = Fraction(60, 123)
 # How far past the asked-for opening a beat may land and still be taken. Without slack the
@@ -1600,6 +1613,29 @@ def build_timeline(
                 ]
                 if worth_opening:
                     available_shots = worth_opening
+            # The opening belongs to the start of the day, and the references open on detail.
+            # Both are narrowed to whatever is left rather than required, so a shoot with no
+            # morning detail still opens on something.
+            # Only the very first cut. Held across the whole ramp, the category steer made
+            # all five opening shots details where the references run 40%, and the day limit
+            # pinned the pool to the earliest minutes of the shoot hard enough to override
+            # the still-life rule and put two records of one sign into the opening.
+            narrowers = (
+                # Steering the first cut to a detail can hand the film a still life, and the
+                # ordinary repeat penalty is too small to stop a second record of the same
+                # object arriving in the very next cut — a shoot that rolled its welcome sign
+                # twice put both into the opening. Inside the ramp the scene is refused
+                # outright rather than charged for.
+                (lambda shot: scene_by_asset.get(shot.asset_id) not in still_life_scenes,)
+                if plan.items else (
+                    lambda shot: day_by_asset.get(shot.asset_id, 0.0) <= OPENING_DAY_LIMIT,
+                    lambda shot: shot.category in OPENING_CATEGORIES,
+                )
+            )
+            for narrower in narrowers:
+                narrowed = [shot for shot in available_shots if narrower(shot)]
+                if narrowed:
+                    available_shots = narrowed
         if hold:
             held = _held_duration(
                 music, current_time, held_seconds,
@@ -1651,6 +1687,13 @@ def build_timeline(
             else:
                 # No room left to hold: give the frequency back so it is spent at a cut where
                 # a beat does land, rather than lost.
+                #
+                # And this is not a hold any more. Leaving the flag standing meant the cut was
+                # still treated as one further down — it was slowed to half speed while its
+                # candidate pool was never narrowed, so the shot played at 0.50x had passed
+                # none of the tests a slowed shot has to pass. That is how a table centrepiece
+                # came to run in slow motion: "gereksiz yerde çiçek".
+                hold = False
                 hold_debt += frequency
         desired = frame_rate.seconds_from_frames(
             max(1, frame_rate.frames_from_seconds(desired, rounding="nearest"))
@@ -1775,6 +1818,13 @@ def build_timeline(
         ) or remaining_frames - frame_rate.frames_from_seconds(desired) < minimum_cut_frames
         if finishing:
             desired = remaining_seconds
+            # The closing runs at speed. Half speed was decided for a *held* shot, out of the
+            # narrowed pool the hold had picked — better than this film's own middle, and not
+            # a still life. The closing then reaches outside that pool, and carrying the
+            # halved speed across meant a shot that had been kept out of slow motion on
+            # purpose came back playing at half speed: one seed ended on a table centrepiece
+            # at 0.50x, which is the "gereksiz yerde çiçek" the slowing rule exists to stop.
+            speed = Fraction(1)
             # Every shot that still has source, not the pool this cut happened to be drawn
             # from. A closing that lands on a held shot was choosing out of the hold's own
             # narrowed pool, and where nothing in it could carry the whole tail the cut came up

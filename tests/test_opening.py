@@ -17,6 +17,7 @@ from pathlib import Path
 
 from sevenfilm.domain import BeatGrid, MediaAsset, Shot
 from sevenfilm.services.planner import (
+    OPENING_CATEGORIES,
     OPENING_SECONDS,
     _duration_from_beats,
     _opening_beats,
@@ -49,6 +50,52 @@ def _plan(clips=120, long_clips=True):
             category=categories[index % len(categories)], shot_scale="medium",
             technical_quality=.8, aesthetic_score=.8, motion_score=.5, confidence=.9,
             duplicate_group=f"visual:{index:016x}", brightness=.36, saturation=.15,
+            highlight_clipping=.01))
+    beats = tuple(Fraction(i * 60, 123) for i in range(900))
+    music = BeatGrid(bpm=123, beats=beats, duration=Fraction(450),
+                     sections=({"energy": "medium", "start": "0", "end": "450"},))
+    return build_timeline(project_id="p", assets=assets, shots=shots, music=music,
+                          frame_rate=RATE, target_duration=Fraction(120),
+                          style_profile=PROFILE, seed=1)
+
+
+def _opening_shoot():
+    """A shoot whose morning holds one long detail shot, and whose evening holds a better one.
+
+    Without the day limit the evening shot wins on merit — it is the stronger picture — which
+    is how an edit came to open on the cake.
+    """
+    assets, shots = [], []
+    plans = [
+        ("sabah-detay.mov", "detail", 0.80, "09:00:00:00"),
+        ("aksam-detay.mov", "detail", 0.95, "21:00:00:00"),
+        ("sabah-cift.mov", "couple", 0.90, "09:02:00:00"),
+    ]
+    for index, (name, category, quality, recorded) in enumerate(plans):
+        one = MediaAsset(id=f"o{index}", project_id="p", path=Path(f"/m/{name}"), name=name,
+                         duration=Fraction(11), frame_rate=RATE, width=1920, height=1080,
+                         timecode=recorded)
+        assets.append(one)
+        shots.append(Shot(
+            id=f"os{index}", asset_id=one.id, source_range=TimeRange(0, 500, RATE),
+            category=category, shot_scale="medium", technical_quality=quality,
+            aesthetic_score=quality, motion_score=.5, confidence=.9,
+            duplicate_group=f"visual:{index:016x}", brightness=.36, saturation=.15,
+            highlight_clipping=.01))
+    # and a body of ordinary material spread across the day, so the edit has something to cut
+    for index in range(90):
+        clock = 9 * 3600 + 300 + index * 900
+        one = MediaAsset(
+            id=f"b{index}", project_id="p", path=Path(f"/m/b{index}.mov"),
+            name=f"b{index}.mov", duration=Fraction(4), frame_rate=RATE, width=1920,
+            height=1080,
+            timecode=f"{clock // 3600:02}:{clock // 60 % 60:02}:{clock % 60:02}:00")
+        assets.append(one)
+        shots.append(Shot(
+            id=f"bs{index}", asset_id=one.id, source_range=TimeRange(0, 150, RATE),
+            category=("couple", "bride", "groom", "party")[index % 4], shot_scale="medium",
+            technical_quality=.7, aesthetic_score=.7, motion_score=.5, confidence=.9,
+            duplicate_group=f"visual:{index + 900:016x}", brightness=.36, saturation=.15,
             highlight_clipping=.01))
     beats = tuple(Fraction(i * 60, 123) for i in range(900))
     music = BeatGrid(bpm=123, beats=beats, duration=Fraction(450),
@@ -95,6 +142,23 @@ class OpeningRampTests(unittest.TestCase):
         plan = _plan()
         self.assertGreaterEqual(
             plan.items[0].timeline_range.duration_seconds, Fraction(2))
+
+    def test_the_film_opens_at_the_start_of_the_day(self):
+        """The edit runs chronologically and one opened on cake and glasses from halfway
+        through the shoot: "direkt pasta kadehten başlamış iyi seçim değil"."""
+        plan = _opening_shoot()
+        self.assertEqual(plan.items[0].asset.name, "sabah-detay.mov")
+
+    def test_it_opens_on_a_detail(self):
+        """Measured on the references: detail is 40% of their first five shots against 18% of
+        their films, 2.18 times its own weight. Nothing else is lifted."""
+        self.assertIn(_opening_shoot().items[0].shot.category, OPENING_CATEGORIES)
+
+    def test_only_the_first_cut_is_steered_to_detail(self):
+        """Applied across the whole ramp it made all five opening shots details."""
+        opening = [i.shot.category for i in _opening_shoot().items[1:len(OPENING_SECONDS)]]
+        self.assertTrue(
+            any(category not in OPENING_CATEGORIES for category in opening), opening)
 
     def test_no_hold_lands_inside_the_opening(self):
         plan = _plan()
