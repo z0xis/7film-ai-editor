@@ -1000,25 +1000,37 @@ def _motion_targets(shots: Sequence[Shot]) -> dict[str, float]:
     }
 
 
-def _window_score(window: ShotWindow, sharpness_bar: float) -> float:
+def _window_score(
+    window: ShotWindow, sharpness_bar: float, category: str = ""
+) -> float:
     """How good this half second is as picture, on the shoot's own scale.
 
     Laplacian variance has no absolute meaning — it moves with resolution, grade and content —
     so crispness is read against this shoot's median rather than a number written here.
+
+    The face terms are dropped on a shot of a thing or a place. On the three table shots in
+    one edit the detector reported 12, 23 and 53 faces and put one against the frame edge in
+    all three; there is not a person in any of them. It reads bowls, chairs and flowers as
+    faces, and at 0.048 of the frame — large enough that the readable-face floor cannot catch
+    them. Their scores came out as noise: the editor's favourite of the three scored -0.35 and
+    the one they objected to scored 0.88.
     """
     crisp = min(1.0, window.sharpness / sharpness_bar) if sharpness_bar > 0 else 1.0
+    if category in STILL_CATEGORIES:
+        return crisp
     crowd = min(window.bystanders, BYSTANDER_LIMIT) / BYSTANDER_LIMIT
     return crisp - FRAME_EDGE_PENALTY * window.face_edge - BYSTANDER_PENALTY * crowd
 
 
 def _run_score(
-    windows: Sequence[ShotWindow], first: int, last: int, sharpness_bar: float
+    windows: Sequence[ShotWindow], first: int, last: int, sharpness_bar: float,
+    category: str = "",
 ) -> float:
     """The worst half second decides. A cut is only as good as the frame that spoils it."""
     covered = windows[first : last + 1]
     if not covered:
         return 0.0
-    return min(_window_score(window, sharpness_bar) for window in covered)
+    return min(_window_score(window, sharpness_bar, category) for window in covered)
 
 
 def _best_offset(
@@ -1051,7 +1063,7 @@ def _best_offset(
             and windows[last + 1].offset_frames < offset + frames
         ):
             last += 1
-        value = _run_score(windows, first, last, sharpness_bar)
+        value = _run_score(windows, first, last, sharpness_bar, shot.category)
         if best_value is None or value > best_value:
             best_offset, best_value = offset, value
     if best_value is None:
