@@ -118,6 +118,9 @@ geldiğinde veriliyor. 8 seed'de altı anın hepsi, hepsinde, ve sırayla: giri�
 | `08fcfea` | Yavaş çekimli klip **dosyanın başından** oynuyordu, seçilen andan değil |
 | `28ad3cc` | Detay/mekân planı asla yavaşlatılmıyor (masadaki çiçek 4 saniye yavaştı) |
 | `c72a979` | `ilk dans` istemi kadrajda ne olduğuyla adlandırıldı; 4'te 2 → 4'te 4 |
+| `4b235be` | Orkestra filmin dörtte birini alıyordu; dengeli payına (%10) indi |
+| `aa754f1` | Aynı kurulumun iki çekimi arka arkaya kesiliyordu (0.939 benzerlik) |
+| `d1b95c4` | Masa planları var olmayan yüzlerden puanlanıyordu (dedektör 12–53 sahte yüz) |
 
 ---
 
@@ -204,6 +207,17 @@ Bu listenin **ölçülebileni ölçmemenin bahanesi olmadığına** dikkat edin:
   `elenora mustafa` ile aynı dosya, hiç kurgusu ve müziği yok, ondan önce (2 Eylül)
   oluşturulmuş. Analiz etmek ~5 saatte zaten var olanı üretmek olur — yapılmadı. Kurgucu
   isterse silinebilir; silme geri alınamaz olduğu için ona bırakıldı.
+- **Kullanılacak parçadan puanlama DENENDİ VE DAHA KÖTÜ ÇIKTI.** Şot puanı "şotun en iyi
+  yeri"nden geliyor; kullanılan parça daha kötü olabiliyor (ensesi görünen plan −0.12).
+  `window_quality`'i "girişten itibaren en iyi dizi" yapmayı denedim: kötü kesim %20→%26,
+  çok kötü %7→%14, gün akışı 0.82→0.74. Sebep: zaten kesim vermiş bir şotun kalan bölgesi
+  doğal olarak zayıf, ve şot *kullanılmış olduğu için* cezalanıyor. Geri alındı. Boşluk
+  duruyor; başka bir çözüm gerek (belki puan yerine süzgeç).
+- **Yüz dedektörü masalarda büyük sahte yüzler buluyor** — kaselerde, sandalyelerde,
+  çiçeklerde, kadrajın %4.8'ine kadar. "Okunamaz yüz" tabanı bunları yakalamıyor. Bu yüzden
+  `detail`/`venue` planlarında yüz terimleri hiç uygulanmıyor.
+- **Kesim temposu müziğe uyuyor** (ölçüldü): low 1.94 sn, high 0.50 sn, low 1.48 sn medyan
+  kesim. "Müzikle uyum yok" şikâyeti tempo değilse içerikle ilgilidir; ölçüsü yok.
 - **Ön plan tıkanıklığı ölçülemiyor.** Kurgucu "önden geçen adam" dedi; ölçtüm ve hiçbir
   sinyal yok: pencere puanı 0,77–0,88, yüz oranı şot boyunca düz (0,012), "arkadaki" tanımı
   *küçük ve uzak* yüzler olduğu için önden geçen biri özne sanılıyor. Şikâyet edilen kesimin
