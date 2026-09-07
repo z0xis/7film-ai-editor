@@ -11,7 +11,7 @@ from fractions import Fraction
 from pathlib import Path
 
 from sevenfilm.domain import BeatGrid, MediaAsset, Shot
-from sevenfilm.services.moments import DISTRACTION_QUANTILE, Moment
+from sevenfilm.services.moments import DISTRACTION_QUANTILE
 from sevenfilm.services.planner import (
     DISTRACTION_PENALTY,
     _score_candidate,
