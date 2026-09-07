@@ -4,6 +4,7 @@ const { describe, it } = require("node:test");
 const {
   appendClipsInBatches,
   hasRetiming,
+  monitorFormatForRate,
   parseRational,
   buildMusicClipInfo,
   buildMusicClipInfos,
@@ -642,5 +643,30 @@ describe("hasRetiming", () => {
   it("says no about a plan with nothing in it", () => {
     assert.equal(hasRetiming({}), false);
     assert.equal(hasRetiming({ items: [] }), false);
+  });
+});
+
+describe("monitorFormatForRate", () => {
+  it("puts a 50 fps edit on a 50 fps monitor", () => {
+    // Four 50 fps edits in this project were being played back at 25 and juddering.
+    assert.equal(monitorFormatForRate("HD 1080p 25", 50), "HD 1080p 50");
+  });
+
+  it("does not watch a progressive timeline as segmented frames", () => {
+    assert.equal(monitorFormatForRate("HD 1080PsF 25", 50), "HD 1080p 50");
+  });
+
+  it("leaves the resolution alone, which is the editor's own chain", () => {
+    assert.equal(monitorFormatForRate("UHD 2160p 24", 25), "UHD 2160p 25");
+  });
+
+  it("says there is nothing to do when it already matches", () => {
+    assert.equal(monitorFormatForRate("HD 1080p 50", 50), null);
+  });
+
+  it("leaves a format it cannot read alone rather than guessing", () => {
+    assert.equal(monitorFormatForRate("", 50), null);
+    assert.equal(monitorFormatForRate("something else", 50), null);
+    assert.equal(monitorFormatForRate("HD 1080p 25", 0), null);
   });
 });

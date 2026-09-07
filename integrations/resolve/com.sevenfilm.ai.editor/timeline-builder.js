@@ -311,8 +311,34 @@ function hasRetiming(plan) {
   });
 }
 
+/**
+ * The monitor format a timeline of this rate should be watched at.
+ *
+ * Resolve gives a new timeline the project's monitor format, which is not the timeline's rate:
+ * measured across nineteen timelines in this project, four 50 fps edits were being played back
+ * as "HD 1080p 25" and one as "HD 1080PsF 25". The viewer then judders, which is what the
+ * editor saw and what made them go looking for the setting themselves.
+ *
+ * Only the rate is replaced. The resolution and the scan belong to the editor's monitoring
+ * chain and are none of this tool's business — except that a progressive timeline is not
+ * watched as segmented frames, so PsF becomes p.
+ *
+ * Returns null when there is nothing to do or nothing recognisable to change.
+ */
+function monitorFormatForRate(current, rate) {
+  const wanted = Number(rate);
+  if (!Number.isFinite(wanted) || wanted <= 0) return null;
+  const match = /^(.*?)(p|PsF|i)\s+(\d+(?:\.\d+)?)$/.exec(String(current || "").trim());
+  if (!match) return null;
+  const [, prefix, scan, present] = match;
+  const shown = Number.isInteger(wanted) ? String(wanted) : String(wanted);
+  const next = `${prefix}${scan === "PsF" ? "p" : scan} ${shown}`;
+  return next === `${prefix}${scan} ${present}` ? null : next;
+}
+
 module.exports = {
   hasRetiming,
+  monitorFormatForRate,
   DEFAULT_BATCH_SIZE,
   MIN_CLIP_SECONDS,
   appendClipsInBatches,

@@ -14,6 +14,8 @@ const {
   buildVideoClipInfos,
   frameRatesAgree,
   hasRetiming,
+  monitorFormatForRate,
+  parseFrameRate,
   musicSegments,
   resolveFrameRateSetting,
 } = require("./timeline-builder");
@@ -348,6 +350,29 @@ async function createTimelineFromPlan(mediaPool, project, plan, timelineName) {
   return timeline;
 }
 
+/**
+ * Play the edit back at the rate it was cut at.
+ *
+ * Resolve gives a new timeline the project's monitor format rather than the timeline's own
+ * rate. Measured across nineteen timelines here, four 50 fps edits were set to "HD 1080p 25"
+ * and one to "HD 1080PsF 25", and the viewer judders on all five - which the editor found for
+ * themselves before this existed. timelinePlaybackFrameRate refuses to be set; the monitor
+ * format takes.
+ *
+ * Best effort: a monitoring format that will not take is not a reason to fail an edit that is
+ * otherwise sitting correctly in the timeline.
+ */
+async function matchMonitorToTimeline(timeline, plan) {
+  try {
+    const rate = parseFrameRate(plan?.frame_rate, 0);
+    const current = await timeline.GetSetting("videoMonitorFormat");
+    const wanted = monitorFormatForRate(current, rate);
+    if (wanted) await timeline.SetSetting("videoMonitorFormat", wanted);
+  } catch (error) {
+    console.error("monitor format:", error && error.message);
+  }
+}
+
 async function importTimeline(_event, payload) {
   const timelineId = String(payload?.timelineId || "");
   if (!/^[0-9a-f-]{36}$/i.test(timelineId)) throw new Error("Geçersiz timeline kimliği.");
@@ -396,6 +421,7 @@ async function importTimeline(_event, payload) {
   }
 
   await project.SetCurrentTimeline(timeline);
+  await matchMonitorToTimeline(timeline, plan);
   let markerCount = 0;
   for (const item of plan.items || []) {
     const markerFrame = Number(item.timeline_in?.start_frame || 0);
