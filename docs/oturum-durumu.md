@@ -73,6 +73,17 @@ planlar zayıf da değil: kaliteleri 0,41–0,49, çekim medyanı 0,406. Planlay
 filminin borçlu olduğu anlar" diye bir kavramı yoktu; yüzük takma anı, teknik olarak daha
 temiz bir yürüme planına yeniliyordu.
 
+> **Uyarı — bu kapı bir varlık testi değil.** 18 istem denendi: havai fişek, gelin arabası,
+> nikâh imzası dahil, hiçbiri bu düğünde yok. **Hepsi** 1.25 eşiğini geçti (1.26–1.94, arada
+> boşluk yok). İki test daha kuruldu, ikisi de çuvalladı: tepeye yakın kaç şot var (havai
+> fişek 21, yüzük 1 — tersine), ve en iyi şotların zamanda ne kadar sıkı durduğu (pasta 0,0 dk,
+> yemin 11,2 dk — kesin görünüyordu, ta ki "anne gelinliği giydiriyor" **0,3 dk** ile en sıkısı
+> çıkana ve üç dans pisti planı taşıyana kadar).
+>
+> `MOMENT_PROMPTS`'taki altı an **gözle doğrulandığı için** güveniliyor, kapıyı geçtiği için
+> değil. Riski sınırlı: olmayan bir an 110 kesimde 1 kesime mal olur. Zayıf eşleşenler
+> (`< 0.30`) artık kurgu uyarısında adıyla söyleniyor.
+
 `services/moments.py` bunları **zaten saklı CLIP gömülerinden** buluyor — yeniden analiz yok,
 yalnız altı cümle kodlanıyor, 4,5 saniye. Çekimde olmayan an uydurulmuyor (`MOMENT_LIFT`).
 
@@ -103,6 +114,7 @@ geldiğinde veriliyor. 8 seed'de altı anın hepsi, hepsinde, ve sırayla: giri�
 | `2217daf` | An bonusu kronolojiyi ezmesin — an kendi zamanında gelsin |
 | `1a67fe8` | Yavaş çekim barajı: çekimin ortasının altındaki hiçbir şey uzatılmıyor |
 | `4ce77bc` | İndekslenmiş dosya bir daha okunmuyordu; 16 dikey klip yatay kayıtlıydı |
+| `7494d11` | An kapısının varlık ispatladığı iddiası yanlıştı; zayıf eşleşme artık söyleniyor |
 
 ---
 
