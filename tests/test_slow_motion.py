@@ -148,5 +148,66 @@ class TheRetimeReachesTheFileTests(unittest.TestCase):
         self.assertEqual(ET.parse(written).getroot().findall(".//timeMap"), [])
 
 
+class NothingWeakIsStretchedTests(unittest.TestCase):
+    """Half speed doubles a shot's time on screen, so it doubles whatever is wrong with it.
+
+    Measured on an edit that shipped: the six slowed shots had a median worst window of 0.44
+    against 0.77 for the film as a whole, and two of them held a face against the frame edge —
+    stretched to twice the length they were shot at.
+    """
+
+    def setUp(self):
+        import tempfile
+
+        self.directory = tempfile.TemporaryDirectory()
+        self.addCleanup(self.directory.cleanup)
+        self.tmp = Path(self.directory.name)
+        for index in range(200):
+            (self.tmp / f"{index}.mov").write_bytes(b"")
+
+    def plan(self):
+        from sevenfilm.services.windows import ShotWindow
+
+        assets, shots, windows = [], [], {}
+        categories = ("couple", "bride", "groom", "party", "venue", "detail")
+        for index in range(200):
+            one = MediaAsset(id=f"a{index}", project_id="p", path=self.tmp / f"{index}.mov",
+                             name=f"{index}.mov", duration=Fraction(30), frame_rate=RATE,
+                             width=1920, height=1080)
+            assets.append(one)
+            shots.append(Shot(
+                id=f"s{index}", asset_id=one.id, source_range=TimeRange(0, 1400, RATE),
+                category=categories[index % len(categories)], shot_scale="medium",
+                technical_quality=.9, aesthetic_score=.9, motion_score=.3, confidence=.9,
+                duplicate_group=f"visual:{index:016x}", brightness=.36, saturation=.15,
+                highlight_clipping=.01))
+            # Half the shoot has its subject against the frame edge throughout.
+            edge = 0.9 if index % 2 else 0.0
+            windows[f"s{index}"] = [
+                ShotWindow(shot_id=f"s{index}", offset_frames=offset, sharpness=80.0,
+                           motion=1.0, face_ratio=0.05, face_edge=edge, face_count=2,
+                           bystanders=0)
+                for offset in range(0, 1400, 25)
+            ]
+        beats = tuple(Fraction(i, 2) for i in range(700))
+        music = BeatGrid(bpm=120, beats=beats, duration=Fraction(350),
+                         sections=({"energy": SLOW_MOTION_ENERGY, "start": "0", "end": "350"},))
+        profile = {"held_shots": {"share_by_band": [0.25] * 10, "median_seconds": 4.0}}
+        return build_timeline(project_id="p", assets=assets, shots=shots, music=music,
+                              frame_rate=RATE, target_duration=Fraction(150), seed=1,
+                              style_profile=profile, windows_by_shot=windows)
+
+    def test_a_shot_below_the_shoot_own_middle_is_never_stretched(self):
+        plan = self.plan()
+        slowed = [
+            item for item in plan.items
+            if item.source_range.duration_seconds != item.timeline_range.duration_seconds
+        ]
+
+        self.assertTrue(slowed, "hiç yavaş çekim yok, test bir şey ölçmüyor")
+        for item in slowed:
+            self.assertEqual(int(item.shot.id[1:]) % 2, 0, f"{item.shot.id} kenarı kesik")
+
+
 if __name__ == "__main__":
     unittest.main()
