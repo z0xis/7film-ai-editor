@@ -1,6 +1,6 @@
 # 7Film AI Editor — oturum durumu
 
-Son güncelleme: 7 Eylül 2026, 04:30. Bu dosya, çalışmayı devralan bir sonraki oturum içindir.
+Son güncelleme: 7 Eylül 2026, 17:20. Bu dosya, çalışmayı devralan bir sonraki oturum içindir.
 
 Bu tur, kurgucunun Resolve'da kurguyu izleyip **plan plan** şikâyet etmesiyle geçti. Yedi ayrı
 şikâyet geldi; hepsi ölçüldü, beşi tek bir kök sebepten çıktı.
@@ -55,6 +55,32 @@ kare başına 661 ms, 1405 şot için ~2 saat, tek seferlik. `analyze_shots` son
 
 ---
 
+## Düğünün kendi anları filmde yoktu
+
+Kurgucu, "benim işaretlememe gerek kalmaması lazım" dedi ve haklıydı. Ölçüm:
+
+| an | en iyi 8 şottan kaçı kurguda |
+|---|---|
+| pasta kesme | 1/8 |
+| pasta yedirme | 2/8 |
+| öpüşme | **0/8** |
+| yüzük takma | **0/8** |
+| ilk dans | **0/8** |
+| giriş | **0/8** |
+
+Düğünün öpüşmesi, yüzüğü, ilk dansı ve girişi filmde **hiç yoktu** — hepsi çekimde varken. O
+planlar zayıf da değil: kaliteleri 0,41–0,49, çekim medyanı 0,406. Planlayıcının "bir düğün
+filminin borçlu olduğu anlar" diye bir kavramı yoktu; yüzük takma anı, teknik olarak daha
+temiz bir yürüme planına yeniliyordu.
+
+`services/moments.py` bunları **zaten saklı CLIP gömülerinden** buluyor — yeniden analiz yok,
+yalnız altı cümle kodlanıyor, 4,5 saniye. Çekimde olmayan an uydurulmuyor (`MOMENT_LIFT`).
+
+Bir tuzak: bonus koşulsuzken kronolojiyi eziyor (0,10'a karşı 0,064) ve filmin ilk 22 saniyesi
+öpüşme–giriş–pasta–yüzük–ilk dans diye sıralanıyordu. Artık yalnız film günün o kısmına
+geldiğinde veriliyor. 8 seed'de altı anın hepsi, hepsinde, ve sırayla: giriş 7 sn → öpüşme 10
+→ yüzük 12 → pasta 25 → ilk dans 35.
+
 ## Bu turda kapatılanlar
 
 | Commit | Ne düzeltildi |
@@ -72,6 +98,10 @@ kare başına 661 ms, 1405 şot için ~2 saat, tek seferlik. `analyze_shots` son
 | `17d364f` | Bir andan filme tek insansız plan (aynı tabela iki kez giriyordu) |
 | `79ff9a2` | Film **bitiyor**: son plan referanslardaki gibi tutuluyor |
 | `218a1bf` | "Hareketli müzik" hedefi elle yazılmıştı ve bu çekimde karşılığı yoktu |
+| `df65b61` | Ret uçları **ölüydü**: kök mount'tan sonra tanımlanmışlar; kapanış kırıntıya düşüyordu |
+| `d726c51` | Düğünün anları (öpüşme/yüzük/ilk dans/giriş) filme giriyor |
+| `2217daf` | An bonusu kronolojiyi ezmesin — an kendi zamanında gelsin |
+| `1a67fe8` | Yavaş çekim barajı: çekimin ortasının altındaki hiçbir şey uzatılmıyor |
 
 ---
 
@@ -87,6 +117,9 @@ kare başına 661 ms, 1405 şot için ~2 saat, tek seferlik. `analyze_shots` son
   ```
 - **Exporter'ın FCPXML'i tam içe aktarılıyor**: 50 fps, 150,0 sn, 111 klip, boşluk 0,
   müzik A1'de, **proxy'ler zaten bağlı**. Yani FCPXML artık gerçek bir yol, yedek değil.
+- **Kök mount her şeyi yutuyor.** `app.mount("/", StaticFiles…)` kendinden **sonra** tanımlanan
+  her yolu yutar. Ret uçları böyle ölü kalmıştı: panel kutuyu gösterir, kutu hiçbir şey yapmaz.
+  O mount dosyanın en sonunda kalmalı.
 - **`videoMonitorFormat` yazılabiliyor**, `timelinePlaybackFrameRate` yazılamıyor.
   Yeni timeline projenin monitör formatını alıyor, kendi hızını değil.
 - **`MediaPoolItem.SetClipProperty('FPS', …)` çalışıyor** ama klibin *tüm proje* boyunca
@@ -141,6 +174,13 @@ Bu listenin **ölçülebileni ölçmemenin bahanesi olmadığına** dikkat edin:
   kopyasıdır ve repo değişince kendiliğinden değişmez. Yavaş çekim ve monitör düzeltmesi
   ancak yeniden kurulumla gelir. Eski motorlar kapatıldı; panel açılınca yenisi doğar.
 - `İS` projesinin 850 şotu hâlâ analiz edilmemiş.
+- **Ön plan tıkanıklığı ölçülemiyor.** Kurgucu "önden geçen adam" dedi; ölçtüm ve hiçbir
+  sinyal yok: pencere puanı 0,77–0,88, yüz oranı şot boyunca düz (0,012), "arkadaki" tanımı
+  *küçük ve uzak* yüzler olduğu için önden geçen biri özne sanılıyor. Şikâyet edilen kesimin
+  karelerine tek tek bakıldığında ise temiz çıktı — bu yüzden bir dedektör kurulmadı. Önce
+  hangi karede olduğunu görmek gerekiyor.
+- **Bir düzensizlik:** yavaş çekim barajı `d726c51`'in içinde kazara gitti ve mesajında
+  geçmiyor. Commit değiştirilmedi; `1a67fe8` kaydı ve testi ayrıca taşıyor.
 - Hazırlık setinde 3 yanlış etiket duruyor; dört düzeltme denemesi de ölçümde daha kötü çıktı.
 
 ---
