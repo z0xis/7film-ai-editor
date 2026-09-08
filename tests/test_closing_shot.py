@@ -232,3 +232,14 @@ class TheFilmSlowsDownBeforeItStopsTests(unittest.TestCase):
         tail = [float(i.timeline_range.duration_seconds) for i in plan.items[-5:-1]]
 
         self.assertEqual(tail, sorted(tail), f"kapanışa doğru uzamıyor: {tail}")
+
+    def test_the_whole_ramp_lands_and_not_just_its_start(self):
+        """A shot with less left than the ramp asks for breaks the settling. Measured on the
+        shoot: the ramp asked for 2.40 seconds twice and got 1.46 and then 0.60, so the film
+        sped up in its last two cuts before the closing shot and landed "tak diye" after all.
+        Narrowed to the shots that can carry the length, the tail runs 1.04, 1.28, 1.48, 1.68,
+        2.00, 2.40 into a 4.00 second close."""
+        plan = TheFilmPullsBackToEndTests()._plan()
+        ramp = [float(i.timeline_range.duration_seconds) for i in plan.items[-7:-1]]
+
+        self.assertEqual(ramp, sorted(ramp), f"rampa bozuluyor: {ramp}")

@@ -2072,6 +2072,18 @@ def build_timeline(
         desired = frame_rate.seconds_from_frames(
             max(1, frame_rate.frames_from_seconds(desired, rounding="nearest"))
         )
+        # Coming in to land, a shot that cannot give the whole length breaks the settling: the
+        # ramp asked for 2.40 seconds twice and got 1.46 and then 0.60, so the film sped up in
+        # its last two cuts before the closing shot and "tak diye" landed after all. Narrowed
+        # to whatever can carry it, and where nothing can the ramp takes what there is.
+        if landing_now:
+            long_enough = [
+                shot for shot in available_shots
+                if _available_duration(shot) - frame_rate.seconds_from_frames(
+                    consumed_source_frames[shot.id]) >= desired
+            ]
+            if long_enough:
+                available_shots = long_enough
         # A shot with nothing usable left for a cut of this length is not a candidate for it.
         # It stays in the pool for the next cut, where a different length may reach a better
         # stretch of it, and the whole pool is never emptied by this.
