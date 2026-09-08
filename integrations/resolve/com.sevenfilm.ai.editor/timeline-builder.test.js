@@ -3,6 +3,7 @@ const { describe, it } = require("node:test");
 
 const {
   appendClipsInBatches,
+  closingFadeFrames,
   hasRetiming,
   monitorFormatForRate,
   parseRational,
@@ -668,5 +669,29 @@ describe("monitorFormatForRate", () => {
     assert.equal(monitorFormatForRate("", 50), null);
     assert.equal(monitorFormatForRate("something else", 50), null);
     assert.equal(monitorFormatForRate("HD 1080p 25", 0), null);
+  });
+});
+
+describe("closingFadeFrames", () => {
+  it("plandan gelen süreyi karelere çevirir", () => {
+    const plan = { closing_fade_seconds: "5/2", frame_rate: "50/1" };
+    assert.equal(closingFadeFrames(plan, 217), 125);
+  });
+
+  it("shot'un tamamını yiyemez — siyahla başlayan kapanış kapanış değildir", () => {
+    const plan = { closing_fade_seconds: "5/2", frame_rate: "50/1" };
+    assert.equal(closingFadeFrames(plan, 60), 59);
+    assert.equal(closingFadeFrames(plan, 1), 0);
+  });
+
+  it("plan süre taşımıyorsa karartma yok", () => {
+    assert.equal(closingFadeFrames({ frame_rate: "50/1" }, 217), 0);
+    assert.equal(
+      closingFadeFrames({ closing_fade_seconds: "0", frame_rate: "50/1" }, 217), 0);
+  });
+
+  it("kare hızını plandan okur", () => {
+    const plan = { closing_fade_seconds: "5/2", frame_rate: "25/1" };
+    assert.equal(closingFadeFrames(plan, 217), 63);
   });
 });

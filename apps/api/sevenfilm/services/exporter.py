@@ -72,6 +72,20 @@ def _asset_start(asset: MediaAsset) -> Fraction:
     return Fraction(0, 1) if frames is None else Fraction(frames) / rate
 
 
+# How long the picture takes to go to black at the end.
+#
+# Measured on the 18 reference films alongside the music fade: 13 of them end on black, over a
+# median 2.5 seconds. Until 21.1 this could not be done at all — Resolve's FCPXML importer
+# drops `adjust-opacity` and `<transition>` silently, and the Fusion API would not take a
+# keyframe over its remote proxy — so the ending was carried by the music alone and the editor
+# still read it as abrupt: "outro olmamış yine sert".
+#
+# It is written here beside the music fade rather than decided in the planner: both are how the
+# film is laid down, not which shots it is made of. The number travels in the exported plan so
+# the Resolve adapter can apply it; FCPXML cannot carry it and does not try.
+PICTURE_FADE_SECONDS = Fraction(5, 2)
+
+
 def plan_as_dict(plan: TimelinePlan) -> dict[str, object]:
     return {
         "id": plan.id,
@@ -84,6 +98,9 @@ def plan_as_dict(plan: TimelinePlan) -> dict[str, object]:
         "created_at": plan.created_at,
         "music_path": str(plan.music_path) if plan.music_path else None,
         "music_duration_seconds": str(plan.music_duration) if plan.music_duration else None,
+        # Applied by the Resolve adapter through TimelineItem.SetFades; FCPXML cannot
+        # carry a picture fade and Resolve drops every form of it that can be written.
+        "closing_fade_seconds": str(PICTURE_FADE_SECONDS),
         # Every song under the edit. music_path above stays for the single-song readers; the
         # Resolve adapter lays these down one per song, each from the part that was chosen.
         "music_segments": [

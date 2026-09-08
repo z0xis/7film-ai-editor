@@ -15,7 +15,12 @@ from fractions import Fraction
 from pathlib import Path
 
 from sevenfilm.domain import MediaAsset, MusicSegment, Shot, TimelineItem, TimelinePlan
-from sevenfilm.services.exporter import MUSIC_FADE_SECONDS, export_fcpxml
+from sevenfilm.services.exporter import (
+    MUSIC_FADE_SECONDS,
+    PICTURE_FADE_SECONDS,
+    export_fcpxml,
+    plan_as_dict,
+)
 from sevenfilm.timebase import FrameRate, TimeRange
 
 RATE = FrameRate(50)
@@ -85,6 +90,35 @@ class TheMusicFadesOutTests(unittest.TestCase):
         plan = _plan([_song("/m/song.mp3", 0, 1)], timeline_frames=50)
 
         self.assertEqual(list(_music_clips(plan)[0].iter("keyframe")), [])
+
+
+class ThePictureFadeTravelsInThePlanTests(unittest.TestCase):
+    """Resolve drops every picture fade FCPXML can express — adjust-opacity and <transition>
+    both — and before 21.1 there was no other way to write one. So the number is carried in the
+    exported plan and applied by the Resolve adapter through TimelineItem.SetFades.
+
+    Verified by rendering the closing shot on 21.1: brightness runs 0.377 down to 0.000."""
+
+    def test_the_plan_carries_a_closing_fade(self):
+        plan = _plan([_song("/m/song.mp3", 0, 10)])
+        self.assertEqual(
+            plan_as_dict(plan)["closing_fade_seconds"], str(PICTURE_FADE_SECONDS))
+
+    def test_it_is_the_measured_length(self):
+        """13 of the 18 references end on black, over a median 2.5 seconds."""
+        self.assertEqual(PICTURE_FADE_SECONDS, Fraction(5, 2))
+
+    def test_fcpxml_does_not_try_to_write_it(self):
+        """Writing one would be silently dropped, and a fade that looks written but is not is
+        worse than none."""
+        clips = _music_clips(_plan([_song("/m/song.mp3", 0, 10)]))
+        self.assertTrue(clips)
+        with tempfile.TemporaryDirectory() as temporary:
+            written = export_fcpxml(
+                _plan([_song("/m/song.mp3", 0, 10)]), Path(temporary) / "e.fcpxml")
+            text = written.read_text()
+        self.assertNotIn("adjust-opacity", text)
+        self.assertNotIn("<transition", text)
 
 
 if __name__ == "__main__":

@@ -300,6 +300,26 @@ function chunk(values, size = DEFAULT_BATCH_SIZE) {
  * A clip is retimed when it occupies more (or less) of the timeline than the source it plays.
  * Compared in seconds rather than frames, because the two need not share a rate.
  */
+// How long the last shot takes to go to black, in frames of the timeline.
+//
+// Measured on the 18 reference films: 13 end on black, over a median 2.5 seconds. The number
+// travels in the exported plan (`closing_fade_seconds`) so the engine stays the one place it
+// is decided; this only converts it and keeps it inside the shot.
+//
+// Until Resolve 21.1 there was no way to apply it: the FCPXML importer drops `adjust-opacity`
+// and `<transition>`, and Fusion would not accept a keyframe over the remote proxy. 21.1 adds
+// TimelineItem.SetFades, which is measured to work — set 50, reads back 50.
+function closingFadeFrames(plan, lastItemDurationFrames) {
+  const seconds = Number(parseRational(plan?.closing_fade_seconds));
+  if (!Number.isFinite(seconds) || seconds <= 0) return 0;
+  const rate = parseFrameRate(plan?.frame_rate, 50);
+  const wanted = Math.round(seconds * rate);
+  const available = Number(lastItemDurationFrames);
+  if (!Number.isFinite(available) || available <= 1) return 0;
+  // A fade may not eat the whole shot: a closing that starts black is not a closing.
+  return Math.max(1, Math.min(wanted, Math.floor(available - 1)));
+}
+
 function hasRetiming(plan) {
   const items = Array.isArray(plan?.items) ? plan.items : [];
   return items.some((item) => {
@@ -337,6 +357,7 @@ function monitorFormatForRate(current, rate) {
 }
 
 module.exports = {
+  closingFadeFrames,
   hasRetiming,
   monitorFormatForRate,
   DEFAULT_BATCH_SIZE,

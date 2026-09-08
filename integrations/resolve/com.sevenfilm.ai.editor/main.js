@@ -13,6 +13,7 @@ const {
   buildMusicClipInfos,
   buildVideoClipInfos,
   frameRatesAgree,
+  closingFadeFrames,
   hasRetiming,
   monitorFormatForRate,
   parseFrameRate,
@@ -362,6 +363,21 @@ async function createTimelineFromPlan(mediaPool, project, plan, timelineName) {
  * Best effort: a monitoring format that will not take is not a reason to fail an edit that is
  * otherwise sitting correctly in the timeline.
  */
+// Take the last shot to black. Resolve 21.1 only; on 21.0.2 SetFades does not exist and the
+// edit is handed over as it always was, with the music fade carrying the ending alone.
+async function applyClosingFade(timeline, plan) {
+  const items = (await timeline.GetItemListInTrack("video", 1)) || [];
+  const last = items[items.length - 1];
+  if (!last || typeof last.SetFades !== "function") return 0;
+  const frames = closingFadeFrames(plan, await last.GetDuration());
+  if (!frames) return 0;
+  const applied = await last.SetFades({ FadeIn: 0, FadeOut: frames });
+  if (!applied) return 0;
+  // Read it back: on this API a call returning true has not always meant it did something.
+  const now = await last.GetFades();
+  return Number(now?.FadeOut) === frames ? frames : 0;
+}
+
 async function matchMonitorToTimeline(timeline, plan) {
   try {
     const rate = parseFrameRate(plan?.frame_rate, 0);
@@ -422,6 +438,7 @@ async function importTimeline(_event, payload) {
 
   await project.SetCurrentTimeline(timeline);
   await matchMonitorToTimeline(timeline, plan);
+  const closingFadeFrames_ = await applyClosingFade(timeline, plan);
   let markerCount = 0;
   for (const item of plan.items || []) {
     const markerFrame = Number(item.timeline_in?.start_frame || 0);
@@ -439,7 +456,13 @@ async function importTimeline(_event, payload) {
   }
   await manager.SaveProject();
   await resolve.OpenPage("edit");
-  return { ok: true, timelineName: await timeline.GetName(), markerCount, importMethod };
+  return {
+    ok: true,
+    timelineName: await timeline.GetName(),
+    markerCount,
+    importMethod,
+    closingFadeFrames: closingFadeFrames_,
+  };
 }
 
 async function createWindow() {
