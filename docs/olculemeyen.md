@@ -80,3 +80,27 @@ her klibi dışarı göndermek demek — üretime alınmadı.
 Yan not: test için `torchvision 0.29.0` **yalnızca `.venv`** içine kuruldu
 (torch 2.14.0 sabit kaldı, 574 test geçti). Üretim ortamı
 `.runtime/mamba-root/envs/sevenfilm` **değişmedi** ve bu koda üretimde ihtiyaç yok.
+
+## Netlik ölçüsü yanlıştı — ama bulgu değişmedi (2026-09-09)
+
+Yukarıdaki tabloların birinde netlik 25.2'ye karşı 23.0 yazıyordu ve bunun bir açıklaması
+yoktu. Açıklaması şuydu: netlik 4K karede ölçülüyordu ve orada Laplacian varyansı odağı
+değil **sensör gürültüsünü** okuyor. Filmin açılışındaki neon tabela — gözle en net kare —
+çekimin en bulanık %1'inde görünüyordu; editörün bulanık dediği iki gelin planı %45'te.
+
+Ölçüm sabit 640 piksel genişlikte yapılınca sıralama düzeldi ve kesimin gerçekten gösterdiği
+kareyle uyum 0.50'den 0.96'ya çıktı. 1405 shot yeniden ölçüldü. Kurgudaki en bulanık kesim
+7.7'den 36.2'ye, açılışınki 10.7'den 42.8'e çıktı; süre 150.0 saniyede kaldı.
+
+Sonra asıl soru yeniden soruldu. Düzeltilmiş ölçüyle:
+
+| ölçü | elenen | tutulan | Cohen d |
+|---|---|---|---|
+| netlik | 196.5 | 138.2 | −0.37 |
+| en kötü yarım saniyenin netliği | 151.2 | 98.5 | −0.39 |
+| estetik | 0.863 | 0.789 | −0.25 |
+| teknik kalite | 0.394 | 0.400 | +0.11 |
+
+Editörün elediği klipler hâlâ tuttuklarından **daha keskin**. Fark artık gürültüden değil:
+o klipler gerçekten daha net. Elenme sebepleri netlik değildi — arkadan kafa, anlamsız
+kadraj, solist. Bu belgenin merkezi bulgusu ayakta ve artık doğru bir ölçüyle duruyor.
