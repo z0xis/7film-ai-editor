@@ -1072,6 +1072,12 @@ UNUSABLE_WINDOW_SCORE = 0.0
 WINDOW_QUALITY_WEIGHT = 0.15
 # The length a shot is judged over: what the edit takes is a stretch, not an instant. This is
 # about the median cut of an edit at this shoot's pace.
+# Under this a moment is a glimpse rather than a moment, and the film says so.
+#
+# Read off this shoot's own moments once the holds go to them: the cake lands at 4.24 seconds,
+# the kiss at 3.92, the ring at 1.94 — and the entrance at 0.80, which is the one the editor
+# picked out. "gelin damat girişi kısa kalıyor ve bi planda nerdeyse görünmüyorlar."
+GLIMPSE_SECONDS = Fraction(3, 2)
 TYPICAL_CUT_SECONDS = Fraction(1)
 # Half speed, where the film pauses to look and the music is not driving.
 #
@@ -2361,6 +2367,30 @@ def build_timeline(
                 + ", ".join(moment.label for moment in merely_unused)
                 + ". Planları var ama başka kesimler tercih edildi."
             )
+    # In the film, but only just. A hold picks from the better half of the shoot, and where a
+    # moment's own footage sits below that median no hold will take it: on this shoot the
+    # entrance runs 0.346 to 0.397 against 0.406 and reaches the film in one 0.80 second cut.
+    # Forcing it in was measured and made things worse — the edit ran out at 83.5 seconds of
+    # 150. So the film says which moment it could only glimpse, rather than passing it off.
+    glimpsed = []
+    for moment in moments:
+        if moment.name in unshown:
+            continue
+        longest = max(
+            (item.timeline_range.duration_seconds for item in plan.items
+             if moment.name in moment_of_shot.get(item.shot.id, ())),
+            default=Fraction(0),
+        )
+        if longest < GLIMPSE_SECONDS:
+            glimpsed.append((moment, longest))
+    if glimpsed:
+        plan.warnings.append(
+            "Şu anlar kurguya çok kısa girdi: "
+            + ", ".join(
+                f"{moment.label} ({float(longest):.2f} sn)" for moment, longest in glimpsed)
+            + ". Bu anın elinizdeki görüntüsü çekimin alt yarısında kaldığı için uzun kesim "
+            "verilemedi."
+        )
     doubtful = [moment for moment in moments if moment.uncertain and moment.name in shown]
     if doubtful:
         # Better said than quietly wrong: the affinity cannot prove the moment happened, only

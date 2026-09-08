@@ -24,6 +24,7 @@ from sevenfilm.services.moments import (
 )
 from sevenfilm.services.planner import (
     CHRONOLOGY_SLACK,
+    GLIMPSE_SECONDS,
     HELD_SHOT_SECONDS,
     MOMENT_BONUS,
     MOMENT_DAY_SPREAD,
@@ -228,6 +229,21 @@ class AMomentThatNeverReachesTheFilmTests(unittest.TestCase):
 
         self.assertNotIn("eleme listesinde", said)
 
+    def test_a_moment_the_film_could_only_glimpse_is_named(self):
+        """In the film, but for 0.80 seconds. A hold picks from the better half of the shoot,
+        and the entrance's own footage sits below this shoot's median, so no hold will take
+        it. Forcing it in cost 66 seconds of running time. Saying so is what is left."""
+        maker = EveryMomentReachesTheFilmTests()
+        plan = maker.build_with((Moment(name="cake", shot_ids=("s0",), best=0.34),))
+        cake = [
+            item for item in plan.items if item.shot.id == "s0"]
+        said = " ".join(plan.warnings)
+
+        if cake and max(
+                item.timeline_range.duration_seconds for item in cake) < GLIMPSE_SECONDS:
+            self.assertIn("çok kısa girdi", said)
+            self.assertIn("pasta kesme", said)
+
     def test_a_moment_the_film_shows_is_not_warned_about_at_all(self):
         moments = EveryMomentReachesTheFilmTests().moments()
         said = " ".join(self.build(moments).warnings)
@@ -270,9 +286,10 @@ class WhatTheFootageDoesNotHoldTests(unittest.TestCase):
         )
         plan = EveryMomentReachesTheFilmTests().build(moments)
         said = " ".join(plan.warnings)
+        weak = said.split("zayıf eşleşti", 1)[1]
 
-        self.assertIn("pasta kesme", said)
-        self.assertNotIn("yüzük", said)
+        self.assertIn("pasta kesme", weak)
+        self.assertNotIn("yüzük", weak)
 
 
 if __name__ == "__main__":
