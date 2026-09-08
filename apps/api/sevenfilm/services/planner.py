@@ -323,6 +323,9 @@ OPENING_DAY_LIMIT = 0.25
 # How many of the opening cuts are steered to a detail. The references run two in
 # five; one gave us one in five, five gave us five.
 OPENING_DETAIL_CUTS = 2
+# The rest of the ramp may range further into the day than the first cut, but not
+# into the evening.
+OPENING_RAMP_DAY_LIMIT = 0.35
 # One beat at the references' own median tempo, for a profile that carries no BPM.
 REFERENCE_BEAT_SECONDS = Fraction(60, 123)
 # How far past the asked-for opening a beat may land and still be taken. Without slack the
@@ -1719,6 +1722,13 @@ def build_timeline(
                 # Steering only the first cut left us at one in five, and steering the whole
                 # ramp made all five details.
                 narrowers.append(lambda shot: shot.category in OPENING_CATEGORIES)
+            # The whole opening belongs to the start of the day, not just its first cut. With
+            # the limit on the first cut alone the third shot of the film came from halfway
+            # through the shoot — the cake-and-glasses clip again — because the chronology
+            # penalty is 0.2 of a score a strong shot clears.
+            narrowers.append(
+                lambda shot: day_by_asset.get(shot.asset_id, 0.0) <= OPENING_RAMP_DAY_LIMIT
+            )
             if not plan.items:
                 narrowers.append(
                     lambda shot: day_by_asset.get(shot.asset_id, 0.0) <= OPENING_DAY_LIMIT
