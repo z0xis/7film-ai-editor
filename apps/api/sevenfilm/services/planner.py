@@ -1119,6 +1119,35 @@ UNUSABLE_RUN_SCORE = 0.25
 # than that. Below half the target the target is simply wrong for the footage and saying so is
 # the honest answer.
 MINIMUM_DELIVERABLE_SHARE = Fraction(1, 2)
+# What the film ends on.
+#
+# Measured across the 18 references: 15 of them close on a `venue` shot — 83% of their endings
+# against 23% of their shots — and not one closes on a `couple` or a `detail`. Looking at what
+# those endings actually are: the couple small in a wide frame, walking away through a garden;
+# a card on a table. The film pulls back.
+#
+# Ours was closing on the bride's back in the middle of a crowded room, which is the shot the
+# editor has objected to all along, and they said so again: "intro outro kötü".
+#
+# The category cannot be required here. This shoot holds 23 venue shots and the four that could
+# carry an ending are all from the first minutes of the day — closing an evening on the morning
+# foyer would break the chronology to fix the framing. So the *shape* is asked for instead,
+# which is what the references are really doing: a wide frame with nobody large in it.
+#
+# Honestly: on this shoot the shape is as far as it goes. Every candidate late in the day is
+# somebody in a crowded room, because the film was shot inside a reception and never pulls
+# back the way the references do. The rule stops the ending being a close-up of a back in the
+# middle of the floor; it cannot supply a shot that was not filmed.
+CLOSING_SCALE = "wide"
+# Above this the subject is close enough that the frame is a portrait, not a departure.
+CLOSING_FACE_RATIO = 0.03
+# A floor on the face size was tried here and made it worse: it moved the ending onto `family`
+# shots in four seeds of eight without improving any of them. The shot this shoot is missing
+# cannot be found by tightening a filter — see the note on CLOSING_SCALE.
+# And the ending comes from the end of the day. Asking only for the shape put a morning shot
+# of a laid table at the end of an evening: a wide frame with nobody in it fits the shape
+# perfectly and finishes the film in the wrong hour.
+CLOSING_DAY_FLOOR = 0.6
 # How long the film holds its last image.
 #
 # Measured across the 18 reference films, 1219 shots: their median shot runs 1.00 second and
@@ -1819,6 +1848,13 @@ def build_timeline(
                 # is better than filling the rest with the stretches this gate exists to keep
                 # out.
                 break
+        if opening is not None and desired < TYPICAL_CUT_SECONDS:
+            # A wide shot inside the opening reads as nothing at all. One edit gave its fourth
+            # cut — 0.98 seconds — to a wide of a hotel lobby, and the editor found the opening
+            # no better than before: "açılış planı da iyi değil hala".
+            readable = [shot for shot in available_shots if shot.shot_scale != "wide"]
+            if readable:
+                available_shots = readable
         if desired < SHORT_CUT_SECONDS:
             # A cut this short is a glance, and a wide shot of a hotel lobby cannot be read in
             # one. The references cut this short more often than we do; what they do not do is
@@ -1957,6 +1993,17 @@ def build_timeline(
                 and (shot.face_ratio == 0.0 or shot.face_ratio >= READABLE_FACE_RATIO)
             ]
             long_enough_to_finish = worthy_to_close or long_enough_to_finish
+            # And the film pulls back to end. Narrowed to whatever is left rather than
+            # required: a shoot with no wide shot late in the day still gets an ending.
+            pulling_back = [
+                shot for shot in long_enough_to_finish
+                if shot.shot_scale == CLOSING_SCALE
+                and shot.face_ratio <= CLOSING_FACE_RATIO
+                and day_by_asset.get(shot.asset_id, 1.0) >= CLOSING_DAY_FLOOR
+                and shot.id not in table_settings
+            ]
+            if pulling_back:
+                long_enough_to_finish = pulling_back
             if long_enough_to_finish and selected_shot not in long_enough_to_finish:
                 allowed = {shot.id for shot in long_enough_to_finish}
                 closing = [entry for entry in ranked if entry[1].id in allowed]

@@ -128,3 +128,62 @@ class TheTailIsOnlyHandedOverWhenAShotCanCarryItTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TheFilmPullsBackToEndTests(unittest.TestCase):
+    """Measured across the 18 references: 15 of them close on a `venue` shot — 83% of their
+    endings against 23% of their shots — and not one closes on a `couple` or a `detail`. What
+    those endings are, looking at them: the couple small in a wide frame walking away, a card
+    on a table. The film pulls back.
+
+    Ours was ending on the bride's back in a crowded room. "intro outro kötü".
+
+    The category cannot be required: this shoot's four usable venue shots are all from the
+    first minutes of the day, and closing an evening on the morning foyer trades one fault for
+    another. The shape is asked for instead — wide, nobody large in frame, late in the day.
+    """
+
+    def _plan(self):
+        assets, shots = [], []
+        # A crowded evening, plus one wide shot at the end of the day and one in the morning.
+        plans = [("sabah-genis.mov", "venue", "wide", 0.0, "09:00:00:00"),
+                 ("aksam-genis.mov", "couple", "wide", 0.02, "22:00:00:00")]
+        for index, (name, category, scale, ratio, clock) in enumerate(plans):
+            one = MediaAsset(id=f"w{index}", project_id="p", path=Path(f"/m/{name}"),
+                             name=name, duration=Fraction(12), frame_rate=RATE,
+                             width=1920, height=1080, timecode=clock)
+            assets.append(one)
+            shots.append(Shot(
+                id=f"ws{index}", asset_id=one.id, source_range=TimeRange(0, 500, RATE),
+                category=category, shot_scale=scale, technical_quality=.85,
+                aesthetic_score=.85, motion_score=.5, confidence=.9,
+                duplicate_group=f"visual:{index:016x}", brightness=.36, saturation=.15,
+                highlight_clipping=.01, face_ratio=ratio))
+        for index in range(120):
+            clock = 9 * 3600 + 600 + index * 380
+            one = MediaAsset(
+                id=f"c{index}", project_id="p", path=Path(f"/m/c{index}.mov"),
+                name=f"c{index}.mov", duration=Fraction(6), frame_rate=RATE,
+                width=1920, height=1080,
+                timecode=f"{clock // 3600:02}:{clock // 60 % 60:02}:{clock % 60:02}:00")
+            assets.append(one)
+            shots.append(Shot(
+                id=f"cs{index}", asset_id=one.id, source_range=TimeRange(0, 250, RATE),
+                category=("couple", "bride", "groom", "party")[index % 4],
+                shot_scale="medium", technical_quality=.8, aesthetic_score=.8,
+                motion_score=.5, confidence=.9,
+                duplicate_group=f"visual:{index + 500:016x}", brightness=.36,
+                saturation=.15, highlight_clipping=.01, face_ratio=0.05))
+        beats = tuple(Fraction(i, 2) for i in range(900))
+        music = BeatGrid(bpm=120, beats=beats, duration=Fraction(450),
+                         sections=({"energy": "medium", "start": "0", "end": "450"},))
+        return build_timeline(project_id="p", assets=assets, shots=shots, music=music,
+                              frame_rate=RATE, target_duration=Fraction(150), seed=1)
+
+    def test_the_film_ends_on_a_wide_frame(self):
+        self.assertEqual(self._plan().items[-1].shot.shot_scale, "wide")
+
+    def test_it_does_not_reach_back_to_the_morning_for_one(self):
+        """A wide shot with nobody in it fits the shape perfectly and finishes the film in the
+        wrong hour: a morning shot of a laid table came out as the ending."""
+        self.assertEqual(self._plan().items[-1].asset.name, "aksam-genis.mov")
