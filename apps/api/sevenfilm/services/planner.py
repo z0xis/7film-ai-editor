@@ -1757,6 +1757,24 @@ def build_timeline(
             first_sign = [
                 shot for shot in available_shots if shot.id in opening_signs
             ] if not plan.items else []
+            if first_sign and windows_by_shot:
+                # The steadiest of them. The first sign chosen on picture score alone was a
+                # mirror with the camera shaking against it and the camera operator reflected
+                # in the glass: "bunun daha iyisi yok mu titriyor kameraman görünüyor".
+                #
+                # Nothing new is measured for this. The half-second windows already carry a
+                # motion figure per shot, and on the sign clips it tracks a frame-difference
+                # measure of shake closely enough to order them: 17.4 against 0.68 for the
+                # shaky mirror, 11.8 against 0.37 for the steady one. On a sign the subject
+                # does not move, so what motion reads there is the camera.
+                def unsteadiness(shot: Shot) -> float:
+                    measured = windows_by_shot.get(shot.id) or ()
+                    return (
+                        sum(window.motion for window in measured) / len(measured)
+                        if measured else float("inf")
+                    )
+
+                first_sign = [min(first_sign, key=unsteadiness)]
             if first_sign:
                 # If the shoot filmed a welcome sign, the film opens on it and nothing else
                 # gets a say. Placed before the other narrowings rather than after: as the

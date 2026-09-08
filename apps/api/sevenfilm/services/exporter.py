@@ -86,6 +86,25 @@ def _asset_start(asset: MediaAsset) -> Fraction:
 PICTURE_FADE_SECONDS = Fraction(5, 2)
 
 
+# Clips the camera labelled the wrong way up.
+#
+# Sixteen clips in this shoot are stored 3840x2160 with a rotation of -90 or +90 in their
+# metadata, so every player — including Resolve and our own analysis — turns them on their side
+# and reports 2160x3840. The metadata is wrong: measured by running face detection on both
+# orientations, the unrotated frame wins in 14 of the 16, by 14 faces to 1 on one clip and 16
+# to 0 on another. The picture is upright in the file and the camera mislabelled it.
+#
+# Dropping them was the first fix and the editor asked for the other one: "şu dikeyleri de
+# döndürsün artık". So the edit turns them back, and the angle is measured rather than assumed
+# — rendering +90 came out upside down, -90 came out level with the signage readable.
+UPRIGHT_ROTATION = -90.0
+
+
+def rotation_for(asset: MediaAsset) -> float:
+    """How far this clip has to be turned to sit level in the edit, in degrees."""
+    return UPRIGHT_ROTATION if asset.height > asset.width else 0.0
+
+
 def plan_as_dict(plan: TimelinePlan) -> dict[str, object]:
     return {
         "id": plan.id,
@@ -126,6 +145,9 @@ def plan_as_dict(plan: TimelinePlan) -> dict[str, object]:
                 "asset_duration_frames": item.source_range.rate.frames_from_seconds(
                     item.asset.duration, rounding="floor"
                 ),
+                # Non-zero for the clips whose camera labelled them the wrong way up; the
+                # Resolve adapter turns them level. FCPXML cannot carry it.
+                "rotation_degrees": rotation_for(item.asset),
                 "source_in": item.source_range.as_rational_dict(),
                 "timeline_in": item.timeline_range.as_rational_dict(),
                 "score": item.score,

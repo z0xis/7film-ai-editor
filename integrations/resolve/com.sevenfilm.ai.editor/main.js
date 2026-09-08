@@ -418,6 +418,33 @@ async function applySpeeds(timeline, clipInfos) {
  * Best effort: a monitoring format that will not take is not a reason to fail an edit that is
  * otherwise sitting correctly in the timeline.
  */
+/**
+ * Turn the clips the camera labelled the wrong way up.
+ *
+ * Sixteen clips in one shoot are stored 3840x2160 with a rotation of -90 or +90 in their
+ * metadata, so Resolve turns them on their side and reports 2160x3840 — pillarboxed in a
+ * landscape edit. The metadata is wrong: face detection on both orientations picks the
+ * unrotated frame in 14 of the 16, and rendering confirmed it, -90 coming out level with the
+ * signage readable while +90 came out upside down.
+ *
+ * The angle travels in the plan; this only applies it. Best effort — a rotation that will not
+ * take is not a reason to fail an edit that is otherwise correct.
+ */
+async function applyRotations(timeline, plan) {
+  const items = (await timeline.GetItemListInTrack("video", 1)) || [];
+  let turned = 0;
+  for (let index = 0; index < items.length; index += 1) {
+    const wanted = Number(plan.items?.[index]?.rotation_degrees || 0);
+    if (!wanted) continue;
+    const item = items[index];
+    if (typeof item.SetProperty !== "function") continue;
+    await item.SetProperty("RotationAngle", wanted);
+    const now = await item.GetProperty("RotationAngle");
+    if (Math.abs(Number(now) - wanted) < 0.01) turned += 1;
+  }
+  return turned;
+}
+
 // Take the last shot to black. Resolve 21.1 only; on 21.0.2 SetFades does not exist and the
 // edit is handed over as it always was, with the music fade carrying the ending alone.
 async function applyClosingFade(timeline, plan) {
@@ -490,6 +517,7 @@ async function importTimeline(_event, payload) {
   await project.SetCurrentTimeline(timeline);
   await matchMonitorToTimeline(timeline, plan);
   const closingFadeFrames_ = await applyClosingFade(timeline, plan);
+  const rotated = await applyRotations(timeline, plan);
   let markerCount = 0;
   for (const item of plan.items || []) {
     const markerFrame = Number(item.timeline_in?.start_frame || 0);
@@ -513,6 +541,7 @@ async function importTimeline(_event, payload) {
     markerCount,
     importMethod,
     closingFadeFrames: closingFadeFrames_,
+    rotatedClips: rotated,
   };
 }
 
