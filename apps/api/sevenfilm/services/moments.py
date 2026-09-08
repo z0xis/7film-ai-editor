@@ -62,6 +62,26 @@ DISTRACTION_PROMPTS = {
 # Where a shot stops being a party shot with a band behind it and becomes a shot of the band.
 DISTRACTION_QUANTILE = 0.90
 
+# Who is holding the microphone. The band prompt above finds the stage; it does not find the
+# singer leaning into the camera or the host announcing over the couple, and the editor kept
+# picking those out: "solist çok fazla görünüyor", and again in the closing minute where three
+# of twelve cuts were somebody at a microphone.
+#
+# Asked on its own, this prompt cannot tell a man at a microphone from a groom in a suit: its
+# twelve best shots on this shoot held four of the host, one of the singer, and six of the
+# groom — including the cake cutting, which the film owes. Subtracting what the film is
+# actually about fixes it, the same way the obstruction test does: the twelve best are then
+# all twelve singer, host, drummer or DJ, with no groom and no cake among them.
+MICROPHONE_PROMPTS = (
+    "a man speaking into a handheld microphone",
+    "a wedding host announcing into a microphone in front of guests",
+)
+MICROPHONE_AGAINST = (
+    "a photo of the wedding couple, faces visible",
+    "a groom in a suit at his own wedding",
+)
+MICROPHONE_QUANTILE = 0.90
+
 
 # A floor, and no more than that.
 #
@@ -201,6 +221,17 @@ def project_distractions(database: Database, project_id: str) -> frozenset[str]:
         bar = float(np.quantile(column, DISTRACTION_QUANTILE))
         found.update(
             shot_id for shot_id, value in zip(shot_ids, column, strict=True) if value >= bar
+        )
+    microphones = _text_features([*MICROPHONE_PROMPTS, *MICROPHONE_AGAINST])
+    if microphones is not None:
+        against = vectors @ microphones.T
+        held = (
+            against[:, : len(MICROPHONE_PROMPTS)].sum(axis=1)
+            - against[:, len(MICROPHONE_PROMPTS) :].sum(axis=1)
+        )
+        bar = float(np.quantile(held, MICROPHONE_QUANTILE))
+        found.update(
+            shot_id for shot_id, value in zip(shot_ids, held, strict=True) if value >= bar
         )
     return frozenset(found)
 

@@ -11,7 +11,12 @@ from fractions import Fraction
 from pathlib import Path
 
 from sevenfilm.domain import BeatGrid, MediaAsset, Shot
-from sevenfilm.services.moments import DISTRACTION_QUANTILE
+from sevenfilm.services.moments import (
+    DISTRACTION_QUANTILE,
+    MICROPHONE_AGAINST,
+    MICROPHONE_PROMPTS,
+    MICROPHONE_QUANTILE,
+)
 from sevenfilm.services.planner import (
     DISTRACTION_PENALTY,
     _score_candidate,
@@ -95,6 +100,36 @@ class TheBandComesDownToItsShareTests(unittest.TestCase):
 
     def test_the_edit_still_fills_its_target(self):
         self.assertEqual(self.build(self.band()).duration, Fraction(150))
+
+
+class WhoIsHoldingTheMicrophoneTests(unittest.TestCase):
+    """The band prompt finds the stage. It does not find the singer leaning into the camera
+    or the host announcing over the couple, and the editor kept picking those out: three of
+    the closing minute's twelve cuts were somebody at a microphone.
+
+    Asked on its own the prompt cannot tell a man at a microphone from a groom in a suit —
+    its twelve best shots on this shoot were four of the host, one of the singer and six of
+    the groom, the cake cutting among them, which the film owes. Subtracting what the film is
+    about fixes it: all twelve are then singer, host, drummer or DJ. Measured on the edit, the
+    people at microphones are 10.0% of the shoot and 0.8% of the film, and the closing minute
+    went from three of twelve to one.
+    """
+
+    def test_the_prompts_are_answered_against_what_the_film_is_about(self):
+        self.assertTrue(MICROPHONE_PROMPTS)
+        self.assertTrue(MICROPHONE_AGAINST)
+
+    def test_the_couple_is_what_is_subtracted(self):
+        """A groom in a suit holding nothing is not the singer, and the cake cutting is a
+        moment the film owes rather than a distraction."""
+        said = " ".join(MICROPHONE_AGAINST)
+
+        self.assertIn("couple", said)
+        self.assertIn("groom", said)
+
+    def test_the_share_is_read_off_the_shoot(self):
+        self.assertGreater(MICROPHONE_QUANTILE, 0.5)
+        self.assertLess(MICROPHONE_QUANTILE, 1.0)
 
 
 class WhereTheLineIsDrawnTests(unittest.TestCase):
