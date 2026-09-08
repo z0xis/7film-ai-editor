@@ -1,0 +1,80 @@
+{
+  "measured_at": "2026-09-08T10:14:58+00:00",
+  "version": "21.1.0.14",
+  "results": {
+    "item.fade": {
+      "state": "SUPPORTED",
+      "detail": "{'FadeIn': 0.0, 'FadeOut': 0.0} → {'FadeIn': 0.0, 'FadeOut': 50.0} (istenen 50)"
+    },
+    "item.speed": {
+      "state": "SUPPORTED",
+      "detail": "{'Percentage': 100.0, 'PitchCorrection': True} → {'Percentage': 50.0, 'PitchCorrection': True}"
+    },
+    "timeline.transition": {
+      "state": "UNSUPPORTED",
+      "detail": "döndü: None · type None"
+    },
+    "transcription.read": {
+      "state": "UNKNOWN",
+      "detail": "0 segment · dil None (önce TranscribeAudio gerekiyor)"
+    },
+    "timeline.auto_align": {
+      "state": "PARTIAL",
+      "detail": "döndü False · başlangıçlar [180000, 180528, 181056] → [180000, 180528, 181056]"
+    },
+    "audio.normalization": {
+      "state": "SUPPORTED",
+      "detail": "modlar: ['Sample Peak Program', 'True Peak', 'ITU-R BS.1770-1', 'ITU-R BS.1770-4', 'ATSC A/85', 'EBU R128', 'OP-59', 'TR-B32', 'AGCOM 219/09/CSP', 'Netflix', 'YouTube', 'Disney - 2.0', 'Disney - 5.1+', 'TencentVideo']"
+    },
+    "render.presets": {
+      "state": "SUPPORTED",
+      "detail": "37 render · 10 quick export"
+    },
+    "project.setting_presets": {
+      "state": "SUPPORTED",
+      "detail": "3 preset"
+    },
+    "media.clone": {
+      "state": "SUPPORTED",
+      "detail": "durum: {'JobStatus': 'Complete', 'CompletionPercentage': 100.0}"
+    },
+    "item.properties": {
+      "state": "SUPPORTED",
+      "detail": "32 property",
+      "names": [
+        "AnchorPointX",
+        "AnchorPointY",
+        "CompositeEnabled",
+        "CompositeMode",
+        "CropBottom",
+        "CropLeft",
+        "CropRetain",
+        "CropRight",
+        "CropSoftness",
+        "CropTop",
+        "CroppingEnabled",
+        "Distortion",
+        "DynamicZoomEase",
+        "DynamicZoomEnabled",
+        "FlipX",
+        "FlipY",
+        "LensCorrectionEnabled",
+        "MotionEstimation",
+        "Opacity",
+        "Pan",
+        "Pitch",
+        "ResizeFilter",
+        "RetimeAndScalingEnabled",
+        "RetimeProcess",
+        "RotationAngle",
+        "Scaling",
+        "Tilt",
+        "TransformEnabled",
+        "Yaw",
+        "ZoomGang",
+        "ZoomX",
+        "ZoomY"
+      ]
+    }
+  }
+}

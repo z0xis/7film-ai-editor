@@ -45,6 +45,39 @@ def symbol(owner: object, name: str) -> str:
     return PRESENT if callable(getattr(owner, name, None)) else ABSENT
 
 
+def surface(owner: object) -> list[str]:
+    """Every public name this object really exposes.
+
+    Asking by a guessed name is how the first run of this probe reported fades, speed and
+    transitions as absent on 21.1: the methods are `SetFades`, `SetSpeed` and `AddTransition`,
+    and it had asked for `SetFade`, `SetClipSpeed` and a Timeline-level AddTransition. dir()
+    does work through the remote proxy, so the matrix is built from what is there rather than
+    from what was expected.
+    """
+    if owner is None:
+        return []
+    try:
+        return sorted(name for name in dir(owner) if not name.startswith("_"))
+    except Exception:
+        return []
+
+
+def find(owner: object, *needles: str) -> dict[str, str]:
+    """The names this object exposes that mention any of `needles`."""
+    lowered = tuple(needle.lower() for needle in needles)
+    return {
+        name: symbol(owner, name)
+        for name in surface(owner)
+        if any(needle in name.lower() for needle in lowered)
+    }
+
+
+def state_of(matches: dict[str, str]) -> str:
+    if not matches:
+        return ABSENT
+    return PRESENT if any(value == PRESENT for value in matches.values()) else ABSENT
+
+
 def probe(connect=None) -> dict:
     sys.path.insert(0, MODULES)
     import DaVinciResolveScript as dvr
@@ -72,94 +105,55 @@ def probe(connect=None) -> dict:
         "capabilities": {},
     }
     say = report["capabilities"].__setitem__
+    report["surface"] = {
+        "TimelineItem": surface(item), "Timeline": surface(timeline),
+        "MediaPool": surface(pool), "MediaPoolItem": surface(clip),
+        "Project": surface(project), "ProjectManager": surface(manager),
+    }
+
+    def capability(name: str, owner: object, *needles: str, notes: str = "") -> None:
+        matches = find(owner, *needles)
+        say(name, {"state": UNKNOWN if owner is None else state_of(matches),
+                   "notes": notes, "symbols": matches})
 
     # --- 21.1'in getirdiği iddia edilenler -----------------------------------------------
-    say("transcription.clip", {
-        "state": symbol(clip, "GetTranscription"),
-        "notes": "Media Pool clip transcription (speaker + timing)",
-        "symbols": {name: symbol(clip, name)
-                    for name in ("GetTranscription", "TranscribeAudio", "ClearTranscription")},
-    })
-    say("multicam.create", {
-        "state": symbol(pool, "CreateMultiCamClipFromClipList") if pool else UNKNOWN,
-        "notes": "Multicam oluşturma / flatten",
-        "symbols": {name: symbol(pool, name)
-                    for name in ("CreateMultiCamClipFromClipList", "CreateMultiCamClip",
-                                 "AppendToTimeline")},
-    })
-    say("multicam.smartswitch", {
-        "state": symbol(item, "SetMultiCamSwitch") if item else UNKNOWN,
-        "notes": "SmartSwitch programatik tetikleme",
-        "symbols": {name: symbol(item, name)
-                    for name in ("SetMultiCamSwitch", "GetMultiCamAngle", "SetMultiCamAngle")},
-    })
-    say("timeline.auto_align", {
-        "state": symbol(timeline, "AutoAlignClips") if timeline else UNKNOWN,
-        "notes": "Timeline clip auto-align (kamera + harici ses senkronu)",
-        "symbols": {name: symbol(timeline, name)
-                    for name in ("AutoAlignClips", "AutoSyncAudio", "AlignClips")},
-    })
-    say("timeline.transition", {
-        "state": symbol(timeline, "AddTransition") if timeline else UNKNOWN,
-        "notes": "Programatik transition ekleme — 21.0.2'de yok, karartma bu yüzden yapılamadı",
-        "symbols": {**{name: symbol(timeline, name)
-                       for name in ("AddTransition", "InsertTransition")},
-                    "item.AddTransition": symbol(item, "AddTransition")},
-    })
-    say("item.fade", {
-        "state": symbol(item, "SetFade") if item else UNKNOWN,
-        "notes": "Fade okuma/yazma — 21.0.2'de SetFade None döndürüyor",
-        "symbols": {name: symbol(item, name)
-                    for name in ("SetFade", "GetFade", "SetFadeIn", "SetFadeOut")},
-    })
-    say("item.speed", {
-        "state": symbol(item, "SetClipSpeed") if item else UNKNOWN,
-        "notes": "Speed change okuma/yazma — 21.0.2'de yok, retiming FCPXML timeMap ile",
-        "symbols": {name: symbol(item, name)
-                    for name in ("SetClipSpeed", "GetClipSpeed", "SetSpeed", "GetSpeed",
-                                 "SetRetimeCurve")},
-    })
-    say("item.audio_normalization", {
-        "state": symbol(item, "SetAudioNormalization") if item else UNKNOWN,
-        "symbols": {name: symbol(item, name)
-                    for name in ("SetAudioNormalization", "NormalizeAudio")},
-    })
-    say("item.source_audio_mapping", {
-        "state": symbol(item, "SetSourceAudioMapping") if item else UNKNOWN,
-        "symbols": {name: symbol(item, name)
-                    for name in ("SetSourceAudioMapping", "GetSourceAudioMapping")},
-    })
-    say("render.presets", {
-        "state": symbol(project, "UpdateRenderPreset") if project else UNKNOWN,
-        "symbols": {name: symbol(project, name)
-                    for name in ("UpdateRenderPreset", "SaveAsNewRenderPreset",
-                                 "GetRenderPresetList", "AddRenderJob",
-                                 "GetQuickExportRenderPresets", "RenderWithQuickExport")},
-    })
-    say("audio.render_format", {
-        "state": symbol(project, "GetCurrentRenderFormatAndCodec") if project else UNKNOWN,
-        "symbols": {name: symbol(project, name)
-                    for name in ("GetCurrentRenderFormatAndCodec",
-                                 "SetCurrentRenderFormatAndCodec",
-                                 "GetRenderAudioFormats", "SetRenderAudioFormat")},
-    })
-    say("project.setting_presets", {
-        "state": symbol(manager, "ExportProjectPreset") if manager else UNKNOWN,
-        "symbols": {name: symbol(manager, name)
-                    for name in ("ExportProjectPreset", "ImportProjectPreset",
-                                 "CreateProjectPreset", "GetProjectPresetList")},
-    })
-    say("media.clone", {
-        "state": symbol(pool, "CloneMedia") if pool else UNKNOWN,
-        "symbols": {name: symbol(pool, name)
-                    for name in ("CloneMedia", "DuplicateMedia", "RelinkClips")},
-    })
-    say("intellisearch.faces", {
-        "state": symbol(pool, "GetFaces") if pool else UNKNOWN,
-        "notes": "Yardımcı sinyal olarak değerlendirilecek, vision katmanının yerine değil",
-        "symbols": {name: symbol(pool, name)
-                    for name in ("GetFaces", "SearchMedia", "GetPeople")},
-    })
+    capability("transcription.clip", clip, "transcri",
+               notes="Media Pool clip transcription (speaker + timing)")
+    capability("multicam.create", pool, "multicam",
+               notes="Multicam oluşturma")
+    capability("multicam.flatten_switch", item, "multicam",
+               notes="Flatten ve SmartSwitch")
+    capability("timeline.auto_align", timeline, "align",
+               notes="Timeline clip auto-align")
+    capability("mediapool.auto_sync", pool, "sync",
+               notes="Kamera + harici ses senkronu")
+    capability("timeline.transition", item, "transition",
+               notes="Programatik transition — TimelineItem üzerinde")
+    capability("item.fade", item, "fade",
+               notes="Fade okuma/yazma; 21.0.2'de yoktu")
+    capability("item.speed", item, "speed",
+               notes="Speed change; 21.0.2'de yoktu, retiming FCPXML timeMap ile")
+    capability("audio.normalization", timeline, "normali",
+               notes="Timeline clip audio normalization")
+    capability("audio.source_mapping", item, "audiochannelmapping",
+               notes="Source audio mapping (timeline item)")
+    capability("audio.clip_mapping", clip, "audiomapping",
+               notes="Source audio mapping (media pool item)")
+    capability("render.presets", project, "renderpreset", "quickexport",
+               notes="Render preset güncelleme ve Quick Export preset")
+    capability("audio.render_format", project, "audiorender",
+               notes="Audio render format/codec sorgulama")
+    capability("project.setting_presets", project, "projectsettingspreset",
+               notes="Project setting preset oluştur/güncelle/import/export")
+    capability("media.clone", pool, "clone", "relink", "replace",
+               notes="Media cloning; birebir CloneMedia yok, Relink/Replace var")
+    capability("intellisearch", clip, "intellisearch",
+               notes="Yardımcı sinyal olarak; vision katmanının yerine değil")
+    capability("intellisearch.project", project, "intellisearch")
+    capability("item.reframe", item, "reframe", "stabilize", "magicmask",
+               notes="SmartReframe / Stabilize / MagicMask — bonus")
+    capability("item.properties", item, "propert",
+               notes="Inspector property okuma/yazma")
 
     # --- Bu oturumda ölçülmüş, üzerine kurduğumuz gerçekler -------------------------------
     inspector = {}
