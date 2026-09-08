@@ -42,9 +42,20 @@ class WindowScoreTests(unittest.TestCase):
         self.assertAlmostEqual(_window_score(window(0, edge=1.0), BAR), 0.0)
         self.assertAlmostEqual(_window_score(window(0, edge=0.76), BAR), 0.24)
 
-    def test_a_whip_scores_low_on_the_shoot_own_scale(self):
-        """C2155 sat at 9 where this shoot's windows run 45 to 78."""
-        self.assertAlmostEqual(_window_score(window(0, sharpness=9.0), BAR), 0.15)
+    def test_a_whip_is_not_usable_at_all_on_the_shoot_own_scale(self):
+        """C2155 sat at 9 where this shoot's windows run 45 to 78 — a sixth of the median.
+
+        It used to score 0.15, low but carryable: with no face at the frame edge and nobody
+        crossing behind, the rest of the score could lift it back into a cut. Below the
+        crispness floor it is simply not picture, and eight cuts an edit were coming from the
+        shoot's softest 6% that way.
+        """
+        self.assertEqual(_window_score(window(0, sharpness=9.0), BAR), 0.0)
+
+    def test_softness_still_grades_above_the_floor(self):
+        """The floor is a floor, not a switch: above it crispness is still a share of the
+        shoot's own median."""
+        self.assertAlmostEqual(_window_score(window(0, sharpness=BAR / 2), BAR), 0.5)
 
     def test_bystanders_cost_and_the_scale_stops_at_a_crowd(self):
         alone = _window_score(window(0), BAR)

@@ -1308,6 +1308,23 @@ def _motion_targets(shots: Sequence[Shot]) -> dict[str, float]:
     }
 
 
+# A floor on crispness, below which nothing else about the half second matters.
+#
+# The score reads sharpness as a share of the shoot's median and caps it at 1, so a window at a
+# twentieth of the median scores 0.05 on crispness and can still be carried by having no face
+# at the frame edge and nobody crossing behind. Measured on one edit: eight cuts came from the
+# bottom 6% of the shoot's sharpness, one of them from the bottom 1%.
+#
+# That bottom one is the shot the editor called "arkadan kocaman kafa" — the groom's back
+# filling half the frame, out of focus. The crispness floor catches it where the framing
+# measures did not, because a body between the lens and the subject is what puts a window out
+# of focus in the first place.
+# Swept over 8 seeds: 0.20 and 0.30 change nothing, 0.45 takes cuts from the shoot's softest
+# 6% down from 3.1 a film to 1.0 and bad cuts from 8% to 7%. The film still fills its 150
+# seconds either way.
+UNUSABLE_SHARPNESS_SHARE = 0.45
+
+
 def _window_score(
     window: ShotWindow, sharpness_bar: float, category: str = ""
 ) -> float:
@@ -1324,6 +1341,9 @@ def _window_score(
     the one they objected to scored 0.88.
     """
     crisp = min(1.0, window.sharpness / sharpness_bar) if sharpness_bar > 0 else 1.0
+    # Too soft to use, whatever else is right about it.
+    if crisp < UNUSABLE_SHARPNESS_SHARE:
+        return 0.0
     if category in STILL_CATEGORIES:
         return crisp
     crowd = min(window.bystanders, BYSTANDER_LIMIT) / BYSTANDER_LIMIT
