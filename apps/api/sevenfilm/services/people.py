@@ -30,6 +30,8 @@ BRIDE_SHARE = 0.6
 # Without this the noise wins: a face seen once, in one bride shot, scores a perfect 1.00 and
 # sorts above the bride herself at 0.71 across ten clips.
 MIN_CLIPS = 5
+# The shots where the couple are together, which is how the second of them is found.
+COUPLE_CATEGORIES = frozenset({"couple"})
 UNCERTAIN = "couple?"
 
 
@@ -87,9 +89,40 @@ def decide_roles(
     bride = settled(brides)
     if bride:
         roles[bride] = "bride"
-    groom = settled(grooms)
-    if groom and groom not in roles:
-        roles[groom] = "groom"
+
+    # The other half is not found the same way, because the lean does not separate them.
+    # Measured across 209 clips of this shoot, every frequent identity sat between 0.44 and
+    # 0.65: the couple are together in most of the film, so the groom is in the bride's shots
+    # and she is in his. Ranking by lean produced a "groom" seen in six clips while the real
+    # one was in a hundred.
+    #
+    # What does separate him is the couple's own shots: the groom is the person the bride is
+    # with. On this shoot he shares 50 couple shots with her against 37 for the next identity,
+    # and the frame confirms it.
+    if bride:
+        together = Counter()
+        for asset_id, identities in people_by_asset.items():
+            if bride not in identities:
+                continue
+            if not (COUPLE_CATEGORIES & set(categories_by_asset.get(asset_id, ()))):
+                continue
+            for identity in identities:
+                if identity != bride and appearances[identity] >= MIN_CLIPS:
+                    together[identity] += 1
+        # A photographer stands in as many couple shots as the groom does, so a tie here is
+        # broken by which of them leans to his own preparation — the one place he is and the
+        # photographer is not particularly.
+        partner = sorted(
+            together, key=lambda i: (-together[i], leans[i] if leans[i] is not None else 0.5)
+        )
+        if partner:
+            best = partner[0]
+            tied = [i for i in partner if together[i] == together[best]]
+            clear = len(tied) == 1 or leans[tied[0]] != leans[tied[1]]
+            if clear:
+                roles[best] = "groom"
+                side[best]["couple_shots"] = together[best]
+
     if not roles:
         for identity, _ in appearances.most_common(2):
             roles[identity] = UNCERTAIN
@@ -100,6 +133,7 @@ def decide_roles(
             "clips": appearances[identity],
             "bride_shots": side[identity]["bride"],
             "groom_shots": side[identity]["groom"],
+            "couple_shots": side[identity]["couple_shots"],
         }
         for identity, role in roles.items()
     }
