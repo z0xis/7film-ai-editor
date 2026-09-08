@@ -74,3 +74,22 @@ yeni yetenek getirmez. MCP'nin bizim için değeri **geliştirme sırasında API
 `planner.py`, `moments.py`, `analysis.py`, `vision.py`, `windows.py`, `music.py`, referans stil
 profili ve `TimelinePlan` temsili. Edit kararları platformdan bağımsız kalır; Resolve yalnızca
 yürütme katmanıdır.
+
+## D) 21.1'in AI özellikleri — ölçüm sonuçları
+
+Hepsi çağrıldı ve sonucu render veya geri okuma ile denetlendi. `True` dönmek kanıt sayılmadı.
+
+| Özellik | API | Sonuç |
+|---|---|---|
+| Kapanış karartması | `TimelineItem.SetFades` | **SUPPORTED** — render 0.377 → 0.000. Üretimde. |
+| Ağır çekim | `TimelineItem.SetSpeed` | **PARTIAL** — render FCPXML ile birebir aynı, ama süreyi bozabiliyor. Koşullu. |
+| **Kadraj** | `TimelineItem.SetProperty` (Pan/Tilt/ZoomX/ZoomY) | **SUPPORTED** — render'a yansıyor, kare farkı 23.2. Kullanılmıyor; en büyük fırsat. |
+| Stabilizasyon | `TimelineItem.Stabilize` | **UNSUPPORTED (etkisiz)** — `True` dönüyor, render'da sallanma **artıyor**: 4.767 → 5.553. Muhtemelen yalnızca analiz ediyor, uygulamıyor. |
+| Akıllı yeniden çerçeveleme | `TimelineItem.SmartReframe` | **UNSUPPORTED (bizim için)** — `True` dönüyor, Pan/Tilt/Zoom değişmiyor. Farklı en-boy oranına (dikey/kare) çevirmek için tasarlanmış; 16:9 → 16:9'da yapacak işi yok. |
+| IntelliSearch / yüz | `MediaPoolItem.AnalyzeForIntellisearch` | **UNSUPPORTED (bizim için)** — iki sebep: (1) "AI Intellisearch - Faster/Better" paketleri kurulu değil, (2) **okuma yüzeyi yok**. Hiçbir nesnede `search`/`face`/`people` okuma metodu yok; yalnızca `AnalyzeForIntellisearch` (tetikle) ve `Project.ResetIntellisearchAnalysis`. Paket kurulsa bile sonuç Resolve'un arama kutusuna gider, API'ye gelmez. |
+| Slate analizi | `AnalyzeForSlate` | `False` döndü, hiçbir şey yazmadı. |
+| Ses sınıflandırma | `PerformAudioClassification` | `False` döndü, hiçbir şey yazmadı. |
+
+**Çıkarım:** 21.1'in hazır AI özellikleri (SmartReframe, Stabilize, IntelliSearch) bize kapalı ya
+da etkisiz. Açılan asıl kapı, kendi ölçümlerimizi Resolve'a **uygulatabilmek**: fade, speed ve
+kadraj. Yani 21.1 bizi zekâ tüketicisi değil, zekâmızın yürütücüsü yaptı — mimari ilkeyle birebir.
