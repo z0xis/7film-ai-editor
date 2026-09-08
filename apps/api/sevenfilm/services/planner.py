@@ -446,6 +446,28 @@ def _hold_this_cut(frequency: Fraction, debt: Fraction) -> tuple[bool, Fraction]
     return False, wanted
 
 
+def _closing_ramp_seconds(
+    remaining: Fraction, closing: Fraction
+) -> Fraction | None:
+    """How long this cut should run if the film is already coming in to land.
+
+    Worked out from what is left rather than from a count of cuts, because how many cuts
+    remain is not known until they are made. Everything past the ramp returns None and the
+    ordinary pacing decides.
+    """
+    left = remaining - closing
+    if left <= 0:
+        return None
+    # Counted from the closing shot backwards: the nearer the end, the longer the cut. Summed
+    # the other way round the ramp ran in reverse — the film sped up into the ending.
+    spent = Fraction(0)
+    for length in CLOSING_RAMP:
+        spent += length
+        if left <= spent:
+            return length
+    return None
+
+
 def _held_duration(
     grid: BeatGrid, start: Fraction, wanted: Fraction, remaining: Fraction
 ) -> Fraction | None:
@@ -1119,6 +1141,18 @@ UNUSABLE_RUN_SCORE = 0.25
 # than that. Below half the target the target is simply wrong for the footage and saying so is
 # the honest answer.
 MINIMUM_DELIVERABLE_SHARE = Fraction(1, 2)
+# How the film slows down before it stops.
+#
+# Measured across the 18 references, from the last shot backwards: 3.17, 1.76, 1.56, 1.48,
+# 1.22, 1.04 — their median shot is 1.00, so the last six cuts lengthen steadily into the
+# ending. Ours ran 0.96, 0.98, 0.98, 0.98, 0.96 and then 3.86: flat, and then a wall.
+# "çıkış da iyi değil tak diye çıkıyor daha yumuşak bitsin azalarak".
+#
+# Held as the cuts before the closing shot, longest first, and applied by how much film is
+# left rather than by counting cuts — the number of cuts left is not known in advance.
+CLOSING_RAMP = (
+    Fraction(44, 25), Fraction(39, 25), Fraction(37, 25), Fraction(61, 50), Fraction(26, 25),
+)
 # What the film ends on.
 #
 # Measured across the 18 references: 15 of them close on a `venue` shot — 83% of their endings
@@ -1698,11 +1732,23 @@ def build_timeline(
             music, current_time, energy, style_profile, progress, beats_per_cut,
             hold_limit=opening * OPENING_SLACK if opening is not None else None,
         )
+        # Coming in to land: the last few cuts lengthen towards the closing shot instead of
+        # holding the film's pace and then jumping.
+        landing = _closing_ramp_seconds(
+            frame_rate.seconds_from_frames(remaining_frames), closing_seconds
+        )
+        landing_now = landing is not None and opening is None
+        if landing_now:
+            desired = landing
         held_seconds = _held_seconds(style_profile, progress)
         frequency = _hold_frequency(
             _held_share(style_profile, progress), held_seconds, desired
         )
         hold, hold_debt = _hold_this_cut(frequency, hold_debt)
+        if landing_now and hold:
+            # The ramp is already lengthening; a four second hold dropped into it breaks the
+            # settling exactly the way one did in the opening. The share is carried forward.
+            hold, hold_debt = False, hold_debt + frequency
         if opening is not None:
             # The ramp is already the long shot here. A four second hold dropped into the
             # fifth cut broke the settling and read as the edit stalling, not opening.

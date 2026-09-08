@@ -15,9 +15,11 @@ from pathlib import Path
 
 from sevenfilm.domain import BeatGrid, MediaAsset, Shot
 from sevenfilm.services.planner import (
+    CLOSING_RAMP,
     CLOSING_SECONDS,
     HELD_SHOT_SECONDS,
     OPENING_SECONDS,
+    _closing_ramp_seconds,
     build_timeline,
 )
 from sevenfilm.timebase import FrameRate, TimeRange
@@ -187,3 +189,40 @@ class TheFilmPullsBackToEndTests(unittest.TestCase):
         """A wide shot with nobody in it fits the shape perfectly and finishes the film in the
         wrong hour: a morning shot of a laid table came out as the ending."""
         self.assertEqual(self._plan().items[-1].asset.name, "aksam-genis.mov")
+
+
+class TheFilmSlowsDownBeforeItStopsTests(unittest.TestCase):
+    """Measured across the 18 references, counting back from the last shot: 3.17, 1.76, 1.56,
+    1.48, 1.22, 1.04, against a median shot of 1.00. The last six cuts lengthen steadily into
+    the ending.
+
+    Ours ran 0.96, 0.98, 0.98, 0.98, 0.96 and then 3.86 — flat, and then a wall:
+    "tak diye çıkıyor daha yumuşak bitsin azalarak".
+    """
+
+    def test_the_ramp_lengthens_towards_the_end(self):
+        self.assertEqual(list(CLOSING_RAMP), sorted(CLOSING_RAMP, reverse=True))
+
+    def test_it_is_read_from_what_is_left_not_from_a_count_of_cuts(self):
+        """How many cuts remain is not known until they are made."""
+        closing = Fraction(3)
+        # Far from the end: ordinary pacing decides.
+        self.assertIsNone(_closing_ramp_seconds(Fraction(60), closing))
+        # Just past the closing shot: the last ramp cut, which is the longest.
+        self.assertEqual(_closing_ramp_seconds(closing + Fraction(1, 2), closing),
+                         max(CLOSING_RAMP))
+        # Nothing left but the closing shot.
+        self.assertIsNone(_closing_ramp_seconds(closing, closing))
+
+    def test_the_ramp_runs_in_the_right_direction(self):
+        """Summed the other way round the film sped up into its ending."""
+        closing = Fraction(3)
+        near = _closing_ramp_seconds(closing + Fraction(1, 2), closing)
+        far = _closing_ramp_seconds(closing + sum(CLOSING_RAMP) - Fraction(1, 10), closing)
+        self.assertGreater(near, far)
+
+    def test_the_cuts_before_the_ending_lengthen(self):
+        plan = TheFilmPullsBackToEndTests()._plan()
+        tail = [float(i.timeline_range.duration_seconds) for i in plan.items[-5:-1]]
+
+        self.assertEqual(tail, sorted(tail), f"kapanışa doğru uzamıyor: {tail}")
