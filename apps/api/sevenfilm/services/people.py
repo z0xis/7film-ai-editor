@@ -69,8 +69,6 @@ def decide_roles(
     # Ranked by how much evidence there is, not by how clean the ratio looks.
     brides = sorted((i for i in eligible if leans[i] >= BRIDE_SHARE),
                     key=lambda i: (-side[i]["bride"], -leans[i]))
-    grooms = sorted((i for i in eligible if leans[i] <= 1 - BRIDE_SHARE),
-                    key=lambda i: (-side[i]["groom"], leans[i]))
 
     def settled(ordered: list[str]) -> str | None:
         """The clear winner, or nothing. Two identities carrying identical evidence cannot be
