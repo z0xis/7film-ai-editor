@@ -1065,6 +1065,17 @@ STILLNESS_PENALTY = 0.08
 # half second to a wide shot of a hotel lobby: "kısa kalmış plan". Of our 24 cuts under 0.64
 # seconds, 17 were medium and 7 wide, and not one was a close-up.
 SHORT_CUT_SECONDS = Fraction(16, 25)
+# What a laid table costs anywhere in the film.
+#
+# Kept out of the opening since the welcome-sign work, and left free everywhere else — so four
+# of them turned up in the body of one edit: cutlery and glasses at 7, the same table again at
+# 17, a centrepiece at 24, a fourth at 33. The editor has objected to this image more than any
+# other, in four separate rounds: "alakasız yerde çiçek", "gereksiz yerde çiçek", "bi detay
+# planı böyle olmaz", "şu anasını siktiğimin çiçeği duruyor".
+#
+# Charged rather than banned. One shot of the room before anyone sits down is a detail a
+# wedding film can use; four of them spread through the party is the tool not noticing.
+TABLE_SETTING_PENALTY = 0.12
 # What a body between the camera and the subject costs.
 #
 # "alakasız sırt var", "çok kötü kafanın arkası görünüyor sadece". These are not weak shots by
@@ -1390,6 +1401,7 @@ def _score_candidate(
     missing_moment: bool = False,
     distraction: bool = False,
     obstructed: bool = False,
+    laid_table: bool = False,
     stillness_bar: float | None = None,
     second_take: bool = False,
     motion_targets: Mapping[str, float] | None = None,
@@ -1476,6 +1488,7 @@ def _score_candidate(
         )
         else 0.0
     )
+    table_penalty = TABLE_SETTING_PENALTY if (laid_table and not missing_moment) else 0.0
     second_take_penalty = SECOND_TAKE_PENALTY if second_take else 0.0
     # Taking the next shot from the clip just used is a sequence, not a repetition, so it is
     # pulled towards: removing the charge alone changed nothing, the edit still took every one
@@ -1514,6 +1527,7 @@ def _score_candidate(
         + take_bonus
         - reuse_penalty
         - obstruction_penalty
+        - table_penalty
         - stillness_penalty
         + random_jitter
     )
@@ -1534,6 +1548,7 @@ def _score_candidate(
         "moment_bonus": moment_bonus,
         "distraction_penalty": distraction_penalty,
         "obstruction_penalty": obstruction_penalty,
+        "table_penalty": table_penalty,
         "stillness_penalty": stillness_penalty,
         "second_take_penalty": second_take_penalty,
         "reuse_penalty": reuse_penalty,
@@ -1958,6 +1973,7 @@ def build_timeline(
                 missing_moment=shot.id in wanted_moment_shots,
                 distraction=shot.id in distractions,
                 obstructed=shot.id in obstructions,
+                laid_table=shot.id in table_settings,
                 stillness_bar=stillness_bar,
                 second_take=_is_second_take(
                     shot, plan.items[-1] if plan.items else None,

@@ -20,8 +20,10 @@ from sevenfilm.services.planner import (
     OPENING_CATEGORIES,
     OPENING_DETAIL_CUTS,
     OPENING_SECONDS,
+    TABLE_SETTING_PENALTY,
     _duration_from_beats,
     _opening_beats,
+    _score_candidate,
     build_timeline,
 )
 from sevenfilm.timebase import FrameRate, TimeRange
@@ -237,3 +239,40 @@ class TheFilmOpensOnTheWelcomeSignTests(unittest.TestCase):
     def test_a_laid_table_stays_out_of_the_opening_even_with_no_sign(self):
         opening = self._plan(tables=frozenset({"os1"})).items[:len(OPENING_SECONDS)]
         self.assertNotIn("masa-cicek.mov", [i.asset.name for i in opening])
+
+
+class ALaidTableIsChargedAnywhereInTheFilmTests(unittest.TestCase):
+    """Kept out of the opening since the welcome-sign work and left free everywhere else, so
+    four of them turned up in the body of one edit: cutlery and glasses, the same table again,
+    a centrepiece, a fourth. This is the image the editor has objected to in four separate
+    rounds — "alakasız yerde çiçek", "gereksiz yerde çiçek", "bi detay planı böyle olmaz",
+    "şu anasını siktiğimin çiçeği duruyor".
+
+    Charged, not banned: one shot of the room before anyone sits down is a detail a wedding
+    film can use. Over 8 seeds it takes them from 6.4 a film to 1.0.
+    """
+
+    def _score(self, **extra):
+        shot = Shot(id="s", asset_id="a", source_range=TimeRange(0, 500, RATE),
+                    category="detail", shot_scale="medium", technical_quality=.8,
+                    aesthetic_score=.8, motion_score=.5, confidence=.8,
+                    duplicate_group="visual:1", brightness=.36, saturation=.15,
+                    highlight_clipping=.01)
+        return _score_candidate(
+            shot, preferred_categories=("detail",), preferred_scales=("medium",),
+            energy="medium", recent=(), desired_duration=Fraction(1), random_jitter=0.0,
+            **extra)
+
+    def test_a_laid_table_gives_up_the_measured_amount(self):
+        self.assertAlmostEqual(
+            self._score(laid_table=True)[1]["table_penalty"], TABLE_SETTING_PENALTY)
+
+    def test_any_other_detail_costs_nothing(self):
+        self.assertEqual(self._score()[1]["table_penalty"], 0.0)
+
+    def test_it_comes_off_the_score(self):
+        self.assertLess(self._score(laid_table=True)[0], self._score()[0])
+
+    def test_a_moment_the_film_owes_is_never_suppressed_for_it(self):
+        self.assertEqual(
+            self._score(laid_table=True, missing_moment=True)[1]["table_penalty"], 0.0)
