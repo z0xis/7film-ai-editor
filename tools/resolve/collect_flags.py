@@ -23,8 +23,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "apps" / "api"))
 
 MODULES = "/Library/Application Support/Blackmagic Design/DaVinci Resolve/Developer/Scripting/Modules"
 
-from sevenfilm.db import Database  # noqa: E402
-from sevenfilm.services.rejections import reject_clips, rejected_names  # noqa: E402
+from sevenfilm.db import Database
+from sevenfilm.services.rejections import reject_clips, rejected_names
 
 
 def flagged_clip_names() -> tuple[list[str], list[str]]:
