@@ -167,6 +167,40 @@ CREATE TABLE IF NOT EXISTS rejections (
 CREATE UNIQUE INDEX IF NOT EXISTS rejections_unique
     ON rejections (project_id, asset_id, IFNULL(shot_id, ''));
 
+-- Who is in which clip.
+--
+-- The identity comes from Resolve's face analysis, which labels the same person consistently
+-- across a shoot; the *name* does not, because Resolve will not take one through the API and
+-- asking the editor to label anything defeats the tool. The role is worked out from our own
+-- shot categories and stored beside the identity, with the counts it was decided from, so a
+-- wrong match can be seen rather than trusted.
+--
+-- Kept per asset rather than per shot because that is the grain Resolve reports at.
+CREATE TABLE IF NOT EXISTS asset_people (
+    project_id TEXT NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
+    asset_id TEXT NOT NULL REFERENCES media_assets(id) ON DELETE CASCADE,
+    identity TEXT NOT NULL,
+    created_at TEXT NOT NULL
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS asset_people_unique
+    ON asset_people (project_id, asset_id, identity);
+
+-- What each identity turned out to be. `role` is 'bride', 'groom' or 'couple?' — the last
+-- meaning the evidence did not lean far enough to say.
+CREATE TABLE IF NOT EXISTS people_roles (
+    project_id TEXT NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
+    identity TEXT NOT NULL,
+    role TEXT NOT NULL,
+    clips INTEGER NOT NULL,
+    bride_shots INTEGER NOT NULL,
+    groom_shots INTEGER NOT NULL,
+    created_at TEXT NOT NULL
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS people_roles_unique
+    ON people_roles (project_id, identity);
+
 CREATE TABLE IF NOT EXISTS jobs (
     id TEXT PRIMARY KEY,
     project_id TEXT NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
