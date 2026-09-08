@@ -56,3 +56,27 @@ her kurgudan sonra bir tur gerekiyor.
 Gerçek bir görsel-dil modeli: kareye bakıp "bu plan bir düğün filminde neyi anlatıyor"
 sorusuna cevap verebilen. CLIP bunu yapamıyor — benzerlik ölçüyor, yargı vermiyor. Yerel bir
 VLM (4–8 GB) bu boşluğu kapatabilir; maliyeti kurulum ve 1405 plan için işlem süresi.
+
+## Altıncı yol: görsel-dil modeline sordum (2026-09-08)
+
+Ölçüler göremiyorsa belki bir model *bakarak* görür diye denedim. Editörün elediği
+klipler ile tuttukları aynı soruyla modele soruldu; kliplerin en yüz-yoğun karesi
+512 px'e ölçeklenip verildi.
+
+| model | doğruluk | kötüleri yakalama | hız |
+|---|---|---|---|
+| SmolVLM-500M-Instruct | 7/11 | C2133'ü yakaladı | 5.5 sn/kare |
+| SmolVLM-Instruct (2.2B) | 6/14 (%43) | **0/8** | 54 sn/kare |
+
+2.2B on dört karenin on dördüne de "USABLE" dedi — tek bir istisna yok. Sabit cevap,
+yargı değil. 500M'in 7/11'i de aynı sebeple sayılmaz: o da tek kelimeye yapışmıştı,
+yalnızca diğer kelimeye; soruyu özelleştirince ("birinin sırtı kamerayı kapatıyor mu?")
+neredeyse her şeye "no" dedi. İki modelin ikisi de kliplere bakmadan cevap veriyor.
+
+Sonuç: bu boyuttaki açık VLM'ler düğün karesinin kullanılabilirliğini ayırt etmiyor.
+Daha büyük/kapalı bir modele gitmek 500 kliplik bir çekimde hem ücretli hem de
+her klibi dışarı göndermek demek — üretime alınmadı.
+
+Yan not: test için `torchvision 0.29.0` **yalnızca `.venv`** içine kuruldu
+(torch 2.14.0 sabit kaldı, 574 test geçti). Üretim ortamı
+`.runtime/mamba-root/envs/sevenfilm` **değişmedi** ve bu koda üretimde ihtiyaç yok.
