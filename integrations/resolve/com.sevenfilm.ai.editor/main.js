@@ -419,16 +419,14 @@ async function applySpeeds(timeline, clipInfos) {
  * otherwise sitting correctly in the timeline.
  */
 /**
- * Turn the clips the camera labelled the wrong way up.
+ * Turn the clips the camera labelled the wrong way up, and resize them to fill the frame.
  *
- * Sixteen clips in one shoot are stored 3840x2160 with a rotation of -90 or +90 in their
- * metadata, so Resolve turns them on their side and reports 2160x3840 — pillarboxed in a
- * landscape edit. The metadata is wrong: face detection on both orientations picks the
- * unrotated frame in 14 of the 16, and rendering confirmed it, -90 coming out level with the
- * signage readable while +90 came out upside down.
+ * The angle is the opposite of what the camera wrote, not a fixed one. A first attempt turned
+ * every such clip by -90; the two written +90 came out right and the other fourteen came out
+ * upside down — "yine ters hepsini kontrol et".
  *
- * The angle travels in the plan; this only applies it. Best effort — a rotation that will not
- * take is not a reason to fail an edit that is otherwise correct.
+ * Both the angle and the scale travel in the plan; this only applies them. Best effort — a
+ * rotation that will not take is not a reason to fail an edit that is otherwise correct.
  */
 async function applyRotations(timeline, plan) {
   const items = (await timeline.GetItemListInTrack("video", 1)) || [];
@@ -439,6 +437,13 @@ async function applyRotations(timeline, plan) {
     const item = items[index];
     if (typeof item.SetProperty !== "function") continue;
     await item.SetProperty("RotationAngle", wanted);
+    // Resolve fits the clip by the height of the frame it thinks it has, so a clip turned
+    // back sits at 1080x607 inside 1920x1080 until it is scaled: "fit olmamış monitöre".
+    const zoom = Number(plan.items[index].rotation_zoom || 1);
+    if (zoom !== 1) {
+      await item.SetProperty("ZoomX", zoom);
+      await item.SetProperty("ZoomY", zoom);
+    }
     const now = await item.GetProperty("RotationAngle");
     if (Math.abs(Number(now) - wanted) < 0.01) turned += 1;
   }

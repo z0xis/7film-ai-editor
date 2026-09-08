@@ -89,20 +89,30 @@ PICTURE_FADE_SECONDS = Fraction(5, 2)
 # Clips the camera labelled the wrong way up.
 #
 # Sixteen clips in this shoot are stored 3840x2160 with a rotation of -90 or +90 in their
-# metadata, so every player — including Resolve and our own analysis — turns them on their side
-# and reports 2160x3840. The metadata is wrong: measured by running face detection on both
-# orientations, the unrotated frame wins in 14 of the 16, by 14 faces to 1 on one clip and 16
-# to 0 on another. The picture is upright in the file and the camera mislabelled it.
+# metadata, so every player — Resolve and our own indexing included — turns them and reports
+# 2160x3840. The metadata is wrong: running face detection on both orientations, the unrotated
+# frame wins in 14 of the 16, by 14 faces to 1 on one clip and 16 to 0 on another. The picture
+# is upright in the file and the camera mislabelled it.
 #
-# Dropping them was the first fix and the editor asked for the other one: "şu dikeyleri de
-# döndürsün artık". So the edit turns them back, and the angle is measured rather than assumed
-# — rendering +90 came out upside down, -90 came out level with the signage readable.
-UPRIGHT_ROTATION = -90.0
-
-
+# Undoing it means turning by the opposite of what was written, not by a fixed angle. The first
+# attempt applied -90 to all of them; the two clips written +90 came out right and the other
+# fourteen came out upside down: "yine ters hepsini kontrol et".
+#
+# And the turned clip has to be resized. Resolve fits the 2160x3840 frame to the timeline by
+# its height, so after turning it back the picture sits at 1080x607 in a 1920x1080 frame —
+# "fit olmamış monitöre". Scaling by the frame's own aspect ratio puts it back to full width.
 def rotation_for(asset: MediaAsset) -> float:
-    """How far this clip has to be turned to sit level in the edit, in degrees."""
-    return UPRIGHT_ROTATION if asset.height > asset.width else 0.0
+    """How far this clip has to be turned to sit level, in degrees. 0 for ordinary clips."""
+    written = asset.written_rotation
+    return -written if written else 0.0
+
+
+def zoom_for(asset: MediaAsset) -> float:
+    """How much a turned clip has to be scaled to fill the frame again."""
+    if not rotation_for(asset) or not asset.height:
+        return 1.0
+    return float(asset.height) / float(asset.width)
+
 
 
 def plan_as_dict(plan: TimelinePlan) -> dict[str, object]:
@@ -148,6 +158,7 @@ def plan_as_dict(plan: TimelinePlan) -> dict[str, object]:
                 # Non-zero for the clips whose camera labelled them the wrong way up; the
                 # Resolve adapter turns them level. FCPXML cannot carry it.
                 "rotation_degrees": rotation_for(item.asset),
+                "rotation_zoom": zoom_for(item.asset),
                 "source_in": item.source_range.as_rational_dict(),
                 "timeline_in": item.timeline_range.as_rational_dict(),
                 "score": item.score,

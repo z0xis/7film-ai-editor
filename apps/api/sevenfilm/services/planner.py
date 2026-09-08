@@ -1150,8 +1150,14 @@ MINIMUM_DELIVERABLE_SHARE = Fraction(1, 2)
 #
 # Held as the cuts before the closing shot, longest first, and applied by how much film is
 # left rather than by counting cuts — the number of cuts left is not known in advance.
+# Lengthened past the reference median once the editor had watched the ramp working and still
+# wanted more: "ve çıkış daha uzun halde yumuşak şekilde kapanmalı". The references' own last
+# shots run from 0.2 to 12.6 seconds around a median of 3.17, so a longer landing is inside
+# what they do, not outside it — this takes the approach to roughly nine seconds of settling
+# rather than seven.
 CLOSING_RAMP = (
-    Fraction(44, 25), Fraction(39, 25), Fraction(37, 25), Fraction(61, 50), Fraction(26, 25),
+    Fraction(12, 5), Fraction(2), Fraction(42, 25), Fraction(37, 25), Fraction(32, 25),
+    Fraction(26, 25),
 )
 # What the film ends on.
 #
@@ -1188,7 +1194,7 @@ CLOSING_DAY_FLOOR = 0.6
 # their *last* shot 3.17, three times as long, with the last five already lengthening to 1.62.
 # Half of them close on a shot of three seconds or more and two hold for over twelve. Our edits
 # were ending on an ordinary 0.98 second cut — the film stopped rather than finished.
-CLOSING_SECONDS = Fraction(317, 100)
+CLOSING_SECONDS = Fraction(4)
 # How much the edit cares that a shot moves the way the music does. The rest of the score is
 # fixed alongside it, so raising this takes from the technical bar rather than floating free.
 #

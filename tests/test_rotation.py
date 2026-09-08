@@ -16,31 +16,41 @@ from fractions import Fraction
 from pathlib import Path
 
 from sevenfilm.domain import MediaAsset, Shot, TimelineItem, TimelinePlan
-from sevenfilm.services.exporter import UPRIGHT_ROTATION, plan_as_dict, rotation_for
+from sevenfilm.services.exporter import plan_as_dict, rotation_for, zoom_for
 from sevenfilm.timebase import FrameRate, TimeRange
 
 RATE = FrameRate(50)
 
 
-def _asset(name, width, height):
+def _asset(name, width, height, written=0):
     return MediaAsset(id=name, project_id="p", path=Path(f"/m/{name}.mov"), name=f"{name}.mov",
-                      duration=Fraction(20), frame_rate=RATE, width=width, height=height)
+                      duration=Fraction(20), frame_rate=RATE, width=width, height=height,
+                      written_rotation=written)
 
 
 class TurningTheMislabelledClipsBackTests(unittest.TestCase):
-    def test_a_clip_reported_taller_than_it_is_wide_is_turned(self):
-        self.assertEqual(rotation_for(_asset("wrong", 2160, 3840)), UPRIGHT_ROTATION)
+    def test_a_clip_is_turned_by_the_opposite_of_what_was_written(self):
+        """A first attempt turned every one of them -90. The two written +90 came out right
+        and the other fourteen came out upside down: "yine ters hepsini kontrol et"."""
+        self.assertEqual(rotation_for(_asset("a", 2160, 3840, written=-90)), 90.0)
+        self.assertEqual(rotation_for(_asset("b", 2160, 3840, written=90)), -90.0)
 
     def test_an_ordinary_clip_is_left_alone(self):
-        self.assertEqual(rotation_for(_asset("fine", 3840, 2160)), 0.0)
+        self.assertEqual(rotation_for(_asset("fine", 3840, 2160, written=0)), 0.0)
+        self.assertEqual(zoom_for(_asset("fine", 3840, 2160, written=0)), 1.0)
 
-    def test_the_angle_is_the_one_that_rendered_level(self):
-        """+90 rendered upside down."""
-        self.assertEqual(UPRIGHT_ROTATION, -90.0)
+    def test_a_clip_with_no_angle_written_is_not_guessed_at(self):
+        self.assertEqual(rotation_for(_asset("odd", 2160, 3840, written=0)), 0.0)
 
-    def test_the_plan_carries_the_angle_for_the_adapter(self):
-        """FCPXML cannot express it, so it travels in the plan and Resolve applies it."""
-        turned, straight = _asset("turned", 2160, 3840), _asset("straight", 3840, 2160)
+    def test_a_turned_clip_is_scaled_back_to_full_width(self):
+        """Resolve fits it by the height of the frame it thinks it has, so a turned clip sits
+        at 1080x607 inside 1920x1080 until it is scaled: "fit olmamış monitöre"."""
+        self.assertAlmostEqual(zoom_for(_asset("a", 2160, 3840, written=-90)), 3840 / 2160)
+
+    def test_the_plan_carries_both_for_the_adapter(self):
+        """FCPXML cannot express either, so they travel in the plan and Resolve applies them."""
+        turned = _asset("turned", 2160, 3840, written=-90)
+        straight = _asset("straight", 3840, 2160)
         plan = TimelinePlan(id="t", project_id="p", name="7Film", frame_rate=RATE,
                             target_duration=Fraction(4))
         for index, asset in enumerate((turned, straight)):
@@ -57,8 +67,10 @@ class TurningTheMislabelledClipsBackTests(unittest.TestCase):
 
         items = plan_as_dict(plan)["items"]
 
-        self.assertEqual(items[0]["rotation_degrees"], UPRIGHT_ROTATION)
+        self.assertEqual(items[0]["rotation_degrees"], 90.0)
+        self.assertAlmostEqual(items[0]["rotation_zoom"], 3840 / 2160)
         self.assertEqual(items[1]["rotation_degrees"], 0.0)
+        self.assertEqual(items[1]["rotation_zoom"], 1.0)
 
 
 if __name__ == "__main__":

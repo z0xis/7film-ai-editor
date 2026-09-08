@@ -22,6 +22,9 @@ class MediaAsset:
     height: int
     codec: str | None = None
     timecode: str | None = None
+    # The angle the camera wrote beside the picture. Kept because undoing a
+    # mislabelled one means turning by its opposite, not by a fixed angle.
+    written_rotation: int = 0
     content_hash: str | None = None
 
 

@@ -194,7 +194,30 @@ def row_to_asset(row: dict[str, Any]) -> MediaAsset:
         codec=row.get("codec"),
         timecode=row.get("timecode"),
         content_hash=row.get("content_hash"),
+        written_rotation=_rotation_from_metadata(row.get("metadata_json")),
     )
+
+
+def _rotation_from_metadata(raw: Any) -> int:
+    """The angle the camera wrote, read back from the probe output kept at indexing time.
+
+    The shape stored in the row is already the shape the clip is watched in, so this is only
+    needed to undo a rotation the camera got wrong — and undoing it means turning by the
+    opposite of what was written, not by a fixed angle.
+    """
+    if not raw:
+        return 0
+    try:
+        payload = json.loads(raw) if isinstance(raw, str) else raw
+    except (TypeError, ValueError):
+        return 0
+    for stream in (payload.get("streams") or []):
+        if stream.get("codec_type") != "video":
+            continue
+        return _display_rotation(stream) if _display_rotation(stream) <= 180 else (
+            _display_rotation(stream) - 360
+        )
+    return 0
 
 
 def project_assets(database: Database, project_id: str) -> list[MediaAsset]:
