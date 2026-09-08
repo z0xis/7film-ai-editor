@@ -1,0 +1,183 @@
+{
+  "measured_at": "2026-09-08T10:01:59+00:00",
+  "product": "DaVinci Resolve Studio",
+  "version": "21.0.2.4",
+  "project": "7Film Kaba Kurgu 50fps",
+  "timeline": "7Film · REVIZE 0319",
+  "media_pool_clips": 408,
+  "capabilities": {
+    "transcription.clip": {
+      "state": "UNSUPPORTED",
+      "notes": "Media Pool clip transcription (speaker + timing)",
+      "symbols": {
+        "GetTranscription": "UNSUPPORTED",
+        "TranscribeAudio": "PRESENT",
+        "ClearTranscription": "PRESENT"
+      }
+    },
+    "multicam.create": {
+      "state": "UNSUPPORTED",
+      "notes": "Multicam oluşturma / flatten",
+      "symbols": {
+        "CreateMultiCamClipFromClipList": "UNSUPPORTED",
+        "CreateMultiCamClip": "UNSUPPORTED",
+        "AppendToTimeline": "PRESENT"
+      }
+    },
+    "multicam.smartswitch": {
+      "state": "UNSUPPORTED",
+      "notes": "SmartSwitch programatik tetikleme",
+      "symbols": {
+        "SetMultiCamSwitch": "UNSUPPORTED",
+        "GetMultiCamAngle": "UNSUPPORTED",
+        "SetMultiCamAngle": "UNSUPPORTED"
+      }
+    },
+    "timeline.auto_align": {
+      "state": "UNSUPPORTED",
+      "notes": "Timeline clip auto-align (kamera + harici ses senkronu)",
+      "symbols": {
+        "AutoAlignClips": "UNSUPPORTED",
+        "AutoSyncAudio": "UNSUPPORTED",
+        "AlignClips": "UNSUPPORTED"
+      }
+    },
+    "timeline.transition": {
+      "state": "UNSUPPORTED",
+      "notes": "Programatik transition ekleme — 21.0.2'de yok, karartma bu yüzden yapılamadı",
+      "symbols": {
+        "AddTransition": "UNSUPPORTED",
+        "InsertTransition": "UNSUPPORTED",
+        "item.AddTransition": "UNSUPPORTED"
+      }
+    },
+    "item.fade": {
+      "state": "UNSUPPORTED",
+      "notes": "Fade okuma/yazma — 21.0.2'de SetFade None döndürüyor",
+      "symbols": {
+        "SetFade": "UNSUPPORTED",
+        "GetFade": "UNSUPPORTED",
+        "SetFadeIn": "UNSUPPORTED",
+        "SetFadeOut": "UNSUPPORTED"
+      }
+    },
+    "item.speed": {
+      "state": "UNSUPPORTED",
+      "notes": "Speed change okuma/yazma — 21.0.2'de yok, retiming FCPXML timeMap ile",
+      "symbols": {
+        "SetClipSpeed": "UNSUPPORTED",
+        "GetClipSpeed": "UNSUPPORTED",
+        "SetSpeed": "UNSUPPORTED",
+        "GetSpeed": "UNSUPPORTED",
+        "SetRetimeCurve": "UNSUPPORTED"
+      }
+    },
+    "item.audio_normalization": {
+      "state": "UNSUPPORTED",
+      "symbols": {
+        "SetAudioNormalization": "UNSUPPORTED",
+        "NormalizeAudio": "UNSUPPORTED"
+      }
+    },
+    "item.source_audio_mapping": {
+      "state": "UNSUPPORTED",
+      "symbols": {
+        "SetSourceAudioMapping": "UNSUPPORTED",
+        "GetSourceAudioMapping": "UNSUPPORTED"
+      }
+    },
+    "render.presets": {
+      "state": "UNSUPPORTED",
+      "symbols": {
+        "UpdateRenderPreset": "UNSUPPORTED",
+        "SaveAsNewRenderPreset": "PRESENT",
+        "GetRenderPresetList": "PRESENT",
+        "AddRenderJob": "PRESENT",
+        "GetQuickExportRenderPresets": "PRESENT",
+        "RenderWithQuickExport": "PRESENT"
+      }
+    },
+    "audio.render_format": {
+      "state": "PRESENT",
+      "symbols": {
+        "GetCurrentRenderFormatAndCodec": "PRESENT",
+        "SetCurrentRenderFormatAndCodec": "PRESENT",
+        "GetRenderAudioFormats": "UNSUPPORTED",
+        "SetRenderAudioFormat": "UNSUPPORTED"
+      }
+    },
+    "project.setting_presets": {
+      "state": "UNSUPPORTED",
+      "symbols": {
+        "ExportProjectPreset": "UNSUPPORTED",
+        "ImportProjectPreset": "UNSUPPORTED",
+        "CreateProjectPreset": "UNSUPPORTED",
+        "GetProjectPresetList": "UNSUPPORTED"
+      }
+    },
+    "media.clone": {
+      "state": "UNSUPPORTED",
+      "symbols": {
+        "CloneMedia": "UNSUPPORTED",
+        "DuplicateMedia": "UNSUPPORTED",
+        "RelinkClips": "PRESENT"
+      }
+    },
+    "intellisearch.faces": {
+      "state": "UNSUPPORTED",
+      "notes": "Yardımcı sinyal olarak değerlendirilecek, vision katmanının yerine değil",
+      "symbols": {
+        "GetFaces": "UNSUPPORTED",
+        "SearchMedia": "UNSUPPORTED",
+        "GetPeople": "UNSUPPORTED"
+      }
+    },
+    "item.inspector_properties": {
+      "state": "SUPPORTED",
+      "notes": "21.0.2: 26 property; Opacity yazılabiliyor ama keyframe yok",
+      "detail": {
+        "readable_count": 26,
+        "names": [
+          "AnchorPointX",
+          "AnchorPointY",
+          "CompositeMode",
+          "CropBottom",
+          "CropLeft",
+          "CropRetain",
+          "CropRight",
+          "CropSoftness",
+          "CropTop",
+          "Distortion",
+          "DynamicZoomEase",
+          "FlipX",
+          "FlipY",
+          "MotionEstimation",
+          "Opacity",
+          "Pan",
+          "Pitch",
+          "ResizeFilter",
+          "RetimeProcess",
+          "RotationAngle",
+          "Scaling",
+          "Tilt",
+          "Yaw",
+          "ZoomGang",
+          "ZoomX",
+          "ZoomY"
+        ]
+      }
+    },
+    "timeline.import_fcpxml": {
+      "state": "PRESENT",
+      "notes": "Bugünkü yürütme yolu: retimed plan + müzik sönümü buradan geçiyor"
+    },
+    "timeline.export": {
+      "state": "PRESENT",
+      "notes": "Doğrulama için: Resolve'un ne aldığını geri okumakta kullanılıyor"
+    },
+    "fusion.comp": {
+      "state": "PRESENT",
+      "notes": "21.0.2: comp eklenebiliyor, SetKeyFrames uzak proxy üzerinden keyframe kabul etmiyor; son comp silinemiyor"
+    }
+  }
+}
