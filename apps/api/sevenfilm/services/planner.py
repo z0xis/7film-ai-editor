@@ -689,6 +689,16 @@ def _is_second_take(
     return float(here @ there) >= SECOND_TAKE_SIMILARITY
 
 
+def _trailing_scale_run(items: Sequence[TimelineItem], scale: str) -> int:
+    """How many cuts at the end of the film already share this shot scale."""
+    run = 0
+    for item in reversed(items):
+        if item.shot.shot_scale != scale:
+            break
+        run += 1
+    return run
+
+
 def _trailing_asset_run(items: Sequence[TimelineItem], asset_id: str) -> int:
     """How many shots the edit has just taken from this clip without leaving it."""
     run = 0
@@ -1082,6 +1092,18 @@ STILLNESS_PENALTY = 0.08
 # half second to a wide shot of a hotel lobby: "kısa kalmış plan". Of our 24 cuts under 0.64
 # seconds, 17 were medium and 7 wide, and not one was a close-up.
 SHORT_CUT_SECONDS = Fraction(16, 25)
+# How many cuts in a row may share a shot scale before the film starts to feel like one long
+# take of the same thing.
+#
+# Watching a whole cut as stills, its last third was medium shot after medium shot of a
+# crowded room. Measured: runs of the same scale reach 17 cuts, and every seed has one of 10
+# or more; half the film sits inside runs of four or more.
+#
+# The footage is the first cause and cannot be fixed here — the evening of this shoot is 79%
+# medium shots against 26% in the morning — but the edit can spend the variety it does have
+# rather than clustering it.
+SCALE_RUN_LIMIT = 4
+SCALE_RUN_PENALTY = 0.04
 # What a laid table costs anywhere in the film.
 #
 # Kept out of the opening since the welcome-sign work, and left free everywhere else — so four
@@ -1419,6 +1441,7 @@ def _score_candidate(
     distraction: bool = False,
     obstructed: bool = False,
     laid_table: bool = False,
+    scale_run: int = 0,
     stillness_bar: float | None = None,
     second_take: bool = False,
     motion_targets: Mapping[str, float] | None = None,
@@ -1506,6 +1529,8 @@ def _score_candidate(
         else 0.0
     )
     table_penalty = TABLE_SETTING_PENALTY if (laid_table and not missing_moment) else 0.0
+    # Charged by how far past the limit the run already is, so it grows rather than switching.
+    scale_run_penalty = SCALE_RUN_PENALTY * max(0, scale_run - SCALE_RUN_LIMIT + 1)
     second_take_penalty = SECOND_TAKE_PENALTY if second_take else 0.0
     # Taking the next shot from the clip just used is a sequence, not a repetition, so it is
     # pulled towards: removing the charge alone changed nothing, the edit still took every one
@@ -1545,6 +1570,7 @@ def _score_candidate(
         - reuse_penalty
         - obstruction_penalty
         - table_penalty
+        - scale_run_penalty
         - stillness_penalty
         + random_jitter
     )
@@ -1566,6 +1592,7 @@ def _score_candidate(
         "distraction_penalty": distraction_penalty,
         "obstruction_penalty": obstruction_penalty,
         "table_penalty": table_penalty,
+        "scale_run_penalty": scale_run_penalty,
         "stillness_penalty": stillness_penalty,
         "second_take_penalty": second_take_penalty,
         "reuse_penalty": reuse_penalty,
@@ -1991,6 +2018,10 @@ def build_timeline(
                 distraction=shot.id in distractions,
                 obstructed=shot.id in obstructions,
                 laid_table=shot.id in table_settings,
+                scale_run=(
+                    _trailing_scale_run(plan.items, shot.shot_scale)
+                    if shot.shot_scale else 0
+                ),
                 stillness_bar=stillness_bar,
                 second_take=_is_second_take(
                     shot, plan.items[-1] if plan.items else None,
