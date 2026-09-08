@@ -68,12 +68,21 @@ class WhatIsLeftOfAShotTests(unittest.TestCase):
 
 
 class WhereTheGateSitsTests(unittest.TestCase):
-    def test_zero_is_where_the_charges_cancel_the_crispness(self):
-        """A stretch below it is one the film should not be sitting on. Swept over six seeds:
-        bad cuts 19% to 16%, very bad 7% to 5%, and scene runs *up* from 24.5 to 30.3, because
-        a shot turned away for one cut and taken for the next is how a run gets built out of
-        the good part of a clip."""
-        self.assertEqual(UNUSABLE_RUN_SCORE, 0.0)
+    def test_the_gate_sits_where_it_was_swept_to(self):
+        """It started at 0.0, where the window charges cancel the crispness. Once the stillness
+        and short-cut rules were in it was swept again over 8 seeds, everything else fixed:
+
+            eşik  süre   kesim  kötü%  çokkötü%  durgun%   an
+            0.00  150.0    112     13         1        3  6.0
+            0.15  150.0    112      7         0        3  6.0
+            0.25  150.0    112      7         0        2  6.0
+            0.35  150.0    112      6         0        4  6.0
+            0.50  150.0    112      0         0        4  5.0   <- bir düğün anı kayboluyor
+
+        The editor expected raising it to cost length — "gereksiz plan eklemek yerine klip
+        uzunluğu kısaltılabilir" — and it does not: the film still fills its 150 seconds.
+        """
+        self.assertEqual(UNUSABLE_RUN_SCORE, 0.25)
 
 
 if __name__ == "__main__":

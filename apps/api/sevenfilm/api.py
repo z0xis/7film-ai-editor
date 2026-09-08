@@ -35,6 +35,8 @@ from .services.moments import (
     project_embeddings,
     project_moments,
     project_obstructions,
+    project_opening_signs,
+    project_table_settings,
 )
 from .services.music import plan_music
 from .services.planner import build_timeline, get_timeline, persist_timeline
@@ -387,6 +389,8 @@ def create_timeline(project_id: str, request: TimelineRequest) -> dict[str, Any]
             moments=project_moments(DATABASE, project_id),
             distractions=project_distractions(DATABASE, project_id),
             obstructions=project_obstructions(DATABASE, project_id),
+            opening_signs=project_opening_signs(DATABASE, project_id),
+            table_settings=project_table_settings(DATABASE, project_id),
             embeddings=project_embeddings(DATABASE, project_id),
         )
         plan.music_segments = music_segments

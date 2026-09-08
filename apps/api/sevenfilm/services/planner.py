@@ -1093,7 +1093,20 @@ SECOND_TAKE_PENALTY = 0.05
 # by a blind spot in _best_offset, which a test written for this found: window offsets are
 # half a second apart, so a narrow range falling between two of them left nothing to score and
 # the shot came back optimistically clean.
-UNUSABLE_RUN_SCORE = 0.0
+# Raised from 0.0 once the stillness and short-cut rules were in. Swept over 8 seeds with
+# everything else fixed:
+#
+#   eşik  süre   kesim  kötü%  çokkötü%  durgun%   an
+#   0.00  150.0    112     13         1        3  6.0
+#   0.15  150.0    112      7         0        3  6.0
+#   0.25  150.0    112      7         0        2  6.0
+#   0.35  150.0    112      6         0        4  6.0
+#   0.50  150.0    112      0         0        4  5.0   <- loses a wedding moment
+#
+# The editor expected this to cost length — "gereksiz plan eklemek yerine klip uzunluğu
+# kısaltılabilir" — and it does not: the film still fills 150 seconds, it just stops reaching
+# for the stretches it was reaching for. The short-delivery path stays for a shoot that cannot.
+UNUSABLE_RUN_SCORE = 0.25
 # How much of the asked-for length the edit has to reach before a short film is delivered
 # instead of an error.
 #
@@ -1471,6 +1484,8 @@ def build_timeline(
     moments: Sequence[Moment] | None = None,
     distractions: frozenset[str] | None = None,
     obstructions: frozenset[str] | None = None,
+    opening_signs: frozenset[str] | None = None,
+    table_settings: frozenset[str] | None = None,
     embeddings: Mapping[str, Any] | None = None,
 ) -> TimelinePlan:
     """Plan a varied edit and retain each score's human-readable rationale."""
@@ -1597,6 +1612,8 @@ def build_timeline(
     # shots the edit can still use, and stops being owed as soon as one of them is in.
     distractions = distractions or frozenset()
     obstructions = obstructions or frozenset()
+    opening_signs = opening_signs or frozenset()
+    table_settings = table_settings or frozenset()
     embeddings = embeddings or {}
     moments = tuple(moments or ())
     moment_of_shot: dict[str, set[str]] = {}
@@ -1659,7 +1676,16 @@ def build_timeline(
             # fifth cut broke the settling and read as the edit stalling, not opening.
             if hold:
                 hold, hold_debt = False, hold_debt + frequency
-            if desired > TYPICAL_CUT_SECONDS:
+            first_sign = [
+                shot for shot in available_shots if shot.id in opening_signs
+            ] if not plan.items else []
+            if first_sign:
+                # If the shoot filmed a welcome sign, the film opens on it and nothing else
+                # gets a say. Placed before the other narrowings rather than after: as the
+                # last of them it kept losing, because a quality bar and a minimum length had
+                # already emptied the sign out of the pool by the time it ran.
+                available_shots = first_sign
+            elif desired > TYPICAL_CUT_SECONDS:
                 # An opening cut is on screen longer than the film's own median, so it is held
                 # to the same bar as a held shot — and it has to be long enough to fill the
                 # ramp. Without that second condition the pacing asked for 2.50 seconds, a
@@ -1686,6 +1712,8 @@ def build_timeline(
             narrowers = [
                 lambda shot: scene_by_asset.get(shot.asset_id) not in still_life_scenes
             ]
+            # A laid table is not what a film opens on, whatever it scores.
+            narrowers.append(lambda shot: shot.id not in table_settings)
             if len(plan.items) < OPENING_DETAIL_CUTS:
                 # The references run 40% detail across their first five shots, two in five.
                 # Steering only the first cut left us at one in five, and steering the whole
@@ -1695,7 +1723,8 @@ def build_timeline(
                 narrowers.append(
                     lambda shot: day_by_asset.get(shot.asset_id, 0.0) <= OPENING_DAY_LIMIT
                 )
-            for narrower in narrowers:
+
+            for narrower in (() if first_sign else narrowers):
                 narrowed = [shot for shot in available_shots if narrower(shot)]
                 if narrowed:
                     available_shots = narrowed

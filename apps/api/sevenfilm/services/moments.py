@@ -250,6 +250,67 @@ def project_obstructions(database: Database, project_id: str) -> frozenset[str]:
         shot_id for shot_id, value in zip(shot_ids, score, strict=True) if value >= bar
     )
 
+
+# What a wedding film opens on when the shoot rolled one.
+#
+# Steering the opening to the `detail` category was right about the category and wrong about
+# the shot: this shoot's best-scoring detail is a table centrepiece, and the editor had already
+# rejected that image several times over — "alakasız yerde çiçek", "bi detay planı böyle
+# olmaz", and finally "hala yarak gibi giriş planları... hala onu koyuyon".
+#
+# What the shoot actually has is a mirror lettered with the couple's names, the word
+# hoşgeldiniz and the date, filmed four times in the first minute of the day. CLIP separates
+# the two cleanly: on this prompt the sign clips take the top four places (0.305-0.334) and
+# the centrepiece falls to 726th of 1405, while on a table-setting prompt the centrepiece is
+# first and the sign is 66th.
+OPENING_SIGN_PROMPT = (
+    "a wedding welcome sign with the couple's names and the date written on it"
+)
+# The top of the shoot, not a share of it: a wedding has one welcome sign or none.
+OPENING_SIGN_QUANTILE = 0.99
+# And what it does not open on.
+TABLE_SETTING_PROMPT = "a set dining table with a flower centrepiece and glasses"
+TABLE_SETTING_QUANTILE = 0.95
+
+
+def _top_by_prompt(
+    database: Database, project_id: str, prompt: str, quantile: float
+) -> frozenset[str]:
+    """The shots this shoot holds that look most like `prompt`."""
+    rows = database.fetch_all(
+        """SELECT shot_features.shot_id, shot_features.embedding FROM shot_features
+           JOIN media_assets ON media_assets.id = shot_features.asset_id
+           WHERE media_assets.project_id = ? AND shot_features.embedding IS NOT NULL""",
+        (project_id,),
+    )
+    if not rows:
+        return frozenset()
+    text = _text_features([prompt])
+    if text is None:
+        return frozenset()
+    shot_ids = [str(row["shot_id"]) for row in rows]
+    vectors = np.stack([np.frombuffer(row["embedding"], dtype=np.float32) for row in rows])
+    vectors = vectors / (np.linalg.norm(vectors, axis=1, keepdims=True) + 1e-9)
+    score = (vectors @ text.T)[:, 0]
+    bar = float(np.quantile(score, quantile))
+    return frozenset(
+        shot_id for shot_id, value in zip(shot_ids, score, strict=True) if value >= bar
+    )
+
+
+def project_opening_signs(database: Database, project_id: str) -> frozenset[str]:
+    """The welcome sign, if this shoot filmed one."""
+    return _top_by_prompt(
+        database, project_id, OPENING_SIGN_PROMPT, OPENING_SIGN_QUANTILE
+    )
+
+
+def project_table_settings(database: Database, project_id: str) -> frozenset[str]:
+    """Laid tables and their centrepieces, which the film does not open on."""
+    return _top_by_prompt(
+        database, project_id, TABLE_SETTING_PROMPT, TABLE_SETTING_QUANTILE
+    )
+
 def _moment_text_features() -> np.ndarray | None:
     """Encode the moment prompts. Only text, so the images never have to be read again."""
     return _text_features(list(MOMENT_PROMPTS.values()))

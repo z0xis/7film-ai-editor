@@ -170,3 +170,70 @@ class OpeningRampTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TheFilmOpensOnTheWelcomeSignTests(unittest.TestCase):
+    """Steering the opening to the `detail` category was right about the category and wrong
+    about the shot. This shoot's best-scoring detail is a table centrepiece, an image the
+    editor had rejected several times over — "alakasız yerde çiçek", "bi detay planı böyle
+    olmaz", and finally "hala yarak gibi giriş planları... hala onu koyuyon".
+
+    What the shoot has is a mirror lettered with the couple's names, hoşgeldiniz and the date,
+    filmed four times in the first minute of the day. CLIP separates the two: on the sign
+    prompt the sign clips take the top four places and the centrepiece falls to 726th of 1405;
+    on a table-setting prompt the centrepiece is first and the sign is 66th.
+    """
+
+    def _plan(self, signs=None, tables=None):
+        assets, shots = [], []
+        # The centrepiece is the better-looking shot, as it is on the real shoot.
+        plans = [
+            ("tabela.mov", "detail", 0.80, "09:00:00:00"),
+            ("masa-cicek.mov", "detail", 0.95, "09:00:30:00"),
+        ]
+        for index, (name, category, quality, clock) in enumerate(plans):
+            one = MediaAsset(id=f"o{index}", project_id="p", path=Path(f"/m/{name}"),
+                             name=name, duration=Fraction(11), frame_rate=RATE,
+                             width=1920, height=1080, timecode=clock)
+            assets.append(one)
+            shots.append(Shot(
+                id=f"os{index}", asset_id=one.id, source_range=TimeRange(0, 500, RATE),
+                category=category, shot_scale="medium", technical_quality=quality,
+                aesthetic_score=quality, motion_score=.5, confidence=.9,
+                duplicate_group=f"visual:{index:016x}", brightness=.36, saturation=.15,
+                highlight_clipping=.01))
+        for index in range(90):
+            clock = 9 * 3600 + 300 + index * 900
+            one = MediaAsset(
+                id=f"b{index}", project_id="p", path=Path(f"/m/b{index}.mov"),
+                name=f"b{index}.mov", duration=Fraction(4), frame_rate=RATE, width=1920,
+                height=1080,
+                timecode=f"{clock // 3600:02}:{clock // 60 % 60:02}:{clock % 60:02}:00")
+            assets.append(one)
+            shots.append(Shot(
+                id=f"bs{index}", asset_id=one.id, source_range=TimeRange(0, 150, RATE),
+                category=("couple", "bride", "groom", "party")[index % 4],
+                shot_scale="medium", technical_quality=.7, aesthetic_score=.7,
+                motion_score=.5, confidence=.9,
+                duplicate_group=f"visual:{index + 900:016x}", brightness=.36,
+                saturation=.15, highlight_clipping=.01))
+        beats = tuple(Fraction(i * 60, 123) for i in range(900))
+        music = BeatGrid(bpm=123, beats=beats, duration=Fraction(450),
+                         sections=({"energy": "medium", "start": "0", "end": "450"},))
+        return build_timeline(project_id="p", assets=assets, shots=shots, music=music,
+                              frame_rate=RATE, target_duration=Fraction(120),
+                              style_profile=PROFILE, seed=1,
+                              opening_signs=signs, table_settings=tables)
+
+    def test_the_centrepiece_wins_on_merit_when_nothing_says_otherwise(self):
+        """Not vacuous: without the two sets, the shot the editor rejected is the one that
+        wins, which is exactly what kept happening."""
+        self.assertEqual(self._plan().items[0].asset.name, "masa-cicek.mov")
+
+    def test_the_sign_opens_the_film(self):
+        plan = self._plan(signs=frozenset({"os0"}), tables=frozenset({"os1"}))
+        self.assertEqual(plan.items[0].asset.name, "tabela.mov")
+
+    def test_a_laid_table_stays_out_of_the_opening_even_with_no_sign(self):
+        opening = self._plan(tables=frozenset({"os1"})).items[:len(OPENING_SECONDS)]
+        self.assertNotIn("masa-cicek.mov", [i.asset.name for i in opening])
