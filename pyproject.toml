@@ -35,3 +35,9 @@ pythonpath = ["apps/api"]
 [tool.ruff]
 line-length = 100
 target-version = "py312"
+
+[tool.ruff.lint.per-file-ignores]
+# The Resolve probes exist to find out what an undocumented remote proxy does, including how
+# it fails. A call that raises is a result to be written down, not a bug to let through, so
+# these files catch broadly on purpose.
+"tools/resolve/*.py" = ["BLE001"]

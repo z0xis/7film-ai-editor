@@ -14,7 +14,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 MODULES = "/Library/Application Support/Blackmagic Design/DaVinci Resolve/Developer/Scripting/Modules"
@@ -163,7 +163,7 @@ def main() -> int:
         project.SetCurrentTimeline(previous)
     print(f"\ntest zaman çizgisi silindi · geri dönüldü: {previous and previous.GetName()}")
 
-    report = {"measured_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+    report = {"measured_at": datetime.now(UTC).isoformat(timespec="seconds"),
               "version": resolve.GetVersionString(), "results": results}
     if arguments.out:
         arguments.out.parent.mkdir(parents=True, exist_ok=True)

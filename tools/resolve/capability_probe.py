@@ -23,7 +23,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 MODULES = "/Library/Application Support/Blackmagic Design/DaVinci Resolve/Developer/Scripting/Modules"
@@ -96,7 +96,7 @@ def probe(connect=None) -> dict:
     clip = clips[0] if clips else None
 
     report = {
-        "measured_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "measured_at": datetime.now(UTC).isoformat(timespec="seconds"),
         "product": resolve.GetProductName(),
         "version": resolve.GetVersionString(),
         "project": project.GetName() if project else None,
