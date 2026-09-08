@@ -71,6 +71,9 @@ class EveryMomentReachesTheFilmTests(unittest.TestCase):
     """The six that matter, each carried by one deliberately unremarkable shot."""
 
     def build(self, moments):
+        return self.build_with(moments)
+
+    def build_with(self, moments, rejected=None):
         assets, shots = [], []
         categories = ("couple", "bride", "groom", "party", "venue", "detail")
         for index in range(200):
@@ -96,7 +99,7 @@ class EveryMomentReachesTheFilmTests(unittest.TestCase):
                          sections=({"energy": "medium", "start": "0", "end": "350"},))
         return build_timeline(project_id="p", assets=assets, shots=shots, music=music,
                               frame_rate=RATE, target_duration=Fraction(150), seed=1,
-                              moments=moments)
+                              moments=moments, rejected=rejected)
 
     def moments(self):
         return tuple(
@@ -125,6 +128,44 @@ class EveryMomentReachesTheFilmTests(unittest.TestCase):
 
         self.assertGreaterEqual(len(carried), 1)
         self.assertLessEqual(len(carried), 3)
+
+
+class AMomentThatNeverReachesTheFilmTests(unittest.TestCase):
+    """The one loss the editor cannot catch by watching: nothing is wrong on screen.
+
+    Measured on this shoot. The cake was absent from a 109 cut edit and no warning said so.
+    Its only clip ran 121 seconds and held 53 shots; one bad cut in it was flagged, the whole
+    clip was rejected, and with it the day's only record of the cake. A rejection list the
+    planner honours in silence is a list that can delete a moment from the wedding.
+    """
+
+    def build(self, moments, rejected=None):
+        return EveryMomentReachesTheFilmTests().build_with(moments, rejected)
+
+    def test_a_moment_whose_every_shot_is_rejected_is_named_as_rejected(self):
+        moment = Moment(name="cake", shot_ids=("s0",), best=0.34)
+        plan = self.build((moment,), rejected=(frozenset({"a0"}), frozenset()))
+        said = " ".join(plan.warnings)
+
+        self.assertIn("eleme listesinde", said)
+        self.assertIn("pasta kesme", said)
+
+    def test_a_moment_that_simply_lost_is_named_differently(self):
+        """The footage is there and usable; the edit preferred other cuts. Telling the editor
+        to review the rejection list would send them looking for something that is not there.
+        """
+        moment = Moment(name="cake", shot_ids=("s0",), best=0.34)
+        plan = self.build((moment,))
+        said = " ".join(plan.warnings)
+
+        self.assertNotIn("eleme listesinde", said)
+
+    def test_a_moment_the_film_shows_is_not_warned_about_at_all(self):
+        moments = EveryMomentReachesTheFilmTests().moments()
+        said = " ".join(self.build(moments).warnings)
+
+        self.assertNotIn("kurguda hiç yok", said)
+        self.assertNotIn("kurguya giremedi", said)
 
 
 class WhatTheFootageDoesNotHoldTests(unittest.TestCase):

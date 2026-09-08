@@ -2279,6 +2279,30 @@ def build_timeline(
             used_hashes.append(selected_hash)
 
     shown = {name for moment in moments for name in ((moment.name,)) if name not in unshown}
+    # A wedding moment that never reaches the film is the one loss the editor cannot see by
+    # watching: nothing is wrong on screen, something is simply absent. Measured on this shoot,
+    # the cake was missing from a 109 cut edit and no warning said so — its only clip had been
+    # rejected whole after one bad cut in it was flagged, and a rejection list the planner
+    # honours silently is a list that can delete a moment from the day.
+    missing = [moment for moment in moments if moment.name in unshown]
+    if missing:
+        all_rejected, merely_unused = [], []
+        for moment in missing:
+            candidate_ids = {shot.id for shot in candidates}
+            (merely_unused if candidate_ids & set(moment.shot_ids) else all_rejected).append(
+                moment)
+        if all_rejected:
+            plan.warnings.append(
+                "Şu anlara ait planların tamamı eleme listesinde, bu yüzden kurguda hiç yok: "
+                + ", ".join(moment.label for moment in all_rejected)
+                + ". Elemeyi gözden geçirin."
+            )
+        if merely_unused:
+            plan.warnings.append(
+                "Şu anlar kurguya giremedi: "
+                + ", ".join(moment.label for moment in merely_unused)
+                + ". Planları var ama başka kesimler tercih edildi."
+            )
     doubtful = [moment for moment in moments if moment.uncertain and moment.name in shown]
     if doubtful:
         # Better said than quietly wrong: the affinity cannot prove the moment happened, only
