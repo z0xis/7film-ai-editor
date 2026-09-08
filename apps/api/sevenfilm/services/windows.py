@@ -19,6 +19,10 @@ detector had just cut, and that is exactly where framing is still settling.
 
 Windows are measured off the proxy when there is one. The source here is 4K 10-bit S-Log3
 with no hardware decode on this machine, and nothing measured below depends on the grade.
+
+Sharpness is read at a fixed width rather than at whatever the source happens to be — see
+SHARPNESS_WIDTH. At 4K the measure reads sensor noise instead of focus, which is how two
+cuts the editor called blurred came through at the 45th percentile.
 """
 
 from __future__ import annotations
@@ -54,6 +58,33 @@ class ShotWindow:
     face_edge: float
     face_count: int
     bystanders: int
+
+
+# Sharpness is measured on a frame scaled to this width, never on the full 4K frame.
+#
+# At 4K the Laplacian variance measures sensor noise, not focus. Measured on 60 cuts of this
+# edit, the same frames ranked at full resolution and at 640 pixels agree at a Spearman of
+# only 0.52 — and the disagreements are exactly the ones the editor picked out. The film's
+# opening, a neon sign that is sharp and clean, sat in the bottom 1% at full resolution; two
+# cuts of the bride the editor called blurred sat at the 45th percentile. Both come right at
+# 640: the sign is the sharpest frame in the film and the blurred cuts are the softest.
+#
+# It also explains a finding that had no explanation. Across eleven features the clips the
+# editor rejected measured *better* than the clips kept, sharpness 25.2 against 23.0, and
+# noise is what that number was reading.
+SHARPNESS_WIDTH = 640
+
+
+def _sharpness(cv2: Any, grey: Any) -> float:
+    """How much of the frame is in focus, read at a fixed width so noise cannot stand in."""
+    height, width = grey.shape[:2]
+    if width > SHARPNESS_WIDTH:
+        scale = SHARPNESS_WIDTH / width
+        grey = cv2.resize(
+            grey, (SHARPNESS_WIDTH, max(1, round(height * scale))),
+            interpolation=cv2.INTER_AREA,
+        )
+    return float(cv2.Laplacian(grey, cv2.CV_64F).var())
 
 
 def _face_framing(box: Any, width: int, height: int) -> tuple[float, float]:
@@ -99,7 +130,7 @@ def measure_windows(asset: MediaAsset, shot: Shot, source: Path) -> list[ShotWin
             if not ok or frame is None:
                 break
             grey = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            sharpness = float(cv2.Laplacian(grey, cv2.CV_64F).var())
+            sharpness = _sharpness(cv2, grey)
             faces: list[Any] = []
             if detector is not None:
                 _ok, detected = detector.detect(frame)

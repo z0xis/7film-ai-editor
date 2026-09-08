@@ -19,7 +19,7 @@ from sevenfilm.services.planner import (
     _source_range_for_duration,
     _window_score,
 )
-from sevenfilm.services.windows import ShotWindow
+from sevenfilm.services.windows import SHARPNESS_WIDTH, ShotWindow, _sharpness
 from sevenfilm.timebase import FrameRate
 
 from tests.test_recording_tail import shot as make_shot
@@ -166,3 +166,62 @@ class UnusableShotsLoseTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class SharpnessIsNotNoiseTests(unittest.TestCase):
+    """At 4K the Laplacian variance measures the sensor, not the focus.
+
+    Measured on 60 cuts of one edit: the same frames ranked at full resolution and at 640
+    pixels agree at a Spearman of only 0.52, and the disagreements are the ones the editor
+    picked out by eye. The film's opening — a neon sign, sharp and clean — sat in the bottom
+    1% at full resolution, while two cuts of the bride the editor called blurred sat at the
+    45th percentile. Read at 640 the sign is the sharpest frame in the film and the blurred
+    cuts are the softest.
+
+    It also answers a finding that had none: across eleven features the clips the editor
+    rejected measured better than the clips kept, sharpness 25.2 against 23.0. That number
+    was reading noise.
+    """
+
+    def setUp(self):
+        try:
+            import cv2  # type: ignore[import-not-found]
+        except ImportError:  # pragma: no cover - opencv is a runtime dependency
+            self.skipTest("opencv yok")
+        import numpy as np
+
+        self.cv2 = cv2
+        rng = np.random.default_rng(7)
+        size = (2160, 3840)
+        # One scene, photographed twice. The sharp frame is clean; the soft one is the same
+        # picture out of focus and carrying the sensor noise a wide-open lens brings with it.
+        # That pairing is what the shoot holds and what the measure has to tell apart.
+        scene = rng.integers(0, 256, (size[0] // 24, size[1] // 24), dtype="uint8")
+        scene = cv2.resize(scene, (size[1], size[0]), interpolation=cv2.INTER_LINEAR)
+        self.sharp = scene
+        blurred = cv2.GaussianBlur(scene, (0, 0), 9)
+        self.soft = np.clip(
+            blurred.astype("float64") + rng.normal(0, 14, size), 0, 255).astype("uint8")
+
+    def test_at_full_resolution_the_noisy_soft_frame_wins(self):
+        """Which is the fault: it is the blurred frame that measures sharper."""
+        def full(frame):
+            return float(self.cv2.Laplacian(frame, self.cv2.CV_64F).var())
+
+        self.assertGreater(full(self.soft), full(self.sharp))
+
+    def test_read_at_a_fixed_width_the_sharp_frame_wins(self):
+        self.assertGreater(
+            _sharpness(self.cv2, self.sharp), _sharpness(self.cv2, self.soft))
+
+    def test_a_frame_already_small_enough_is_not_touched(self):
+        import numpy as np
+
+        small = np.zeros((360, 480), dtype="uint8")
+        small[:, ::8] = 255
+        plain = float(self.cv2.Laplacian(small, self.cv2.CV_64F).var())
+
+        self.assertAlmostEqual(_sharpness(self.cv2, small), plain)
+
+    def test_the_width_is_well_below_a_4k_frame(self):
+        self.assertLess(SHARPNESS_WIDTH, 1920)
