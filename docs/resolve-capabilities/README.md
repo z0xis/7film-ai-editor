@@ -22,7 +22,7 @@ güvenilir olduğu için capability adları bu iki dosyaya göre yazıldı.
 | Yetenek | Gerçek API | Durum | Nasıl doğrulandı |
 |---|---|---|---|
 | Timeline item fade | `TimelineItem.Get/SetFades(FadeInfo)` | **SUPPORTED** | `SetFades({"FadeOut":50})` → geri okuma `FadeOut: 50.0` |
-| Timeline item speed | `TimelineItem.Get/SetSpeed(SpeedOptions)` | **SUPPORTED** | `{"Percentage":50.0}` → geri okuma `50.0` |
+| Timeline item speed | `TimelineItem.Get/SetSpeed(SpeedOptions)` | **PARTIAL — doğrulanmış render, koşullu güvensiz** | Render FCPXML timeMap ile birebir aynı (aynı ilk kare, aynı ilerleme, aynı son kare) ama **süreyi her zaman korumuyor**: test timeline'ında ortadaki klip 100 karesini korudu, gerçek kurguda ilk klip 126→252 olup arkasındaki iki klibi ezdi. Üretimde koşulsuz güvenilir sayılmıyor; her uygulamadan sonra süre doğrulanıyor, bozulursa tüm timeline FCPXML'e düşüyor |
 | Transition ekleme | `TimelineItem.AddTransition(TransitionOptions)` | **PARTIAL** | `Dip To Color Dissolve` bir `TimelineItem` döndürdü; `Cross Dissolve` her parametre birleşiminde `None` |
 | Audio normalization | `Timeline.GetNormalizeAudioModes`, `NormalizeAudioLevel` | **SUPPORTED** | 6 mod listelendi (Sample Peak, True Peak, ITU-R BS.1770-1/-4, ATSC A/85…) |
 | Render preset | `Project.UpdateRenderPreset`, `SetQuickExportEnabledForRenderPreset` | **SUPPORTED** | 37 render + 10 quick export preset okundu |
@@ -59,7 +59,7 @@ yeni yetenek getirmez. MCP'nin bizim için değeri **geliştirme sırasında API
 | Yetenek | Backend | Doğrulandı | Fallback | 7Film kullanımı | Öncelik |
 |---|---|---|---|---|---|
 | Fade out | Scripting | evet | FCPXML yok (Resolve `adjust-opacity` yutuyor) | **Kapanış karartması** — "outro olmamış yine sert" | **1** |
-| Speed | Scripting | evet | FCPXML `timeMap` + klip başına asset (çalışıyor) | Ağır çekim; FCPXML yolunun en kırılgan parçasını değiştirebilir | **2** |
+| Speed | Scripting (koşullu) | render evet, davranış hayır | **FCPXML `timeMap` + klip başına asset — kaldırılmayacak** | Ağır çekim. API yolu yalnızca güvenli deneme: süre doğrulaması zorunlu, bozulursa tüm timeline fallback | **2** |
 | Transition | Scripting (kısmi) | kısmen | fade yeterli | Kapanışta Dip To Color; ara geçiş kullanmıyoruz | 3 |
 | Transcription + speaker | Scripting | hayır | yok | Yeminler, konuşmalar, duygusal diyalog seçimi | 3 |
 | Audio normalization | Scripting | evet | yok | Konuşma/müzik dengesi (kaba kurgu sonrası) | 4 |
