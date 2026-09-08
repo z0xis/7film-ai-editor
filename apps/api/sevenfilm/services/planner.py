@@ -674,19 +674,29 @@ def _is_second_take(
 ) -> bool:
     """Whether this shot is another take of the one just played rather than its next moment.
 
-    A sequence continues *within* a take, so a shot from the same file is never a second take
-    of itself however alike the two look. What this catches is the camera rolling twice on one
-    setup and both takes reaching the edit back to back.
+    A sequence continues *within* a take, so two cuts from one file are usually its next
+    moment rather than a repeat — and they look alike simply because they are the same room
+    and the same people. So the same file is held to a higher bar rather than exempted, which
+    is what it used to be: an edit put two cuts of the bride's bouquet back to back, four
+    seconds apart in the source and 0.957 alike, and nothing charged for it. The next pair
+    from one file in the same edit measured 0.754 and reads as a sequence, which is the
+    distinction the two thresholds draw.
+
+    What the lower bar catches is the other case: the camera rolling twice on one setup and
+    both takes reaching the edit back to back.
     """
     if previous is None or not same_scene or not embeddings:
-        return False
-    if shot.asset_id == previous.shot.asset_id:
         return False
     here = embeddings.get(shot.id)
     there = embeddings.get(previous.shot.id)
     if here is None or there is None:
         return False
-    return float(here @ there) >= SECOND_TAKE_SIMILARITY
+    bar = (
+        SAME_CLIP_REPEAT_SIMILARITY
+        if shot.asset_id == previous.shot.asset_id
+        else SECOND_TAKE_SIMILARITY
+    )
+    return float(here @ there) >= bar
 
 
 def _trailing_scale_run(items: Sequence[TimelineItem], scale: str) -> int:
@@ -1073,7 +1083,22 @@ MOMENT_BONUS = 0.1
 # is not being banished. 0.20 takes it to nothing and costs the day's order, 0.84 to 0.78.
 # Scene runs come *up*, 26.7 to 29.7, because the band's stage was pulling the edit back to
 # the same corner of the room from every part of the evening.
-DISTRACTION_PENALTY = 0.05
+# Raised after the band was still in an eighth of the film. The prompt was finding them — all
+# four clips the editor flagged as the singer are inside its top 200 — but 0.05 was not enough
+# to keep them out: 12.7% of cuts, and the singer with her microphone was still turning up in
+# the last minute of the edit.
+#
+# Swept over 8 seeds:
+#
+#   ceza  grup planı%  kötü%   an
+#   0.05         12.7      7  4.0
+#   0.10          6.1      8  4.0   <-
+#   0.15          3.0      9  4.0
+#   0.22          0.8      9  4.0
+#
+# Halved at 0.10 for one point of picture quality. Tighter keeps buying less and costing the
+# same, and the band is not nothing in a wedding film: the first dance happens in front of it.
+DISTRACTION_PENALTY = 0.10
 # A shot of people who are not doing anything.
 #
 # "öylece duruyorlar shota hazırlık kısmı daha", "yine duruyorlar gelin terini siliyor", and
@@ -1136,6 +1161,11 @@ OBSTRUCTION_PENALTY = 0.05
 # exactly one pair qualifies — the one complained about — and no pair from a single file
 # continuing into itself comes near it, so a sequence is never touched.
 SECOND_TAKE_SIMILARITY = 0.90
+# Two cuts from the *same* file look alike whatever they show — same room, same people, same
+# light — so they are held to a higher bar before being called a repeat. Measured on one edit:
+# a pair of bouquet cuts four seconds apart scored 0.957 and was plainly the same shot twice,
+# while the next same-file pair scored 0.754 and read as a sequence.
+SAME_CLIP_REPEAT_SIMILARITY = 0.94
 # Swept over three seeds: 0.05 takes the second-take pairs to none and the most alike pair in
 # the film from 0.919 to 0.899, while the six moments and the scene runs are untouched.
 SECOND_TAKE_PENALTY = 0.05

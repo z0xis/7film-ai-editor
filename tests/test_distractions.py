@@ -107,3 +107,20 @@ class WhereTheLineIsDrawnTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TheBandDoesNotFillAnEighthOfTheFilmTests(unittest.TestCase):
+    """The prompt was finding them — all four clips the editor flagged as the singer are in
+    its top 200 — but the charge was too small to act on it: 12.7% of cuts, with the singer
+    and her microphone still in the last minute.
+
+    Swept over 8 seeds: 0.05 leaves 12.7%, 0.10 leaves 6.1% for one point of picture quality,
+    0.15 leaves 3.0% for two. Halved rather than banned — the first dance happens in front of
+    the band.
+    """
+
+    def test_the_charge_is_heavy_enough_to_be_felt(self):
+        self.assertGreaterEqual(DISTRACTION_PENALTY, 0.1)
+
+    def test_it_is_not_a_ban(self):
+        self.assertLess(DISTRACTION_PENALTY, 0.3)

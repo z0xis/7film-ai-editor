@@ -26,6 +26,7 @@ from pathlib import Path
 import numpy as np
 from sevenfilm.domain import MediaAsset, Shot, TimelineItem
 from sevenfilm.services.planner import (
+    SAME_CLIP_REPEAT_SIMILARITY,
     SECOND_TAKE_PENALTY,
     SECOND_TAKE_SIMILARITY,
     _is_second_take,
@@ -68,13 +69,24 @@ class WhatCountsAsASecondTakeTests(unittest.TestCase):
 
         self.assertTrue(found)
 
-    def test_a_shot_continuing_within_one_take_never_is(self):
-        """A sequence continues inside a take, however alike the two frames look."""
+    def test_a_sequence_continuing_within_one_take_is_not(self):
+        """A sequence continues inside a take, and two cuts from one file look alike anyway —
+        same room, same people, same light. So the same file is held to a higher bar rather
+        than exempted: measured on one edit, a pair reading 0.754 is the next moment."""
         found = _is_second_take(
             shot("b", "file1"), item(shot("a", "file1")),
-            vectors(0.99), same_scene=True)
+            vectors(0.75), same_scene=True)
 
         self.assertFalse(found)
+
+    def test_but_a_near_identical_pair_from_one_file_still_is(self):
+        """Exempting the same file entirely put two cuts of the bouquet back to back, four
+        seconds apart in the source and 0.957 alike, with nothing charged for it."""
+        found = _is_second_take(
+            shot("b", "file1"), item(shot("a", "file1")),
+            vectors(0.96), same_scene=True)
+
+        self.assertTrue(found)
 
     def test_two_files_from_different_moments_are_not_takes_of_each_other(self):
         found = _is_second_take(
@@ -120,3 +132,66 @@ class TheScoreChargesForItTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TwoCutsFromOneFileAreHeldToAHigherBarTests(unittest.TestCase):
+    """A sequence continues within a take, so two cuts from one file are usually its next
+    moment — and they look alike simply because they are the same room and the same people.
+    Exempting them entirely let an edit put two cuts of the bouquet back to back, four seconds
+    apart in the source and 0.957 alike, with nothing charged for it. The next same-file pair
+    in that edit measured 0.754 and reads as a sequence, which is the gap the two thresholds
+    sit in.
+    """
+
+    def test_the_same_file_bar_is_higher_than_the_other(self):
+        self.assertGreater(SAME_CLIP_REPEAT_SIMILARITY, SECOND_TAKE_SIMILARITY)
+
+    def test_a_near_identical_pair_from_one_file_is_caught(self):
+        previous, shot = _pair(same_asset=True)
+        embeddings = _embeddings(shot, previous, similarity=0.96)
+
+        self.assertTrue(
+            _is_second_take(shot, previous, embeddings, same_scene=True))
+
+    def test_a_sequence_from_one_file_is_left_alone(self):
+        previous, shot = _pair(same_asset=True)
+        embeddings = _embeddings(shot, previous, similarity=0.75)
+
+        self.assertFalse(
+            _is_second_take(shot, previous, embeddings, same_scene=True))
+
+    def test_a_second_take_from_another_file_still_uses_the_lower_bar(self):
+        previous, shot = _pair(same_asset=False)
+        embeddings = _embeddings(shot, previous, similarity=0.92)
+
+        self.assertTrue(
+            _is_second_take(shot, previous, embeddings, same_scene=True))
+
+
+def _pair(*, same_asset):
+    import numpy as np  # noqa: F401
+    previous_shot = Shot(id="p", asset_id="a1", source_range=TimeRange(0, 100, RATE),
+                         category="bride", shot_scale="medium", technical_quality=.8,
+                         aesthetic_score=.8, motion_score=.5, confidence=.9,
+                         duplicate_group="visual:1", brightness=.36, saturation=.15,
+                         highlight_clipping=.01)
+    asset = MediaAsset(id="a1", project_id="p", path=Path("/m/a1.mov"), name="a1.mov",
+                       duration=Fraction(20), frame_rate=RATE, width=1920, height=1080)
+    previous = TimelineItem(id="i", shot=previous_shot, asset=asset,
+                            source_range=TimeRange(0, 100, RATE),
+                            timeline_range=TimeRange(0, 100, RATE), score=.5,
+                            selection_reason="")
+    shot = Shot(id="s", asset_id="a1" if same_asset else "a2",
+                source_range=TimeRange(200, 100, RATE), category="bride",
+                shot_scale="medium", technical_quality=.8, aesthetic_score=.8,
+                motion_score=.5, confidence=.9, duplicate_group="visual:2", brightness=.36,
+                saturation=.15, highlight_clipping=.01)
+    return previous, shot
+
+
+def _embeddings(shot, previous, *, similarity):
+    import numpy as np
+    here = np.array([1.0, 0.0], dtype=np.float32)
+    angle = float(np.arccos(similarity))
+    there = np.array([np.cos(angle), np.sin(angle)], dtype=np.float32)
+    return {shot.id: here, previous.shot.id: there}
