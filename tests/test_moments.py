@@ -24,7 +24,10 @@ from sevenfilm.services.moments import (
 )
 from sevenfilm.services.planner import (
     CHRONOLOGY_SLACK,
+    HELD_SHOT_SECONDS,
     MOMENT_BONUS,
+    MOMENT_DAY_SPREAD,
+    _moment_shots_of_the_day,
     _score_candidate,
     build_timeline,
 )
@@ -73,7 +76,7 @@ class EveryMomentReachesTheFilmTests(unittest.TestCase):
     def build(self, moments):
         return self.build_with(moments)
 
-    def build_with(self, moments, rejected=None):
+    def build_with(self, moments, rejected=None, handicap=True):
         assets, shots = [], []
         categories = ("couple", "bride", "groom", "party", "venue", "detail")
         for index in range(200):
@@ -90,8 +93,8 @@ class EveryMomentReachesTheFilmTests(unittest.TestCase):
             shots.append(Shot(
                 id=f"s{index}", asset_id=one.id, source_range=TimeRange(0, 500, RATE),
                 category=categories[index % len(categories)], shot_scale="medium",
-                technical_quality=.65 if carries else .85,
-                aesthetic_score=.65 if carries else .85,
+                technical_quality=.65 if (carries and handicap) else .85,
+                aesthetic_score=.65 if (carries and handicap) else .85,
                 motion_score=.5, confidence=.9, duplicate_group=f"visual:{index:016x}",
                 brightness=.36, saturation=.15, highlight_clipping=.01))
         beats = tuple(Fraction(i, 2) for i in range(700))
@@ -128,6 +131,71 @@ class EveryMomentReachesTheFilmTests(unittest.TestCase):
 
         self.assertGreaterEqual(len(carried), 1)
         self.assertLessEqual(len(carried), 3)
+
+
+class AMomentIsWhereItHappenedTests(unittest.TestCase):
+    """The affinity cannot tell a shortlist apart; the time of day can.
+
+    Measured on this shoot: the eight best shots for each moment score between 0.94 and 1.00
+    of the best, with no gap anywhere. Their positions in the day do have a gap. The entrance
+    sits at 0.183 to 0.193 and the first dance at 0.648 to 0.687, and the strays in each
+    shortlist sit far outside — the entrance's held one at 0.102 and one at 0.308, and it was
+    the 0.102 one the film answered the entrance with, a clip with no face in it at all.
+    """
+
+    def test_a_clip_far_from_the_rest_of_the_moment_is_not_that_moment(self):
+        shots = {
+            f"s{i}": Shot(id=f"s{i}", asset_id=f"a{i}", source_range=TimeRange(0, 500, RATE),
+                          category="couple", shot_scale="medium", technical_quality=.8,
+                          aesthetic_score=.8, motion_score=.5, confidence=.9,
+                          duplicate_group=f"visual:{i}", brightness=.36, saturation=.15,
+                          highlight_clipping=.01)
+            for i in range(4)
+        }
+        moment = Moment(name="entrance", shot_ids=("s0", "s1", "s2", "s3"), best=0.35)
+        day = {"a0": 0.183, "a1": 0.190, "a2": 0.193, "a3": 0.102}
+
+        kept = _moment_shots_of_the_day(moment, shots, day)
+
+        self.assertEqual(kept, ("s0", "s1", "s2"))
+
+    def test_a_shoot_with_no_recording_times_keeps_the_whole_shortlist(self):
+        moment = Moment(name="entrance", shot_ids=("s0", "s1"), best=0.35)
+
+        self.assertEqual(_moment_shots_of_the_day(moment, {}, {}), ("s0", "s1"))
+
+    def test_the_spread_is_a_twentieth_of_the_day(self):
+        """Wide enough for every clustered shot on this shoot (spread at most 0.039), tight
+        enough to drop every stray (nearest 0.088)."""
+        self.assertEqual(MOMENT_DAY_SPREAD, 0.05)
+
+
+class AMomentGetsALongEnoughCutTests(unittest.TestCase):
+    """A hold is what an entrance, a first look or a slow dance is made of.
+
+    Measured on this shoot before this: the cake reached the film for 0.48 seconds and the
+    kiss for 1.96, because the moment bonus landed on whatever cut the rhythm happened to be
+    making. Spending the holds on the moments the film still owes took the cake to 4.24
+    seconds, the kiss to 3.92 and the first dance to 8.30, with the running time unchanged.
+    """
+
+    def test_a_hold_goes_to_a_moment_the_film_still_owes(self):
+        # No handicap here: a hold picks from the better half of what is left, so a moment
+        # carried by a shot worse than the shoot's median is not held at all. On the shoot
+        # that is the entrance, whose best clips run 0.36 to 0.40 against a median of 0.406,
+        # and it still reaches the film in one 0.80 second cut. Not solved.
+        maker = EveryMomentReachesTheFilmTests()
+        plan = maker.build_with(maker.moments(), handicap=False)
+        longest = {}
+        for item in plan.items:
+            seconds = item.timeline_range.duration_seconds
+            longest[item.shot.id] = max(longest.get(item.shot.id, seconds), seconds)
+        moment_cuts = [
+            longest[f"s{i}"] for i in range(len(MOMENT_PROMPTS)) if f"s{i}" in longest
+        ]
+
+        self.assertTrue(moment_cuts, "hiçbir an filme girmedi")
+        self.assertGreaterEqual(max(moment_cuts), HELD_SHOT_SECONDS)
 
 
 class AMomentThatNeverReachesTheFilmTests(unittest.TestCase):

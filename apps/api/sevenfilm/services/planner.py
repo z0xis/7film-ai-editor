@@ -358,6 +358,50 @@ def _worthy_shots(shots: Sequence[Shot], hold_bar: float) -> list[Shot]:
     ]
 
 
+# How far from the middle of a moment's own shots a clip may sit and still be that moment.
+#
+# The affinity cannot tell the shortlist apart: measured on this shoot, the eight best shots
+# for each moment score between 0.94 and 1.00 of the best, with no gap anywhere. The time of
+# day can. A moment happens once, and its shots cluster: the entrance sits at 0.183 to 0.193
+# of the day, the first dance at 0.648 to 0.687. The clips that do not belong sit far outside
+# — the entrance shortlist also held one at 0.102 and one at 0.308, and the film answered the
+# entrance with the 0.102 one, a clip with no face in it at all. "gelin damat girişi kısa
+# kalıyor ve bi planda nerdeyse görünmüyorlar."
+#
+# 0.05 of the day keeps every clustered shot on this shoot (spread at most 0.039) and drops
+# every stray (nearest 0.088). It also takes the first dance's best shot out of the kiss's
+# shortlist, which is what it was.
+MOMENT_DAY_SPREAD = 0.05
+
+
+def _moment_shots_of_the_day(
+    moment: Moment,
+    shot_by_id: Mapping[str, Shot],
+    day_by_asset: Mapping[str, float],
+) -> tuple[str, ...]:
+    """The shortlisted shots that sit where this moment actually happened.
+
+    Falls back to the whole shortlist when the day is not known, which is what a shoot with no
+    recording times gives.
+    """
+    positions = []
+    for shot_id in moment.shot_ids:
+        shot = shot_by_id.get(shot_id)
+        where = day_by_asset.get(shot.asset_id) if shot else None
+        if where is not None:
+            positions.append(where)
+    if not positions:
+        return moment.shot_ids
+    middle = sorted(positions)[len(positions) // 2]
+    kept = []
+    for shot_id in moment.shot_ids:
+        shot = shot_by_id.get(shot_id)
+        where = day_by_asset.get(shot.asset_id) if shot else None
+        if where is None or abs(where - middle) <= MOMENT_DAY_SPREAD:
+            kept.append(shot_id)
+    return tuple(kept)
+
+
 def _beats_for_cut(target: Fraction, debt: Fraction) -> tuple[int, Fraction]:
     """Pick a whole number of beats, carrying the fraction over to the next cut.
 
@@ -1798,8 +1842,9 @@ def build_timeline(
     embeddings = embeddings or {}
     moments = tuple(moments or ())
     moment_of_shot: dict[str, set[str]] = {}
+    shot_by_id = {shot.id: shot for shot in candidates}
     for moment in moments:
-        for shot_id in moment.shot_ids:
+        for shot_id in _moment_shots_of_the_day(moment, shot_by_id, day_by_asset):
             moment_of_shot.setdefault(shot_id, set()).add(moment.name)
     unshown = {moment.name for moment in moments}
     wanted_moment_shots = {
@@ -1988,6 +2033,19 @@ def build_timeline(
                         worthy = steady
                     else:
                         worthy = []
+                # A hold is what an entrance, a first look or a slow dance is made of, so a
+                # moment the film still owes is what a hold is for. Without this the bonus
+                # landed on whatever cut the rhythm was making — the cake was settled in 0.48
+                # seconds and the entrance in 0.80, in one cut where the couple are barely
+                # visible: "gelin damat girişi kısa kalıyor ve bi planda nerdeyse
+                # görünmüyorlar." The rhythm is untouched; only what this hold is spent on
+                # changes, and where the moment has nothing worth holding it is not forced.
+                # Not relaxed further than this: dropping the hold's own quality bar for
+                # moments let the entrance's weak clips into every hold and the edit ran out
+                # at 83.5 seconds of 150.
+                owed = [shot for shot in worthy if shot.id in wanted_moment_shots]
+                if owed:
+                    worthy = owed
                 if worthy:
                     available_shots = worthy
                     desired = held
