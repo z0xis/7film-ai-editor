@@ -51,25 +51,35 @@ describe("the import path the plugin leads with", () => {
   const source = fs.readFileSync(path.join(PLUGIN_DIR, "main.js"), "utf8");
   const flow = source.slice(source.indexOf("async function importTimeline"));
 
-  it("builds an ordinary plan through the Resolve API before trying the FCPXML file", () => {
+  it("builds the plan through the Resolve API before trying the FCPXML file", () => {
     // Only the API path can say picture-only, place the music on A1 and add the markers, and
     // it is the one verified against real Resolve.
-    const ordinary = flow.slice(flow.indexOf("} else {"));
-    const api = ordinary.indexOf("createTimelineFromPlan(");
-    const fcpxml = ordinary.indexOf("ImportTimelineFromFile(");
+    const api = flow.indexOf("createTimelineFromPlan(");
+    const fcpxml = flow.indexOf("ImportTimelineFromFile(");
     assert.ok(api > -1 && fcpxml > -1, "both paths should still be present");
     assert.ok(api < fcpxml, "the verified Resolve API path must be attempted first");
   });
 
-  it("sends a retimed plan straight to FCPXML, which is the only path that can carry it", () => {
-    // AppendToTimeline lays a clip down at its own speed and nothing can change that after:
-    // TimelineItem.SetProperty offers pan, tilt, zoom, crop and the retime method, no speed.
-    // Taking the API path anyway would drop the slow motion and mis-time the cut.
-    const guard = flow.indexOf("hasRetiming(plan)");
-    const fcpxml = flow.indexOf("ImportTimelineFromFile(");
+  it("takes the retimed plan through the API too, and keeps FCPXML underneath it", () => {
+    // Until 21.1 a retimed plan had to go through FCPXML: AppendToTimeline laid a clip down at
+    // its own speed and SetProperty offered pan, tilt, zoom, crop and the retime method, no
+    // speed. 21.1 adds SetSpeed, measured against the FCPXML path on this footage — rendered
+    // frame for frame the two are identical, and SetSpeed additionally leaves the item
+    // reporting its real source position instead of 0.
+    //
+    // So the API path is tried for every plan, and FCPXML catches an older Resolve, a clip
+    // with too little source, or a speed that does not read back.
+    assert.match(source, /async function applySpeeds\(/);
+    assert.match(source, /applySpeeds\(timeline, clipInfos\)/);
+    // The speed has to be read back, and so does the length: SetSpeed kept a mid-timeline
+    // clip at 100 frames but took the first clip of a real edit from 126 to 252, overwriting
+    // the two after it.
+    assert.match(source, /GetSpeed\(\)/);
+    assert.match(source, /GetDuration\(\)/);
     const api = flow.indexOf("createTimelineFromPlan(");
-    assert.ok(guard > -1, "the plan has to be asked whether it holds a retimed clip");
-    assert.ok(guard < fcpxml && guard < api, "and asked before either path is taken");
+    const fcpxml = flow.indexOf("ImportTimelineFromFile(");
+    assert.ok(api < fcpxml, "FCPXML is the fallback, not the first choice");
+    assert.match(flow, /catch \(error\)/, "the fallback has to be reachable on failure");
   });
 
   it("still downloads the FCPXML, which the fallback needs", () => {

@@ -4,6 +4,8 @@ const { describe, it } = require("node:test");
 const {
   appendClipsInBatches,
   closingFadeFrames,
+  retimedSourceFrames,
+  speedPercentageFor,
   hasRetiming,
   monitorFormatForRate,
   parseRational,
@@ -693,5 +695,61 @@ describe("closingFadeFrames", () => {
   it("kare hızını plandan okur", () => {
     const plan = { closing_fade_seconds: "5/2", frame_rate: "25/1" };
     assert.equal(closingFadeFrames(plan, 217), 63);
+  });
+});
+
+describe("speedPercentageFor", () => {
+  it("reads the slow motion out of the plan's two ranges", () => {
+    // The plan carries no speed field: a clip whose source is half its place in the timeline
+    // is being played at half speed, and that is the only place the number comes from.
+    assert.equal(
+      speedPercentageFor({
+        source_in: { duration_frames: 122 },
+        timeline_in: { duration_frames: 244 },
+      }),
+      50,
+    );
+  });
+
+  it("says nothing for a clip at normal speed", () => {
+    assert.equal(
+      speedPercentageFor({
+        source_in: { duration_frames: 100 },
+        timeline_in: { duration_frames: 100 },
+      }),
+      null,
+    );
+  });
+
+  it("slows only — a ratio that reads as speeding up is a malformed plan", () => {
+    // A fuzz case of 1e9 source frames against 1 timeline frame was taken as a 1e11% speed
+    // change and dropped the clip.
+    assert.equal(
+      speedPercentageFor({
+        source_in: { duration_frames: 1e9 },
+        timeline_in: { duration_frames: 1 },
+      }),
+      null,
+    );
+  });
+
+  it("survives a plan with nothing usable in it", () => {
+    for (const item of [{}, { source_in: {}, timeline_in: {} }, null]) {
+      assert.equal(speedPercentageFor(item), null);
+    }
+  });
+});
+
+describe("retimedSourceFrames", () => {
+  it("lays the clip down at its timeline length, not its source length", () => {
+    // Measured on 21.1: SetSpeed keeps the timeline length and pulls the source in. Placing
+    // 244 frames and asking for 50% leaves 244 on the timeline reading 122 of source.
+    assert.equal(
+      retimedSourceFrames({
+        source_in: { duration_frames: 122 },
+        timeline_in: { duration_frames: 244 },
+      }),
+      244,
+    );
   });
 });

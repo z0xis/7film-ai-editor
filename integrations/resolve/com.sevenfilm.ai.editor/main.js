@@ -346,9 +346,64 @@ async function createTimelineFromPlan(mediaPool, project, plan, timelineName) {
   if (!timeline) throw new Error("Resolve video timeline'ını oluşturamadı.");
   await project.SetCurrentTimeline(timeline);
   await appendClipsInBatches({ mediaPool, clipInfos, labels });
+  await applySpeeds(timeline, clipInfos);
 
   await appendMusic(mediaPool, timeline, plan, media);
   return timeline;
+}
+
+/**
+ * Slow the clips the edit asked to be slowed.
+ *
+ * Before 21.1 this was impossible through the API — SetProperty offered pan, tilt, zoom, crop
+ * and the retime *method* and no speed — so a plan with a retimed clip had to go through
+ * FCPXML, where each retimed item needed an asset of its own because an asset-clip carrying a
+ * timeMap has its `start` in-point ignored.
+ *
+ * 21.1 adds TimelineItem.SetSpeed, measured on this footage against the FCPXML path: rendered
+ * frame for frame the two are identical — same first source frame, same progression, same last
+ * frame. The difference is in what Resolve then knows. Through FCPXML the item reports its
+ * source as 0-122, because the asset it points at was cut to the in-point already; through
+ * SetSpeed it reports 743-865, the real position in the source clip, so the editor can still
+ * trim it and can see where it came from.
+ *
+ * Throws rather than continuing quietly: a clip that stays at full speed is not the edit that
+ * was planned, and the caller falls back to FCPXML.
+ */
+async function applySpeeds(timeline, clipInfos) {
+  const wanted = clipInfos
+    .map((info, index) => ({ index, speed: info.sevenfilmSpeed }))
+    .filter((entry) => entry.speed != null);
+  if (!wanted.length) return 0;
+  const items = (await timeline.GetItemListInTrack("video", 1)) || [];
+  let applied = 0;
+  for (const { index, speed } of wanted) {
+    const item = items[index];
+    if (!item || typeof item.SetSpeed !== "function") {
+      throw new Error("Bu Resolve sürümü klip hızını değiştiremiyor (21.1 gerekiyor).");
+    }
+    const before = await item.GetDuration();
+    const ok = await item.SetSpeed({ Percentage: speed });
+    // Read it back: on this API a call returning true has not always meant it did something.
+    const now = await item.GetSpeed();
+    if (!ok || Math.abs(Number(now?.Percentage) - speed) > 0.01) {
+      throw new Error(`Klip hızı uygulanamadı: ${await item.GetName()}`);
+    }
+    // And check the length, because SetSpeed does not always keep it. Measured on 21.1: a
+    // clip in the middle of a timeline kept its 100 frames and gave up half its source, while
+    // the first clip of a real edit went from 126 frames to 252 and overwrote the two clips
+    // after it. The cut lengths are the edit — they are where the music lands — so a clip that
+    // changed length is not the plan any more and the whole timeline falls back to FCPXML.
+    const after = await item.GetDuration();
+    if (after !== before) {
+      throw new Error(
+        `Hız değişikliği klip süresini bozdu (${before} → ${after} kare): `
+        + `${await item.GetName()}`,
+      );
+    }
+    applied += 1;
+  }
+  return applied;
 }
 
 /**
@@ -414,26 +469,22 @@ async function importTimeline(_event, payload) {
   // tilt, zoom, crop and the retime method, and no speed. Taking the API path anyway would
   // drop the slow motion silently and, worse, lay the clip down at the wrong length. So a plan
   // that asks for a speed goes through FCPXML, where the map comes back at exactly 0.50x.
+  //
+  // 21.1 added SetSpeed, so a retimed plan can take the API path too. It is still only tried:
+  // where the version is older, where a clip has too little source to be laid down at its
+  // timeline length, or where the speed does not read back, this falls through to FCPXML —
+  // which is measured to produce an identical render and is not going anywhere.
   let timeline = null;
-  const retimed = hasRetiming(plan);
-  let importMethod = retimed ? "FCPXML (yavaş çekim)" : "Resolve API";
-  if (retimed) {
+  let importMethod = "Resolve API";
+  try {
+    timeline = await createTimelineFromPlan(mediaPool, project, plan, timelineName);
+  } catch (error) {
+    importMethod = hasRetiming(plan) ? "FCPXML (yavaş çekim)" : "FCPXML";
     timeline = await mediaPool.ImportTimelineFromFile(importFile, {
       timelineName,
       importSourceClips: true,
     });
-    if (!timeline) throw new Error("Yavaş çekimli kurgu Resolve'a aktarılamadı (FCPXML).");
-  } else {
-    try {
-      timeline = await createTimelineFromPlan(mediaPool, project, plan, timelineName);
-    } catch (error) {
-      importMethod = "FCPXML";
-      timeline = await mediaPool.ImportTimelineFromFile(importFile, {
-        timelineName,
-        importSourceClips: true,
-      });
-      if (!timeline) throw error;
-    }
+    if (!timeline) throw error;
   }
 
   await project.SetCurrentTimeline(timeline);

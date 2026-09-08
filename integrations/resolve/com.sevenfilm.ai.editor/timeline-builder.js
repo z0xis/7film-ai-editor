@@ -80,9 +80,13 @@ function buildVideoClipInfos(items, resolveMedia) {
       throw new Error(`Media Pool öğesi bulunamadı: ${sourcePath}`);
     }
     const reported = toFrameCount(media.frameCount);
+    // A retimed clip is laid down at its timeline length; SetSpeed then pulls the source in.
+    const speed = speedPercentageFor(item);
     const range = clampSourceRange({
       startFrame: item?.source_in?.start_frame,
-      durationFrames: item?.source_in?.duration_frames,
+      durationFrames: speed === null
+        ? item?.source_in?.duration_frames
+        : retimedSourceFrames(item),
       availableFrames: reported === null ? item?.asset_duration_frames : reported,
       minimumFrames: Math.ceil(MIN_CLIP_SECONDS * parseFrameRate(item?.source_in?.rate)),
     });
@@ -90,11 +94,19 @@ function buildVideoClipInfos(items, resolveMedia) {
       dropped.push(sourcePath);
       continue;
     }
+    // Not enough source to lay the clip down at its timeline length means SetSpeed cannot
+    // reach the asked-for speed, and a silently faster clip is worse than the FCPXML path.
+    if (speed !== null && range.endFrame - range.startFrame < retimedSourceFrames(item)) {
+      throw new Error(
+        `Yavaşlatılacak klipte yeterli kaynak yok: ${sourcePath}`,
+      );
+    }
     clipInfos.push({
       mediaPoolItem: media.mediaPoolItem,
       startFrame: range.startFrame,
       endFrame: range.endFrame,
       mediaType: 1,
+      ...(speed === null ? {} : { sevenfilmSpeed: speed }),
     });
     labels.push(`${sourcePath} [${range.startFrame}-${range.endFrame}]`);
   }
@@ -309,6 +321,37 @@ function chunk(values, size = DEFAULT_BATCH_SIZE) {
 // Until Resolve 21.1 there was no way to apply it: the FCPXML importer drops `adjust-opacity`
 // and `<transition>`, and Fusion would not accept a keyframe over the remote proxy. 21.1 adds
 // TimelineItem.SetFades, which is measured to work — set 50, reads back 50.
+/**
+ * The speed a plan item asks to be played at, as a percentage, or null for normal speed.
+ *
+ * The plan does not carry a speed field: it carries a source range and a timeline range, and a
+ * clip whose source is shorter than its place in the timeline is being slowed by exactly that
+ * ratio. Reading it back out here keeps the speed a consequence of the edit decision rather
+ * than a second copy of it that could disagree.
+ */
+function speedPercentageFor(item) {
+  const source = toFrameCount(item?.source_in?.duration_frames);
+  const timeline = toFrameCount(item?.timeline_in?.duration_frames);
+  if (!source || !timeline || source >= timeline) return null;
+  // Slowing only. The engine never speeds a shot up, so a ratio that reads as one is a
+  // malformed plan rather than an instruction — a fuzz case of 1e9 source frames against 1
+  // timeline frame was being taken as a 100000000000% speed change and dropped the clip.
+  const percentage = (source / timeline) * 100;
+  return percentage > 0 && percentage < 100 ? percentage : null;
+}
+
+/**
+ * How much source to lay down for a retimed clip before SetSpeed is applied.
+ *
+ * Measured on 21.1: SetSpeed keeps the item's timeline length and shortens what it consumes
+ * from the source — laying down 200 frames and asking for 50% leaves 200 frames on the
+ * timeline reading 100 frames of source. So the clip is placed at its *timeline* length and
+ * the speed change pulls the source in, rather than the other way round.
+ */
+function retimedSourceFrames(item) {
+  return toFrameCount(item?.timeline_in?.duration_frames);
+}
+
 function closingFadeFrames(plan, lastItemDurationFrames) {
   const seconds = Number(parseRational(plan?.closing_fade_seconds));
   if (!Number.isFinite(seconds) || seconds <= 0) return 0;
@@ -359,6 +402,8 @@ function monitorFormatForRate(current, rate) {
 module.exports = {
   closingFadeFrames,
   hasRetiming,
+  retimedSourceFrames,
+  speedPercentageFor,
   monitorFormatForRate,
   DEFAULT_BATCH_SIZE,
   MIN_CLIP_SECONDS,
