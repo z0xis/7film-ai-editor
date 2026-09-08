@@ -791,11 +791,28 @@ def _scene_of_asset(assets: Sequence[MediaAsset]) -> dict[str, int]:
 # The references intercut freely, so a film is not the day played back in order; but a table
 # laid before anyone arrived has no business at eighty-four per cent of the running time.
 # Swept: at 0.30 six or seven morning shots still closed the film, at 0.15 none did.
-CHRONOLOGY_SLACK = 0.15
+# Raised after watching a whole cut as stills rather than reading its correlation. The number
+# said 0.79 and looked acceptable; the film went evening, morning, evening — fourteen jumps of
+# more than a third of the shooting day in 112 cuts, one of them from 0.79 to 0.06, and 54 cuts
+# sitting outside the slack. A correlation hides that, because a few shots in the wrong hour
+# barely move it.
+#
+# Swept over 8 seeds, everything else fixed:
+#
+#   ağırlık  tolerans  sıçrama  korelasyon  kötü%   an
+#      0.2      0.15      10.5       0.816      8  4.0
+#      0.4      0.10       0.2       0.929      8  4.0
+#      0.6      0.08       0.0       0.950      7  4.0   <-
+#      0.8      0.06       0.0       0.959      8  4.0
+#      1.2      0.05       0.0       0.970      8  4.0
+#
+# 0.6 is where the jumps stop. Tighter buys correlation and nothing the film can use, while
+# taking away the freedom to choose between shots taken in the same minutes.
+CHRONOLOGY_SLACK = 0.08
 # What that distance costs per unit beyond the slack. This is the lightest weight that reaches
 # zero misplaced shots over five seeds; heavier settings only tie the edit closer to the clock,
 # and a film is not the day played back in order.
-CHRONOLOGY_WEIGHT = 0.2
+CHRONOLOGY_WEIGHT = 0.6
 
 
 def _day_position(assets: Sequence[MediaAsset]) -> dict[str, float]:

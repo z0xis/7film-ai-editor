@@ -15,6 +15,7 @@ from pathlib import Path
 from sevenfilm.domain import BeatGrid, MediaAsset, Shot
 from sevenfilm.services.planner import (
     CHRONOLOGY_SLACK,
+    CHRONOLOGY_WEIGHT,
     _day_position,
     _score_candidate,
     build_timeline,
@@ -161,3 +162,42 @@ class TheFilmFollowsTheDayTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TheFilmDoesNotJumpBackAndForthThroughTheDayTests(unittest.TestCase):
+    """A correlation hides this. One edit measured 0.79 and read as acceptable, and the film
+    still went evening, morning, evening: fourteen jumps of more than a third of the shooting
+    day in 112 cuts, one from 0.79 to 0.06, with 54 cuts outside the slack. A few shots in the
+    wrong hour barely move a correlation.
+
+    Swept over 8 seeds, the jumps stop at a weight of 0.6 and a slack of 0.08 — and bad cuts go
+    down rather than up. Tighter buys correlation and nothing the film can use.
+    """
+
+    def test_the_slack_is_narrow_enough_to_catch_an_hour_out_of_place(self):
+        self.assertLessEqual(CHRONOLOGY_SLACK, 0.1)
+
+    def test_the_charge_is_heavy_enough_to_be_felt(self):
+        """At 0.2 a strong shot cleared it without noticing."""
+        self.assertGreaterEqual(CHRONOLOGY_WEIGHT, 0.5)
+
+    def test_a_shot_from_the_wrong_hour_is_charged_more_than_a_nearby_one(self):
+        near = _score_candidate(
+            _shot("near"), preferred_categories=("couple",), preferred_scales=("medium",),
+            energy="medium", recent=(), desired_duration=Fraction(1), random_jitter=0.0,
+            day_position=0.55, progress=0.5)[1]["chronology_penalty"]
+        far = _score_candidate(
+            _shot("far"), preferred_categories=("couple",), preferred_scales=("medium",),
+            energy="medium", recent=(), desired_duration=Fraction(1), random_jitter=0.0,
+            day_position=0.05, progress=0.5)[1]["chronology_penalty"]
+
+        self.assertEqual(near, 0.0)
+        self.assertGreater(far, 0.2)
+
+
+def _shot(identifier):
+    return Shot(id=identifier, asset_id="a", source_range=TimeRange(0, 500, RATE),
+                category="couple", shot_scale="medium", technical_quality=.8,
+                aesthetic_score=.8, motion_score=.5, confidence=.8,
+                duplicate_group="visual:1", brightness=.36, saturation=.15,
+                highlight_clipping=.01)
