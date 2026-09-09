@@ -104,3 +104,37 @@ Sonra asıl soru yeniden soruldu. Düzeltilmiş ölçüyle:
 Editörün elediği klipler hâlâ tuttuklarından **daha keskin**. Fark artık gürültüden değil:
 o klipler gerçekten daha net. Elenme sebepleri netlik değildi — arkadan kafa, anlamsız
 kadraj, solist. Bu belgenin merkezi bulgusu ayakta ve artık doğru bir ölçüyle duruyor.
+
+## "Bu eklenti AI olacak" — öğrenme denemeleri (2026-09-09)
+
+Editör haklı olarak şunu söyledi: her şikâyet elle bir kural yazılarak çözülüyor. Öğrenen bir
+katman kurulabilir mi diye dört yol denendi. Etiket olarak editörün eleme listesi kullanıldı:
+137 shot, 19 klip.
+
+**Dürüstlük şartı:** aynı klibin shot'ları hem eğitimde hem testte olamaz. Klip düzeyinde
+gruplanmadığında model klibi ezberliyor ve sahte bir başarı veriyor — aynı veride shot'lar
+karıştırılınca AUC 0.628 çıkıyor, klip düzeyinde gruplanınca 0.364.
+
+| yol | ne öğrenildi | dürüst AUC |
+|---|---|---|
+| CLIP + lojistik regresyon | anlam gömlemesi, 512 boyut | **0.364** |
+| DINOv2-base + lojistik regresyon | görsel yapı, 768 boyut | **0.443** ± 0.114 |
+| 7Film'in kendi filmlerine benzerlik | 18 referans, 1105 kesim karesi | **0.489–0.512** |
+| SmolVLM 500M / 2.2B | doğrudan yargı | sabit cevap, yargı yok |
+
+Hiçbiri 0.50'yi geçmiyor. 0.50 rastgeledir.
+
+Sebep, şikâyetlerin kendisinde görünüyor. "bunu niye kullandık tekrar" bir tekrar itirazı,
+"uzun ve ritme uymuyor plan" bir ritim itirazı, "gelin damat girişi kısa kalıyor" bir süre
+itirazı. Bunların hiçbiri tek karede değil — kurgunun akışında. Tek kareye bakan bir model
+bunları göremez, ve bu oturumda düzelenlerin hepsi akış tarafında düzeldi.
+
+Akışın kendisi de ölçüldü. 7Film'in kendi filmlerinde ardışık kesimler arası görsel benzerlik
+medyanı 0.730, %95'i 0.901; bizim kurgumuzda 0.762 ve 0.882. Referansın %95'ini aşan ardışık
+çift 132'de 1. Yani akış zaten referansa uyuyor.
+
+**Öğrenme için eksik olan şey veri.** 19 elenmiş klip, klip düzeyinde 19 pozitif örnek demek.
+Bir tercih modeli için gereken, editörün teslim ettiği filmlerin *ham çekimleriyle*
+eşleştirilmesi: kullanılan her kesim bir olumlu örnek, aynı çekimin kullanılmayan kısımları
+olumsuz. Bu, elle işaretleme gerektirmeden binlerce örnek verir. Referans filmler burada var,
+ham çekimleri yok.
