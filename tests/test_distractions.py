@@ -14,6 +14,8 @@ from sevenfilm.domain import BeatGrid, MediaAsset, Shot
 from sevenfilm.services.moments import (
     DISTRACTION_QUANTILE,
     MICROPHONE_AGAINST,
+    MICROPHONE_CLIP_QUANTILE,
+    MICROPHONE_CLIP_SHOTS,
     MICROPHONE_PROMPTS,
     MICROPHONE_QUANTILE,
 )
@@ -130,6 +132,24 @@ class WhoIsHoldingTheMicrophoneTests(unittest.TestCase):
     def test_the_share_is_read_off_the_shoot(self):
         self.assertGreater(MICROPHONE_QUANTILE, 0.5)
         self.assertLess(MICROPHONE_QUANTILE, 1.0)
+
+    def test_a_clip_that_is_the_singer_end_to_end_is_read_as_a_clip(self):
+        """Asked of one half second the test misses a clip whose every frame is the singer.
+        C2210 scored -0.0163 against a bar of -0.0022 and landed at cut 132 of 133 - the
+        singer filling the frame one cut before the film closed.
+
+        Lowering the shot bar is not the answer: between the 85th and 90th percentile sit the
+        groom fixing his cuff and guests dancing, and half of what it catches is innocent.
+        Read across a clip the answer is clean - the seven highest clips on this shoot are
+        seven singers, drummers and keyboard players, and the eighth is the groom. Measured on
+        the edit, cuts from those seven went from 3 to 0 of 132, and the moments are untouched:
+        entrance 4.60 s, cake 4.18, first dance 8.46 with the film still ending on it."""
+        self.assertGreater(MICROPHONE_CLIP_QUANTILE, MICROPHONE_QUANTILE)
+        self.assertLess(MICROPHONE_CLIP_QUANTILE, 1.0)
+
+    def test_one_shot_is_not_a_clip(self):
+        """A single shot's median is that shot, which is the test above with extra steps."""
+        self.assertGreaterEqual(MICROPHONE_CLIP_SHOTS, 3)
 
 
 class WhereTheLineIsDrawnTests(unittest.TestCase):

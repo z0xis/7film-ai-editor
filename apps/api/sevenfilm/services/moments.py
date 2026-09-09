@@ -81,6 +81,20 @@ MICROPHONE_AGAINST = (
     "a groom in a suit at his own wedding",
 )
 MICROPHONE_QUANTILE = 0.90
+# And the clips that are *about* the singer from end to end.
+#
+# The shot-level test asks of one half second and misses a clip whose every frame is the
+# singer: C2210 scored -0.0163 against a bar of -0.0022 and landed at cut 132 of 133, the
+# singer filling the frame one cut before the film closed. Lowering the shot bar does not fix
+# it — the band between the 85th and 90th percentile holds the groom fixing his cuff and
+# guests dancing, and half of what it catches is innocent.
+#
+# Read across a clip instead, the answer is clean: the seven highest clips on this shoot are
+# seven singers, drummers and keyboard players, and the eighth is the groom. So the top of the
+# clip ranking is taken and no more. A clip needs at least MICROPHONE_CLIP_SHOTS measured
+# shots to be judged this way, because one shot's median is that shot.
+MICROPHONE_CLIP_QUANTILE = 0.98
+MICROPHONE_CLIP_SHOTS = 3
 
 
 # A floor, and no more than that.
@@ -201,13 +215,15 @@ def project_distractions(database: Database, project_id: str) -> frozenset[str]:
     some weddings than others and the question is which of *these* shots are the band's.
     """
     rows = database.fetch_all(
-        """SELECT shot_features.shot_id, shot_features.embedding FROM shot_features
+        """SELECT shot_features.shot_id, shot_features.asset_id, shot_features.embedding
+           FROM shot_features
            JOIN media_assets ON media_assets.id = shot_features.asset_id
            WHERE media_assets.project_id = ? AND shot_features.embedding IS NOT NULL""",
         (project_id,),
     )
     if not rows:
         return frozenset()
+    asset_of_shot = {str(row["shot_id"]): str(row["asset_id"]) for row in rows}
     text = _text_features(list(DISTRACTION_PROMPTS.values()))
     if text is None:
         return frozenset()
@@ -233,6 +249,24 @@ def project_distractions(database: Database, project_id: str) -> frozenset[str]:
         found.update(
             shot_id for shot_id, value in zip(shot_ids, held, strict=True) if value >= bar
         )
+        by_clip: dict[str, list[float]] = {}
+        for shot_id, value in zip(shot_ids, held, strict=True):
+            by_clip.setdefault(asset_of_shot.get(shot_id, ""), []).append(float(value))
+        clip_scores = {
+            asset: float(np.median(values))
+            for asset, values in by_clip.items()
+            if asset and len(values) >= MICROPHONE_CLIP_SHOTS
+        }
+        if clip_scores:
+            clip_bar = float(
+                np.quantile(list(clip_scores.values()), MICROPHONE_CLIP_QUANTILE))
+            singers = {
+                asset for asset, value in clip_scores.items() if value >= clip_bar
+            }
+            found.update(
+                shot_id for shot_id in shot_ids
+                if asset_of_shot.get(shot_id) in singers
+            )
     return frozenset(found)
 
 
