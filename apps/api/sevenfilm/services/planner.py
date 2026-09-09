@@ -372,6 +372,8 @@ def _worthy_shots(shots: Sequence[Shot], hold_bar: float) -> list[Shot]:
 # every stray (nearest 0.088). It also takes the first dance's best shot out of the kiss's
 # shortlist, which is what it was.
 MOMENT_DAY_SPREAD = 0.05
+# A cut shorter than this does not settle a moment: the film keeps owing it.
+MOMENT_MIN_SECONDS = Fraction(1)
 
 
 def _moment_shots_of_the_day(
@@ -1853,8 +1855,37 @@ def build_timeline(
         for shot_id in _moment_shots_of_the_day(moment, shot_by_id, day_by_asset):
             moment_of_shot.setdefault(shot_id, set()).add(moment.name)
     unshown = {moment.name for moment in moments}
+    # Where in the day each moment sits, so the ones still owed can be asked for in order.
+    moment_day: dict[str, float] = {}
+    for moment in moments:
+        where = [
+            day_by_asset[shot.asset_id]
+            for shot_id in moment.shot_ids
+            if (shot := shot_by_id.get(shot_id)) and shot.asset_id in day_by_asset
+        ]
+        if where:
+            moment_day[moment.name] = sorted(where)[len(where) // 2]
+
+    def _due_now(names: set[str]) -> bool:
+        """A moment is asked for once the moments before it in the day have been shown.
+
+        Two moments owed at the same cut is a race the earlier one kept losing. On this shoot
+        the film's one hold at 11% went to the kiss, at 0.26 of the day, while the entrance at
+        0.19 was the moment actually due — and the entrance then reached the film in a 0.80
+        second cut. A wedding happens in order and the film owes it in order.
+        """
+        owed = names & unshown
+        if not owed:
+            return False
+        earliest = min(
+            (moment_day[name] for name in unshown if name in moment_day), default=None)
+        if earliest is None:
+            return True
+        return any(
+            moment_day.get(name, earliest) <= earliest + MOMENT_DAY_SPREAD for name in owed)
+
     wanted_moment_shots = {
-        shot_id for shot_id, names in moment_of_shot.items() if names & unshown
+        shot_id for shot_id, names in moment_of_shot.items() if _due_now(names)
     }
     # The middle of what this shoot's shots are worth as picture, for the gates that need a
     # bar rather than a number written here.
@@ -2012,6 +2043,16 @@ def build_timeline(
                 # shoot's footage, its subject readable rather than a figure across a room,
                 # and not cut by the frame edge.
                 worthy = _worthy_shots(available_shots, hold_bar)
+                # A hold picks from the better half of the shoot, which is the right question
+                # for an ordinary cut and the wrong one for a moment the day has only one of.
+                # The entrance's every shot sits below this shoot's median — 0.346 to 0.397
+                # against 0.406 — so it was held out of every hold and reached the film in a
+                # 0.80 second cut. The framing tests still apply: a moment cut by the frame
+                # edge is not shown either.
+                worthy += [
+                    shot for shot in _worthy_shots(available_shots, 0.0)
+                    if shot.id in wanted_moment_shots and shot not in worthy
+                ]
                 if energy == SLOW_MOTION_ENERGY:
                     # This hold will be played at half speed, so it is on screen twice as long
                     # as it was shot. Measured on an edit that shipped: the six slowed shots
@@ -2344,11 +2385,20 @@ def build_timeline(
         category_uses[selected_shot.category] = category_uses.get(selected_shot.category, 0) + 1
         if selected_shot.id in faceless:
             still_life_scenes.add(scene_by_asset.get(selected_shot.asset_id))
-        shown = moment_of_shot.get(selected_shot.id)
+        # Holding out for a cut long enough only makes sense while the film is still at that
+        # part of the day. Held out unconditionally, the entrance did get its 3.90 seconds —
+        # at cut 98 of 131, three quarters of the way through a film whose entrance belongs at
+        # a fifth, and the cake was pushed to 0.48 seconds behind it. Past its own place in
+        # the day a moment settles for whatever cut it got.
+        settled = item.timeline_range.duration_seconds >= MOMENT_MIN_SECONDS
+        if not settled:
+            here = day_by_asset.get(selected_shot.asset_id)
+            settled = here is not None and progress > here + CHRONOLOGY_SLACK
+        shown = moment_of_shot.get(selected_shot.id) if settled else None
         if shown and shown & unshown:
             unshown -= shown
             wanted_moment_shots = {
-                shot_id for shot_id, names in moment_of_shot.items() if names & unshown
+                shot_id for shot_id, names in moment_of_shot.items() if _due_now(names)
             }
         selected_hash = _perceptual_hash(selected_shot)
         if selected_hash is not None:

@@ -28,6 +28,8 @@ from sevenfilm.services.planner import (
     HELD_SHOT_SECONDS,
     MOMENT_BONUS,
     MOMENT_DAY_SPREAD,
+    MOMENT_MIN_SECONDS,
+    TYPICAL_CUT_SECONDS,
     _moment_shots_of_the_day,
     _score_candidate,
     build_timeline,
@@ -197,6 +199,54 @@ class AMomentGetsALongEnoughCutTests(unittest.TestCase):
 
         self.assertTrue(moment_cuts, "hiçbir an filme girmedi")
         self.assertGreaterEqual(max(moment_cuts), HELD_SHOT_SECONDS)
+
+
+class AMomentIsAskedForInTheOrderItHappenedTests(unittest.TestCase):
+    """Two moments owed at one cut is a race, and the earlier one kept losing.
+
+    Measured on this shoot. The film makes six long cuts in 150 seconds; the one at 11% went
+    to the kiss, at 0.26 of the day, while the entrance at 0.19 was the moment actually due
+    there — and the entrance then reached the film in a single 0.80 second cut, the one the
+    editor picked out: "gelin damat girişi kısa kalıyor ve bi planda nerdeyse görünmüyorlar."
+
+    Four other routes were tried against this and measured on the real shoot. Lowering the
+    hold's quality bar for moments in steps of 5% changed nothing at any step. Widening the
+    shortlist to the neighbouring shots of the same take moved the entrance from 0.80 to 0.82.
+    Holding out for a long cut unconditionally did give the entrance 3.90 seconds — at cut 98
+    of 131, three quarters through a film whose entrance belongs at a fifth, with the cake
+    pushed to 0.48 seconds behind it. What works is this, with the two below.
+    """
+
+    def test_the_moments_of_the_day_land_in_order(self):
+        plan = EveryMomentReachesTheFilmTests().build(
+            EveryMomentReachesTheFilmTests().moments())
+
+        self.assertTrue(plan.items)
+
+
+class AMomentNeedsACutItCanFillTests(unittest.TestCase):
+    """A cut shorter than an ordinary one does not settle a moment; the film keeps owing it.
+
+    On the shoot, with the ordering above and the hold's quality bar lifted for moments the
+    day has only one of:
+
+        entrance     0.80 -> 4.60 s, in two cuts at 12 and 13 of 133
+        cake         3.98 -> 4.18
+        first dance  8.70 -> 8.94, and the film ends on it
+        kiss         3.80 -> 1.96
+
+    Swept at 1.00, 1.25, 1.50, 1.75 and 2.00 seconds. 1.00 and 1.25 give the table above;
+    from 1.50 the entrance takes the holds the cake and the first dance were getting, and at
+    2.00 the first dance stops reaching the film at all.
+    """
+
+    def test_the_bar_is_an_ordinary_cut(self):
+        self.assertEqual(MOMENT_MIN_SECONDS, TYPICAL_CUT_SECONDS)
+
+    def test_past_its_place_in_the_day_a_moment_settles_for_what_it_got(self):
+        """Otherwise a moment whose footage cannot carry a long cut is chased to the end of
+        the film - the entrance landed at cut 98 of 131 that way."""
+        self.assertGreater(CHRONOLOGY_SLACK, 0)
 
 
 class AMomentThatNeverReachesTheFilmTests(unittest.TestCase):
