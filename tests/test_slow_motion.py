@@ -178,12 +178,18 @@ class TheRetimeReachesTheFileTests(unittest.TestCase):
                 "retime edilen klip kendi giriş noktasından başlayan bir asset'e bakmalı")
 
     def test_an_ordinary_clip_still_shares_its_asset(self):
-        """One asset per file, or a hundred and ten clips become a hundred and ten assets."""
+        """One asset per file, or a hundred and ten clips become a hundred and ten assets.
+
+        Counted against the files the plan actually draws on rather than against the number of
+        cuts: a fast edit can hold fewer cuts than the shoot has clips, and then one asset per
+        clip is the right answer and the count proves nothing.
+        """
         plan = _plan("high", self.tmp)
         written = export_fcpxml(plan, self.tmp / "edit.fcpxml")
         root = ET.parse(written).getroot()
+        files = {item.shot.asset_id for item in plan.items}
 
-        self.assertLess(len(root.findall(".//asset")), len(plan.items))
+        self.assertEqual(len(root.findall(".//asset")), len(files))
 
     def test_a_plan_at_normal_speed_writes_none(self):
         plan = _plan("high", self.tmp)

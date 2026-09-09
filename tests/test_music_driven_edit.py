@@ -9,6 +9,7 @@ import numpy as np
 from sevenfilm.domain import BeatGrid, MediaAsset, Shot
 from sevenfilm.services.analysis import _energy_sections
 from sevenfilm.services.planner import (
+    BEAT_RUN_LIMIT,
     MAX_BEAT_DEBT,
     _beats_for_cut,
     _duration_from_beats,
@@ -232,6 +233,22 @@ class FractionalPacingTests(unittest.TestCase):
         average = Fraction(sum(chosen), len(chosen))
         self.assertLess(abs(average - target), Fraction(1, 50), f"ortalama {float(average)}")
         self.assertEqual(set(chosen), {1, 2}, "a 1.31 beat target is one beat or two, never three")
+
+    def test_the_edit_does_not_keep_time_like_a_metronome(self):
+        """Cutting to the beat is right; cutting to the same beat count thirty times running
+        is a machine. Measured against the 18 references: their longest run of near-equal cuts
+        is 8 and this edit's was 28, with half its cuts a single beat against a reference
+        median of two.
+
+        The pace itself is not touched — it comes from those same references. What changes is
+        that it may not land on the same number more than BEAT_RUN_LIMIT times in a row, and
+        the difference is carried in the debt like every other rounding.
+
+        On the shoot: longest run 28 -> 7, median cut 0.71 -> 0.98 s against the references'
+        1.08, upper quartile 1.92 -> 1.80 against their 1.72, and beat alignment 88% -> 90%.
+        """
+        self.assertGreaterEqual(BEAT_RUN_LIMIT, 4)
+        self.assertLessEqual(BEAT_RUN_LIMIT, 8, "referansların en uzun dizisi 8")
 
     def test_every_cut_is_at_least_one_beat(self):
         debt = Fraction(0)

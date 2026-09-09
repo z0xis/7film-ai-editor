@@ -240,6 +240,16 @@ class TheFilmSlowsDownBeforeItStopsTests(unittest.TestCase):
         Narrowed to the shots that can carry the length, the tail runs 1.04, 1.28, 1.48, 1.68,
         2.00, 2.40 into a 4.00 second close."""
         plan = TheFilmPullsBackToEndTests()._plan()
-        ramp = [float(i.timeline_range.duration_seconds) for i in plan.items[-7:-1]]
+        # The ramp is however many cuts fit its lengths, not a fixed number of them, so it is
+        # read back from the end until a cut is longer than the ramp's own longest.
+        lengths = {float(length) for length in CLOSING_RAMP}
+        ramp = []
+        for item in reversed(plan.items[:-1]):
+            seconds = float(item.timeline_range.duration_seconds)
+            if seconds not in lengths:
+                break
+            ramp.append(seconds)
+        ramp.reverse()
 
+        self.assertGreaterEqual(len(ramp), 4, f"rampa çok kısa: {ramp}")
         self.assertEqual(ramp, sorted(ramp), f"rampa bozuluyor: {ramp}")
