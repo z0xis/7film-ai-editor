@@ -170,16 +170,30 @@ class TheFilmDoesNotJumpBackAndForthThroughTheDayTests(unittest.TestCase):
     day in 112 cuts, one from 0.79 to 0.06, with 54 cuts outside the slack. A few shots in the
     wrong hour barely move a correlation.
 
-    Swept over 8 seeds, the jumps stop at a weight of 0.6 and a slack of 0.08 — and bad cuts go
-    down rather than up. Tighter buys correlation and nothing the film can use.
+    Swept over 8 seeds, the jumps stopped at a weight of 0.6 and a slack of 0.08 — and bad
+    cuts went down rather than up.
+
+    That was measured before the shoot was re-encoded with the S-Log3 curve undone. Correcting
+    the log curve moved a third of the categories, and with them what competes for each cut:
+    the same 0.6 then put the cake — an evening shot, halfway through the day — at cut 11 of
+    115, inside the morning of the film. Re-swept at 0.6, 0.9, 1.2 and 1.6 on the corrected
+    shoot: order and time of day correlate 0.916, 0.949, 0.956, 0.953, and cuts that step
+    backwards run 26, 19, 17, 15. 1.2 is where the correlation stops improving, and 1.6 costs
+    the first dance for two fewer backward steps.
     """
 
     def test_the_slack_is_narrow_enough_to_catch_an_hour_out_of_place(self):
         self.assertLessEqual(CHRONOLOGY_SLACK, 0.1)
 
     def test_the_charge_is_heavy_enough_to_be_felt(self):
-        """At 0.2 a strong shot cleared it without noticing."""
-        self.assertGreaterEqual(CHRONOLOGY_WEIGHT, 0.5)
+        """At 0.2 a strong shot cleared it without noticing, and at 0.6 the cake reached cut
+        11 of 115 once the categories were read off corrected colour."""
+        self.assertGreaterEqual(CHRONOLOGY_WEIGHT, 0.9)
+
+    def test_it_does_not_tie_the_film_to_the_clock(self):
+        """A film is not the day played back in order: past 1.2 the correlation stops
+        improving and the first dance starts paying for it."""
+        self.assertLessEqual(CHRONOLOGY_WEIGHT, 1.4)
 
     def test_a_shot_from_the_wrong_hour_is_charged_more_than_a_nearby_one(self):
         near = _score_candidate(

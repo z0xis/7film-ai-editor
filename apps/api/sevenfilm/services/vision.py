@@ -127,6 +127,39 @@ def _face_framing(faces: list, width: int, height: int) -> tuple[float, float]:
     return round(ratio, 5), round(edge, 3)
 
 
+# The shoot is 10 bit S-Log3, which is flat and grey by design, and CLIP was trained on
+# ordinary pictures. Measured on 120 frames of this shoot: shown the log frame and the same
+# frame with the curve undone, CLIP changes its mind about the category on 36% of them — and
+# by eye the graded answer is right on eleven of the twelve checked. On the log frame it calls
+# almost everything "bride", because a white dress is the only thing that survives the flat
+# grey; crowded dance floors, a mother dancing, and a bride at her mirror all came back as
+# "bride". That is why this edit ran 35% bride against the references' 21%, and 2% party
+# against their 17%.
+#
+# The shot scale survives the log curve (86% unchanged) and so does the ranking of the
+# aesthetic score (Spearman 0.90), so those measurements were sound; the category was not.
+#
+# Sony's own S-Log3 decode, then a Rec.709 transfer. The colour primaries are left alone:
+# undoing the tone curve is what the category depends on, and a full S-Gamut3.Cine matrix
+# would be a second, unmeasured change.
+_SLOG3_BREAK = 171.2102946929 / 1023.0
+
+
+def _slog3_to_rec709(frame: np.ndarray) -> np.ndarray:
+    """Undo the S-Log3 curve so the picture reads the way a viewer would see it."""
+    x = frame.astype(np.float32) / 255.0
+    code = x * 1023.0
+    high = (np.power(10.0, (code - 420.0) / 261.5) * 0.19) - 0.01
+    low = (code - 95.0) * 0.01125 / (171.2102946929 - 95.0)
+    linear = np.where(x >= _SLOG3_BREAK, high, low)
+    linear = np.clip(linear, 0.0, 1.0)
+    # Rec.709 opto-electronic transfer, so mid grey lands where the eye expects it.
+    encoded = np.where(
+        linear < 0.018, linear * 4.5, 1.099 * np.power(linear, 0.45) - 0.099
+    )
+    return np.clip(encoded * 255.0, 0, 255).astype(np.uint8)
+
+
 def _perceptual_hash(frame: np.ndarray) -> str:
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     small = cv2.resize(gray, (9, 8), interpolation=cv2.INTER_AREA)
@@ -284,7 +317,10 @@ class VisionClassifier:
             return None
         from PIL import Image  # type: ignore[import-not-found]
 
-        images = [Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)) for frame in frames]
+        images = [
+            Image.fromarray(cv2.cvtColor(_slog3_to_rec709(frame), cv2.COLOR_BGR2RGB))
+            for frame in frames
+        ]
         inputs = self._processor(images=images, return_tensors="pt")
         inputs = {key: value.to(self._device) for key, value in inputs.items()}
         with self._torch.inference_mode():

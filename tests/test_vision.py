@@ -1,4 +1,5 @@
 import unittest
+from itertools import pairwise
 
 import cv2
 import numpy as np
@@ -7,6 +8,7 @@ from sevenfilm.services.vision import (
     CATEGORY_PROMPTS,
     SCALE_PROMPTS,
     VisionClassifier,
+    _slog3_to_rec709,
     measure_frames,
 )
 
@@ -297,3 +299,78 @@ class ScalePriorTests(unittest.TestCase):
             features, self.metrics(4), classifier.prompt_priors(features))
 
         self.assertIn("close_up", corrected[1]["labels"])
+
+
+class TheFootageIsLogAndCLIPIsNotTests(unittest.TestCase):
+    """The shoot is 10 bit S-Log3 — flat and grey by design — and CLIP was trained on
+    ordinary pictures.
+
+    Measured on 120 frames of this shoot: shown the log frame and the same frame with the
+    curve undone, CLIP changes its mind about the category on 36% of them, and by eye the
+    graded answer is right on eleven of the twelve checked. On the log frame it calls almost
+    everything "bride", because a white dress is the only thing that survives the flat grey:
+    crowded dance floors, a mother dancing and a bride at her mirror all came back as "bride".
+    That is why the edit ran 35% bride against the references' 21% and 2% party against 17%.
+
+    Over a 120 frame sample the labels move from {bride 78, groom 26, party 11} to
+    {bride 42, party 33, groom 17, bride_prep 10, couple 5} — towards the reference mix, not
+    away from it.
+
+    The scale survives the curve (86% unchanged) and so does the ranking of the aesthetic
+    score (Spearman 0.90), so those measurements were sound. Sharpness is unaffected too:
+    ranked before and after, Spearman 0.96. Face detection finds 12% more faces on the graded
+    frame, which is a separate change and not made here.
+    """
+
+    def test_log_black_lands_on_black(self):
+        """S-Log3 lifts black to 95 of 1023 so the sensor keeps its shadow detail, which is
+        what makes the picture look washed out. Decoded, that level is black again."""
+        lifted_black = np.full((2, 2, 3), round(0.0929 * 255), dtype="uint8")
+
+        self.assertLess(int(_slog3_to_rec709(lifted_black).max()), 12)
+
+    def test_middle_grey_stays_middle_grey(self):
+        """18% grey sits at 420 of 1023 in S-Log3 and near 41% in Rec.709 — the curve moves
+        the ends, not the middle."""
+        grey = np.full((2, 2, 3), round(0.4106 * 255), dtype="uint8")
+
+        decoded = float(_slog3_to_rec709(grey).mean()) / 255.0
+
+        self.assertGreater(decoded, 0.34)
+        self.assertLess(decoded, 0.48)
+
+    def test_it_stretches_the_range_rather_than_shifting_it(self):
+        """The log curve compresses everything into the middle; undoing it has to open the
+        distance between dark and light, or the picture is only brighter and still flat."""
+        dark = np.full((2, 2, 3), int(0.20 * 255), dtype="uint8")
+        light = np.full((2, 2, 3), int(0.75 * 255), dtype="uint8")
+        before = float(light.mean()) - float(dark.mean())
+
+        after = float(_slog3_to_rec709(light).mean()) - float(_slog3_to_rec709(dark).mean())
+
+        self.assertGreater(after, before)
+
+    def test_black_stays_black_and_white_stays_white(self):
+        black = np.zeros((2, 2, 3), dtype="uint8")
+        white = np.full((2, 2, 3), 255, dtype="uint8")
+
+        self.assertEqual(int(_slog3_to_rec709(black).max()), 0)
+        self.assertEqual(int(_slog3_to_rec709(white).min()), 255)
+
+    def test_the_curve_only_ever_climbs(self):
+        """A tone curve that dips would swap the order of two greys, and then a shot could be
+        measured darker than one that is plainly brighter than it."""
+        ramp = np.arange(256, dtype="uint8").reshape(1, 256, 1).repeat(3, axis=2)
+
+        out = _slog3_to_rec709(ramp)[0, :, 0].astype(int)
+
+        self.assertTrue(all(b >= a for a, b in pairwise(out)))
+
+    def test_it_never_leaves_the_byte_range(self):
+        rng = np.random.default_rng(4)
+        frame = rng.integers(0, 256, (32, 32, 3), dtype="uint8")
+
+        out = _slog3_to_rec709(frame)
+
+        self.assertEqual(out.dtype, np.uint8)
+        self.assertEqual(out.shape, frame.shape)

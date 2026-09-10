@@ -921,10 +921,18 @@ def _scene_of_asset(assets: Sequence[MediaAsset]) -> dict[str, int]:
 # 0.6 is where the jumps stop. Tighter buys correlation and nothing the film can use, while
 # taking away the freedom to choose between shots taken in the same minutes.
 CHRONOLOGY_SLACK = 0.08
-# What that distance costs per unit beyond the slack. This is the lightest weight that reaches
-# zero misplaced shots over five seeds; heavier settings only tie the edit closer to the clock,
-# and a film is not the day played back in order.
-CHRONOLOGY_WEIGHT = 0.6
+# What that distance costs per unit beyond the slack.
+#
+# 0.6 was the lightest weight that reached zero misplaced shots, measured before the shoot was
+# re-encoded with the S-Log3 curve undone. Correcting the log curve moved a third of the
+# categories, and with them what competes for each cut: the same 0.6 then put the cake — an
+# evening shot, halfway through the day — at cut 11 of 115, inside the morning of the film.
+#
+# Swept at 0.6, 0.9, 1.2 and 1.6 on the corrected shoot. 1.2 gives the best order without
+# tying the film to the clock: the correlation between cut order and time of day goes 0.916
+# to 0.956, cuts that step backwards go 26 to 17, and the moments hold (entrance 4.68 s,
+# cake 3.66, first dance 5.36). 1.6 buys two more backward steps and costs the first dance.
+CHRONOLOGY_WEIGHT = 1.2
 
 
 def _day_position(assets: Sequence[MediaAsset]) -> dict[str, float]:
