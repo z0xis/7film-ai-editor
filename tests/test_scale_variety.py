@@ -26,6 +26,8 @@ from sevenfilm.domain import BeatGrid, MediaAsset, Shot
 from sevenfilm.services.planner import (
     SCALE_RUN_LIMIT,
     SCALE_RUN_PENALTY,
+    SCALE_SHARE_WEIGHT,
+    _scale_overrun,
     _score_candidate,
     _trailing_scale_run,
     build_timeline,
@@ -107,3 +109,50 @@ class TheEditSpreadsWhatVarietyItHasTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TheEditSpendsTheScalesTheReferencesDoTests(unittest.TestCase):
+    """The preference table was doing nothing for most of the film.
+
+    Between 15% and 75% of the running time `_preferred_scales` lists all four scales, and the
+    score only asks whether a scale is in the list — so every scale scored the same and the
+    edit simply inherited the shoot's own mix. The shoot is not the reference.
+
+    Measured across the 18 reference films, 1109 cuts: 60.0% wide, 38.6% medium. One edit of
+    this shoot came out 26.4% wide and 68.8% medium while the shoot itself holds 34% wide, so
+    the wides were there and were not being reached for. Read as a share instead — the way the
+    categories already are — wide reaches 37.1%.
+
+    The share is learned, not written here: tools/references/learn_scale_shares.py reads it
+    off the films and stores it in the profile.
+    """
+
+    def _profile(self, wide: float) -> dict:
+        return {"scale_shares": {"wide": wide, "medium": 1.0 - wide}}
+
+    def test_a_scale_under_its_share_is_not_charged(self):
+        overrun = _scale_overrun(self._profile(0.6), "wide", {"wide": 2}, 10)
+
+        self.assertEqual(overrun, 0.0)
+
+    def test_a_scale_past_its_share_is_charged_by_how_far(self):
+        overrun = _scale_overrun(self._profile(0.6), "wide", {"wide": 9}, 10)
+
+        self.assertAlmostEqual(overrun, 0.3)
+
+    def test_a_shoot_with_no_learned_shares_is_left_alone(self):
+        """A profile from before this was measured, or none at all, changes nothing."""
+        self.assertEqual(_scale_overrun(None, "wide", {"wide": 9}, 10), 0.0)
+        self.assertEqual(_scale_overrun({}, "wide", {"wide": 9}, 10), 0.0)
+
+    def test_a_scale_the_references_never_use_is_left_alone(self):
+        """Silence in the profile is not a quota of zero: the references hold 0.3% detail and
+        a shoot may reasonably hold more."""
+        self.assertEqual(
+            _scale_overrun(self._profile(0.6), "detail", {"detail": 5}, 10), 0.0)
+
+    def test_the_charge_is_heavy_enough_to_move_the_mix(self):
+        """Swept at 0, 1, 2, 3, 5 and 8: wide goes 30.1% to 37.1% at 5 and stops — 8 adds half
+        a point. Nothing else moves: quality holds at 0.411, the moments hold, no clip is used
+        more than four times, and neighbouring cuts stay as unalike as the references' own."""
+        self.assertGreaterEqual(SCALE_SHARE_WEIGHT, 3.0)
