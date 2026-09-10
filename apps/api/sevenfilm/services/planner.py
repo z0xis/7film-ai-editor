@@ -1253,7 +1253,16 @@ TABLE_SETTING_PENALTY = 0.12
 # lens as no face at all, which is what an empty room reads as too. Set alongside the band's
 # charge rather than above it — an obstructed shot is still a shot of the wedding, and this is
 # a preference for the clear one, not a ban.
-OBSTRUCTION_PENALTY = 0.05
+#
+# Raised from 0.05 once the shoot was re-encoded with the S-Log3 curve undone. On the log
+# frame the test was half blind; read in colour its twelve highest shots are twelve genuine
+# obstructions — a head filling the frame from behind, a shoulder across the lens, the
+# couple's backs — which is exactly what the editor kept objecting to.
+#
+# Swept at 0.05, 0.10, 0.15 and 0.22: obstructed cuts go 3, 1, 0, 0. It saturates at 0.15,
+# picture quality holds at 0.409 and the order of the day at 0.950. The cost is the first
+# dance, 5.36 s to 4.18; the cake gains 3.66 to 3.88.
+OBSTRUCTION_PENALTY = 0.15
 # How alike two shots have to look, coming from different files of one moment, before the
 # second reads as another take of the first rather than as the next shot of a sequence.
 #

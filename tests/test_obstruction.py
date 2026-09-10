@@ -90,6 +90,23 @@ class TheEditPrefersTheClearShotTests(unittest.TestCase):
         self.assertGreater(without, 0, "ceza öncesi hiç engelli plan yok, test boş")
         self.assertLess(with_penalty, without)
 
+    def test_the_charge_is_heavy_enough_to_clear_them_out(self):
+        """On the log frame this test was half blind. Read in colour — the shoot re-encoded
+        with the S-Log3 curve undone — its twelve highest shots are twelve genuine
+        obstructions: a head filling the frame from behind, a shoulder across the lens, the
+        couple's backs. That is what the editor kept objecting to.
+
+        Swept at 0.05, 0.10, 0.15 and 0.22 on the corrected shoot: obstructed cuts in the edit
+        go 3, 1, 0, 0, and it saturates at 0.15. Picture quality holds at 0.409 and the order
+        of the day at 0.950. The cost is the first dance, 5.36 s to 4.18, and the cake gains
+        3.66 to 3.88."""
+        self.assertGreaterEqual(OBSTRUCTION_PENALTY, 0.12)
+
+    def test_it_is_still_a_preference_and_not_a_ban(self):
+        """An obstructed shot is still a shot of the wedding, and where a moment has only an
+        obstructed record the film still owes the moment."""
+        self.assertLess(OBSTRUCTION_PENALTY, 0.3)
+
 
 if __name__ == "__main__":
     unittest.main()
