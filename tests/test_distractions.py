@@ -30,7 +30,7 @@ RATE = FrameRate(50)
 
 
 class TheScoreChargesForTheBandTests(unittest.TestCase):
-    def components(self, distraction, missing_moment=False):
+    def components(self, distraction, missing_moment=False, moment_shot=False):
         _, parts = _score_candidate(
             Shot(id="s", asset_id="a", source_range=TimeRange(0, 500, RATE),
                  category="party", shot_scale="medium", technical_quality=.8,
@@ -40,6 +40,7 @@ class TheScoreChargesForTheBandTests(unittest.TestCase):
             preferred_categories=("party",), preferred_scales=("medium",), energy="medium",
             recent=(), desired_duration=Fraction(1), random_jitter=0.0,
             distraction=distraction, missing_moment=missing_moment,
+            moment_shot=moment_shot,
         )
         return parts
 
@@ -54,7 +55,17 @@ class TheScoreChargesForTheBandTests(unittest.TestCase):
         """The first dance *is* in front of the band. Without this the six moments the film
         owes came out at 5.7 of six."""
         self.assertEqual(
-            self.components(True, missing_moment=True)["distraction_penalty"], 0.0)
+            self.components(True, moment_shot=True)["distraction_penalty"], 0.0)
+
+    def test_every_angle_of_a_moment_is_protected_and_not_only_the_first(self):
+        """Protecting only a moment the film still owed meant that once one cut of the first
+        dance was in, every other angle of it started paying the band's charge. Measured on
+        this shoot: C2121 and C2123 — the couple dancing, wide, the two sharpest frames in the
+        whole shoot at 493 and 640 — sat out the entire film while the edit closed on a crowd.
+        With this, C2121 is in the film and the first dance runs across three cuts."""
+        already_shown = self.components(True, missing_moment=False, moment_shot=True)
+
+        self.assertEqual(already_shown["distraction_penalty"], 0.0)
 
 
 class TheBandComesDownToItsShareTests(unittest.TestCase):

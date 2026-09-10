@@ -1604,6 +1604,7 @@ def _score_candidate(
     window_quality: float = 1.0,
     still_life_repeat: bool = False,
     missing_moment: bool = False,
+    moment_shot: bool = False,
     distraction: bool = False,
     obstructed: bool = False,
     laid_table: bool = False,
@@ -1675,8 +1676,13 @@ def _score_candidate(
     moment_bonus = MOMENT_BONUS if (missing_moment and chronology_penalty == 0.0) else 0.0
     # A moment the film owes is never suppressed for happening in front of the band: the first
     # dance is *in* front of the band. Without this the six moments came out at 5.7 of six.
+    # A moment the film owes is never suppressed for happening in front of the band — and
+    # neither is a moment it has already shown. The first dance *is* in front of the band, so
+    # once one cut of it was in, every other angle of it started paying the band's charge:
+    # measured on this shoot, C2121 and C2123 — the couple dancing, wide, sharpest frames in
+    # the shoot at 493 and 640 — sat out the whole film while the edit closed on a crowd.
     distraction_penalty = (
-        DISTRACTION_PENALTY if (distraction and not missing_moment) else 0.0
+        DISTRACTION_PENALTY if (distraction and not moment_shot) else 0.0
     )
     # A moment is never suppressed for this either: if the only record of the ring is over a
     # guest's shoulder, the film still owes the ring.
@@ -2268,6 +2274,7 @@ def build_timeline(
                     shot.id in faceless
                     and scene_by_asset.get(shot.asset_id) in still_life_scenes),
                 missing_moment=shot.id in wanted_moment_shots,
+                moment_shot=shot.id in moment_of_shot,
                 distraction=shot.id in distractions,
                 obstructed=shot.id in obstructions,
                 laid_table=shot.id in table_settings,
