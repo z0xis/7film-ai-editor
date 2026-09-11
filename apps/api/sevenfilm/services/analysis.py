@@ -399,6 +399,14 @@ def analyze_music(
     return grid
 
 
+# How much a section's energy has to move across itself before it counts as rising or falling.
+#
+# Read as a share of the track's own floor-to-peak range, so it travels to a quiet song and a
+# loud one alike. A tenth of that range is small enough to catch a build and large enough that
+# the smoothing noise inside one passage does not flip the label.
+SECTION_DIRECTION_RATIO = 0.10
+
+
 def _energy_sections(samples: object, sample_rate: int, duration: Fraction) -> tuple[dict[str, object], ...]:
     """Follow the track's own dynamics instead of splitting it into four equal quarters.
 
@@ -447,10 +455,37 @@ def _energy_sections(samples: object, sample_rate: int, duration: Fraction) -> t
             end = duration * Fraction(index + 1, windows)
             if sections and sections[-1]["energy"] == energy:
                 sections[-1]["end"] = str(end)
+                sections[-1]["levels"].append(level)
                 continue
-            sections.append(
-                {"start": str(duration * Fraction(index, windows)), "end": str(end), "energy": energy}
+            sections.append({
+                "start": str(duration * Fraction(index, windows)),
+                "end": str(end),
+                "energy": energy,
+                "levels": [level],
+            })
+        # Three labels are not enough to pace an edit. Measured on one wedding the editor cut
+        # by hand: the song's quiet opening and its breakdown both read as "low", but the shots
+        # in them run 1.52 and 2.40 seconds. What separates them is how far below the track's
+        # own peak they sit, and which way the energy is moving.
+        #
+        # So each section also carries the level it actually reached and the direction the
+        # energy took across it. Both are measured off this song, never written down here:
+        # a different track produces different numbers from the same code.
+        for index, section in enumerate(sections):
+            levels = section.pop("levels")
+            section["level"] = round(float(np.mean(levels)), 4)
+            if len(levels) >= 2:
+                half = max(1, len(levels) // 2)
+                rise = float(np.mean(levels[half:]) - np.mean(levels[:half]))
+            else:
+                previous = sections[index - 1]["level"] if index else None
+                rise = 0.0 if previous is None else float(section["level"] - previous)
+            section["direction"] = (
+                "rising" if rise > SECTION_DIRECTION_RATIO
+                else "falling" if rise < -SECTION_DIRECTION_RATIO
+                else "steady"
             )
+            section["rise"] = round(rise, 4)
         return tuple(sections)
     except (ImportError, ValueError, TypeError, AttributeError):
         return ({"start": "0", "end": str(duration), "energy": "medium"},)

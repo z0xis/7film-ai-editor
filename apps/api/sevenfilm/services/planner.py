@@ -66,10 +66,61 @@ class InsufficientFootageError(ValueError):
 
 
 def _energy_at(grid: BeatGrid, second: Fraction) -> str:
+    section = _section_at(grid, second)
+    return str(section["energy"]) if section else "medium"
+
+
+def _section_at(grid: BeatGrid, second: Fraction) -> Mapping[str, object] | None:
+    """The song's own passage this second falls in, with its level and direction."""
     for section in grid.sections:
         if Fraction(str(section["start"])) <= second < Fraction(str(section["end"])):
-            return str(section["energy"])
-    return "medium"
+            return section
+    return None
+
+
+# How far the pace may move between the song's quietest passage and its loudest.
+#
+# Measured on one wedding cut by hand: shot length and music energy correlate at -0.40, and
+# across the song's own passages the median cut runs 1.52 s where the track is quiet and
+# 0.50 s at its peak — a little over three to one. This is the share of the beat target that
+# the level is allowed to move, applied symmetrically, so a mid-level passage keeps exactly
+# the pace the reference profile already gives it and only the extremes are stretched.
+#
+# 0.5 reproduces roughly that three-to-one spread without letting a quiet passage stall: at
+# level 0 the target is 1.25x the profile's, at level 1 it is 0.75x.
+PACING_LEVEL_SPAN = 0.5
+# Where a passage stops being quiet enough to slow a shot down, read as a share of this song's
+# own floor-to-peak range rather than an absolute loudness.
+#
+# On the reference edit the slowed shots sit at a mean energy of 0.126 against 0.294 for the
+# rest, and the correlation between energy and slow motion is -0.55. A third of the range puts
+# the boundary between those two groups.
+SLOW_MOTION_LEVEL = 0.34
+
+
+def _section_level(section: Mapping[str, object] | None) -> float | None:
+    """Where this passage sits between the track's own floor and peak, or None if unmeasured."""
+    if not section:
+        return None
+    level = section.get("level")
+    if isinstance(level, (int, float)) and 0.0 <= float(level) <= 1.0:
+        return float(level)
+    # A track analysed before sections carried a level keeps exactly the pace it has today.
+    # Deriving a level from the coarse label instead would charge the same energy twice: the
+    # label is already what the reference profile's beats-per-cut table reads.
+    return None
+
+
+def _pacing_scale(section: Mapping[str, object] | None) -> Fraction:
+    """How much to stretch or compress the cut length for this passage.
+
+    Returns 1 where the level is unknown or mid-range, so a song the analysis could not read
+    keeps exactly the pace it has today.
+    """
+    level = _section_level(section)
+    if level is None:
+        return Fraction(1)
+    return Fraction(1) + Fraction(PACING_LEVEL_SPAN) * (Fraction(1, 2) - Fraction(level).limit_denominator(1000))
 
 
 # What the edit shows and when, used only when the profile carries no measured arc. It was
@@ -736,6 +787,13 @@ SEQUENCE_SHARE_RELIEF = 0.85
 # measured reference, because the reference figure is a floor: the scene detector used to take
 # it cannot see a cut *within* a scene, which is exactly what a sequence is made of.
 TAKE_CONTINUITY_BONUS = 0.02
+# What returning to a clip costs when it steps *backwards* through the source.
+#
+# The editor's 17 same-clip runs all advance and none goes back, so a backward return is the
+# repetition the reuse charge is for rather than a sequence. Set alongside the second-take
+# charge: enough to lose a close contest, not a ban — a moment the film owes may only exist
+# in an earlier part of a clip already used.
+BACKWARD_REUSE_PENALTY = 0.06
 MINIMUM_CATEGORY_SHARE = 0.05
 # Same subject at the same size back to back reads as a jump rather than as a second look.
 JUMP_CUT_PENALTY = 0.18
@@ -1146,6 +1204,19 @@ TYPICAL_CUT_SECONDS = Fraction(1)
 # and doubling that look is the gesture the request was about; slowing the cutting rhythm
 # instead would just make the edit sluggish.
 SLOW_MOTION_SPEED = Fraction(1, 2)
+# How long a cut has to be, as a multiple of an ordinary one, before slowing it reads as a
+# gesture rather than a stutter. On the reference edit the slowed cuts run a median of 1.72
+# seconds against 0.50 for the rest — a little over three to one — and none of them is short.
+#
+# Swept at 1.00, 1.125, 1.25 and 1.50, with the quality bar held and relaxed 5%. Measured on
+# the reference shoot, slowed cuts reach 21% of the edit against the editor's 25%, and the
+# energy they sit at matches almost exactly: 0.131 against 0.126, with the rest of the edit at
+# 0.295 against 0.294. Energy and slowing correlate at -0.53 against the editor's -0.62.
+#
+# 1.00 and 1.125 add a single slowed cut and nothing else, so the tighter 1.25 is kept — it is
+# the one that never slows an ordinary-length cut. Relaxing the quality bar moves slowed cuts
+# into louder passages and makes the separation worse, so the bar stays where it is.
+SLOW_MOTION_MIN_RATIO = Fraction(5, 4)
 SLOW_MOTION_ENERGY = "low"
 # The categories that are a thing or a place rather than somebody. Nothing here is slowed.
 STILL_CATEGORIES = frozenset({"detail", "venue"})
@@ -1412,6 +1483,30 @@ MOTION_QUANTILES = {"low": 0.25, "medium": 0.5, "high": 0.75}
 FALLBACK_MOTION_TARGETS = {"low": 0.3, "medium": 0.55, "high": 0.78}
 
 
+def _motion_target(
+    targets: Mapping[str, float], energy: str, level: float | None
+) -> float:
+    """How much movement this passage is asking for, on this shoot's own scale.
+
+    Three labels give three targets, and a song spends most of its length in the middle one.
+    Measured on one wedding cut by hand, music energy and the movement in the selected shot
+    correlate at +0.46 once the time of day is held constant — a real preference, and finer
+    than three steps can express.
+
+    So where the section carries a measured level, the target is read continuously between
+    the shoot's quiet and driving values instead of snapping to the middle one. A song the
+    analysis could not read keeps the three-step behaviour exactly.
+    """
+    low = targets.get("low", FALLBACK_MOTION_TARGETS["low"])
+    mid = targets.get("medium", FALLBACK_MOTION_TARGETS["medium"])
+    high = targets.get("high", FALLBACK_MOTION_TARGETS["high"])
+    if level is None:
+        return targets.get(energy, mid)
+    if level <= 0.5:
+        return low + (mid - low) * (level / 0.5)
+    return mid + (high - mid) * ((level - 0.5) / 0.5)
+
+
 def _motion_targets(shots: Sequence[Shot]) -> dict[str, float]:
     """The movement a low, medium and driving passage should look for, on this shoot's scale."""
     values = sorted(shot.motion_score for shot in shots)
@@ -1593,6 +1688,7 @@ def _score_candidate(
     preferred_categories: tuple[str, ...],
     preferred_scales: tuple[str, ...],
     scale_overrun: float = 0.0,
+    section_level: float | None = None,
     energy: str,
     recent: tuple[TimelineItem, ...],
     current_run: int = 0,
@@ -1617,6 +1713,7 @@ def _score_candidate(
     style_profile: Mapping[str, object] | None = None,
     reuse_count: int = 0,
     asset_reuse_count: int = 0,
+    forward_in_source: bool | None = None,
     used_hashes: Sequence[int] = (),
     visual_baseline: tuple[float, float] | None = None,
 ) -> tuple[float, dict[str, float]]:
@@ -1631,7 +1728,7 @@ def _score_candidate(
     visual_fit = _reference_visual_fit(shot, visual_baseline, style_profile)
     style_fit = 0.5 * scale_fit + 0.5 * visual_fit
     targets = motion_targets or FALLBACK_MOTION_TARGETS
-    target_motion = targets.get(energy, targets.get("medium", 0.55))
+    target_motion = _motion_target(targets, energy, section_level)
     music_fit = max(0.0, 1.0 - abs(shot.motion_score - target_motion))
     sequence_continuity = 1.0
     previous = recent[-1] if recent else None
@@ -1713,8 +1810,16 @@ def _score_candidate(
     # them. Exempting the whole history instead let one cake take seven cuts across 55 seconds,
     # three of them back to back after a 27 second absence, each free because the return had
     # made itself a sequence.
-    staying = same_scene and in_sequence
+    # Coming back to a clip is a sequence only when it moves *forward* through the source.
+    #
+    # Measured on one wedding cut by hand: the editor builds 17 runs from a single clip and
+    # every one of them advances — C1999 at 221, 1117, 1212, 1454; the cake at 2612, 4452,
+    # 5521. Not one goes back. The edit made here did the opposite: of its four same-clip
+    # runs, two stepped backwards in the source, which is the repetition the charge exists
+    # for. So continuity is paid for only in the direction the editor actually works.
+    staying = same_scene and in_sequence and forward_in_source is not False
     take_bonus = TAKE_CONTINUITY_BONUS if staying else 0.0
+    backward_penalty = BACKWARD_REUSE_PENALTY if forward_in_source is False else 0.0
     reuse_penalty = (
         REUSE_PENALTY * reuse_count
         + ASSET_REUSE_PENALTY * asset_reuse_count
@@ -1740,6 +1845,7 @@ def _score_candidate(
         - distraction_penalty
         - second_take_penalty
         + take_bonus
+        - backward_penalty
         - reuse_penalty
         - obstruction_penalty
         - table_penalty
@@ -1768,6 +1874,7 @@ def _score_candidate(
         "scale_run_penalty": scale_run_penalty,
         "stillness_penalty": stillness_penalty,
         "second_take_penalty": second_take_penalty,
+        "backward_penalty": backward_penalty,
         "reuse_penalty": reuse_penalty,
     }
 
@@ -1987,14 +2094,16 @@ def build_timeline(
         remaining_frames = target_frames - current_frame
         current_time = frame_rate.seconds_from_frames(current_frame)
         progress = current_frame / target_frames
-        energy = _energy_at(music, current_time)
+        section = _section_at(music, current_time)
+        energy = str(section["energy"]) if section else "medium"
+        section_level = _section_level(section)
         # The opening runs long and comes down to the film's own pace over its first few cuts.
         opening = (
             OPENING_SECONDS[len(plan.items)] if len(plan.items) < len(OPENING_SECONDS) else None
         )
         pace = (
             _opening_beats(style_profile, opening) if opening is not None
-            else _target_beats_per_cut(style_profile, progress, energy)
+            else _target_beats_per_cut(style_profile, progress, energy) * _pacing_scale(section)
         )
         # The debt is carried through the ramp as everywhere else, and that is what keeps the
         # opening's shape: paying it forward cut by cut held the measured distance to the
@@ -2259,6 +2368,7 @@ def build_timeline(
                 energy=energy,
                 recent=tuple(plan.items[-4:]),
                 current_run=_trailing_run(plan.items, shot.category),
+                section_level=section_level,
                 scale_overrun=_scale_overrun(
                     style_profile, shot.shot_scale, scale_uses, len(plan.items)),
                 share_overrun=_share_overrun(
@@ -2283,6 +2393,13 @@ def build_timeline(
                     if shot.shot_scale else 0
                 ),
                 stillness_bar=stillness_bar,
+                forward_in_source=(
+                    None if not plan.items
+                    or plan.items[-1].shot.asset_id != shot.asset_id
+                    else shot.source_range.start_frame
+                    >= plan.items[-1].source_range.start_frame
+                    + plan.items[-1].source_range.duration_frames
+                ),
                 second_take=_is_second_take(
                     shot, plan.items[-1] if plan.items else None,
                     embeddings, same_scene=(
@@ -2310,7 +2427,30 @@ def build_timeline(
         remaining_seconds = frame_rate.seconds_from_frames(remaining_frames)
         # A second of timeline costs `speed` seconds of source, so half speed buys twice the
         # screen time out of the same footage.
-        speed = SLOW_MOTION_SPEED if (hold and energy == SLOW_MOTION_ENERGY) else Fraction(1)
+        # Slowing follows the song's own quiet passages, not just the holds.
+        #
+        # The rule used to be "a held shot in a low-energy section", and holds are rare enough
+        # that production edits came out with none at all. Measured on one wedding cut by hand:
+        # a quarter of its cuts run at half speed, the slowed ones sit at a mean energy of
+        # 0.126 against 0.294 for the rest, and energy correlates with slowing at -0.55.
+        #
+        # So a cut is slowed where the passage is quiet *and* the cut is long enough for the
+        # slowing to read — a fifth of a second at half speed is not a gesture, it is a stutter.
+        # The old hold path is kept as it was.
+        quiet = section_level is not None and section_level <= SLOW_MOTION_LEVEL
+        long_enough = desired >= TYPICAL_CUT_SECONDS * SLOW_MOTION_MIN_RATIO
+        # The same two guards the hold path already applies: a shot worth looking at twice as
+        # long, and never a thing or a place. A table centrepiece at half speed is only a
+        # longer shot of a table — "gereksiz yerde çiçek".
+        worth_slowing = (
+            selected_shot.technical_quality >= hold_bar
+            and selected_shot.category not in STILL_CATEGORIES
+        )
+        speed = (
+            SLOW_MOTION_SPEED
+            if ((hold and energy == SLOW_MOTION_ENERGY) or (quiet and long_enough and worth_slowing))
+            else Fraction(1)
+        )
         # Take the whole tail now rather than leaving a stub for the next cut to pick up. Only
         # a shot with enough source left can do that, so in the tail the others stand down:
         # picking one that runs out mid-cut is what leaves the four frame shot at the end.
