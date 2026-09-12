@@ -251,3 +251,29 @@ def gated_window_score(window: ShotWindow, sharpness_bar: float, category: str =
         return ELIGIBLE
     crowd = min(window.bystanders, BYSTANDER_LIMIT) / BYSTANDER_LIMIT
     return ELIGIBLE - FRAME_EDGE_PENALTY * window.face_edge - BYSTANDER_PENALTY * crowd
+
+
+def unpenalised_window_score(
+    window: ShotWindow, sharpness_bar: float, category: str = "",
+) -> float:
+    """The gated score with the charge for other people's faces taken off.
+
+    Measured on the 54 clips both edits use, the median number of small background faces in
+    the chosen window falls at every step away from the planner: the editor's own moments
+    hold 1.88, the planner's 1.00, a clip-wide search 0.45, and a clip-wide search with
+    sharpness demoted 0.00. The editor cuts to the busy frame; the score walks away from it,
+    and once sharpness stops ranking, this charge is what decides.
+
+    So this path neutralises it — and does nothing else. There is no reward for a crowd here:
+    a frame full of people scores exactly what an empty one does. The question being asked is
+    only whether "other faces are bad" is wrong, not whether "other faces are good" is right.
+    Everything else, the gate and the frame-edge charge included, stays where it is.
+    """
+    from .planner import FRAME_EDGE_PENALTY, STILL_CATEGORIES, UNUSABLE_SHARPNESS_SHARE
+
+    crisp = min(1.0, window.sharpness / sharpness_bar) if sharpness_bar > 0 else 1.0
+    if crisp < UNUSABLE_SHARPNESS_SHARE:
+        return 0.0
+    if category in STILL_CATEGORIES:
+        return ELIGIBLE
+    return ELIGIBLE - FRAME_EDGE_PENALTY * window.face_edge

@@ -371,3 +371,103 @@ class SharpnessAsAGateTests(unittest.TestCase):
         self.assertEqual(production.frames, gated.frames)
         self.assertIsNotNone(production.shadow_start)
         self.assertIsNotNone(gated.shadow_start)
+
+
+class WithoutTheChargeForOtherFacesTests(unittest.TestCase):
+    """P2.5: the charge for small background faces taken off, and nothing put in its place."""
+
+    def _window(self, bystanders, edge=0.0, sharpness=BAR):
+        return ShotWindow(shot_id="s", offset_frames=0, sharpness=sharpness, motion=1.0,
+                          face_ratio=.02, face_edge=edge, face_count=6,
+                          bystanders=bystanders)
+
+    def test_the_production_score_still_charges_for_them(self):
+        self.assertLess(_window_score(self._window(3), BAR, "couple"),
+                        _window_score(self._window(0), BAR, "couple"))
+
+    def test_the_gated_score_still_charges_for_them(self):
+        self.assertLess(shadow.gated_window_score(self._window(3), BAR, "couple"),
+                        shadow.gated_window_score(self._window(0), BAR, "couple"))
+
+    def test_this_one_does_not(self):
+        crowded = shadow.unpenalised_window_score(self._window(3), BAR, "couple")
+        empty = shadow.unpenalised_window_score(self._window(0), BAR, "couple")
+        self.assertEqual(crowded, empty)
+
+    def test_a_crowd_is_not_rewarded_either(self):
+        """Neutralised, not inverted: a busy frame scores what an empty one scores."""
+        for bystanders in (0, 1, 2, 3, 9):
+            self.assertEqual(
+                shadow.unpenalised_window_score(self._window(bystanders), BAR, "couple"),
+                shadow.ELIGIBLE)
+
+    def test_the_frame_edge_charge_is_untouched(self):
+        from sevenfilm.services.planner import FRAME_EDGE_PENALTY
+        value = shadow.unpenalised_window_score(self._window(0, edge=0.4), BAR, "couple")
+        self.assertAlmostEqual(value, shadow.ELIGIBLE - FRAME_EDGE_PENALTY * 0.4)
+
+    def test_the_quality_gate_is_untouched(self):
+        self.assertEqual(
+            shadow.unpenalised_window_score(self._window(0, sharpness=BAR * 0.1),
+                                            BAR, "couple"), 0.0)
+
+    def test_a_still_life_keeps_its_branch(self):
+        self.assertEqual(
+            shadow.unpenalised_window_score(self._window(3, edge=1.0), BAR, "detail"),
+            shadow.ELIGIBLE)
+
+    def test_the_worst_window_still_decides_the_run(self):
+        good = _window(0, bystanders=0)
+        bad = _window(25, edge=0.9, bystanders=0)
+        span = shadow.SearchRange(0, 0)
+        found = shadow.shadow_offset([good, bad], span, 50, BAR,
+                                     window_score=shadow.unpenalised_window_score)
+        self.assertAlmostEqual(found[1],
+                               shadow.unpenalised_window_score(bad.as_shot_window(),
+                                                               BAR, "couple"))
+
+    def test_the_search_still_crosses_shots_and_stops_at_the_clip(self):
+        result = shadow.evaluate(
+            _shot(start=500, duration=250), frames=50, asset_duration_frames=1000,
+            windows=_clip(), sharpness_bar=BAR,
+            window_score=shadow.unpenalised_window_score)
+        self.assertLess(result.shadow_range.first_frame, 500)
+        self.assertLessEqual(result.shadow_range.last_frame + 50, 1000)
+
+    def test_it_falls_back_like_the_others(self):
+        result = shadow.evaluate(
+            _shot(), frames=50, asset_duration_frames=1000, windows=[],
+            sharpness_bar=BAR, window_score=shadow.unpenalised_window_score,
+            legacy_start=44)
+        self.assertTrue(result.fallback)
+        self.assertEqual(result.shadow_time_range(RATE).start_frame, 44)
+
+    def test_a_flat_score_still_resolves_to_the_earliest_start(self):
+        """With nothing left to separate them the tie-break decides, and it is the planner's:
+        earliest wins. This is what makes the path pick clip heads."""
+        windows = _clip(count=8, step=25, bystanders=2)
+        found = shadow.shadow_offset(windows, shadow.SearchRange(0, 175), 50, BAR,
+                                     window_score=shadow.unpenalised_window_score)
+        self.assertEqual(found[0], 0)
+
+    def test_the_same_clip_gives_the_same_answer_every_time(self):
+        windows = _clip(bystanders=2)
+        answers = {
+            shadow.evaluate(_shot(), frames=50, asset_duration_frames=1000,
+                            windows=windows, sharpness_bar=BAR,
+                            window_score=shadow.unpenalised_window_score).shadow_start
+            for _ in range(5)
+        }
+        self.assertEqual(len(answers), 1)
+
+    def test_all_four_paths_read_the_same_production_answer(self):
+        shot = _shot(start=200, duration=250)
+        windows = _clip()
+        results = [
+            shadow.evaluate(shot, frames=50, asset_duration_frames=1000, windows=windows,
+                            sharpness_bar=BAR, window_score=scorer, legacy_start=222)
+            for scorer in (_window_score, shadow.gated_window_score,
+                           shadow.unpenalised_window_score)
+        ]
+        self.assertEqual({r.legacy_start for r in results}, {222})
+        self.assertEqual({r.frames for r in results}, {50})
