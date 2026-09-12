@@ -205,3 +205,92 @@ def project_windows(database: Database, project_id: str) -> dict[str, list[ShotW
             bystanders=int(row["bystanders"]),
         ))
     return by_shot
+
+
+@dataclass(frozen=True)
+class AssetWindow:
+    """A measured window placed on its asset's timeline rather than on its shot's.
+
+    The same measurement as ShotWindow, re-based so the moment search can look past the
+    boundary the scene detector happened to draw. `asset_frame` is the window's first frame
+    counted from the start of the media file; `category` is the category of the shot the
+    window was measured in, so a window keeps the treatment it would have had there.
+    """
+
+    shot_id: str
+    asset_frame: int
+    category: str
+    sharpness: float
+    motion: float
+    face_ratio: float
+    face_edge: float
+    face_count: int
+    bystanders: int
+
+    def as_shot_window(self) -> ShotWindow:
+        """The same window in the shape the scorer already takes."""
+        return ShotWindow(
+            shot_id=self.shot_id,
+            offset_frames=self.asset_frame,
+            sharpness=self.sharpness,
+            motion=self.motion,
+            face_ratio=self.face_ratio,
+            face_edge=self.face_edge,
+            face_count=self.face_count,
+            bystanders=self.bystanders,
+        )
+
+
+def asset_windows(database: Database, project_id: str) -> dict[str, list[AssetWindow]]:
+    """Every measured window of a project, by asset, in order along the media file.
+
+    Windows are measured a shot at a time and stored with an offset from the shot's start,
+    which is why a moment search given only `windows_by_shot` cannot see past the shot it was
+    handed. This is the same rows, re-based onto the asset, so a search can be given the whole
+    clip instead. Nothing is measured again.
+    """
+    rows = database.fetch_all(
+        """SELECT shot_windows.*, shots.asset_id AS asset_id, shots.category AS category,
+                  shots.start_frame AS shot_start
+           FROM shot_windows
+           JOIN shots ON shots.id = shot_windows.shot_id
+           JOIN media_assets ON media_assets.id = shots.asset_id
+           WHERE media_assets.project_id = ?
+           ORDER BY shots.asset_id, shots.start_frame, shot_windows.offset_frames""",
+        (project_id,),
+    )
+    by_asset: dict[str, list[AssetWindow]] = {}
+    for row in rows:
+        by_asset.setdefault(str(row["asset_id"]), []).append(AssetWindow(
+            shot_id=str(row["shot_id"]),
+            asset_frame=int(row["shot_start"]) + int(row["offset_frames"]),
+            category=str(row["category"]),
+            sharpness=float(row["sharpness"]),
+            motion=float(row["motion"]),
+            face_ratio=float(row["face_ratio"]),
+            face_edge=float(row["face_edge"]),
+            face_count=int(row["face_count"]),
+            bystanders=int(row["bystanders"]),
+        ))
+    for windows in by_asset.values():
+        windows.sort(key=lambda window: window.asset_frame)
+    return by_asset
+
+
+def unmeasured_shots(database: Database, project_id: str) -> list[str]:
+    """The shots of a project that have no windows stored, in a stable order.
+
+    A shot analysed before windows existed has none, and a moment search over its asset is
+    blind across that stretch. Measuring is resumable: a shot that already has rows is never
+    returned here, so an interrupted pass picks up where it stopped.
+    """
+    rows = database.fetch_all(
+        """SELECT shots.id AS id FROM shots
+           JOIN media_assets ON media_assets.id = shots.asset_id
+           LEFT JOIN shot_windows ON shot_windows.shot_id = shots.id
+           WHERE media_assets.project_id = ? AND shot_windows.shot_id IS NULL
+           GROUP BY shots.id
+           ORDER BY shots.asset_id, shots.start_frame""",
+        (project_id,),
+    )
+    return [str(row["id"]) for row in rows]

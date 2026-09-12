@@ -545,3 +545,46 @@ def latest_music(database: Database, project_id: str) -> BeatGrid | None:
         duration=Fraction(row["duration_seconds"]),
         sections=tuple(json.loads(row["sections_json"])),
     )
+
+
+def measure_missing_windows(
+    database: Database, project_id: str, *, limit: int | None = None,
+) -> dict[str, int]:
+    """Measure the shots of a project that have no windows yet, and only those.
+
+    A moment search over a whole clip is blind across any stretch that was never measured, and
+    850 of this project's 2255 shots were analysed before windows existed. This fills those in
+    without touching the 9374 already stored: a shot that has rows is skipped, so the pass is
+    resumable and an interrupted run costs nothing.
+    """
+    from .windows import unmeasured_shots
+
+    pending = unmeasured_shots(database, project_id)
+    if limit is not None:
+        pending = pending[:limit]
+    if not pending:
+        return {"pending": 0, "measured": 0, "windows": 0, "failed": 0}
+
+    wanted = set(pending)
+    shots = [shot for shot in project_shots(database, project_id) if shot.id in wanted]
+    by_id = {asset.id: asset for asset in project_assets(database, project_id)}
+
+    measured = failed = written = 0
+    for shot in shots:
+        asset = by_id.get(shot.asset_id)
+        if asset is None:
+            failed += 1
+            continue
+        try:
+            windows = measure_windows(asset, shot, asset.path)
+        except Exception:
+            LOGGER.exception(json.dumps(
+                {"event": "shot_windows_failed", "shot_id": shot.id}))
+            failed += 1
+            continue
+        if windows:
+            store_windows(database, shot.id, windows)
+            measured += 1
+            written += len(windows)
+    return {"pending": len(pending), "measured": measured,
+            "windows": written, "failed": failed}
