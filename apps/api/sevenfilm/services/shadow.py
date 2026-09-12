@@ -213,3 +213,41 @@ def reachable(span: SearchRange | None, frame: int) -> bool:
 def as_shot_windows(windows: Sequence[AssetWindow]) -> list[ShotWindow]:
     """The asset view in the shape the existing scorer takes, for callers that want it."""
     return [window.as_shot_window() for window in windows]
+
+
+# What an eligible window is worth before its framing is charged for.
+#
+# The production score starts a window at its crispness, so of two windows a search can use,
+# the sharper one wins on sharpness alone. Measured against the editor on the 54 clips both
+# edits share, that is the single largest thing standing between the moment he chose and the
+# moment the score prefers: putting crispness back as the base value of a score that was
+# otherwise reading face count cost 18.2 points of agreement, more than any other term.
+#
+# Here every window that clears the gate starts level, and sharpness only decides whether a
+# window may be used at all. The gate itself is untouched — same threshold, same measure.
+ELIGIBLE = 1.0
+
+
+def gated_window_score(window: ShotWindow, sharpness_bar: float, category: str = "") -> float:
+    """The planner's window score with sharpness demoted from ranker to gate.
+
+    Line for line the production score except for the base value, so the framing charges stay
+    exactly what they are and this cannot quietly drift away from them. A test holds the two
+    together: on a window at or above the shoot's median sharpness, where crispness is 1.0 and
+    the base values agree, both must return the same number.
+    """
+    from .planner import (
+        BYSTANDER_LIMIT,
+        BYSTANDER_PENALTY,
+        FRAME_EDGE_PENALTY,
+        STILL_CATEGORIES,
+        UNUSABLE_SHARPNESS_SHARE,
+    )
+
+    crisp = min(1.0, window.sharpness / sharpness_bar) if sharpness_bar > 0 else 1.0
+    if crisp < UNUSABLE_SHARPNESS_SHARE:
+        return 0.0
+    if category in STILL_CATEGORIES:
+        return ELIGIBLE
+    crowd = min(window.bystanders, BYSTANDER_LIMIT) / BYSTANDER_LIMIT
+    return ELIGIBLE - FRAME_EDGE_PENALTY * window.face_edge - BYSTANDER_PENALTY * crowd

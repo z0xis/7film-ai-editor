@@ -275,3 +275,99 @@ class TheStoredRowsAreReusedTests(unittest.TestCase):
             store_windows(database, "s0", rows)
             store_windows(database, "s0", rows)
             self.assertEqual(len(asset_windows(database, "p")["a1"]), 2)
+
+
+class SharpnessAsAGateTests(unittest.TestCase):
+    """P2: sharpness says whether a window may be used, not which usable window wins."""
+
+    def test_the_production_score_still_rewards_the_sharper_window(self):
+        soft = ShotWindow(shot_id="s", offset_frames=0, sharpness=BAR * 0.6, motion=1.0,
+                          face_ratio=.02, face_edge=0.0, face_count=2, bystanders=0)
+        sharp = ShotWindow(shot_id="s", offset_frames=0, sharpness=BAR, motion=1.0,
+                           face_ratio=.02, face_edge=0.0, face_count=2, bystanders=0)
+        self.assertGreater(_window_score(sharp, BAR, "couple"),
+                           _window_score(soft, BAR, "couple"))
+
+    def test_the_gate_gives_two_usable_windows_the_same_start(self):
+        soft = ShotWindow(shot_id="s", offset_frames=0, sharpness=BAR * 0.6, motion=1.0,
+                          face_ratio=.02, face_edge=0.0, face_count=2, bystanders=0)
+        sharp = ShotWindow(shot_id="s", offset_frames=0, sharpness=BAR, motion=1.0,
+                           face_ratio=.02, face_edge=0.0, face_count=2, bystanders=0)
+        self.assertEqual(shadow.gated_window_score(sharp, BAR, "couple"),
+                         shadow.gated_window_score(soft, BAR, "couple"))
+
+    def test_a_window_under_the_floor_is_still_refused(self):
+        blurred = ShotWindow(shot_id="s", offset_frames=0, sharpness=BAR * 0.1, motion=1.0,
+                             face_ratio=.02, face_edge=0.0, face_count=2, bystanders=0)
+        self.assertEqual(shadow.gated_window_score(blurred, BAR, "couple"), 0.0)
+        self.assertEqual(_window_score(blurred, BAR, "couple"), 0.0)
+
+    def test_the_two_scores_agree_where_only_the_base_could_differ(self):
+        """Anti-drift: at the shoot's median sharpness both start from 1.0, so the framing
+        charges must come out identical or one of them has moved."""
+        for edge, bystanders in ((0.0, 0), (0.4, 1), (1.0, 3), (0.25, 2)):
+            window = ShotWindow(shot_id="s", offset_frames=0, sharpness=BAR, motion=1.0,
+                                face_ratio=.02, face_edge=edge, face_count=2,
+                                bystanders=bystanders)
+            self.assertAlmostEqual(shadow.gated_window_score(window, BAR, "couple"),
+                                   _window_score(window, BAR, "couple"),
+                                   msg=f"edge={edge} bystanders={bystanders}")
+
+    def test_a_still_life_keeps_its_own_branch(self):
+        window = ShotWindow(shot_id="s", offset_frames=0, sharpness=BAR, motion=1.0,
+                            face_ratio=.02, face_edge=1.0, face_count=9, bystanders=3)
+        self.assertEqual(shadow.gated_window_score(window, BAR, "detail"),
+                         shadow.ELIGIBLE)
+
+    def test_the_gated_search_still_reaches_past_the_shot(self):
+        shot = _shot(start=500, duration=250)
+        result = shadow.evaluate(
+            shot, frames=50, asset_duration_frames=1000, windows=_clip(),
+            sharpness_bar=BAR, window_score=shadow.gated_window_score)
+        self.assertFalse(result.fallback)
+        self.assertLess(result.shadow_range.first_frame, 500)
+
+    def test_the_gated_search_stays_inside_the_clip(self):
+        result = shadow.evaluate(
+            _shot(), frames=50, asset_duration_frames=1000, windows=_clip(),
+            sharpness_bar=BAR, window_score=shadow.gated_window_score)
+        self.assertLessEqual(result.shadow_range.last_frame + 50, 1000)
+
+    def test_the_gated_search_falls_back_like_the_other_one(self):
+        result = shadow.evaluate(
+            _shot(), frames=50, asset_duration_frames=1000, windows=[],
+            sharpness_bar=BAR, window_score=shadow.gated_window_score, legacy_start=88)
+        self.assertTrue(result.fallback)
+        self.assertEqual(result.shadow_time_range(RATE).start_frame, 88)
+
+    def test_a_tie_is_broken_the_way_the_planner_breaks_it(self):
+        """Every window level: the earliest start wins, as `_best_offset` does."""
+        windows = _clip(count=8, step=25)
+        span = shadow.SearchRange(0, 175)
+        found = shadow.shadow_offset(windows, span, 50, BAR,
+                                     window_score=shadow.gated_window_score)
+        self.assertEqual(found[0], 0)
+
+    def test_the_same_clip_gives_the_same_answer_every_time(self):
+        windows = _clip()
+        answers = {
+            shadow.evaluate(_shot(), frames=50, asset_duration_frames=1000,
+                            windows=windows, sharpness_bar=BAR,
+                            window_score=shadow.gated_window_score).shadow_start
+            for _ in range(5)
+        }
+        self.assertEqual(len(answers), 1)
+
+    def test_both_shadow_paths_can_be_read_side_by_side(self):
+        shot = _shot(start=200, duration=250)
+        windows = _clip()
+        production = shadow.evaluate(
+            shot, frames=50, asset_duration_frames=1000, windows=windows,
+            sharpness_bar=BAR, window_score=_window_score, legacy_start=210)
+        gated = shadow.evaluate(
+            shot, frames=50, asset_duration_frames=1000, windows=windows,
+            sharpness_bar=BAR, window_score=shadow.gated_window_score, legacy_start=210)
+        self.assertEqual(production.legacy_start, gated.legacy_start)
+        self.assertEqual(production.frames, gated.frames)
+        self.assertIsNotNone(production.shadow_start)
+        self.assertIsNotNone(gated.shadow_start)
