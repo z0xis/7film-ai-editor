@@ -471,3 +471,117 @@ class WithoutTheChargeForOtherFacesTests(unittest.TestCase):
         ]
         self.assertEqual({r.legacy_start for r in results}, {222})
         self.assertEqual({r.frames for r in results}, {50})
+
+
+class RankingByWhoIsInTheWindowTests(unittest.TestCase):
+    """P3: a positive term in the base, built from measurements the system already has."""
+
+    FACE_BAR, RATIO_BAR = 5.0, 0.0279
+
+    def _scorer(self, count=True, ratio=False):
+        return shadow.content_scorer(self.FACE_BAR, self.RATIO_BAR,
+                                     use_count=count, use_ratio=ratio)
+
+    def _window(self, faces=5, ratio=0.0279, edge=0.0, bystanders=0, sharpness=BAR):
+        return ShotWindow(shot_id="s", offset_frames=0, sharpness=sharpness, motion=1.0,
+                          face_ratio=ratio, face_edge=edge, face_count=faces,
+                          bystanders=bystanders)
+
+    def test_a_window_with_people_beats_an_empty_one(self):
+        score = self._scorer()
+        self.assertGreater(score(self._window(faces=6), BAR, "couple"),
+                           score(self._window(faces=0), BAR, "couple"))
+
+    def test_a_bigger_face_beats_a_smaller_one(self):
+        score = self._scorer(count=False, ratio=True)
+        self.assertGreater(score(self._window(ratio=0.04), BAR, "couple"),
+                           score(self._window(ratio=0.004), BAR, "couple"))
+
+    def test_a_crowd_cannot_run_away_with_it(self):
+        """Capped at the shoot's median, so 40 faces is worth what 5 are."""
+        score = self._scorer()
+        self.assertEqual(score(self._window(faces=5), BAR, "couple"),
+                         score(self._window(faces=40), BAR, "couple"))
+
+    def test_background_faces_are_neither_charged_nor_rewarded(self):
+        score = self._scorer()
+        self.assertEqual(score(self._window(bystanders=0), BAR, "couple"),
+                         score(self._window(bystanders=3), BAR, "couple"))
+
+    def test_the_quality_gate_still_refuses_a_blurred_window(self):
+        for scorer in (self._scorer(), self._scorer(count=False, ratio=True),
+                       self._scorer(ratio=True)):
+            self.assertEqual(scorer(self._window(sharpness=BAR * 0.1), BAR, "couple"), 0.0)
+
+    def test_sharpness_does_not_rank_among_usable_windows(self):
+        score = self._scorer()
+        self.assertEqual(score(self._window(sharpness=BAR), BAR, "couple"),
+                         score(self._window(sharpness=BAR * 0.6), BAR, "couple"))
+
+    def test_the_frame_edge_charge_is_untouched(self):
+        from sevenfilm.services.planner import FRAME_EDGE_PENALTY
+        score = self._scorer()
+        base = score(self._window(edge=0.0), BAR, "couple")
+        self.assertAlmostEqual(score(self._window(edge=0.3), BAR, "couple"),
+                               base - FRAME_EDGE_PENALTY * 0.3)
+
+    def test_a_faceless_window_scores_nothing(self):
+        score = self._scorer(ratio=True)
+        self.assertEqual(score(self._window(faces=0, ratio=0.0), BAR, "couple"), 0.0)
+
+    def test_a_faceless_still_life_ties_at_zero(self):
+        """Declared in advance: on a detail or venue shot the content term is zero and every
+        candidate ties, which is the diagnostic for needing a category-aware signal."""
+        score = self._scorer(ratio=True)
+        self.assertEqual(score(self._window(faces=0, ratio=0.0, edge=1.0), BAR, "detail"),
+                         0.0)
+
+    def test_the_two_terms_are_weighted_equally(self):
+        both = self._scorer(count=True, ratio=True)
+        only_count = self._scorer(count=True, ratio=False)
+        only_ratio = self._scorer(count=False, ratio=True)
+        window = self._window(faces=5, ratio=0.0)
+        self.assertAlmostEqual(
+            both(window, BAR, "couple"),
+            (only_count(window, BAR, "couple") + only_ratio(window, BAR, "couple")) / 2)
+
+    def test_the_bars_come_from_the_windows_not_from_the_answer(self):
+        windows = [_window(index * 25, faces=index) for index in range(11)]
+        face_bar, ratio_bar = shadow.content_bars(windows)
+        self.assertEqual(face_bar, 5.0)
+        self.assertGreater(ratio_bar, 0.0)
+
+    def test_an_unmeasured_clip_gives_no_bars(self):
+        self.assertEqual(shadow.content_bars([]), (0.0, 0.0))
+
+    def test_the_search_still_crosses_shots_and_stops_at_the_clip(self):
+        result = shadow.evaluate(
+            _shot(start=500, duration=250), frames=50, asset_duration_frames=1000,
+            windows=_clip(), sharpness_bar=BAR, window_score=self._scorer())
+        self.assertLess(result.shadow_range.first_frame, 500)
+        self.assertLessEqual(result.shadow_range.last_frame + 50, 1000)
+
+    def test_it_falls_back_like_the_others(self):
+        result = shadow.evaluate(
+            _shot(), frames=50, asset_duration_frames=1000, windows=[],
+            sharpness_bar=BAR, window_score=self._scorer(), legacy_start=61)
+        self.assertTrue(result.fallback)
+        self.assertEqual(result.shadow_time_range(RATE).start_frame, 61)
+
+    def test_the_same_clip_gives_the_same_answer_every_time(self):
+        windows = _clip(faces=4)
+        answers = {
+            shadow.evaluate(_shot(), frames=50, asset_duration_frames=1000,
+                            windows=windows, sharpness_bar=BAR,
+                            window_score=self._scorer()).shadow_start
+            for _ in range(5)
+        }
+        self.assertEqual(len(answers), 1)
+
+    def test_it_prefers_the_populated_window_over_the_earliest_one(self):
+        """The point of the term: a later window with people in it beats an empty head."""
+        windows = [_window(0, faces=0), _window(25, faces=0), _window(50, faces=8),
+                   _window(75, faces=8)]
+        found = shadow.shadow_offset(windows, shadow.SearchRange(0, 75), 50, BAR,
+                                     window_score=self._scorer())
+        self.assertEqual(found[0], 50)

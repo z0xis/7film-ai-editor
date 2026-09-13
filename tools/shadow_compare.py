@@ -4,6 +4,7 @@
   B  P1                     — clip search, production score
   C  P1 + P2                — clip search, sharpness gates rather than ranks
   D  P1 + P2.5              — C with the charge for other people's faces taken off
+  E1 E2 E3                  — D with a positive content term in the base
 
 Reads the project and the stored measurements. Writes a JSON report. Changes nothing: the
 planner's answer is read from the plan it produced, and no shadow path is wired into it.
@@ -34,10 +35,22 @@ from sevenfilm.services.planner import (
 from sevenfilm.services.windows import asset_windows, project_windows
 
 RATE = 50
-PATHS = (("A planner", "a_in", _window_score),
-         ("B P1", "b_in", _window_score),
-         ("C P1+P2", "c_in", shadow.gated_window_score),
-         ("D P1+P2.5", "d_in", shadow.unpenalised_window_score))
+
+
+def build_paths(face_bar, ratio_bar):
+    """The searches being compared, in the order they were added."""
+    return (
+        ("A planner", "a_in", _window_score),
+        ("B P1", "b_in", _window_score),
+        ("C P1+P2", "c_in", shadow.gated_window_score),
+        ("D P1+P2.5", "d_in", shadow.unpenalised_window_score),
+        ("E1 faces", "e_in", shadow.content_scorer(
+            face_bar, ratio_bar, use_count=True, use_ratio=False)),
+        ("E2 face size", "f_in", shadow.content_scorer(
+            face_bar, ratio_bar, use_count=False, use_ratio=True)),
+        ("E3 both", "g_in", shadow.content_scorer(
+            face_bar, ratio_bar, use_count=True, use_ratio=True)),
+    )
 
 
 def sharpness_bar(windows_by_shot) -> float:
@@ -83,6 +96,11 @@ def main() -> int:
 
     windows_by_asset = asset_windows(database, args.project_id)
     bar = sharpness_bar(project_windows(database, args.project_id))
+    every_window = [w for rows in windows_by_asset.values() for w in rows]
+    face_bar, ratio_bar = shadow.content_bars(every_window)
+    paths = build_paths(face_bar, ratio_bar)
+    print(f"bars - sharpness {bar:.2f}, face count {face_bar:.2f}, "
+          f"largest face {ratio_bar:.5f}\n")
     reference = json.loads(args.reference.read_text())
     plan = json.loads(args.plan.read_text())
 
@@ -103,7 +121,7 @@ def main() -> int:
         windows = windows_by_asset.get(asset.id, ())
 
         found = {}
-        for label, key, scorer in PATHS[1:]:
+        for label, key, scorer in paths[1:]:
             found[key] = shadow.evaluate(
                 host, frames, asset_duration_frames=total, windows=windows,
                 sharpness_bar=bar, window_score=scorer,
@@ -151,16 +169,19 @@ def main() -> int:
             "a_reachable": shadow.reachable(
                 shadow.legacy_search_range(host, frames), manual[0]),
         }
-        for label, key, _scorer in PATHS[1:]:
+        for label, key, _scorer in paths[1:]:
             result = found[key]
             row[key] = result.shadow_start
             row[f"{key[0]}_score"] = result.shadow_score
             row[f"{key[0]}_reachable"] = shadow.reachable(result.shadow_range, manual[0])
             row[f"{key[0]}_fallback"] = result.fallback
-        for label, key, scorer in PATHS[1:]:
+            row[f"{key[0]}_first"] = bool(
+                result.shadow_range
+                and result.shadow_start == result.shadow_range.first_frame)
+        for label, key, scorer in paths[1:]:
             top, count = ties(scorer, found[key].shadow_range)
             row[f"{key[0]}_ties"], row[f"{key[0]}_candidates"] = top, count
-        for _label, key, _scorer in PATHS:
+        for _label, key, _scorer in paths:
             row[f"{key[0]}_held"] = held(key, row[key]) if row[key] is not None else None
             row[f"{key[0]}_shot"] = shot_index(row[key]) if row[key] is not None else None
         row["manual_held"] = held("manual_in", manual[0])
@@ -174,12 +195,12 @@ def main() -> int:
 
     print(f"pairs: {len(rows)}\n")
     print("F) SEARCH RECALL")
-    for label, key, _ in PATHS:
+    for label, key, _ in paths:
         print(f"  {label:12}: {sum(r[f'{key[0]}_reachable'] for r in rows)}/{len(rows)}")
 
     print("\nG) DISTANCE TO THE EDITOR'S IN POINT, seconds")
     print(f"  {'path':12} {'median':>7} {'mean':>7} {'p25':>6} {'p75':>6} {'p90':>6}")
-    for label, key, _ in PATHS:
+    for label, key, _ in paths:
         s = spread(distance(key))
         print(f"  {label:12} {s['median']:7.2f} {s['mean']:7.2f} {s['p25']:6.2f} "
               f"{s['p75']:6.2f} {s['p90']:6.2f}")
@@ -188,12 +209,12 @@ def main() -> int:
     for window in (0.5, 1.0, 2.0):
         cells = "  ".join(
             f"{label.split()[0]} {sum(1 for d in distance(key) if d <= window):2d}"
-            for label, key, _ in PATHS)
+            for label, key, _ in paths)
         print(f"  within {window:.1f}s : {cells}   of {len(rows)}")
 
     print("\nK) BACKGROUND FACES IN THE CHOSEN WINDOW")
     print(f"  {'path':12} {'median':>7} {'mean':>7}    0   1   2  3+")
-    for label, key in (("editor", "manual"), *[(l, k[0]) for l, k, _ in PATHS]):
+    for label, key in (("editor", "manual"), *[(l, k[0]) for l, k, _ in paths]):
         values = [r[f"{key}_held"]["bystanders"] for r in rows
                   if r.get(f"{key}_held")]
         buckets = [sum(1 for v in values if v == 0), sum(1 for v in values if 0 < v <= 1),
@@ -201,18 +222,31 @@ def main() -> int:
         print(f"  {label:12} {st.median(values):7.2f} {st.mean(values):7.2f} "
               + "".join(f"{b:4d}" for b in buckets))
 
-    print("\nI) D AGAINST C, paired")
-    deltas = [(abs(r["d_in"] - r["manual_in"]) - abs(r["c_in"] - r["manual_in"])) / RATE
-              for r in rows if r["c_in"] is not None and r["d_in"] is not None]
-    print(f"  closer {sum(1 for d in deltas if d < 0)}   "
-          f"further {sum(1 for d in deltas if d > 0)}   "
-          f"unchanged {sum(1 for d in deltas if d == 0)}")
-    print(f"  median paired delta {st.median(deltas):+.2f}s   "
-          f"mean {st.mean(deltas):+.2f}s   (negative means D is closer)")
-    print(f"  moments that moved: {sum(1 for r in rows if r['c_in'] != r['d_in'])}/{len(rows)}")
+    print("\nCOARSE REACH - within N seconds of the editor's in point")
+    for window in (2.0, 3.0, 5.0):
+        cells = "  ".join(
+            f"{label.split()[0]:2} {sum(1 for d in distance(key) if d <= window):2d}"
+            for label, key, _ in paths)
+        print(f"  within {window:.0f}s : {cells}   of {len(rows)}")
+
+    print("\nFIRST-CANDIDATE COLLAPSE")
+    for label, key, _ in paths[1:]:
+        first = sum(1 for r in rows if r.get(f"{key[0]}_first"))
+        print(f"  {label:12} chose the earliest candidate on {first}/{len(rows)}")
+
+    print("\nI) EACH PATH AGAINST D, paired")
+    for label, key, _ in paths:
+        if key == "d_in":
+            continue
+        deltas = [(abs(r[key] - r["manual_in"]) - abs(r["d_in"] - r["manual_in"])) / RATE
+                  for r in rows if r[key] is not None and r["d_in"] is not None]
+        print(f"  {label:12} closer {sum(1 for d in deltas if d < 0):2d}  "
+              f"further {sum(1 for d in deltas if d > 0):2d}  "
+              f"same {sum(1 for d in deltas if d == 0):2d}   "
+              f"median {st.median(deltas):+.2f}s  mean {st.mean(deltas):+.2f}s")
 
     print("\nM) TIES AT THE WINNING SCORE")
-    for label, key, _ in PATHS[1:]:
+    for label, key, _ in paths[1:]:
         top = [r[f"{key[0]}_ties"] for r in rows]
         cand = [r[f"{key[0]}_candidates"] for r in rows]
         print(f"  {label:12} median {st.median(top):.0f} of {st.median(cand):.0f} candidates, "
@@ -226,7 +260,7 @@ def main() -> int:
           f"(charge weight {FRAME_EDGE_PENALTY})")
 
     print("\nQUALITY")
-    for label, key, _ in PATHS:
+    for label, key, _ in paths:
         breaches = sum(1 for r in rows if r.get(f"{key[0]}_held")
                        and r[f"{key[0]}_held"]["under_floor"])
         print(f"  {label:12} cuts holding a window under the floor: {breaches}/{len(rows)}")

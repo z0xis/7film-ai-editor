@@ -277,3 +277,56 @@ def unpenalised_window_score(
     if category in STILL_CATEGORIES:
         return ELIGIBLE
     return ELIGIBLE - FRAME_EDGE_PENALTY * window.face_edge
+
+
+def content_scorer(
+    face_bar: float, ratio_bar: float, *, use_count: bool, use_ratio: bool,
+):
+    """A scorer that ranks by who is in the window rather than by how clean it is.
+
+    Three rounds of taking wrong charges off ended the same way: nothing was left to rank
+    with. The score became a gate minus penalties, every eligible candidate tied, and the
+    tie-break handed the cut to the head of the clip on 35 of 54 clips. What is missing is not
+    another charge to remove but a term that says what is worth cutting to.
+
+    So the count of faces, or the size of the largest one, takes the place the sharpness term
+    used to hold — read against this shoot's own median, exactly as crispness is, and capped
+    at 1 so a crowd cannot run away with it. No weight is invented: the term sits on the same
+    0-to-1 scale, in the same position, under the same frame-edge charge and the same
+    worst-window rule.
+
+    This is a measured proxy for one wedding, not a rule about weddings. A face is not a
+    subject, a crowd is not an event, and zero faces means both "nobody is facing us" and
+    "there are no people in this shot" — all three are limits of what is being measured here,
+    and none of them is patched over.
+    """
+    from .planner import FRAME_EDGE_PENALTY, STILL_CATEGORIES, UNUSABLE_SHARPNESS_SHARE
+
+    def score(window: ShotWindow, sharpness_bar: float, category: str = "") -> float:
+        crisp = min(1.0, window.sharpness / sharpness_bar) if sharpness_bar > 0 else 1.0
+        if crisp < UNUSABLE_SHARPNESS_SHARE:
+            return 0.0
+        parts = []
+        if use_count:
+            parts.append(min(1.0, window.face_count / face_bar) if face_bar > 0 else 0.0)
+        if use_ratio:
+            parts.append(min(1.0, window.face_ratio / ratio_bar) if ratio_bar > 0 else 0.0)
+        base = sum(parts) / len(parts) if parts else ELIGIBLE
+        if category in STILL_CATEGORIES:
+            return base
+        return base - FRAME_EDGE_PENALTY * window.face_edge
+
+    return score
+
+
+def content_bars(windows: Sequence[AssetWindow]) -> tuple[float, float]:
+    """The shoot's own median face count and largest-face share, for the scorer above.
+
+    Read off the project's measured windows, never off the editor's choices, so the scale
+    comes from the material rather than from the answer.
+    """
+    counts = sorted(float(window.face_count) for window in windows)
+    ratios = sorted(float(window.face_ratio) for window in windows)
+    if not counts:
+        return 0.0, 0.0
+    return counts[len(counts) // 2], ratios[len(ratios) // 2]
