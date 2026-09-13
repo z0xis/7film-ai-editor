@@ -294,7 +294,9 @@ def report(rows, interval) -> None:
               f"motion {row['region_median_motion']}")
         print(f"    editor's IN inside it: {row['manual_in_in_chosen']}   "
               f"inside any: {row['manual_in_in_any_region']}   "
-              f"beat {row['corrected_beat_distance'] * 1000:.0f} ms out")
+              + (f"beat {row['corrected_beat_distance'] * 1000:.0f} ms out"
+                 if row["corrected_beat_distance"] is not None
+                 else "no music time for this cut"))
         if row["class"] == "ACTION_EVENT":
             print("    EXPECTED UNSUPPORTED EVENT FAILURE — this class has no measured rule")
 
