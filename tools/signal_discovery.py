@@ -96,6 +96,17 @@ PROBES: dict[str, tuple[str, str]] = {
 }
 GROUPS["E2 content probes"] = tuple(PROBES)
 
+# What a vision-language model says is in the frame, read in by --semantic. Split into the two
+# families the audit separated: things that say the shot is spoiled, and things that say there
+# is something worth cutting to. The split is the hypothesis this round tests — that the
+# editor's rule is mostly the first kind.
+SEMANTIC_NEGATIVE = ("sem_foreground_blur", "sem_back_turned")
+SEMANTIC_POSITIVE = ("sem_couple_visible", "sem_people_present", "sem_facing_camera",
+                     "sem_interaction", "sem_expression", "sem_action_underway",
+                     "sem_well_framed")
+SEMANTIC_EVENT = ("sem_cake_cutting",)
+SEMANTIC_ALL = SEMANTIC_NEGATIVE + SEMANTIC_POSITIVE + SEMANTIC_EVENT
+
 
 def pairwise(rows, key, label="used") -> tuple[float, int]:
     """How often this feature puts a used window above an unused one from the same clip."""
@@ -179,6 +190,12 @@ def model_pairwise(rows, features, rng) -> tuple[float, int]:
               and len({r.get(f) for r in rows if r.get(f) is not None}) > 1]
     if not usable:
         return float("nan"), 0
+    # Only rows that have every feature. Filling a gap with a zero would let the model read
+    # the gap itself: the semantic answers exist only around the cut, and every window he used
+    # is around the cut, so "this value is missing" would be most of the label.
+    rows = [r for r in rows if all(r.get(f) is not None for f in usable)]
+    if not rows:
+        return float("nan"), 0
     clips = {r["clip"] for r in rows}
     scored: list[dict] = []
     for held in grouped_folds(clips):
@@ -186,11 +203,11 @@ def model_pairwise(rows, features, rng) -> tuple[float, int]:
         test = [r for r in rows if r["clip"] in held]
         if not test or len({r["used"] for r in train}) < 2:
             continue
-        matrix = np.array([[float(r.get(f) or 0.0) for f in usable] for r in train])
+        matrix = np.array([[float(r[f]) for f in usable] for r in train])
         target = np.array([int(r["used"]) for r in train])
         scaler = StandardScaler().fit(matrix)
         model = LogisticRegression(max_iter=2000, C=1.0).fit(scaler.transform(matrix), target)
-        probe = np.array([[float(r.get(f) or 0.0) for f in usable] for r in test])
+        probe = np.array([[float(r[f]) for f in usable] for r in test])
         predicted = model.predict_proba(scaler.transform(probe))[:, 1]
         scored.extend(dict(r, _p=float(p)) for r, p in zip(test, predicted, strict=True))
     return pairwise(scored, "_p")
@@ -210,7 +227,7 @@ def report_feature(name, rows, key, rng, label="used") -> None:
 
 
 def build_rows(database, project_id, canonical, manual, cuts, shutter, classes,
-               vectors, order):
+               vectors, order, semantic=None):
     """One row per measured window of every clip in the set, with what is known about it."""
     assets = {asset.name: asset for asset in project_assets(database, project_id)}
     by_asset = asset_windows(database, project_id)
@@ -299,6 +316,7 @@ def build_rows(database, project_id, canonical, manual, cuts, shutter, classes,
                 "content_change": None,
             **{name: (float(vector @ probe_axes[name]) if vector is not None
                       and probe_axes else None) for name in PROBES},
+            **_semantic_of(semantic, key),
                 "like_previous": (
                     float(vector @ previous_vector)
                     if vector is not None and previous_vector is not None else None),
@@ -312,6 +330,19 @@ def build_rows(database, project_id, canonical, manual, cuts, shutter, classes,
                     row["content_change"] = -float(vector @ earlier)
             rows.append(row)
     return rows, bar
+
+
+def _semantic_of(semantic, key) -> dict[str, float | None]:
+    """One window's answers, with the two charges flipped so higher always means better."""
+    said = (semantic or {}).get(key)
+    if not said:
+        return {name: None for name in SEMANTIC_ALL} | {
+            f"neg_{name}": None for name in SEMANTIC_NEGATIVE}
+    out = {name: said.get(name) for name in SEMANTIC_ALL}
+    for name in SEMANTIC_NEGATIVE:
+        value = said.get(name)
+        out[f"neg_{name}"] = None if value is None else 1.0 - value
+    return out
 
 
 def probe_directions() -> dict[str, np.ndarray]:
@@ -427,6 +458,7 @@ def main() -> int:
     parser.add_argument("--shutter", type=Path, required=True)
     parser.add_argument("--classes", type=Path, required=True)
     parser.add_argument("--vectors", type=Path)
+    parser.add_argument("--semantic", type=Path)
     parser.add_argument("--out", type=Path, default=Path("signal_discovery.json"))
     args = parser.parse_args()
 
@@ -454,9 +486,19 @@ def main() -> int:
             if norm > 0:
                 vectors[str(key)] = vector / norm
 
+    semantic = {}
+    if args.semantic and args.semantic.exists():
+        semantic = json.loads(args.semantic.read_text())
+        # A charge is worth more as a reason to refuse than as a reason to prefer, so the two
+        # negatives are flipped here and nowhere else: every feature in this file reads
+        # "higher is more like what he used".
+        GROUPS["S1 semantic defect"] = tuple(f"neg_{name}" for name in SEMANTIC_NEGATIVE)
+        GROUPS["S2 semantic content"] = SEMANTIC_POSITIVE
+        GROUPS["S3 semantic event"] = SEMANTIC_EVENT
+
     database = Database(database_path())
     rows, bar = build_rows(database, args.project_id, canonical, manual, cuts,
-                           shutter, classes, vectors, order)
+                           shutter, classes, vectors, order, semantic)
     clips = {r["clip"] for r in rows}
     used = sum(1 for r in rows if r["used"])
     print(f"B) DATASET — {len(rows)} windows over {len(clips)} clips; "
@@ -546,6 +588,25 @@ def main() -> int:
         print(f"  {group:26} {value:.3f}   pairs {total:7d}")
     value, total = model_pairwise(rows, every, rng)
     print(f"  {'J combined':26} {value:.3f}   pairs {total:7d}")
+
+    if semantic:
+        print("\nT) EXISTING AGAINST SEMANTIC, ON EXACTLY THE SAME ROWS")
+        print("   the semantic answers exist only around each cut, so every comparison below")
+        print("   is restricted to those windows and the frozen baseline is recomputed there.")
+        existing = [f for group, features in GROUPS.items()
+                    if not group.startswith(("S1", "S2", "S3"))
+                    and group not in CONSTANT_WITHIN_CLIP
+                    for f in features]
+        semantic_features = [f for group, features in GROUPS.items()
+                             if group.startswith(("S1", "S2", "S3")) for f in features]
+        graded = [r for r in rows if all(r.get(f) is not None for f in semantic_features)]
+        print(f"   {len(graded)} windows over {len({r['clip'] for r in graded})} clips")
+        for name, chosen in (("existing features only", existing),
+                             ("semantic only", semantic_features),
+                             ("semantic defect only", list(GROUPS["S1 semantic defect"])),
+                             ("existing + semantic", existing + semantic_features)):
+            value, total = model_pairwise(graded, chosen, rng)
+            print(f"  {name:26} {value:.3f}   pairs {total:7d}")
 
     print("\nW) SHUTTER-CONDITIONAL ABLATION")
     for wanted in ("NORMAL_SHUTTER", "CREATIVE_LOW_SHUTTER"):
