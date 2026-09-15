@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { api, CreateProject, Job, Project, Timeline } from "./api";
 import "./styles.css";
@@ -238,30 +238,54 @@ function App() {
   const [rawFolder, setRawFolder] = useState("");
   const [songs, setSongs] = useState<string[]>([""]);
 
+  // Which project selection is the most recent one a person actually asked for. `openProject`
+  // and `create` both run several awaits deep, and the browser does not guarantee they settle
+  // in the order they were started: the page-load lookup of whatever project was open last
+  // time can still be in flight when someone creates a brand new project seconds later, and if
+  // both call `setProject` the one that resolves *last* wins, not the one that happened last.
+  // That is exactly how a newly created project's own shot-extraction job ended up writing
+  // into the previous project's rows — the page-load call finished after `create` did and
+  // silently put the old project back. Every call that intends to change which project is open
+  // takes a ticket first; a call whose ticket is no longer the current one is stale and must
+  // not touch state, no matter what it found.
+  const projectSelection = useRef(0);
+
   useEffect(() => {
+    const ticket = ++projectSelection.current;
     api.projects().then(async (availableProjects) => {
+      if (projectSelection.current !== ticket) return;
       setProjects(availableProjects);
       const savedId = localStorage.getItem("sevenfilm.projectId");
       const selected = availableProjects.find(({ id }) => id === savedId) || availableProjects[0];
-      if (selected) await openProject(selected);
+      if (selected) await openProject(selected, ticket);
     }).catch((cause) => setError(String(cause)));
     if (window.resolveAPI) {
       window.resolveAPI.getContext().then(setResolveContext).catch((cause) => setError(String(cause)));
     }
   }, []);
 
-  async function openProject(selected: Project) {
+  /** Open `selected` as the current project, unless a newer selection has since started.
+   *
+   * `ticket` is optional so a caller with no ticket of its own (a click on a project in the
+   * list) always wins over anything already in flight, the same way `create` does below. */
+  async function openProject(selected: Project, ticket = ++projectSelection.current) {
     try {
       const detailedProject = await api.getProject(selected.id);
+      if (projectSelection.current !== ticket) return;
       localStorage.setItem("sevenfilm.projectId", detailedProject.id);
       setProject(detailedProject);
       // Show the running order back, so re-analysing does not silently drop the second song.
       setSongs(detailedProject.music_paths?.length ? detailedProject.music_paths : [""]);
-      setTimeline(await api.latestTimeline(detailedProject.id).catch(() => null));
+      const nextTimeline = await api.latestTimeline(detailedProject.id).catch(() => null);
+      if (projectSelection.current !== ticket) return;
+      setTimeline(nextTimeline);
       setError("");
       const running = await api.latestJob(detailedProject.id).catch(() => null);
+      if (projectSelection.current !== ticket) return;
       setJob(running && !running.stalled && running.status !== "completed" ? running : null);
-    } catch (cause) { setError(String(cause)); }
+    } catch (cause) {
+      if (projectSelection.current === ticket) setError(String(cause));
+    }
   }
 
   const busy = job !== null && (job.status === "queued" || job.status === "running") && !job.stalled;
@@ -273,6 +297,10 @@ function App() {
 
   async function create(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    // Claimed before the request goes out, not after: a page-load `openProject` still in
+    // flight at this point must lose to the project someone is creating right now, even if
+    // its own network call happens to finish later.
+    const ticket = ++projectSelection.current;
     try {
       const values = Object.fromEntries(new FormData(event.currentTarget));
       const payload: CreateProject = {
@@ -282,11 +310,14 @@ function App() {
         frame_rate: String(values.frame_rate),
       };
       const newProject = await api.project(payload);
+      if (projectSelection.current !== ticket) return;
       localStorage.setItem("sevenfilm.projectId", newProject.id);
       setProject(newProject);
       setProjects((current) => [newProject, ...current]);
       setError("");
-    } catch (cause) { setError(String(cause)); }
+    } catch (cause) {
+      if (projectSelection.current === ticket) setError(String(cause));
+    }
   }
 
   /** Follow a job to its end. Shot analysis runs for tens of minutes, so this has to survive
