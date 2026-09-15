@@ -1,0 +1,54 @@
+{
+  "clip": {
+    "style1_bare": {
+      "accuracy": "19/42 (45%)",
+      "prompts_sample": [
+        "the bride getting ready",
+        "the groom getting ready"
+      ],
+      "wall_s": 6.7
+    },
+    "style2_sentence": {
+      "accuracy": "22/42 (52%)",
+      "prompts_sample": [
+        "a photo of the bride getting ready",
+        "a photo of the groom getting ready"
+      ],
+      "wall_s": 1.0
+    },
+    "style3_cinematic": {
+      "accuracy": "20/42 (48%)",
+      "prompts_sample": [
+        "a cinematic wedding photograph of the bride getting ready",
+        "a cinematic wedding photograph of the groom getting ready"
+      ],
+      "wall_s": 1.1
+    }
+  },
+  "siglip2_so400m": {
+    "style1_bare": {
+      "accuracy": "22/42 (52%)",
+      "prompts_sample": [
+        "the bride getting ready",
+        "the groom getting ready"
+      ],
+      "wall_s": 31.5
+    },
+    "style2_sentence": {
+      "accuracy": "18/42 (43%)",
+      "prompts_sample": [
+        "a photo of the bride getting ready",
+        "a photo of the groom getting ready"
+      ],
+      "wall_s": 32.4
+    },
+    "style3_cinematic": {
+      "accuracy": "20/42 (48%)",
+      "prompts_sample": [
+        "a cinematic wedding photograph of the bride getting ready",
+        "a cinematic wedding photograph of the groom getting ready"
+      ],
+      "wall_s": 32.9
+    }
+  }
+}

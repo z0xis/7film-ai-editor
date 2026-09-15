@@ -1,0 +1,2627 @@
+{
+  "clip": {
+    "raw": {
+      "backend": "clip_vision",
+      "model_id": "openai/clip-vit-base-patch32",
+      "load_time": 0.78,
+      "infer_times": [
+        0.02813370805233717,
+        0.013383541023358703,
+        0.01333720819093287,
+        0.013658666983246803,
+        0.013928291853517294,
+        0.013766749994829297,
+        0.014032082865014672,
+        0.013742625014856458,
+        0.013501791981980205,
+        0.013468374963849783,
+        0.013683124911040068,
+        0.013263999950140715,
+        0.01269020908512175,
+        0.013043125160038471,
+        0.013090375112369657,
+        0.013653666945174336,
+        0.013160291127860546,
+        0.013532750075682998,
+        0.013387042097747326,
+        0.013255582889541984,
+        0.013849957846105099,
+        0.014302167110145092,
+        0.014562082942575216,
+        0.014554833061993122,
+        0.014796040952205658,
+        0.014717666897922754,
+        0.019028125097975135,
+        0.016282333061099052,
+        0.01597458287142217,
+        0.014483707956969738,
+        0.013060417026281357,
+        0.013189333025366068,
+        0.012993915937840939,
+        0.012705333065241575,
+        0.013255791971459985,
+        0.01313408394344151,
+        0.013675207970663905,
+        0.01311916601844132,
+        0.013367458013817668,
+        0.013488083146512508,
+        0.013431750005111098,
+        0.01350133283995092
+      ],
+      "results": [
+        {
+          "file": "00_bride.jpg",
+          "top1": "bride",
+          "top1_score": 0.659,
+          "top3": [
+            [
+              "bride",
+              0.659
+            ],
+            [
+              "bride_prep",
+              0.124
+            ],
+            [
+              "couple",
+              0.122
+            ]
+          ]
+        },
+        {
+          "file": "01_bride.jpg",
+          "top1": "groom",
+          "top1_score": 0.595,
+          "top3": [
+            [
+              "groom",
+              0.595
+            ],
+            [
+              "bride",
+              0.205
+            ],
+            [
+              "couple",
+              0.114
+            ]
+          ]
+        },
+        {
+          "file": "02_bride.jpg",
+          "top1": "bride",
+          "top1_score": 0.601,
+          "top3": [
+            [
+              "bride",
+              0.601
+            ],
+            [
+              "bride_prep",
+              0.163
+            ],
+            [
+              "couple",
+              0.138
+            ]
+          ]
+        },
+        {
+          "file": "03_couple.jpg",
+          "top1": "bride_prep",
+          "top1_score": 0.579,
+          "top3": [
+            [
+              "bride_prep",
+              0.579
+            ],
+            [
+              "bride",
+              0.35
+            ],
+            [
+              "groom",
+              0.038
+            ]
+          ]
+        },
+        {
+          "file": "04_couple.jpg",
+          "top1": "bride",
+          "top1_score": 0.514,
+          "top3": [
+            [
+              "bride",
+              0.514
+            ],
+            [
+              "bride_prep",
+              0.328
+            ],
+            [
+              "couple",
+              0.059
+            ]
+          ]
+        },
+        {
+          "file": "05_family.jpg",
+          "top1": "bride_prep",
+          "top1_score": 0.787,
+          "top3": [
+            [
+              "bride_prep",
+              0.787
+            ],
+            [
+              "bride",
+              0.179
+            ],
+            [
+              "groom",
+              0.014
+            ]
+          ]
+        },
+        {
+          "file": "06_family.jpg",
+          "top1": "bride",
+          "top1_score": 0.573,
+          "top3": [
+            [
+              "bride",
+              0.573
+            ],
+            [
+              "bride_prep",
+              0.237
+            ],
+            [
+              "groom",
+              0.088
+            ]
+          ]
+        },
+        {
+          "file": "07_venue.jpg",
+          "top1": "party",
+          "top1_score": 0.913,
+          "top3": [
+            [
+              "party",
+              0.913
+            ],
+            [
+              "party_dance",
+              0.048
+            ],
+            [
+              "groom",
+              0.021
+            ]
+          ]
+        },
+        {
+          "file": "08_venue.jpg",
+          "top1": "bride",
+          "top1_score": 0.5,
+          "top3": [
+            [
+              "bride",
+              0.5
+            ],
+            [
+              "bride_prep",
+              0.353
+            ],
+            [
+              "couple",
+              0.092
+            ]
+          ]
+        },
+        {
+          "file": "09_venue.jpg",
+          "top1": "venue",
+          "top1_score": 0.626,
+          "top3": [
+            [
+              "venue",
+              0.626
+            ],
+            [
+              "ceremony",
+              0.204
+            ],
+            [
+              "party_dance",
+              0.049
+            ]
+          ]
+        },
+        {
+          "file": "10_venue.jpg",
+          "top1": "party_dance",
+          "top1_score": 0.636,
+          "top3": [
+            [
+              "party_dance",
+              0.636
+            ],
+            [
+              "ceremony",
+              0.246
+            ],
+            [
+              "party",
+              0.072
+            ]
+          ]
+        },
+        {
+          "file": "11_bride_prep_hairdetail.jpg",
+          "top1": "bride_prep",
+          "top1_score": 0.7,
+          "top3": [
+            [
+              "bride_prep",
+              0.7
+            ],
+            [
+              "bride",
+              0.193
+            ],
+            [
+              "groom_prep",
+              0.047
+            ]
+          ]
+        },
+        {
+          "file": "12_bride_prep_phone.jpg",
+          "top1": "bride",
+          "top1_score": 0.558,
+          "top3": [
+            [
+              "bride",
+              0.558
+            ],
+            [
+              "groom",
+              0.254
+            ],
+            [
+              "couple",
+              0.1
+            ]
+          ]
+        },
+        {
+          "file": "13_bride_prep_mirror.jpg",
+          "top1": "bride",
+          "top1_score": 0.726,
+          "top3": [
+            [
+              "bride",
+              0.726
+            ],
+            [
+              "couple",
+              0.138
+            ],
+            [
+              "groom",
+              0.09
+            ]
+          ]
+        },
+        {
+          "file": "14_detail_lipstick.jpg",
+          "top1": "bride",
+          "top1_score": 0.67,
+          "top3": [
+            [
+              "bride",
+              0.67
+            ],
+            [
+              "groom",
+              0.106
+            ],
+            [
+              "bride_prep",
+              0.105
+            ]
+          ]
+        },
+        {
+          "file": "15_detail_dresshands.jpg",
+          "top1": "bride",
+          "top1_score": 0.417,
+          "top3": [
+            [
+              "bride",
+              0.417
+            ],
+            [
+              "ceremony",
+              0.268
+            ],
+            [
+              "couple",
+              0.173
+            ]
+          ]
+        },
+        {
+          "file": "16_groom_prep_bowtie.jpg",
+          "top1": "couple",
+          "top1_score": 0.458,
+          "top3": [
+            [
+              "couple",
+              0.458
+            ],
+            [
+              "bride",
+              0.338
+            ],
+            [
+              "groom",
+              0.197
+            ]
+          ]
+        },
+        {
+          "file": "17_bride_portrait.jpg",
+          "top1": "bride",
+          "top1_score": 0.739,
+          "top3": [
+            [
+              "bride",
+              0.739
+            ],
+            [
+              "couple",
+              0.151
+            ],
+            [
+              "groom",
+              0.078
+            ]
+          ]
+        },
+        {
+          "file": "18_groom_prep_solo.jpg",
+          "top1": "groom",
+          "top1_score": 0.421,
+          "top3": [
+            [
+              "groom",
+              0.421
+            ],
+            [
+              "groom_prep",
+              0.304
+            ],
+            [
+              "bride",
+              0.142
+            ]
+          ]
+        },
+        {
+          "file": "19_couple_sunglasses.jpg",
+          "top1": "bride",
+          "top1_score": 0.633,
+          "top3": [
+            [
+              "bride",
+              0.633
+            ],
+            [
+              "couple",
+              0.287
+            ],
+            [
+              "groom",
+              0.075
+            ]
+          ]
+        },
+        {
+          "file": "20_detail_van.jpg",
+          "top1": "venue",
+          "top1_score": 0.561,
+          "top3": [
+            [
+              "venue",
+              0.561
+            ],
+            [
+              "bride",
+              0.091
+            ],
+            [
+              "couple",
+              0.076
+            ]
+          ]
+        },
+        {
+          "file": "21_couple_walking.jpg",
+          "top1": "couple",
+          "top1_score": 0.446,
+          "top3": [
+            [
+              "couple",
+              0.446
+            ],
+            [
+              "bride",
+              0.32
+            ],
+            [
+              "groom",
+              0.227
+            ]
+          ]
+        },
+        {
+          "file": "22_couple_chandelier.jpg",
+          "top1": "couple",
+          "top1_score": 0.338,
+          "top3": [
+            [
+              "couple",
+              0.338
+            ],
+            [
+              "bride",
+              0.327
+            ],
+            [
+              "groom",
+              0.319
+            ]
+          ]
+        },
+        {
+          "file": "23_ceremony_henna_entrance.jpg",
+          "top1": "bride",
+          "top1_score": 0.495,
+          "top3": [
+            [
+              "bride",
+              0.495
+            ],
+            [
+              "couple",
+              0.373
+            ],
+            [
+              "groom",
+              0.112
+            ]
+          ]
+        },
+        {
+          "file": "24_party_dance_groom.jpg",
+          "top1": "party",
+          "top1_score": 0.67,
+          "top3": [
+            [
+              "party",
+              0.67
+            ],
+            [
+              "party_dance",
+              0.243
+            ],
+            [
+              "groom",
+              0.046
+            ]
+          ]
+        },
+        {
+          "file": "25_family_group_hug.jpg",
+          "top1": "bride",
+          "top1_score": 0.55,
+          "top3": [
+            [
+              "bride",
+              0.55
+            ],
+            [
+              "couple",
+              0.251
+            ],
+            [
+              "groom",
+              0.153
+            ]
+          ]
+        },
+        {
+          "file": "26_party_dance_group.jpg",
+          "top1": "party_dance",
+          "top1_score": 0.615,
+          "top3": [
+            [
+              "party_dance",
+              0.615
+            ],
+            [
+              "party",
+              0.169
+            ],
+            [
+              "bride",
+              0.109
+            ]
+          ]
+        },
+        {
+          "file": "27_couple_toast.jpg",
+          "top1": "couple",
+          "top1_score": 0.474,
+          "top3": [
+            [
+              "couple",
+              0.474
+            ],
+            [
+              "bride",
+              0.344
+            ],
+            [
+              "groom",
+              0.164
+            ]
+          ]
+        },
+        {
+          "file": "28_party_band.jpg",
+          "top1": "party",
+          "top1_score": 0.592,
+          "top3": [
+            [
+              "party",
+              0.592
+            ],
+            [
+              "groom",
+              0.144
+            ],
+            [
+              "bride",
+              0.112
+            ]
+          ]
+        },
+        {
+          "file": "29_couple_embrace_henna.jpg",
+          "top1": "couple",
+          "top1_score": 0.241,
+          "top3": [
+            [
+              "couple",
+              0.241
+            ],
+            [
+              "bride",
+              0.222
+            ],
+            [
+              "groom",
+              0.171
+            ]
+          ]
+        },
+        {
+          "file": "30_ceremony_henna_seated.jpg",
+          "top1": "couple",
+          "top1_score": 0.251,
+          "top3": [
+            [
+              "couple",
+              0.251
+            ],
+            [
+              "bride",
+              0.217
+            ],
+            [
+              "groom",
+              0.169
+            ]
+          ]
+        },
+        {
+          "file": "31_party_drum.jpg",
+          "top1": "party",
+          "top1_score": 0.742,
+          "top3": [
+            [
+              "party",
+              0.742
+            ],
+            [
+              "groom",
+              0.191
+            ],
+            [
+              "bride",
+              0.033
+            ]
+          ]
+        },
+        {
+          "file": "32_party_dance_guests.jpg",
+          "top1": "party_dance",
+          "top1_score": 0.891,
+          "top3": [
+            [
+              "party_dance",
+              0.891
+            ],
+            [
+              "party",
+              0.056
+            ],
+            [
+              "bride",
+              0.022
+            ]
+          ]
+        },
+        {
+          "file": "33_couple_cake_feeding.jpg",
+          "top1": "bride",
+          "top1_score": 0.271,
+          "top3": [
+            [
+              "bride",
+              0.271
+            ],
+            [
+              "groom",
+              0.188
+            ],
+            [
+              "couple",
+              0.185
+            ]
+          ]
+        },
+        {
+          "file": "34_bride_walking_entrance.jpg",
+          "top1": "bride",
+          "top1_score": 0.577,
+          "top3": [
+            [
+              "bride",
+              0.577
+            ],
+            [
+              "groom",
+              0.174
+            ],
+            [
+              "couple",
+              0.156
+            ]
+          ]
+        },
+        {
+          "file": "35_venue_night_arch.jpg",
+          "top1": "couple",
+          "top1_score": 0.38,
+          "top3": [
+            [
+              "couple",
+              0.38
+            ],
+            [
+              "groom",
+              0.306
+            ],
+            [
+              "bride",
+              0.272
+            ]
+          ]
+        },
+        {
+          "file": "36_bride_dancing_party.jpg",
+          "top1": "bride",
+          "top1_score": 0.416,
+          "top3": [
+            [
+              "bride",
+              0.416
+            ],
+            [
+              "couple",
+              0.323
+            ],
+            [
+              "groom",
+              0.117
+            ]
+          ]
+        },
+        {
+          "file": "37_drone_landscape.jpg",
+          "top1": "venue",
+          "top1_score": 0.531,
+          "top3": [
+            [
+              "venue",
+              0.531
+            ],
+            [
+              "drone_exterior",
+              0.339
+            ],
+            [
+              "groom",
+              0.05
+            ]
+          ]
+        },
+        {
+          "file": "38_drone_venue_overview.jpg",
+          "top1": "ceremony",
+          "top1_score": 0.67,
+          "top3": [
+            [
+              "ceremony",
+              0.67
+            ],
+            [
+              "venue",
+              0.233
+            ],
+            [
+              "family_group",
+              0.047
+            ]
+          ]
+        },
+        {
+          "file": "39_ceremony_cake_cutting.jpg",
+          "top1": "party",
+          "top1_score": 0.415,
+          "top3": [
+            [
+              "party",
+              0.415
+            ],
+            [
+              "party_dance",
+              0.239
+            ],
+            [
+              "bride",
+              0.117
+            ]
+          ]
+        },
+        {
+          "file": "40_party_first_dance.jpg",
+          "top1": "party",
+          "top1_score": 0.859,
+          "top3": [
+            [
+              "party",
+              0.859
+            ],
+            [
+              "party_dance",
+              0.102
+            ],
+            [
+              "couple",
+              0.012
+            ]
+          ]
+        },
+        {
+          "file": "41_ceremony_entrance_walk.jpg",
+          "top1": "bride",
+          "top1_score": 0.317,
+          "top3": [
+            [
+              "bride",
+              0.317
+            ],
+            [
+              "groom",
+              0.251
+            ],
+            [
+              "couple",
+              0.166
+            ]
+          ]
+        }
+      ]
+    },
+    "scored": {
+      "strict_top1": "17/42 (40%)",
+      "top3": "28/42 (67%)",
+      "macro_balanced": "40%",
+      "hard_negative": "7/17 (41%)",
+      "per_category": {
+        "bride": "2/2",
+        "bride_prep": "3/10",
+        "ceremony": "0/4",
+        "couple": "4/6",
+        "detail": "0/3",
+        "drone_exterior": "0/2",
+        "family_group": "0/1",
+        "groom": "1/1",
+        "groom_prep": "0/2",
+        "party": "4/5",
+        "party_dance": "2/4",
+        "venue": "1/2"
+      },
+      "median_infer_s": 0.0135,
+      "p90_infer_s": 0.0148,
+      "max_infer_s": 0.0281,
+      "load_time_s": 0.78
+    }
+  },
+  "siglip2_base": {
+    "raw": {
+      "backend": "siglip2_base",
+      "model_id": "google/siglip2-base-patch16-256",
+      "load_time": 2.01,
+      "infer_times": [
+        0.9379873750731349,
+        0.08729766705073416,
+        0.08708987501449883,
+        0.08752958290278912,
+        0.08767245896160603,
+        0.0880252921488136,
+        0.08740766695700586,
+        0.08779362495988607,
+        0.08677204186096787,
+        0.08849466685205698,
+        0.08720291685312986,
+        0.08702320791780949,
+        0.08698974992148578,
+        0.08725695894099772,
+        0.08842204208485782,
+        0.08785274997353554,
+        0.08719850005581975,
+        0.08688291697762907,
+        0.08676762483082712,
+        0.0867791660130024,
+        0.08670516707934439,
+        0.08676879201084375,
+        0.08642333396710455,
+        0.08707858296111226,
+        0.08712762501090765,
+        0.08682854101061821,
+        0.0870363749563694,
+        0.08640224998816848,
+        0.08696070802398026,
+        0.08674579206854105,
+        0.08674570801667869,
+        0.08681016694754362,
+        0.08712266711518168,
+        0.0880644170101732,
+        0.08788070804439485,
+        0.08684379188343883,
+        0.0867846249602735,
+        0.08705337508581579,
+        0.08694887510500848,
+        0.08644791599363089,
+        0.08684329106472433,
+        0.08700491697527468
+      ],
+      "results": [
+        {
+          "file": "00_bride.jpg",
+          "top1": "bride_prep",
+          "top1_score": 0.987,
+          "top3": [
+            [
+              "bride_prep",
+              0.987
+            ],
+            [
+              "bride",
+              0.013
+            ],
+            [
+              "groom",
+              0.0
+            ]
+          ]
+        },
+        {
+          "file": "01_bride.jpg",
+          "top1": "groom",
+          "top1_score": 0.842,
+          "top3": [
+            [
+              "groom",
+              0.842
+            ],
+            [
+              "party",
+              0.086
+            ],
+            [
+              "groom_prep",
+              0.058
+            ]
+          ]
+        },
+        {
+          "file": "02_bride.jpg",
+          "top1": "bride_prep",
+          "top1_score": 0.959,
+          "top3": [
+            [
+              "bride_prep",
+              0.959
+            ],
+            [
+              "bride",
+              0.041
+            ],
+            [
+              "couple",
+              0.0
+            ]
+          ]
+        },
+        {
+          "file": "03_couple.jpg",
+          "top1": "bride_prep",
+          "top1_score": 0.993,
+          "top3": [
+            [
+              "bride_prep",
+              0.993
+            ],
+            [
+              "bride",
+              0.006
+            ],
+            [
+              "ceremony",
+              0.0
+            ]
+          ]
+        },
+        {
+          "file": "04_couple.jpg",
+          "top1": "bride_prep",
+          "top1_score": 0.993,
+          "top3": [
+            [
+              "bride_prep",
+              0.993
+            ],
+            [
+              "bride",
+              0.006
+            ],
+            [
+              "ceremony",
+              0.0
+            ]
+          ]
+        },
+        {
+          "file": "05_family.jpg",
+          "top1": "bride_prep",
+          "top1_score": 0.953,
+          "top3": [
+            [
+              "bride_prep",
+              0.953
+            ],
+            [
+              "bride",
+              0.047
+            ],
+            [
+              "party",
+              0.0
+            ]
+          ]
+        },
+        {
+          "file": "06_family.jpg",
+          "top1": "bride_prep",
+          "top1_score": 0.963,
+          "top3": [
+            [
+              "bride_prep",
+              0.963
+            ],
+            [
+              "bride",
+              0.035
+            ],
+            [
+              "party",
+              0.001
+            ]
+          ]
+        },
+        {
+          "file": "07_venue.jpg",
+          "top1": "party",
+          "top1_score": 0.98,
+          "top3": [
+            [
+              "party",
+              0.98
+            ],
+            [
+              "groom",
+              0.014
+            ],
+            [
+              "party_dance",
+              0.004
+            ]
+          ]
+        },
+        {
+          "file": "08_venue.jpg",
+          "top1": "bride_prep",
+          "top1_score": 0.937,
+          "top3": [
+            [
+              "bride_prep",
+              0.937
+            ],
+            [
+              "bride",
+              0.062
+            ],
+            [
+              "family_group",
+              0.0
+            ]
+          ]
+        },
+        {
+          "file": "09_venue.jpg",
+          "top1": "drone_exterior",
+          "top1_score": 0.808,
+          "top3": [
+            [
+              "drone_exterior",
+              0.808
+            ],
+            [
+              "party",
+              0.105
+            ],
+            [
+              "venue",
+              0.077
+            ]
+          ]
+        },
+        {
+          "file": "10_venue.jpg",
+          "top1": "party",
+          "top1_score": 0.496,
+          "top3": [
+            [
+              "party",
+              0.496
+            ],
+            [
+              "party_dance",
+              0.391
+            ],
+            [
+              "couple",
+              0.048
+            ]
+          ]
+        },
+        {
+          "file": "11_bride_prep_hairdetail.jpg",
+          "top1": "bride_prep",
+          "top1_score": 0.971,
+          "top3": [
+            [
+              "bride_prep",
+              0.971
+            ],
+            [
+              "bride",
+              0.028
+            ],
+            [
+              "couple",
+              0.0
+            ]
+          ]
+        },
+        {
+          "file": "12_bride_prep_phone.jpg",
+          "top1": "bride_prep",
+          "top1_score": 0.562,
+          "top3": [
+            [
+              "bride_prep",
+              0.562
+            ],
+            [
+              "bride",
+              0.433
+            ],
+            [
+              "couple",
+              0.002
+            ]
+          ]
+        },
+        {
+          "file": "13_bride_prep_mirror.jpg",
+          "top1": "bride_prep",
+          "top1_score": 0.994,
+          "top3": [
+            [
+              "bride_prep",
+              0.994
+            ],
+            [
+              "bride",
+              0.006
+            ],
+            [
+              "party",
+              0.0
+            ]
+          ]
+        },
+        {
+          "file": "14_detail_lipstick.jpg",
+          "top1": "bride_prep",
+          "top1_score": 0.845,
+          "top3": [
+            [
+              "bride_prep",
+              0.845
+            ],
+            [
+              "bride",
+              0.151
+            ],
+            [
+              "ceremony",
+              0.001
+            ]
+          ]
+        },
+        {
+          "file": "15_detail_dresshands.jpg",
+          "top1": "bride",
+          "top1_score": 0.706,
+          "top3": [
+            [
+              "bride",
+              0.706
+            ],
+            [
+              "bride_prep",
+              0.193
+            ],
+            [
+              "ceremony",
+              0.079
+            ]
+          ]
+        },
+        {
+          "file": "16_groom_prep_bowtie.jpg",
+          "top1": "bride_prep",
+          "top1_score": 0.499,
+          "top3": [
+            [
+              "bride_prep",
+              0.499
+            ],
+            [
+              "groom",
+              0.22
+            ],
+            [
+              "couple",
+              0.15
+            ]
+          ]
+        },
+        {
+          "file": "17_bride_portrait.jpg",
+          "top1": "bride",
+          "top1_score": 0.974,
+          "top3": [
+            [
+              "bride",
+              0.974
+            ],
+            [
+              "bride_prep",
+              0.011
+            ],
+            [
+              "groom",
+              0.007
+            ]
+          ]
+        },
+        {
+          "file": "18_groom_prep_solo.jpg",
+          "top1": "groom",
+          "top1_score": 0.588,
+          "top3": [
+            [
+              "groom",
+              0.588
+            ],
+            [
+              "groom_prep",
+              0.401
+            ],
+            [
+              "ceremony",
+              0.006
+            ]
+          ]
+        },
+        {
+          "file": "19_couple_sunglasses.jpg",
+          "top1": "bride",
+          "top1_score": 0.565,
+          "top3": [
+            [
+              "bride",
+              0.565
+            ],
+            [
+              "bride_prep",
+              0.293
+            ],
+            [
+              "couple",
+              0.081
+            ]
+          ]
+        },
+        {
+          "file": "20_detail_van.jpg",
+          "top1": "bride_prep",
+          "top1_score": 0.277,
+          "top3": [
+            [
+              "bride_prep",
+              0.277
+            ],
+            [
+              "bride",
+              0.264
+            ],
+            [
+              "venue",
+              0.184
+            ]
+          ]
+        },
+        {
+          "file": "21_couple_walking.jpg",
+          "top1": "couple",
+          "top1_score": 0.449,
+          "top3": [
+            [
+              "couple",
+              0.449
+            ],
+            [
+              "ceremony",
+              0.286
+            ],
+            [
+              "groom",
+              0.129
+            ]
+          ]
+        },
+        {
+          "file": "22_couple_chandelier.jpg",
+          "top1": "couple",
+          "top1_score": 0.431,
+          "top3": [
+            [
+              "couple",
+              0.431
+            ],
+            [
+              "party",
+              0.299
+            ],
+            [
+              "bride",
+              0.102
+            ]
+          ]
+        },
+        {
+          "file": "23_ceremony_henna_entrance.jpg",
+          "top1": "bride",
+          "top1_score": 0.838,
+          "top3": [
+            [
+              "bride",
+              0.838
+            ],
+            [
+              "party",
+              0.116
+            ],
+            [
+              "ceremony",
+              0.014
+            ]
+          ]
+        },
+        {
+          "file": "24_party_dance_groom.jpg",
+          "top1": "party",
+          "top1_score": 0.854,
+          "top3": [
+            [
+              "party",
+              0.854
+            ],
+            [
+              "party_dance",
+              0.102
+            ],
+            [
+              "groom",
+              0.038
+            ]
+          ]
+        },
+        {
+          "file": "25_family_group_hug.jpg",
+          "top1": "bride",
+          "top1_score": 0.383,
+          "top3": [
+            [
+              "bride",
+              0.383
+            ],
+            [
+              "party_dance",
+              0.274
+            ],
+            [
+              "party",
+              0.236
+            ]
+          ]
+        },
+        {
+          "file": "26_party_dance_group.jpg",
+          "top1": "party",
+          "top1_score": 0.777,
+          "top3": [
+            [
+              "party",
+              0.777
+            ],
+            [
+              "party_dance",
+              0.214
+            ],
+            [
+              "family_group",
+              0.003
+            ]
+          ]
+        },
+        {
+          "file": "27_couple_toast.jpg",
+          "top1": "couple",
+          "top1_score": 0.54,
+          "top3": [
+            [
+              "couple",
+              0.54
+            ],
+            [
+              "party",
+              0.139
+            ],
+            [
+              "ceremony",
+              0.133
+            ]
+          ]
+        },
+        {
+          "file": "28_party_band.jpg",
+          "top1": "party",
+          "top1_score": 0.994,
+          "top3": [
+            [
+              "party",
+              0.994
+            ],
+            [
+              "party_dance",
+              0.005
+            ],
+            [
+              "groom",
+              0.001
+            ]
+          ]
+        },
+        {
+          "file": "29_couple_embrace_henna.jpg",
+          "top1": "couple",
+          "top1_score": 0.408,
+          "top3": [
+            [
+              "couple",
+              0.408
+            ],
+            [
+              "groom",
+              0.124
+            ],
+            [
+              "party",
+              0.122
+            ]
+          ]
+        },
+        {
+          "file": "30_ceremony_henna_seated.jpg",
+          "top1": "party",
+          "top1_score": 0.95,
+          "top3": [
+            [
+              "party",
+              0.95
+            ],
+            [
+              "party_dance",
+              0.026
+            ],
+            [
+              "family_group",
+              0.006
+            ]
+          ]
+        },
+        {
+          "file": "31_party_drum.jpg",
+          "top1": "party",
+          "top1_score": 0.994,
+          "top3": [
+            [
+              "party",
+              0.994
+            ],
+            [
+              "groom",
+              0.004
+            ],
+            [
+              "party_dance",
+              0.001
+            ]
+          ]
+        },
+        {
+          "file": "32_party_dance_guests.jpg",
+          "top1": "party",
+          "top1_score": 0.692,
+          "top3": [
+            [
+              "party",
+              0.692
+            ],
+            [
+              "party_dance",
+              0.229
+            ],
+            [
+              "groom",
+              0.021
+            ]
+          ]
+        },
+        {
+          "file": "33_couple_cake_feeding.jpg",
+          "top1": "party",
+          "top1_score": 0.703,
+          "top3": [
+            [
+              "party",
+              0.703
+            ],
+            [
+              "couple",
+              0.086
+            ],
+            [
+              "party_dance",
+              0.059
+            ]
+          ]
+        },
+        {
+          "file": "34_bride_walking_entrance.jpg",
+          "top1": "party",
+          "top1_score": 0.475,
+          "top3": [
+            [
+              "party",
+              0.475
+            ],
+            [
+              "party_dance",
+              0.253
+            ],
+            [
+              "bride_prep",
+              0.165
+            ]
+          ]
+        },
+        {
+          "file": "35_venue_night_arch.jpg",
+          "top1": "groom",
+          "top1_score": 0.66,
+          "top3": [
+            [
+              "groom",
+              0.66
+            ],
+            [
+              "party",
+              0.241
+            ],
+            [
+              "party_dance",
+              0.064
+            ]
+          ]
+        },
+        {
+          "file": "36_bride_dancing_party.jpg",
+          "top1": "bride",
+          "top1_score": 0.49,
+          "top3": [
+            [
+              "bride",
+              0.49
+            ],
+            [
+              "party",
+              0.306
+            ],
+            [
+              "party_dance",
+              0.154
+            ]
+          ]
+        },
+        {
+          "file": "37_drone_landscape.jpg",
+          "top1": "venue",
+          "top1_score": 0.563,
+          "top3": [
+            [
+              "venue",
+              0.563
+            ],
+            [
+              "drone_exterior",
+              0.435
+            ],
+            [
+              "party",
+              0.0
+            ]
+          ]
+        },
+        {
+          "file": "38_drone_venue_overview.jpg",
+          "top1": "venue",
+          "top1_score": 0.918,
+          "top3": [
+            [
+              "venue",
+              0.918
+            ],
+            [
+              "party",
+              0.059
+            ],
+            [
+              "drone_exterior",
+              0.021
+            ]
+          ]
+        },
+        {
+          "file": "39_ceremony_cake_cutting.jpg",
+          "top1": "party",
+          "top1_score": 0.993,
+          "top3": [
+            [
+              "party",
+              0.993
+            ],
+            [
+              "couple",
+              0.003
+            ],
+            [
+              "bride",
+              0.001
+            ]
+          ]
+        },
+        {
+          "file": "40_party_first_dance.jpg",
+          "top1": "party",
+          "top1_score": 0.991,
+          "top3": [
+            [
+              "party",
+              0.991
+            ],
+            [
+              "party_dance",
+              0.003
+            ],
+            [
+              "couple",
+              0.003
+            ]
+          ]
+        },
+        {
+          "file": "41_ceremony_entrance_walk.jpg",
+          "top1": "party",
+          "top1_score": 0.306,
+          "top3": [
+            [
+              "party",
+              0.306
+            ],
+            [
+              "family_group",
+              0.295
+            ],
+            [
+              "bride_prep",
+              0.113
+            ]
+          ]
+        }
+      ]
+    },
+    "scored": {
+      "strict_top1": "21/42 (50%)",
+      "top3": "32/42 (76%)",
+      "macro_balanced": "35%",
+      "hard_negative": "4/17 (24%)",
+      "per_category": {
+        "bride": "1/2",
+        "bride_prep": "10/10",
+        "ceremony": "0/4",
+        "couple": "4/6",
+        "detail": "0/3",
+        "drone_exterior": "0/2",
+        "family_group": "0/1",
+        "groom": "1/1",
+        "groom_prep": "0/2",
+        "party": "5/5",
+        "party_dance": "0/4",
+        "venue": "0/2"
+      },
+      "median_infer_s": 0.087,
+      "p90_infer_s": 0.088,
+      "max_infer_s": 0.938,
+      "load_time_s": 2.01
+    }
+  },
+  "siglip2_so400m": {
+    "raw": {
+      "backend": "siglip2_so400m",
+      "model_id": "google/siglip2-so400m-patch14-384",
+      "load_time": 7.27,
+      "infer_times": [
+        1.6101268329657614,
+        0.5674308750312775,
+        0.5556620832066983,
+        0.542257291963324,
+        0.5647539170458913,
+        0.5521267920266837,
+        0.5446548331528902,
+        0.5480682500638068,
+        0.5495823328383267,
+        0.6150529580190778,
+        0.5523114579264075,
+        0.548048208002001,
+        0.544593249913305,
+        0.5432694579940289,
+        0.5555148748680949,
+        0.54644879209809,
+        0.545766833005473,
+        0.5468797499779612,
+        0.5394051249604672,
+        0.5426250421442091,
+        0.5476768328808248,
+        0.5428806249983609,
+        0.5472104588989168,
+        0.5532740000635386,
+        0.546621749876067,
+        0.5508782090619206,
+        0.5505676250904799,
+        0.5660978751257062,
+        0.5620805418584496,
+        0.5560554170515388,
+        0.5562453749589622,
+        0.5521321250125766,
+        0.5673666670918465,
+        0.5641961249057204,
+        0.5568783751223236,
+        0.5504796248860657,
+        0.5522477498743683,
+        0.5546613330952823,
+        0.5581305830273777,
+        0.549000833183527,
+        0.5499482080340385,
+        0.550708666909486
+      ],
+      "results": [
+        {
+          "file": "00_bride.jpg",
+          "top1": "bride_prep",
+          "top1_score": 0.937,
+          "top3": [
+            [
+              "bride_prep",
+              0.937
+            ],
+            [
+              "bride",
+              0.062
+            ],
+            [
+              "couple",
+              0.001
+            ]
+          ]
+        },
+        {
+          "file": "01_bride.jpg",
+          "top1": "groom",
+          "top1_score": 0.844,
+          "top3": [
+            [
+              "groom",
+              0.844
+            ],
+            [
+              "groom_prep",
+              0.15
+            ],
+            [
+              "couple",
+              0.002
+            ]
+          ]
+        },
+        {
+          "file": "02_bride.jpg",
+          "top1": "bride_prep",
+          "top1_score": 0.985,
+          "top3": [
+            [
+              "bride_prep",
+              0.985
+            ],
+            [
+              "bride",
+              0.014
+            ],
+            [
+              "couple",
+              0.001
+            ]
+          ]
+        },
+        {
+          "file": "03_couple.jpg",
+          "top1": "bride_prep",
+          "top1_score": 0.999,
+          "top3": [
+            [
+              "bride_prep",
+              0.999
+            ],
+            [
+              "bride",
+              0.001
+            ],
+            [
+              "couple",
+              0.0
+            ]
+          ]
+        },
+        {
+          "file": "04_couple.jpg",
+          "top1": "bride_prep",
+          "top1_score": 1.0,
+          "top3": [
+            [
+              "bride_prep",
+              1.0
+            ],
+            [
+              "bride",
+              0.0
+            ],
+            [
+              "couple",
+              0.0
+            ]
+          ]
+        },
+        {
+          "file": "05_family.jpg",
+          "top1": "bride_prep",
+          "top1_score": 0.993,
+          "top3": [
+            [
+              "bride_prep",
+              0.993
+            ],
+            [
+              "bride",
+              0.007
+            ],
+            [
+              "couple",
+              0.0
+            ]
+          ]
+        },
+        {
+          "file": "06_family.jpg",
+          "top1": "bride_prep",
+          "top1_score": 0.949,
+          "top3": [
+            [
+              "bride_prep",
+              0.949
+            ],
+            [
+              "bride",
+              0.05
+            ],
+            [
+              "couple",
+              0.001
+            ]
+          ]
+        },
+        {
+          "file": "07_venue.jpg",
+          "top1": "party",
+          "top1_score": 0.894,
+          "top3": [
+            [
+              "party",
+              0.894
+            ],
+            [
+              "groom",
+              0.1
+            ],
+            [
+              "family_group",
+              0.002
+            ]
+          ]
+        },
+        {
+          "file": "08_venue.jpg",
+          "top1": "bride_prep",
+          "top1_score": 0.957,
+          "top3": [
+            [
+              "bride_prep",
+              0.957
+            ],
+            [
+              "bride",
+              0.042
+            ],
+            [
+              "couple",
+              0.001
+            ]
+          ]
+        },
+        {
+          "file": "09_venue.jpg",
+          "top1": "drone_exterior",
+          "top1_score": 0.823,
+          "top3": [
+            [
+              "drone_exterior",
+              0.823
+            ],
+            [
+              "venue",
+              0.089
+            ],
+            [
+              "party_dance",
+              0.064
+            ]
+          ]
+        },
+        {
+          "file": "10_venue.jpg",
+          "top1": "party_dance",
+          "top1_score": 0.698,
+          "top3": [
+            [
+              "party_dance",
+              0.698
+            ],
+            [
+              "party",
+              0.125
+            ],
+            [
+              "ceremony",
+              0.051
+            ]
+          ]
+        },
+        {
+          "file": "11_bride_prep_hairdetail.jpg",
+          "top1": "bride_prep",
+          "top1_score": 0.972,
+          "top3": [
+            [
+              "bride_prep",
+              0.972
+            ],
+            [
+              "bride",
+              0.02
+            ],
+            [
+              "ceremony",
+              0.005
+            ]
+          ]
+        },
+        {
+          "file": "12_bride_prep_phone.jpg",
+          "top1": "bride_prep",
+          "top1_score": 0.619,
+          "top3": [
+            [
+              "bride_prep",
+              0.619
+            ],
+            [
+              "bride",
+              0.367
+            ],
+            [
+              "couple",
+              0.007
+            ]
+          ]
+        },
+        {
+          "file": "13_bride_prep_mirror.jpg",
+          "top1": "bride_prep",
+          "top1_score": 0.98,
+          "top3": [
+            [
+              "bride_prep",
+              0.98
+            ],
+            [
+              "bride",
+              0.018
+            ],
+            [
+              "couple",
+              0.001
+            ]
+          ]
+        },
+        {
+          "file": "14_detail_lipstick.jpg",
+          "top1": "bride_prep",
+          "top1_score": 0.831,
+          "top3": [
+            [
+              "bride_prep",
+              0.831
+            ],
+            [
+              "bride",
+              0.158
+            ],
+            [
+              "couple",
+              0.007
+            ]
+          ]
+        },
+        {
+          "file": "15_detail_dresshands.jpg",
+          "top1": "bride_prep",
+          "top1_score": 0.616,
+          "top3": [
+            [
+              "bride_prep",
+              0.616
+            ],
+            [
+              "bride",
+              0.274
+            ],
+            [
+              "couple",
+              0.054
+            ]
+          ]
+        },
+        {
+          "file": "16_groom_prep_bowtie.jpg",
+          "top1": "groom",
+          "top1_score": 0.438,
+          "top3": [
+            [
+              "groom",
+              0.438
+            ],
+            [
+              "bride_prep",
+              0.303
+            ],
+            [
+              "couple",
+              0.187
+            ]
+          ]
+        },
+        {
+          "file": "17_bride_portrait.jpg",
+          "top1": "bride",
+          "top1_score": 0.903,
+          "top3": [
+            [
+              "bride",
+              0.903
+            ],
+            [
+              "bride_prep",
+              0.085
+            ],
+            [
+              "couple",
+              0.008
+            ]
+          ]
+        },
+        {
+          "file": "18_groom_prep_solo.jpg",
+          "top1": "groom",
+          "top1_score": 0.858,
+          "top3": [
+            [
+              "groom",
+              0.858
+            ],
+            [
+              "groom_prep",
+              0.128
+            ],
+            [
+              "bride_prep",
+              0.005
+            ]
+          ]
+        },
+        {
+          "file": "19_couple_sunglasses.jpg",
+          "top1": "bride",
+          "top1_score": 0.74,
+          "top3": [
+            [
+              "bride",
+              0.74
+            ],
+            [
+              "bride_prep",
+              0.156
+            ],
+            [
+              "couple",
+              0.081
+            ]
+          ]
+        },
+        {
+          "file": "20_detail_van.jpg",
+          "top1": "bride",
+          "top1_score": 0.791,
+          "top3": [
+            [
+              "bride",
+              0.791
+            ],
+            [
+              "couple",
+              0.087
+            ],
+            [
+              "bride_prep",
+              0.079
+            ]
+          ]
+        },
+        {
+          "file": "21_couple_walking.jpg",
+          "top1": "couple",
+          "top1_score": 0.957,
+          "top3": [
+            [
+              "couple",
+              0.957
+            ],
+            [
+              "bride",
+              0.02
+            ],
+            [
+              "groom",
+              0.017
+            ]
+          ]
+        },
+        {
+          "file": "22_couple_chandelier.jpg",
+          "top1": "couple",
+          "top1_score": 0.919,
+          "top3": [
+            [
+              "couple",
+              0.919
+            ],
+            [
+              "bride",
+              0.029
+            ],
+            [
+              "party",
+              0.027
+            ]
+          ]
+        },
+        {
+          "file": "23_ceremony_henna_entrance.jpg",
+          "top1": "bride",
+          "top1_score": 0.889,
+          "top3": [
+            [
+              "bride",
+              0.889
+            ],
+            [
+              "couple",
+              0.046
+            ],
+            [
+              "bride_prep",
+              0.033
+            ]
+          ]
+        },
+        {
+          "file": "24_party_dance_groom.jpg",
+          "top1": "groom",
+          "top1_score": 0.529,
+          "top3": [
+            [
+              "groom",
+              0.529
+            ],
+            [
+              "party",
+              0.443
+            ],
+            [
+              "groom_prep",
+              0.013
+            ]
+          ]
+        },
+        {
+          "file": "25_family_group_hug.jpg",
+          "top1": "bride",
+          "top1_score": 0.491,
+          "top3": [
+            [
+              "bride",
+              0.491
+            ],
+            [
+              "bride_prep",
+              0.271
+            ],
+            [
+              "family_group",
+              0.118
+            ]
+          ]
+        },
+        {
+          "file": "26_party_dance_group.jpg",
+          "top1": "party",
+          "top1_score": 0.732,
+          "top3": [
+            [
+              "party",
+              0.732
+            ],
+            [
+              "party_dance",
+              0.255
+            ],
+            [
+              "family_group",
+              0.005
+            ]
+          ]
+        },
+        {
+          "file": "27_couple_toast.jpg",
+          "top1": "couple",
+          "top1_score": 0.772,
+          "top3": [
+            [
+              "couple",
+              0.772
+            ],
+            [
+              "bride",
+              0.101
+            ],
+            [
+              "bride_prep",
+              0.047
+            ]
+          ]
+        },
+        {
+          "file": "28_party_band.jpg",
+          "top1": "party",
+          "top1_score": 0.984,
+          "top3": [
+            [
+              "party",
+              0.984
+            ],
+            [
+              "venue",
+              0.006
+            ],
+            [
+              "groom",
+              0.004
+            ]
+          ]
+        },
+        {
+          "file": "29_couple_embrace_henna.jpg",
+          "top1": "couple",
+          "top1_score": 0.808,
+          "top3": [
+            [
+              "couple",
+              0.808
+            ],
+            [
+              "groom",
+              0.053
+            ],
+            [
+              "bride",
+              0.049
+            ]
+          ]
+        },
+        {
+          "file": "30_ceremony_henna_seated.jpg",
+          "top1": "party",
+          "top1_score": 0.496,
+          "top3": [
+            [
+              "party",
+              0.496
+            ],
+            [
+              "couple",
+              0.17
+            ],
+            [
+              "groom",
+              0.133
+            ]
+          ]
+        },
+        {
+          "file": "31_party_drum.jpg",
+          "top1": "party",
+          "top1_score": 0.859,
+          "top3": [
+            [
+              "party",
+              0.859
+            ],
+            [
+              "groom",
+              0.116
+            ],
+            [
+              "family_group",
+              0.008
+            ]
+          ]
+        },
+        {
+          "file": "32_party_dance_guests.jpg",
+          "top1": "party",
+          "top1_score": 0.794,
+          "top3": [
+            [
+              "party",
+              0.794
+            ],
+            [
+              "party_dance",
+              0.181
+            ],
+            [
+              "couple",
+              0.013
+            ]
+          ]
+        },
+        {
+          "file": "33_couple_cake_feeding.jpg",
+          "top1": "couple",
+          "top1_score": 0.423,
+          "top3": [
+            [
+              "couple",
+              0.423
+            ],
+            [
+              "party",
+              0.237
+            ],
+            [
+              "bride_prep",
+              0.119
+            ]
+          ]
+        },
+        {
+          "file": "34_bride_walking_entrance.jpg",
+          "top1": "bride_prep",
+          "top1_score": 0.405,
+          "top3": [
+            [
+              "bride_prep",
+              0.405
+            ],
+            [
+              "party",
+              0.265
+            ],
+            [
+              "bride",
+              0.119
+            ]
+          ]
+        },
+        {
+          "file": "35_venue_night_arch.jpg",
+          "top1": "groom",
+          "top1_score": 0.906,
+          "top3": [
+            [
+              "groom",
+              0.906
+            ],
+            [
+              "party",
+              0.034
+            ],
+            [
+              "couple",
+              0.018
+            ]
+          ]
+        },
+        {
+          "file": "36_bride_dancing_party.jpg",
+          "top1": "bride",
+          "top1_score": 0.559,
+          "top3": [
+            [
+              "bride",
+              0.559
+            ],
+            [
+              "bride_prep",
+              0.274
+            ],
+            [
+              "party",
+              0.101
+            ]
+          ]
+        },
+        {
+          "file": "37_drone_landscape.jpg",
+          "top1": "drone_exterior",
+          "top1_score": 0.928,
+          "top3": [
+            [
+              "drone_exterior",
+              0.928
+            ],
+            [
+              "venue",
+              0.072
+            ],
+            [
+              "couple",
+              0.0
+            ]
+          ]
+        },
+        {
+          "file": "38_drone_venue_overview.jpg",
+          "top1": "venue",
+          "top1_score": 0.762,
+          "top3": [
+            [
+              "venue",
+              0.762
+            ],
+            [
+              "drone_exterior",
+              0.226
+            ],
+            [
+              "party",
+              0.008
+            ]
+          ]
+        },
+        {
+          "file": "39_ceremony_cake_cutting.jpg",
+          "top1": "party",
+          "top1_score": 0.597,
+          "top3": [
+            [
+              "party",
+              0.597
+            ],
+            [
+              "couple",
+              0.157
+            ],
+            [
+              "bride_prep",
+              0.128
+            ]
+          ]
+        },
+        {
+          "file": "40_party_first_dance.jpg",
+          "top1": "party",
+          "top1_score": 0.973,
+          "top3": [
+            [
+              "party",
+              0.973
+            ],
+            [
+              "couple",
+              0.023
+            ],
+            [
+              "party_dance",
+              0.001
+            ]
+          ]
+        },
+        {
+          "file": "41_ceremony_entrance_walk.jpg",
+          "top1": "family_group",
+          "top1_score": 0.405,
+          "top3": [
+            [
+              "family_group",
+              0.405
+            ],
+            [
+              "party",
+              0.287
+            ],
+            [
+              "couple",
+              0.134
+            ]
+          ]
+        }
+      ]
+    },
+    "scored": {
+      "strict_top1": "22/42 (52%)",
+      "top3": "31/42 (74%)",
+      "macro_balanced": "39%",
+      "hard_negative": "5/17 (29%)",
+      "per_category": {
+        "bride": "1/2",
+        "bride_prep": "10/10",
+        "ceremony": "0/4",
+        "couple": "5/6",
+        "detail": "0/3",
+        "drone_exterior": "1/2",
+        "family_group": "0/1",
+        "groom": "1/1",
+        "groom_prep": "0/2",
+        "party": "4/5",
+        "party_dance": "0/4",
+        "venue": "0/2"
+      },
+      "median_infer_s": 0.5509,
+      "p90_infer_s": 0.5661,
+      "max_infer_s": 1.6101,
+      "load_time_s": 7.27
+    }
+  }
+}
