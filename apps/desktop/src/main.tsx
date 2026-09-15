@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { api, CreateProject, Job, Project, Timeline } from "./api";
+import { canCancel, healthWarning, isBusy, isTerminal, statusLine, terminalMessage } from "./jobs";
 import "./styles.css";
 
 type ResolveContext = {
@@ -225,7 +226,7 @@ function RejectList({ projectId, disabled }: { projectId: string; disabled: bool
   );
 }
 
-function App() {
+export function App() {
   const [project, setProject] = useState<Project | null>(null);
   const [projects, setProjects] = useState<Project[]>([]);
   const [job, setJob] = useState<Job | null>(null);
@@ -249,6 +250,12 @@ function App() {
   // takes a ticket first; a call whose ticket is no longer the current one is stale and must
   // not touch state, no matter what it found.
   const projectSelection = useRef(0);
+  // `follow`'s poll loop is a plain async function, not a React effect — unmounting does not
+  // interrupt an `await` already in flight. Without this, a background poll from a torn-down
+  // instance would run forever, still calling `setJob`/`setError` on state nothing reads any
+  // more.
+  const mounted = useRef(true);
+  useEffect(() => () => { mounted.current = false; }, []);
 
   useEffect(() => {
     const ticket = ++projectSelection.current;
@@ -280,15 +287,18 @@ function App() {
       if (projectSelection.current !== ticket) return;
       setTimeline(nextTimeline);
       setError("");
+      // Only an in-progress job is worth re-attaching to; `stalled` is a health warning on a
+      // job the backend still owns, not a reason to treat it as if it had never started — a
+      // reload while a job is merely unresponsive-looking must not lose sight of it either.
       const running = await api.latestJob(detailedProject.id).catch(() => null);
       if (projectSelection.current !== ticket) return;
-      setJob(running && !running.stalled && running.status !== "completed" ? running : null);
+      setJob(running && !isTerminal(running.status) ? running : null);
     } catch (cause) {
       if (projectSelection.current === ticket) setError(String(cause));
     }
   }
 
-  const busy = job !== null && (job.status === "queued" || job.status === "running") && !job.stalled;
+  const busy = isBusy(job);
 
   useEffect(() => {
     if (project && busy) follow(job!.id);
@@ -321,30 +331,69 @@ function App() {
   }
 
   /** Follow a job to its end. Shot analysis runs for tens of minutes, so this has to survive
-   *  a reload: the job is found again from the project rather than remembered in this tab. */
+   *  a reload: the job is found again from the project rather than remembered in this tab.
+   *
+   * `stalled` used to make this throw and stop polling outright — the exact reason a
+   * derivatives job that had, in the backend, already reached `completed` kept showing
+   * "İş yanıt vermiyor" for half an hour: the frontend had given up watching it minutes
+   * earlier, over a warning, not a failure. It is a health signal on a job the backend still
+   * owns, so it changes nothing about whether this loop keeps polling; only a genuine terminal
+   * status (`completed`/`failed`/`cancelled`) ends it.
+   *
+   * Ticketed the same way `openProject`/`create` are: a project switch mid-poll must not let a
+   * response that was already in flight write `setJob`/`setError`/`setProject` into whatever
+   * project is open by the time it resolves. */
   async function follow(jobId: string) {
     if (!project) return;
+    const ticket = projectSelection.current;
     try {
+      let next: Job;
       for (;;) {
-        const next = await api.job(jobId);
+        next = await api.job(jobId);
+        if (!mounted.current || projectSelection.current !== ticket) return;
         setJob(next);
-        if (next.status === "completed") break;
-        if (next.status === "failed") throw new Error(next.error || "İş tamamlanamadı.");
-        if (next.stalled) throw new Error(
-          `${next.kind}: iş yanıt vermiyor, ilerleme %${Math.round(next.progress * 100)}'te durdu. ` +
-          "Yeniden başlatabilirsiniz; tamamlanan kısım korunur.");
+        if (isTerminal(next.status)) break;
         await new Promise((resolve) => setTimeout(resolve, 700));
+        if (!mounted.current || projectSelection.current !== ticket) return;
       }
-      setProject(await api.getProject(project.id));
-    } catch (cause) { setError(String(cause)); }
+      // An authoritative terminal response always wins over whatever transient warning or
+      // error was showing for this same job — that is what "reconciliation" means here.
+      setError(terminalMessage(next));
+      if (next.status === "completed") setProject(await api.getProject(project.id));
+      if (!mounted.current || projectSelection.current !== ticket) return;
+    } catch (cause) {
+      if (mounted.current && projectSelection.current === ticket) setError(String(cause));
+    }
   }
 
   async function run(endpoint: string, payload?: object) {
     if (!project || busy) return;
+    const ticket = projectSelection.current;
     try {
       const { job_id } = await api.startJob(project.id, endpoint, payload);
+      if (projectSelection.current !== ticket) return;
       await follow(job_id);
-    } catch (cause) { setError(String(cause)); }
+    } catch (cause) {
+      if (projectSelection.current === ticket) setError(String(cause));
+    }
+  }
+
+  /** Ask the backend to stop `job`. Cooperative, not immediate: a `running` job becomes
+   * `cancel_requested` and the already-active `follow` poll picks up the eventual `cancelled`
+   * on its own — this only needs to record the backend's own answer, optimistically, so the
+   * button's effect is not waiting on the next 700ms tick to be visible. A failed cancel
+   * request leaves the job's state exactly as it was: the request did not happen, so nothing
+   * about the job did either. */
+  async function cancelJob() {
+    if (!job || !canCancel(job)) return;
+    const ticket = projectSelection.current;
+    try {
+      const updated = await api.cancel(job.id);
+      if (projectSelection.current !== ticket) return;
+      setJob(updated);
+    } catch (cause) {
+      if (projectSelection.current === ticket) setError(String(cause));
+    }
   }
 
   async function build(event: FormEvent<HTMLFormElement>) {
@@ -432,7 +481,9 @@ function App() {
           </section>
           <section className="card">
             <h2>Durum</h2>
-            <pre>{error || resolveMessage || (job ? `${job.kind}: ${job.status} · ${Math.round(job.progress * 100)}%` : `${project.assets || 0} medya · ${project.shots || 0} shot · ${project.latest_music ? "müzik hazır" : "müzik bekleniyor"} · ${project.style_reference_count || 0} referans profili`)}</pre>
+            <pre>{error || resolveMessage || (job ? statusLine(job) : `${project.assets || 0} medya · ${project.shots || 0} shot · ${project.latest_music ? "müzik hazır" : "müzik bekleniyor"} · ${project.style_reference_count || 0} referans profili`)}</pre>
+            {job && !error && healthWarning(job) && <p className="warning">{healthWarning(job)}</p>}
+            {job && canCancel(job) && <button className="secondary" onClick={cancelJob}>İptal et</button>}
             {staleWarning(project) && <p className="stale-analysis">{staleWarning(project)}</p>}
           </section>
         </>
@@ -464,4 +515,7 @@ function App() {
   );
 }
 
-createRoot(document.getElementById("root")!).render(<App />);
+// Guarded, not unconditional: importing `App` for a test (there is no `#root` element in that
+// jsdom document) must not also try to mount it.
+const rootElement = document.getElementById("root");
+if (rootElement) createRoot(rootElement).render(<App />);

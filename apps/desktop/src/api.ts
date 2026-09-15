@@ -1,6 +1,27 @@
 export type Project = { id: string; name: string; workspace_path: string; target_duration_seconds: string; frame_rate: string; assets?: number; shots?: number; latest_music?: boolean; music_paths?: string[]; style_reference_count?: number; stale_analysis?: { shots: boolean; music: boolean } };
 export type CreateProject = Pick<Project, "name" | "workspace_path" | "target_duration_seconds" | "frame_rate">;
-export type Job = { id: string; kind: string; status: "queued" | "running" | "completed" | "failed"; progress: number; error?: string | null ; stalled?: boolean };
+export type JobStatus = "queued" | "running" | "cancel_requested" | "cancelled" | "completed" | "failed";
+export type Job = {
+  id: string;
+  kind: string;
+  status: JobStatus;
+  progress: number;
+  error?: string | null;
+  stalled?: boolean;
+  // P2 job observability contract — additive, all optional so a response from before this
+  // existed (or a job kind this UI does not special-case) still renders correctly.
+  stage?: string | null;
+  processed?: number | null;
+  total?: number | null;
+  stage_progress?: number | null;
+  overall_progress?: number | null;
+  current_asset_id?: string | null;
+  current_asset_display?: string | null;
+  current_shot_id?: string | null;
+  current_shot_index?: number | null;
+  last_progress_at?: string | null;
+  last_heartbeat_at?: string | null;
+};
 export type TimelineItem = { clip_name: string; source_path: string; score: number; category: string; shot_scale: string; selection_reason: string; source_in: { start_seconds: string; duration_seconds: string }; timeline_in: { start_seconds: string; duration_seconds: string } };
 export type Timeline = { id: string; name: string; created_at?: string | null; actual_duration_seconds: string; frame_rate: string; music_path?: string | null; warnings: string[]; items: TimelineItem[] };
 
@@ -40,6 +61,7 @@ export const api = {
   startJob: (projectId: string, endpoint: string, payload?: object) => call<{ job_id: string }>(`/api/projects/${projectId}/${endpoint}`, { method: "POST", body: payload ? JSON.stringify(payload) : undefined }),
   job: (id: string) => call<Job>(`/api/jobs/${id}`),
   latestJob: (projectId: string) => call<Job>(`/api/projects/${projectId}/jobs/latest`),
+  cancel: (jobId: string) => call<Job>(`/api/jobs/${jobId}/cancel`, { method: "POST" }),
   timeline: (projectId: string, payload: object) => call<Timeline>(`/api/projects/${projectId}/timelines`, { method: "POST", body: JSON.stringify(payload) }),
   export: (timelineId: string) => call<Record<string, string>>(`/api/timelines/${timelineId}/export`, { method: "POST" }),
   rejections: (projectId: string) => call<Rejections>(`/api/projects/${projectId}/rejections`),
