@@ -1,0 +1,222 @@
+[
+  {
+    "label": "genuine_first_dance_C7450",
+    "path": "/tmp/p53_shadow_frames/095.jpg",
+    "event_claimed": "first_dance",
+    "human_verdict": "TP",
+    "atomic_raw": "{\n  \"primary_person_count\": 2,\n  \"two_people_interacting\": true,\n  \"dance_like_movement_visible\": true,\n  \"solo_performer_pattern\": false,\n  \"cake_visible\": false,\n  \"cake_cutting_action_visible\": false,\n  \"confidence_in_this_read\": 0.95\n}",
+    "atomic_parsed": {
+      "primary_person_count": 2,
+      "two_people_interacting": true,
+      "dance_like_movement_visible": true,
+      "solo_performer_pattern": false,
+      "cake_visible": false,
+      "cake_cutting_action_visible": false,
+      "confidence_in_this_read": 0.95
+    },
+    "atomic_latency_s": 42.89,
+    "atomic_exception": null,
+    "yunet": {
+      "available": true,
+      "face_count": 1
+    }
+  },
+  {
+    "label": "genuine_first_dance_drone_A",
+    "path": "/tmp/p53_shadow_frames/111.jpg",
+    "event_claimed": "first_dance",
+    "human_verdict": "TP",
+    "atomic_raw": "{\n  \"primary_person_count\": 2,\n  \"two_people_interacting\": true,\n  \"dance_like_movement_visible\": true,\n  \"solo_performer_pattern\": false,\n  \"cake_visible\": false,\n  \"cake_cutting_action_visible\": false,\n  \"confidence_in_this_read\": 0.95\n}",
+    "atomic_parsed": {
+      "primary_person_count": 2,
+      "two_people_interacting": true,
+      "dance_like_movement_visible": true,
+      "solo_performer_pattern": false,
+      "cake_visible": false,
+      "cake_cutting_action_visible": false,
+      "confidence_in_this_read": 0.95
+    },
+    "atomic_latency_s": 12.07,
+    "atomic_exception": null,
+    "yunet": {
+      "available": true,
+      "face_count": 0
+    }
+  },
+  {
+    "label": "genuine_first_dance_drone_B",
+    "path": "/tmp/p53_shadow_frames/109.jpg",
+    "event_claimed": "first_dance",
+    "human_verdict": "TP",
+    "atomic_raw": "{\n  \"primary_person_count\": 2,\n  \"two_people_interacting\": true,\n  \"dance_like_movement_visible\": true,\n  \"solo_performer_pattern\": false,\n  \"cake_visible\": false,\n  \"cake_cutting_action_visible\": false,\n  \"confidence_in_this_read\": 0.95\n}",
+    "atomic_parsed": {
+      "primary_person_count": 2,
+      "two_people_interacting": true,
+      "dance_like_movement_visible": true,
+      "solo_performer_pattern": false,
+      "cake_visible": false,
+      "cake_cutting_action_visible": false,
+      "confidence_in_this_read": 0.95
+    },
+    "atomic_latency_s": 7.96,
+    "atomic_exception": null,
+    "yunet": {
+      "available": true,
+      "face_count": 0
+    }
+  },
+  {
+    "label": "genuine_first_dance_C7252",
+    "path": "/tmp/p53_shadow_frames/037.jpg",
+    "event_claimed": "first_dance",
+    "human_verdict": "TP",
+    "atomic_raw": "{\n  \"primary_person_count\": 2,\n  \"two_people_interacting\": true,\n  \"dance_like_movement_visible\": true,\n  \"solo_performer_pattern\": false,\n  \"cake_visible\": false,\n  \"cake_cutting_action_visible\": false,\n  \"confidence_in_this_read\": 0.95\n}",
+    "atomic_parsed": {
+      "primary_person_count": 2,
+      "two_people_interacting": true,
+      "dance_like_movement_visible": true,
+      "solo_performer_pattern": false,
+      "cake_visible": false,
+      "cake_cutting_action_visible": false,
+      "confidence_in_this_read": 0.95
+    },
+    "atomic_latency_s": 8.94,
+    "atomic_exception": null,
+    "yunet": {
+      "available": true,
+      "face_count": 2
+    }
+  },
+  {
+    "label": "genuine_first_dance_C7261",
+    "path": "/tmp/p54_stress_frames/052.jpg",
+    "event_claimed": "first_dance",
+    "human_verdict": "TP",
+    "atomic_raw": "{\n  \"primary_person_count\": 2,\n  \"two_people_interacting\": true,\n  \"dance_like_movement_visible\": true,\n  \"solo_performer_pattern\": true,\n  \"cake_visible\": false,\n  \"cake_cutting_action_visible\": false,\n  \"confidence_in_this_read\": 0.95\n}",
+    "atomic_parsed": {
+      "primary_person_count": 2,
+      "two_people_interacting": true,
+      "dance_like_movement_visible": true,
+      "solo_performer_pattern": true,
+      "cake_visible": false,
+      "cake_cutting_action_visible": false,
+      "confidence_in_this_read": 0.95
+    },
+    "atomic_latency_s": 8.49,
+    "atomic_exception": null,
+    "yunet": {
+      "available": true,
+      "face_count": 1
+    }
+  },
+  {
+    "label": "genuine_cake_cutting_C7309",
+    "path": "/tmp/p54_stress_frames/066.jpg",
+    "event_claimed": "cake_cutting",
+    "human_verdict": "TP",
+    "atomic_raw": "{\n  \"primary_person_count\": 2,\n  \"two_people_interacting\": true,\n  \"dance_like_movement_visible\": false,\n  \"solo_performer_pattern\": false,\n  \"cake_visible\": true,\n  \"cake_cutting_action_visible\": true,\n  \"confidence_in_this_read\": 0.95\n}",
+    "atomic_parsed": {
+      "primary_person_count": 2,
+      "two_people_interacting": true,
+      "dance_like_movement_visible": false,
+      "solo_performer_pattern": false,
+      "cake_visible": true,
+      "cake_cutting_action_visible": true,
+      "confidence_in_this_read": 0.95
+    },
+    "atomic_latency_s": 9.31,
+    "atomic_exception": null,
+    "yunet": {
+      "available": true,
+      "face_count": 2
+    }
+  },
+  {
+    "label": "HARMFUL_solo_performer_C7349",
+    "path": "/tmp/p54_stress_frames/083.jpg",
+    "event_claimed": "first_dance",
+    "human_verdict": "FP",
+    "atomic_raw": "{\n  \"primary_person_count\": 2,\n  \"two_people_interacting\": true,\n  \"dance_like_movement_visible\": true,\n  \"solo_performer_pattern\": true,\n  \"cake_visible\": false,\n  \"cake_cutting_action_visible\": false,\n  \"confidence_in_this_read\": 0.95\n}",
+    "atomic_parsed": {
+      "primary_person_count": 2,
+      "two_people_interacting": true,
+      "dance_like_movement_visible": true,
+      "solo_performer_pattern": true,
+      "cake_visible": false,
+      "cake_cutting_action_visible": false,
+      "confidence_in_this_read": 0.95
+    },
+    "atomic_latency_s": 8.06,
+    "atomic_exception": null,
+    "yunet": {
+      "available": true,
+      "face_count": 3
+    }
+  },
+  {
+    "label": "ceremony_halluc_C7343",
+    "path": "/tmp/p53_shadow_frames/061.jpg",
+    "event_claimed": "ceremony_action",
+    "human_verdict": "FP",
+    "atomic_raw": "{\n  \"primary_person_count\": 4,\n  \"two_people_interacting\": true,\n  \"dance_like_movement_visible\": false,\n  \"solo_performer_pattern\": false,\n  \"cake_visible\": false,\n  \"cake_cutting_action_visible\": false,\n  \"confidence_in_this_read\": 0.8\n}",
+    "atomic_parsed": {
+      "primary_person_count": 4,
+      "two_people_interacting": true,
+      "dance_like_movement_visible": false,
+      "solo_performer_pattern": false,
+      "cake_visible": false,
+      "cake_cutting_action_visible": false,
+      "confidence_in_this_read": 0.8
+    },
+    "atomic_latency_s": 8.24,
+    "atomic_exception": null,
+    "yunet": {
+      "available": true,
+      "face_count": 6
+    }
+  },
+  {
+    "label": "ceremony_halluc_C7344",
+    "path": "/tmp/p53_shadow_frames/062.jpg",
+    "event_claimed": "ceremony_action",
+    "human_verdict": "FP",
+    "atomic_raw": "{\n  \"primary_person_count\": 4,\n  \"two_people_interacting\": true,\n  \"dance_like_movement_visible\": false,\n  \"solo_performer_pattern\": false,\n  \"cake_visible\": true,\n  \"cake_cutting_action_visible\": true,\n  \"confidence_in_this_read\": 0.9\n}",
+    "atomic_parsed": {
+      "primary_person_count": 4,
+      "two_people_interacting": true,
+      "dance_like_movement_visible": false,
+      "solo_performer_pattern": false,
+      "cake_visible": true,
+      "cake_cutting_action_visible": true,
+      "confidence_in_this_read": 0.9
+    },
+    "atomic_latency_s": 11.47,
+    "atomic_exception": null,
+    "yunet": {
+      "available": true,
+      "face_count": 5
+    }
+  },
+  {
+    "label": "ceremony_borderline_C7342",
+    "path": "/tmp/p54_stress_frames/078.jpg",
+    "event_claimed": "ceremony_action",
+    "human_verdict": "FP",
+    "atomic_raw": "{\n  \"primary_person_count\": 3,\n  \"two_people_interacting\": true,\n  \"dance_like_movement_visible\": false,\n  \"solo_performer_pattern\": false,\n  \"cake_visible\": false,\n  \"cake_cutting_action_visible\": false,\n  \"confidence_in_this_read\": 0.8\n}",
+    "atomic_parsed": {
+      "primary_person_count": 3,
+      "two_people_interacting": true,
+      "dance_like_movement_visible": false,
+      "solo_performer_pattern": false,
+      "cake_visible": false,
+      "cake_cutting_action_visible": false,
+      "confidence_in_this_read": 0.8
+    },
+    "atomic_latency_s": 48.72,
+    "atomic_exception": null,
+    "yunet": {
+      "available": true,
+      "face_count": 5
+    }
+  }
+]

@@ -1,0 +1,28 @@
+[
+  {
+    "label": "HARMFUL_solo_performer_C7349",
+    "path": "/tmp/p54_stress_frames/083.jpg",
+    "raw": "{\n  \"how_many_people_are_clearly_the_main_focus\": 2,\n  \"is_there_a_paired_couple_moving_together\": false,\n  \"is_one_individual_performing_while_others_watch\": true,\n  \"body_movement_suggests_dancing\": true,\n  \"confidence_in_this_read\": 0.95\n}",
+    "parsed": {
+      "how_many_people_are_clearly_the_main_focus": 2,
+      "is_there_a_paired_couple_moving_together": false,
+      "is_one_individual_performing_while_others_watch": true,
+      "body_movement_suggests_dancing": true,
+      "confidence_in_this_read": 0.95
+    },
+    "latency_s": 15.1
+  },
+  {
+    "label": "genuine_first_dance_C7261",
+    "path": "/tmp/p54_stress_frames/052.jpg",
+    "raw": "{\n  \"how_many_people_are_clearly_the_main_focus\": 2,\n  \"is_there_a_paired_couple_moving_together\": true,\n  \"is_one_individual_performing_while_others_watch\": true,\n  \"body_movement_suggests_dancing\": true,\n  \"confidence_in_this_read\": 0.95\n}",
+    "parsed": {
+      "how_many_people_are_clearly_the_main_focus": 2,
+      "is_there_a_paired_couple_moving_together": true,
+      "is_one_individual_performing_while_others_watch": true,
+      "body_movement_suggests_dancing": true,
+      "confidence_in_this_read": 0.95
+    },
+    "latency_s": 7.59
+  }
+]
