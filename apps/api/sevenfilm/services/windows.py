@@ -45,6 +45,40 @@ BYSTANDER_SCORE = 0.35
 # A face this much smaller than the largest one in frame is someone else's.
 BYSTANDER_RATIO = 0.25
 
+# P4.1: `cap.set(CAP_PROP_POS_FRAMES, ...)` measured at ~600ms per call on this shoot's H.264
+# footage, against ~37ms for the `cap.read()` that follows it -- a random seek on long-GOP
+# media forces the decoder to find the preceding keyframe and decode forward to the target
+# from there, every time, even when the target is a handful of frames past wherever the
+# decoder already sits. Measured on four real assets (drone and camera, 12 real shots): walking
+# forward with `cap.grab()` instead of seeking, whenever the gap is within this many frames,
+# cut total decode time from 52.6s to 23.3s (2.26x) with byte-identical decoded frames --
+# verified by checksum, not assumed. 150 frames is comfortably above every gap this shoot's own
+# windows actually produce (measured: median 25, P99 25, max 25 within one asset, since window
+# steps are already close to this size) while staying well under where a keyframe search
+# becomes cheaper than walking; it is a margin, not a tuned edge.
+MAX_SEQUENTIAL_WALK_FRAMES = 150
+
+
+def _seek_and_read(cv2: Any, capture: Any, target: int, position: int | None) -> tuple[bool, Any, int | None]:
+    """Read the frame at `target`, walking forward from `position` (the frame the capture
+    would return next, i.e. one past the last frame actually read) when that is close enough
+    to be cheaper than a seek -- see `MAX_SEQUENTIAL_WALK_FRAMES`. Returns the frame and the
+    position the capture will be at afterwards (`None` on a failed read, so the next call
+    falls back to a seek rather than trusting a position that never actually landed).
+
+    `cap.grab()` decodes the frame without the colour-conversion and copy `cap.read()` does,
+    which is exactly the cost this can skip for every frame between `position` and `target`:
+    only the target frame is ever actually retrieved.
+    """
+    gap = None if position is None else target - position
+    if gap is not None and 0 <= gap <= MAX_SEQUENTIAL_WALK_FRAMES:
+        for _ in range(gap):
+            capture.grab()
+    else:
+        capture.set(cv2.CAP_PROP_POS_FRAMES, target)
+    ok, frame = capture.read()
+    return ok, frame, (target + 1 if ok else None)
+
 
 @dataclass(frozen=True)
 class ShotWindow:
@@ -102,11 +136,18 @@ def _face_framing(box: Any, width: int, height: int) -> tuple[float, float]:
 
 def _measure_shot_on_open_capture(
     cv2: Any, capture: Any, detector: Any, width: int, height: int, shot: Shot,
-) -> list[ShotWindow]:
-    """The per-shot measurement loop, unchanged from before this was split out -- given an
-    already-open capture and an already-built detector rather than opening/building its own.
-    Every seek, read, and computed value is identical to what a fresh `measure_windows` call
-    would have produced for this shot; only the open/init work above it is shared now."""
+    position: int | None = None,
+) -> tuple[list[ShotWindow], int | None]:
+    """The per-shot measurement loop, given an already-open capture and an already-built
+    detector rather than opening/building its own. Every decoded frame and every computed
+    value is identical to what a fresh `measure_windows` call would have produced for this
+    shot -- see `_seek_and_read` for the one thing that changed, which frame *access strategy*
+    reaches each target, never which target or what is measured from it.
+
+    `position` carries the capture's frame position across calls -- from one window to the
+    next within this shot, and from one shot to the next when a caller (`AssetWindowMeasurer`)
+    threads its own return value back in. `None` (a fresh capture, or the last read failed)
+    always falls back to a seek."""
     import numpy as np
 
     rate = shot.source_range.rate
@@ -114,8 +155,8 @@ def _measure_shot_on_open_capture(
     windows: list[ShotWindow] = []
     previous = None
     for offset in range(0, shot.source_range.duration_frames, step):
-        capture.set(cv2.CAP_PROP_POS_FRAMES, shot.source_range.start_frame + offset)
-        ok, frame = capture.read()
+        target = shot.source_range.start_frame + offset
+        ok, frame, position = _seek_and_read(cv2, capture, target, position)
         if not ok or frame is None:
             break
         grey = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -146,7 +187,7 @@ def _measure_shot_on_open_capture(
             face_count=len(faces),
             bystanders=bystanders,
         ))
-    return windows
+    return windows, position
 
 
 def measure_windows(asset: MediaAsset, shot: Shot, source: Path) -> list[ShotWindow]:
@@ -175,7 +216,8 @@ def measure_windows(asset: MediaAsset, shot: Shot, source: Path) -> list[ShotWin
                 str(model), "", (width, height),
                 score_threshold=BYSTANDER_SCORE, nms_threshold=0.3,
             )
-        return _measure_shot_on_open_capture(cv2, capture, detector, width, height, shot)
+        windows, _position = _measure_shot_on_open_capture(cv2, capture, detector, width, height, shot)
+        return windows
     finally:
         capture.release()
 
@@ -208,6 +250,11 @@ class AssetWindowMeasurer:
         self._width = 0
         self._height = 0
         self._detector = None
+        # The capture's frame position, carried from one `measure()` call to the next -- shots
+        # of the same asset arrive in ascending `start_frame` order (`project_shots`'s own
+        # ordering), so the gap between one shot's last window and the next shot's first is
+        # almost always small too; see `_seek_and_read`.
+        self._position: int | None = None
         if self._usable:
             self._width = int(self._capture.get(cv2.CAP_PROP_FRAME_WIDTH))
             self._height = int(self._capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
@@ -225,8 +272,10 @@ class AssetWindowMeasurer:
         every shot, exactly as a fresh `measure_windows` call would have for each of them."""
         if not self._usable:
             return []
-        return _measure_shot_on_open_capture(
-            self._cv2, self._capture, self._detector, self._width, self._height, shot)
+        windows, self._position = _measure_shot_on_open_capture(
+            self._cv2, self._capture, self._detector, self._width, self._height, shot,
+            self._position)
+        return windows
 
     def close(self) -> None:
         self._capture.release()

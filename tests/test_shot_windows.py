@@ -266,11 +266,20 @@ class _FakeCapture:
         self._pos = value
         return True
 
+    def grab(self):
+        # Real `cv2.VideoCapture.grab()` decodes the current frame and advances position by
+        # one without the colour-conversion `read()` does -- this fake has no real decode to
+        # skip, but still has to advance position the same way for the sequential-walk path
+        # (P4.1) to land on the frame the seek path would have.
+        self._pos += 1
+        return True
+
     def read(self):
         import numpy as np
 
         rng = np.random.default_rng(self._pos)
         frame = rng.integers(0, 256, (self.HEIGHT, self.WIDTH, 3), dtype="uint8")
+        self._pos += 1
         return True, frame
 
     def release(self):
@@ -362,3 +371,119 @@ class AssetWindowMeasurerEquivalenceTests(unittest.TestCase):
         with AssetWindowMeasurer(self.asset) as measurer:
             measurer.measure(self.shots[0])
         # No exception on __exit__ is the assertion.
+
+
+class SequentialWalkTests(unittest.TestCase):
+    """P4.1: `_seek_and_read` walks forward with `grab()` instead of seeking when the gap is
+    small, because a `cap.set()` on this shoot's long-GOP H.264 footage measured at ~600ms a
+    call against ~37ms for the `read()` that follows it -- a random seek forces the decoder
+    back to the nearest keyframe and forward from there every time, even when the target is a
+    handful of frames past wherever it already sits. Measured on four real assets (drone and
+    camera), walking instead of seeking cut total decode time 52.6s -> 23.3s with
+    byte-identical decoded frames, verified by checksum. These tests prove the operation
+    counts the walk is supposed to produce, not wall-clock time -- see P4.1's own instruction
+    against flaky absolute-timing assertions.
+    """
+
+    def setUp(self):
+        import cv2
+
+        self.calls = []
+        real_grab = _FakeCapture.grab
+        real_set = _FakeCapture.set
+
+        def counting_grab(fake_self):
+            self.calls.append("grab")
+            return real_grab(fake_self)
+
+        def counting_set(fake_self, prop, value):
+            self.calls.append("seek")
+            return real_set(fake_self, prop, value)
+
+        patcher = unittest.mock.patch.object(cv2, "VideoCapture", _FakeCapture)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+
+        class _NoFaceDetector:
+            def detect(self, frame):
+                return True, None
+
+        class _FakeFaceDetectorYN:
+            @staticmethod
+            def create(*args, **kwargs):
+                return _NoFaceDetector()
+
+        # A no-op detector, not an absent one: only seek/grab counts matter to these tests,
+        # but the detector still has to run the same real code path both sides of this
+        # comparison would.
+        detector_patcher = unittest.mock.patch.object(cv2, "FaceDetectorYN", _FakeFaceDetectorYN)
+        detector_patcher.start()
+        self.addCleanup(detector_patcher.stop)
+        grab_patcher = unittest.mock.patch.object(_FakeCapture, "grab", counting_grab)
+        grab_patcher.start()
+        self.addCleanup(grab_patcher.stop)
+        set_patcher = unittest.mock.patch.object(_FakeCapture, "set", counting_set)
+        set_patcher.start()
+        self.addCleanup(set_patcher.stop)
+
+        self.asset = MediaAsset(
+            id="a1", project_id="p", path=Path("/m/a1.mov"), name="a1.mov",
+            duration=Fraction(20), frame_rate=FrameRate(50), width=96, height=54)
+
+    def test_close_targets_within_one_shot_walk_instead_of_seeking(self):
+        # A 200-frame shot at 50fps steps every 25 frames (WINDOW_SECONDS=0.5s) -- well inside
+        # MAX_SEQUENTIAL_WALK_FRAMES, so only the very first window should seek.
+        shot = Shot(id="s1", asset_id="a1", source_range=TimeRange(0, 200, FrameRate(50)))
+        with AssetWindowMeasurer(self.asset) as measurer:
+            measurer.measure(shot)
+        self.assertEqual(self.calls.count("seek"), 1)
+        self.assertGreater(self.calls.count("grab"), 0)
+
+    def test_a_far_shot_seeks_rather_than_walking_thousands_of_frames(self):
+        first = Shot(id="s1", asset_id="a1", source_range=TimeRange(0, 25, FrameRate(50)))
+        far = Shot(id="s2", asset_id="a1",
+                  source_range=TimeRange(1_000_000, 25, FrameRate(50)))
+        with AssetWindowMeasurer(self.asset) as measurer:
+            measurer.measure(first)
+            self.calls.clear()
+            measurer.measure(far)
+        # The huge gap must seek, not grab() a million times.
+        self.assertEqual(self.calls.count("seek"), 1)
+        self.assertEqual(self.calls.count("grab"), 0)
+
+    def test_position_resets_to_a_seek_after_a_failed_read(self):
+        class _OnceThenFailingCapture(_FakeCapture):
+            def read(self):
+                if self._pos >= 25:
+                    return False, None
+                return super().read()
+
+        with (
+            unittest.mock.patch("cv2.VideoCapture", _OnceThenFailingCapture),
+            AssetWindowMeasurer(self.asset) as measurer,
+        ):
+            shot_a = Shot(id="s1", asset_id="a1",
+                         source_range=TimeRange(0, 50, FrameRate(50)))
+            measurer.measure(shot_a)  # breaks after the first read fails at frame 25
+            self.calls.clear()
+            shot_b = Shot(id="s2", asset_id="a1",
+                         source_range=TimeRange(30, 25, FrameRate(50)))
+            measurer.measure(shot_b)
+        # position was left as None by the failed read, so the next shot must seek, not walk
+        # forward from a position the capture never actually reached.
+        self.assertEqual(self.calls.count("seek"), 1)
+
+    def test_the_second_shot_of_an_asset_still_walks_from_the_first(self):
+        # Cross-shot continuity: project_shots orders shots by ascending start_frame within one
+        # asset, so consecutive shots' target frames are close too, not just windows within one
+        # shot.
+        first = Shot(id="s1", asset_id="a1", source_range=TimeRange(0, 25, FrameRate(50)))
+        second = Shot(id="s2", asset_id="a1", source_range=TimeRange(25, 25, FrameRate(50)))
+        with AssetWindowMeasurer(self.asset) as measurer:
+            measurer.measure(first)
+            self.calls.clear()
+            measurer.measure(second)
+        # first shot reads frame 0 and leaves position at 1; second shot's target is frame 25,
+        # so the walk is 24 grabs, not 25.
+        self.assertEqual(self.calls.count("seek"), 0)
+        self.assertEqual(self.calls.count("grab"), 24)
