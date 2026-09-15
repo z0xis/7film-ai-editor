@@ -1,0 +1,23 @@
+{
+  "policy": {
+    "offset_s": 2.0,
+    "description": "BEFORE = CURRENT - 2.0s, AFTER = CURRENT + 2.0s, clamped to [0, source_duration], fixed for all 13 cases -- no per-case tuning",
+    "clamped_cases": [
+      "23_ceremony_henna_entrance.jpg", "34_bride_walking_entrance.jpg", "33_couple_cake_feeding.jpg",
+      "22_couple_chandelier.jpg", "29_couple_embrace_henna.jpg", "24_party_dance_groom.jpg",
+      "26_party_dance_group.jpg", "32_party_dance_guests.jpg", "36_bride_dancing_party.jpg",
+      "30_ceremony_henna_seated.jpg"
+    ],
+    "clamp_note": "10/13 cases (all sourced from the 15 Agustos fallback-derived 125-frame clips) have CURRENT at t=1.24s, so BEFORE clamps to t=0.0 -- actual before-delta is only 1.24s, not the full 2.0s. Only 3 cases (all Elenora-sourced, longer clips) got the full +/-2.0s window."
+  },
+  "single_frame": {"tp": 2, "fn": 2, "fp": 0, "tn": 9, "precision": 1.0, "recall": 0.5, "specificity": 1.0, "fpr": 0.0, "accuracy": 0.846, "f1": 0.667, "median_latency_s": 7.57, "p90_latency_s": 27.78, "max_latency_s": 73.8},
+  "temporal": {"tp": 2, "fn": 2, "fp": 0, "tn": 9, "precision": 1.0, "recall": 0.5, "specificity": 1.0, "fpr": 0.0, "accuracy": 0.846, "f1": 0.667, "median_latency_s": 10.91, "p90_latency_s": 124.21, "max_latency_s": 169.39},
+  "delta": {"tp": 0, "fp": 0, "fn": 0, "precision": 0.0, "recall": 0.0, "f1": 0.0, "median_latency_pct": "+44%", "p90_latency_pct": "+347%"},
+  "transition_matrix": {"correct_to_correct": 11, "correct_to_wrong": 0, "wrong_to_correct": 0, "wrong_to_wrong": 2},
+  "entrance_cases": [
+    {"file": "23_ceremony_henna_entrance.jpg", "single_frame_result": "FN (event_present=none)", "temporal_result": "FN (event_present=none, unchanged)", "single_confidence": 0.95, "temporal_confidence": 0.95},
+    {"file": "41_ceremony_entrance_walk.jpg", "single_frame_result": "FN (event_present=none)", "temporal_result": "FN (event_present=none, unchanged)", "single_confidence": 0.95, "temporal_confidence": 0.95}
+  ],
+  "hard_negative_preservation": "PRESERVED -- 0 false positives in both single-frame and temporal modes across all 9 negative samples, including the cake_visible_vs_cake_cutting pair (33 vs 39) and ordinary-dancing-vs-first-dance pairs (22, 29, 24, 26, 32, 36, 30 vs 40)",
+  "verdict": "Temporal BEFORE/CURRENT/AFTER context provided ZERO measured incremental value over single-frame on this 13-case corpus -- identical classification on every single case (0 transitions in either direction) -- while costing meaningfully more latency (44% median, up to 347% at P90) due to 3x image tokens per inference."
+}
