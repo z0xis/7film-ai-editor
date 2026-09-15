@@ -1,0 +1,40 @@
+{
+  "model": "Qwen/Qwen3-VL-4B-Instruct",
+  "mode": "single_frame",
+  "device": "mps",
+  "load_time_s": 11.2,
+  "params_m": 4437.8,
+  "n_samples": 13,
+  "median_latency_s": 7.57,
+  "max_latency_s": 73.8,
+  "event_metrics": {
+    "true_positive": 2,
+    "false_positive": 0,
+    "false_negative": 2,
+    "true_negative": 9,
+    "precision": 1.0,
+    "recall": 0.5,
+    "false_positive_rate": 0.0
+  },
+  "per_sample": [
+    {"file": "23_ceremony_henna_entrance.jpg", "gt_event": "entrance", "pred_event": "none", "result": "MISS (false negative)"},
+    {"file": "34_bride_walking_entrance.jpg", "gt_event": null, "pred_event": "none", "result": "MATCH (true negative)"},
+    {"file": "41_ceremony_entrance_walk.jpg", "gt_event": "entrance", "pred_event": "none", "result": "MISS (false negative)"},
+    {"file": "33_couple_cake_feeding.jpg", "gt_event": null, "pred_event": "none", "result": "MATCH (true negative)"},
+    {"file": "39_ceremony_cake_cutting.jpg", "gt_event": "cake_cutting", "pred_event": "cake_cutting", "result": "MATCH (true positive)"},
+    {"file": "22_couple_chandelier.jpg", "gt_event": null, "pred_event": "none", "result": "MATCH (true negative)"},
+    {"file": "29_couple_embrace_henna.jpg", "gt_event": null, "pred_event": "none", "result": "MATCH (true negative)"},
+    {"file": "40_party_first_dance.jpg", "gt_event": "first_dance", "pred_event": "first_dance", "result": "MATCH (true positive)"},
+    {"file": "24_party_dance_groom.jpg", "gt_event": null, "pred_event": "none", "result": "MATCH (true negative)"},
+    {"file": "26_party_dance_group.jpg", "gt_event": null, "pred_event": "none", "result": "MATCH (true negative)"},
+    {"file": "32_party_dance_guests.jpg", "gt_event": null, "pred_event": "none", "result": "MATCH (true negative)"},
+    {"file": "36_bride_dancing_party.jpg", "gt_event": null, "pred_event": "none", "result": "MATCH (true negative)"},
+    {"file": "30_ceremony_henna_seated.jpg", "gt_event": null, "pred_event": "none", "result": "MATCH (true negative)"}
+  ],
+  "known_limitations": [
+    "single-frame only -- before/current/after multi-frame temporal test (P5.2.15/18) not run this session",
+    "hard-negative discrimination on cake_visible_vs_cake_cutting pair (33 vs 39) correctly separated by the VLM (0 FP)",
+    "both entrance misses were culturally-coded scenes (henna night procession / indoor guest-lined walk) -- the prompt's event vocabulary or the model's training distribution may not represent this specific entrance style well",
+    "n=13 event-subset is too small for a statistically stable recall estimate -- 50% recall here is 2/4 positives"
+  ]
+}

@@ -1,0 +1,204 @@
+[
+  {
+    "file": "23_ceremony_henna_entrance.jpg",
+    "latency_s": 73.8,
+    "raw": "{\"broad_scene\": \"Outdoor wedding reception\", \"subjects\": [\"Bride\"], \"action\": \"Dancing gracefully\", \"event_present\": \"none\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Outdoor wedding reception",
+      "subjects": [
+        "Bride"
+      ],
+      "action": "Dancing gracefully",
+      "event_present": "none",
+      "confidence": 0.95
+    }
+  },
+  {
+    "file": "34_bride_walking_entrance.jpg",
+    "latency_s": 12.19,
+    "raw": "{\"broad_scene\": \"Wedding reception\", \"subjects\": [\"bride\", \"guest\", \"guest\"], \"action\": \"Bride being assisted by guests\", \"event_present\": \"none\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Wedding reception",
+      "subjects": [
+        "bride",
+        "guest",
+        "guest"
+      ],
+      "action": "Bride being assisted by guests",
+      "event_present": "none",
+      "confidence": 0.95
+    }
+  },
+  {
+    "file": "41_ceremony_entrance_walk.jpg",
+    "latency_s": 27.78,
+    "raw": "{\"broad_scene\": \"Wedding reception\", \"subjects\": [\"bride\", \"groom\", \"guests\"], \"action\": \"Guests watching couple\", \"event_present\": \"none\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Wedding reception",
+      "subjects": [
+        "bride",
+        "groom",
+        "guests"
+      ],
+      "action": "Guests watching couple",
+      "event_present": "none",
+      "confidence": 0.95
+    }
+  },
+  {
+    "file": "33_couple_cake_feeding.jpg",
+    "latency_s": 13.34,
+    "raw": "{\"broad_scene\": \"Wedding reception\", \"subjects\": [\"groom\", \"bride\"], \"action\": \"Smiling and dancing together\", \"event_present\": \"none\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Wedding reception",
+      "subjects": [
+        "groom",
+        "bride"
+      ],
+      "action": "Smiling and dancing together",
+      "event_present": "none",
+      "confidence": 0.95
+    }
+  },
+  {
+    "file": "39_ceremony_cake_cutting.jpg",
+    "latency_s": 7.57,
+    "raw": "{\n  \"broad_scene\": \"Wedding reception\",\n  \"subjects\": [\n    \"groom\",\n    \"bride\",\n    \"musician\",\n    \"guests\"\n  ],\n  \"action\": \"Groom and bride standing together at cake table\",\n  \"event_present\": \"cake_cutting\",\n  \"confidence\": 0.95\n}",
+    "parsed": {
+      "broad_scene": "Wedding reception",
+      "subjects": [
+        "groom",
+        "bride",
+        "musician",
+        "guests"
+      ],
+      "action": "Groom and bride standing together at cake table",
+      "event_present": "cake_cutting",
+      "confidence": 0.95
+    }
+  },
+  {
+    "file": "22_couple_chandelier.jpg",
+    "latency_s": 4.92,
+    "raw": "{\"broad_scene\": \"Wedding reception\", \"subjects\": [\"bride\", \"groom\"], \"action\": \"Dancing together\", \"event_present\": \"none\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Wedding reception",
+      "subjects": [
+        "bride",
+        "groom"
+      ],
+      "action": "Dancing together",
+      "event_present": "none",
+      "confidence": 0.95
+    }
+  },
+  {
+    "file": "29_couple_embrace_henna.jpg",
+    "latency_s": 5.5,
+    "raw": "{\n  \"broad_scene\": \"Wedding dance\",\n  \"subjects\": [\n    \"couple\"\n  ],\n  \"action\": \"Dancing closely\",\n  \"event_present\": \"none\",\n  \"confidence\": 0.95\n}",
+    "parsed": {
+      "broad_scene": "Wedding dance",
+      "subjects": [
+        "couple"
+      ],
+      "action": "Dancing closely",
+      "event_present": "none",
+      "confidence": 0.95
+    }
+  },
+  {
+    "file": "40_party_first_dance.jpg",
+    "latency_s": 6.85,
+    "raw": "{\n  \"broad_scene\": \"Wedding reception with live band\",\n  \"subjects\": [\n    \"groom\",\n    \"bride\",\n    \"band\"\n  ],\n  \"action\": \"Couple dancing on stage\",\n  \"event_present\": \"first_dance\",\n  \"confidence\": 0.95\n}",
+    "parsed": {
+      "broad_scene": "Wedding reception with live band",
+      "subjects": [
+        "groom",
+        "bride",
+        "band"
+      ],
+      "action": "Couple dancing on stage",
+      "event_present": "first_dance",
+      "confidence": 0.95
+    }
+  },
+  {
+    "file": "24_party_dance_groom.jpg",
+    "latency_s": 5.51,
+    "raw": "{\"broad_scene\": \"Wedding reception\", \"subjects\": [\"Man in tuxedo\", \"Other guests\"], \"action\": \"Man dancing with arms raised\", \"event_present\": \"none\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Wedding reception",
+      "subjects": [
+        "Man in tuxedo",
+        "Other guests"
+      ],
+      "action": "Man dancing with arms raised",
+      "event_present": "none",
+      "confidence": 0.95
+    }
+  },
+  {
+    "file": "26_party_dance_group.jpg",
+    "latency_s": 7.63,
+    "raw": "{\n  \"broad_scene\": \"Outdoor wedding reception\",\n  \"subjects\": [\n    \"Couple dancing\",\n    \"Guests dancing\",\n    \"Woman in dress\",\n    \"Man in suit\"\n  ],\n  \"action\": \"Dancing under string lights\",\n  \"event_present\": \"none\",\n  \"confidence\": 0.95\n}",
+    "parsed": {
+      "broad_scene": "Outdoor wedding reception",
+      "subjects": [
+        "Couple dancing",
+        "Guests dancing",
+        "Woman in dress",
+        "Man in suit"
+      ],
+      "action": "Dancing under string lights",
+      "event_present": "none",
+      "confidence": 0.95
+    }
+  },
+  {
+    "file": "32_party_dance_guests.jpg",
+    "latency_s": 6.27,
+    "raw": "{\n  \"broad_scene\": \"Outdoor wedding reception\",\n  \"subjects\": [\n    \"man\",\n    \"woman\"\n  ],\n  \"action\": \"Dancing together\",\n  \"event_present\": \"none\",\n  \"confidence\": 0.95\n}",
+    "parsed": {
+      "broad_scene": "Outdoor wedding reception",
+      "subjects": [
+        "man",
+        "woman"
+      ],
+      "action": "Dancing together",
+      "event_present": "none",
+      "confidence": 0.95
+    }
+  },
+  {
+    "file": "36_bride_dancing_party.jpg",
+    "latency_s": 6.7,
+    "raw": "{\n  \"broad_scene\": \"Outdoor wedding reception\",\n  \"subjects\": [\n    \"Bride\",\n    \"Guests\",\n    \"Dancer\"\n  ],\n  \"action\": \"Bride dancing with guests\",\n  \"event_present\": \"none\",\n  \"confidence\": 0.95\n}",
+    "parsed": {
+      "broad_scene": "Outdoor wedding reception",
+      "subjects": [
+        "Bride",
+        "Guests",
+        "Dancer"
+      ],
+      "action": "Bride dancing with guests",
+      "event_present": "none",
+      "confidence": 0.95
+    }
+  },
+  {
+    "file": "30_ceremony_henna_seated.jpg",
+    "latency_s": 7.84,
+    "raw": "{\n  \"broad_scene\": \"Wedding reception with dancers\",\n  \"subjects\": [\n    \"Man in tuxedo\",\n    \"Woman in veil\",\n    \"Dancers in skeleton costumes\"\n  ],\n  \"action\": \"Couple seated at reception with dancers performing\",\n  \"event_present\": \"none\",\n  \"confidence\": 0.95\n}",
+    "parsed": {
+      "broad_scene": "Wedding reception with dancers",
+      "subjects": [
+        "Man in tuxedo",
+        "Woman in veil",
+        "Dancers in skeleton costumes"
+      ],
+      "action": "Couple seated at reception with dancers performing",
+      "event_present": "none",
+      "confidence": 0.95
+    }
+  }
+]
