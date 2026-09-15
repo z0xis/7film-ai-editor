@@ -36,7 +36,13 @@ from sevenfilm.services import analysis
 class JobCancellationTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.addClassCleanup(_ROOT.cleanup)
+        # Not `cls.addClassCleanup(_ROOT.cleanup)`: `_ROOT` is the directory `SEVENFILM_DATA_ROOT`
+        # was set to at import time (see the module-level `setdefault` above), and other test
+        # modules share this same `api.DATABASE` singleton for the rest of the process. Deleting
+        # it the moment this one class finishes pulled the directory out from under every test
+        # that runs afterward, in this file or any other. `test_multiple_songs.py`'s copy of this
+        # `_ROOT` pattern never explicitly cleans it up either, for the same reason -- the
+        # directory is meant to live for the process, not one class.
         api.DATABASE.migrate()
         cls.client = TestClient(api.app)
         cls.workspace = Path(_ROOT.name)
@@ -296,10 +302,16 @@ class TransitionTableTests(unittest.TestCase):
         database = api.DATABASE
         import uuid
         job_id = str(uuid.uuid4())
+        # A fresh project_id, not the "p" other test modules share on this same api.DATABASE
+        # singleton: a literal "p" here left a `completed` job row with no cleanup, and it was
+        # recent enough to outrank the deliberately-backdated job `test_plugin_api_contract.py`
+        # expects `/api/projects/p/jobs/latest` to return -- a real cross-file collision, not a
+        # hypothetical one.
+        project_id = f"p-{uuid.uuid4()}"
         database.execute(
             "INSERT INTO jobs (id, project_id, kind, status, progress, checkpoint_json, "
-            "error, created_at, updated_at) VALUES (?, 'p', 'shots', 'completed', 1, '{}', "
-            "NULL, ?, ?)", (job_id, now(), now()))
+            "error, created_at, updated_at) VALUES (?, ?, 'shots', 'completed', 1, '{}', "
+            "NULL, ?, ?)", (job_id, project_id, now(), now()))
         applied = database.transition_job(
             job_id, "cancelled", from_statuses=frozenset({"running", "cancel_requested"}))
         self.assertFalse(applied)
