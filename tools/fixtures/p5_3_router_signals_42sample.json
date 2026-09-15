@@ -1,0 +1,422 @@
+[
+  {
+    "file": "00_bride.jpg",
+    "project": "15 Agustos",
+    "gt": "bride_prep",
+    "top1": "bride",
+    "confidence": 0.659,
+    "margin": 0.535,
+    "correct": false,
+    "story_crit": false
+  },
+  {
+    "file": "01_bride.jpg",
+    "project": "15 Agustos",
+    "gt": "groom",
+    "top1": "groom",
+    "confidence": 0.595,
+    "margin": 0.39,
+    "correct": true,
+    "story_crit": false
+  },
+  {
+    "file": "02_bride.jpg",
+    "project": "15 Agustos",
+    "gt": "bride_prep",
+    "top1": "bride",
+    "confidence": 0.601,
+    "margin": 0.438,
+    "correct": false,
+    "story_crit": false
+  },
+  {
+    "file": "03_couple.jpg",
+    "project": "15 Agustos",
+    "gt": "bride_prep",
+    "top1": "bride_prep",
+    "confidence": 0.579,
+    "margin": 0.229,
+    "correct": true,
+    "story_crit": true
+  },
+  {
+    "file": "04_couple.jpg",
+    "project": "15 Agustos",
+    "gt": "bride_prep",
+    "top1": "bride",
+    "confidence": 0.514,
+    "margin": 0.186,
+    "correct": false,
+    "story_crit": false
+  },
+  {
+    "file": "05_family.jpg",
+    "project": "15 Agustos",
+    "gt": "bride_prep",
+    "top1": "bride_prep",
+    "confidence": 0.787,
+    "margin": 0.608,
+    "correct": true,
+    "story_crit": true
+  },
+  {
+    "file": "06_family.jpg",
+    "project": "15 Agustos",
+    "gt": "bride_prep",
+    "top1": "bride",
+    "confidence": 0.573,
+    "margin": 0.336,
+    "correct": false,
+    "story_crit": false
+  },
+  {
+    "file": "07_venue.jpg",
+    "project": "15 Agustos",
+    "gt": "party",
+    "top1": "party",
+    "confidence": 0.913,
+    "margin": 0.865,
+    "correct": true,
+    "story_crit": true
+  },
+  {
+    "file": "08_venue.jpg",
+    "project": "15 Agustos",
+    "gt": "bride_prep",
+    "top1": "bride",
+    "confidence": 0.5,
+    "margin": 0.147,
+    "correct": false,
+    "story_crit": false
+  },
+  {
+    "file": "09_venue.jpg",
+    "project": "15 Agustos",
+    "gt": "venue",
+    "top1": "venue",
+    "confidence": 0.626,
+    "margin": 0.422,
+    "correct": true,
+    "story_crit": false
+  },
+  {
+    "file": "10_venue.jpg",
+    "project": "15 Agustos",
+    "gt": "party",
+    "top1": "party_dance",
+    "confidence": 0.636,
+    "margin": 0.39,
+    "correct": false,
+    "story_crit": true
+  },
+  {
+    "file": "11_bride_prep_hairdetail.jpg",
+    "project": "15 Agustos",
+    "gt": "bride_prep",
+    "top1": "bride_prep",
+    "confidence": 0.7,
+    "margin": 0.507,
+    "correct": true,
+    "story_crit": true
+  },
+  {
+    "file": "12_bride_prep_phone.jpg",
+    "project": "15 Agustos",
+    "gt": "bride_prep",
+    "top1": "bride",
+    "confidence": 0.558,
+    "margin": 0.304,
+    "correct": false,
+    "story_crit": false
+  },
+  {
+    "file": "13_bride_prep_mirror.jpg",
+    "project": "15 Agustos",
+    "gt": "bride_prep",
+    "top1": "bride",
+    "confidence": 0.726,
+    "margin": 0.588,
+    "correct": false,
+    "story_crit": false
+  },
+  {
+    "file": "14_detail_lipstick.jpg",
+    "project": "15 Agustos",
+    "gt": "detail",
+    "top1": "bride",
+    "confidence": 0.67,
+    "margin": 0.564,
+    "correct": false,
+    "story_crit": false
+  },
+  {
+    "file": "15_detail_dresshands.jpg",
+    "project": "15 Agustos",
+    "gt": "detail",
+    "top1": "bride",
+    "confidence": 0.417,
+    "margin": 0.149,
+    "correct": false,
+    "story_crit": false
+  },
+  {
+    "file": "16_groom_prep_bowtie.jpg",
+    "project": "15 Agustos",
+    "gt": "groom_prep",
+    "top1": "couple",
+    "confidence": 0.458,
+    "margin": 0.12,
+    "correct": false,
+    "story_crit": true
+  },
+  {
+    "file": "17_bride_portrait.jpg",
+    "project": "15 Agustos",
+    "gt": "bride",
+    "top1": "bride",
+    "confidence": 0.739,
+    "margin": 0.588,
+    "correct": true,
+    "story_crit": false
+  },
+  {
+    "file": "18_groom_prep_solo.jpg",
+    "project": "15 Agustos",
+    "gt": "groom_prep",
+    "top1": "groom",
+    "confidence": 0.421,
+    "margin": 0.117,
+    "correct": false,
+    "story_crit": false
+  },
+  {
+    "file": "19_couple_sunglasses.jpg",
+    "project": "15 Agustos",
+    "gt": "couple",
+    "top1": "bride",
+    "confidence": 0.633,
+    "margin": 0.346,
+    "correct": false,
+    "story_crit": false
+  },
+  {
+    "file": "20_detail_van.jpg",
+    "project": "15 Agustos",
+    "gt": "detail",
+    "top1": "venue",
+    "confidence": 0.561,
+    "margin": 0.47,
+    "correct": false,
+    "story_crit": false
+  },
+  {
+    "file": "21_couple_walking.jpg",
+    "project": "15 Agustos",
+    "gt": "couple",
+    "top1": "couple",
+    "confidence": 0.446,
+    "margin": 0.126,
+    "correct": true,
+    "story_crit": true
+  },
+  {
+    "file": "22_couple_chandelier.jpg",
+    "project": "15 Agustos",
+    "gt": "couple",
+    "top1": "couple",
+    "confidence": 0.338,
+    "margin": 0.011,
+    "correct": true,
+    "story_crit": true
+  },
+  {
+    "file": "23_ceremony_henna_entrance.jpg",
+    "project": "15 Agustos",
+    "gt": "ceremony",
+    "top1": "bride",
+    "confidence": 0.495,
+    "margin": 0.122,
+    "correct": false,
+    "story_crit": false
+  },
+  {
+    "file": "24_party_dance_groom.jpg",
+    "project": "15 Agustos",
+    "gt": "party_dance",
+    "top1": "party",
+    "confidence": 0.67,
+    "margin": 0.427,
+    "correct": false,
+    "story_crit": true
+  },
+  {
+    "file": "25_family_group_hug.jpg",
+    "project": "15 Agustos",
+    "gt": "family_group",
+    "top1": "bride",
+    "confidence": 0.55,
+    "margin": 0.299,
+    "correct": false,
+    "story_crit": false
+  },
+  {
+    "file": "26_party_dance_group.jpg",
+    "project": "15 Agustos",
+    "gt": "party_dance",
+    "top1": "party_dance",
+    "confidence": 0.615,
+    "margin": 0.446,
+    "correct": true,
+    "story_crit": true
+  },
+  {
+    "file": "27_couple_toast.jpg",
+    "project": "15 Agustos",
+    "gt": "couple",
+    "top1": "couple",
+    "confidence": 0.474,
+    "margin": 0.13,
+    "correct": true,
+    "story_crit": true
+  },
+  {
+    "file": "28_party_band.jpg",
+    "project": "15 Agustos",
+    "gt": "party",
+    "top1": "party",
+    "confidence": 0.592,
+    "margin": 0.448,
+    "correct": true,
+    "story_crit": true
+  },
+  {
+    "file": "29_couple_embrace_henna.jpg",
+    "project": "15 Agustos",
+    "gt": "couple",
+    "top1": "couple",
+    "confidence": 0.241,
+    "margin": 0.019,
+    "correct": true,
+    "story_crit": true
+  },
+  {
+    "file": "30_ceremony_henna_seated.jpg",
+    "project": "15 Agustos",
+    "gt": "ceremony",
+    "top1": "couple",
+    "confidence": 0.251,
+    "margin": 0.034,
+    "correct": false,
+    "story_crit": true
+  },
+  {
+    "file": "31_party_drum.jpg",
+    "project": "15 Agustos",
+    "gt": "party",
+    "top1": "party",
+    "confidence": 0.742,
+    "margin": 0.551,
+    "correct": true,
+    "story_crit": true
+  },
+  {
+    "file": "32_party_dance_guests.jpg",
+    "project": "15 Agustos",
+    "gt": "party_dance",
+    "top1": "party_dance",
+    "confidence": 0.891,
+    "margin": 0.835,
+    "correct": true,
+    "story_crit": true
+  },
+  {
+    "file": "33_couple_cake_feeding.jpg",
+    "project": "15 Agustos",
+    "gt": "couple",
+    "top1": "bride",
+    "confidence": 0.271,
+    "margin": 0.083,
+    "correct": false,
+    "story_crit": false
+  },
+  {
+    "file": "34_bride_walking_entrance.jpg",
+    "project": "15 Agustos",
+    "gt": "bride",
+    "top1": "bride",
+    "confidence": 0.577,
+    "margin": 0.403,
+    "correct": true,
+    "story_crit": false
+  },
+  {
+    "file": "35_venue_night_arch.jpg",
+    "project": "15 Agustos",
+    "gt": "venue",
+    "top1": "couple",
+    "confidence": 0.38,
+    "margin": 0.074,
+    "correct": false,
+    "story_crit": true
+  },
+  {
+    "file": "36_bride_dancing_party.jpg",
+    "project": "15 Agustos",
+    "gt": "party_dance",
+    "top1": "bride",
+    "confidence": 0.416,
+    "margin": 0.093,
+    "correct": false,
+    "story_crit": false
+  },
+  {
+    "file": "37_drone_landscape.jpg",
+    "project": "15 Agustos",
+    "gt": "drone_exterior",
+    "top1": "venue",
+    "confidence": 0.531,
+    "margin": 0.192,
+    "correct": false,
+    "story_crit": false
+  },
+  {
+    "file": "38_drone_venue_overview.jpg",
+    "project": "15 Agustos",
+    "gt": "drone_exterior",
+    "top1": "ceremony",
+    "confidence": 0.67,
+    "margin": 0.437,
+    "correct": false,
+    "story_crit": true
+  },
+  {
+    "file": "39_ceremony_cake_cutting.jpg",
+    "project": "Elenora",
+    "gt": "ceremony",
+    "top1": "party",
+    "confidence": 0.415,
+    "margin": 0.176,
+    "correct": false,
+    "story_crit": true
+  },
+  {
+    "file": "40_party_first_dance.jpg",
+    "project": "Elenora",
+    "gt": "party",
+    "top1": "party",
+    "confidence": 0.859,
+    "margin": 0.757,
+    "correct": true,
+    "story_crit": true
+  },
+  {
+    "file": "41_ceremony_entrance_walk.jpg",
+    "project": "Elenora",
+    "gt": "ceremony",
+    "top1": "bride",
+    "confidence": 0.317,
+    "margin": 0.066,
+    "correct": false,
+    "story_crit": false
+  }
+]

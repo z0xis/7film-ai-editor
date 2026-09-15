@@ -1,0 +1,3902 @@
+[
+  {
+    "shot_id": "70917952-e169-5ac8-9973-a9c3703374e6",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7101.MP4",
+    "start_frame": 0,
+    "duration_frames": 204,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 0,
+    "frame_path": "/tmp/p53_shadow_frames/000.jpg",
+    "clip_pred": {
+      "top1": "bride_prep",
+      "top1_score": 0.71,
+      "top2": "bride",
+      "top2_score": 0.196,
+      "margin": 0.514
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.1562
+  },
+  {
+    "shot_id": "c682fad5-822d-512d-9369-9da4c87274f4",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7106.MP4",
+    "start_frame": 0,
+    "duration_frames": 198,
+    "frame_rate": "50/1",
+    "fallback_category": "bride",
+    "frame_index": 1,
+    "frame_path": "/tmp/p53_shadow_frames/001.jpg",
+    "clip_pred": {
+      "top1": "bride_prep",
+      "top1_score": 0.868,
+      "top2": "bride",
+      "top2_score": 0.105,
+      "margin": 0.763
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0268
+  },
+  {
+    "shot_id": "d4c349e8-dad5-5f3d-b840-16a78d796f46",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7110.MP4",
+    "start_frame": 912,
+    "duration_frames": 228,
+    "frame_rate": "50/1",
+    "fallback_category": "couple",
+    "frame_index": 2,
+    "frame_path": "/tmp/p53_shadow_frames/002.jpg",
+    "clip_pred": {
+      "top1": "bride_prep",
+      "top1_score": 0.544,
+      "top2": "bride",
+      "top2_score": 0.398,
+      "margin": 0.146
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": false,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.026
+  },
+  {
+    "shot_id": "2608ac87-3037-5974-bcc9-5322bc675cca",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7116.MP4",
+    "start_frame": 204,
+    "duration_frames": 204,
+    "frame_rate": "50/1",
+    "fallback_category": "family",
+    "frame_index": 3,
+    "frame_path": "/tmp/p53_shadow_frames/003.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.652,
+      "top2": "bride_prep",
+      "top2_score": 0.249,
+      "margin": 0.403
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0272
+  },
+  {
+    "shot_id": "01661f15-820b-5dce-a4cd-76da9f1adf86",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7120.MP4",
+    "start_frame": 1440,
+    "duration_frames": 240,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 4,
+    "frame_path": "/tmp/p53_shadow_frames/004.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.691,
+      "top2": "couple",
+      "top2_score": 0.131,
+      "margin": 0.56
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0257
+  },
+  {
+    "shot_id": "5ed67adf-96c6-5f83-a3fe-2231e180f125",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7123.MP4",
+    "start_frame": 884,
+    "duration_frames": 220,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 5,
+    "frame_path": "/tmp/p53_shadow_frames/005.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.701,
+      "top2": "groom",
+      "top2_score": 0.223,
+      "margin": 0.479
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0258
+  },
+  {
+    "shot_id": "c414e4d3-f991-58b4-b807-5fd30c9c8f17",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7129.MP4",
+    "start_frame": 666,
+    "duration_frames": 222,
+    "frame_rate": "50/1",
+    "fallback_category": "couple",
+    "frame_index": 6,
+    "frame_path": "/tmp/p53_shadow_frames/006.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.553,
+      "top2": "bride_prep",
+      "top2_score": 0.315,
+      "margin": 0.239
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0268
+  },
+  {
+    "shot_id": "8a999ef5-bf5f-5376-9bba-58f65a742bc0",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7137.MP4",
+    "start_frame": 496,
+    "duration_frames": 248,
+    "frame_rate": "50/1",
+    "fallback_category": "couple",
+    "frame_index": 7,
+    "frame_path": "/tmp/p53_shadow_frames/007.jpg",
+    "clip_pred": {
+      "top1": "bride_prep",
+      "top1_score": 0.589,
+      "top2": "bride",
+      "top2_score": 0.322,
+      "margin": 0.267
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0455
+  },
+  {
+    "shot_id": "0506dbd7-f884-5468-8397-301e63061d05",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7138.MP4",
+    "start_frame": 3801,
+    "duration_frames": 237,
+    "frame_rate": "50/1",
+    "fallback_category": "bride",
+    "frame_index": 8,
+    "frame_path": "/tmp/p53_shadow_frames/008.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.569,
+      "top2": "couple",
+      "top2_score": 0.306,
+      "margin": 0.264
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.027
+  },
+  {
+    "shot_id": "827e823a-6000-53e0-8bcb-f607a0589776",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7143.MP4",
+    "start_frame": 216,
+    "duration_frames": 216,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 9,
+    "frame_path": "/tmp/p53_shadow_frames/009.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.755,
+      "top2": "couple",
+      "top2_score": 0.127,
+      "margin": 0.627
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0451
+  },
+  {
+    "shot_id": "9183c3ca-661b-5101-b512-820f06288f4a",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7150.MP4",
+    "start_frame": 576,
+    "duration_frames": 192,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 10,
+    "frame_path": "/tmp/p53_shadow_frames/010.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.639,
+      "top2": "bride_prep",
+      "top2_score": 0.159,
+      "margin": 0.48
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0283
+  },
+  {
+    "shot_id": "f1693995-b362-51fb-bea4-401b29205543",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7152.MP4",
+    "start_frame": 2676,
+    "duration_frames": 243,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 11,
+    "frame_path": "/tmp/p53_shadow_frames/011.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.811,
+      "top2": "couple",
+      "top2_score": 0.087,
+      "margin": 0.724
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0262
+  },
+  {
+    "shot_id": "89e929c7-bbd6-51ee-af50-e5da9b863a85",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7158.MP4",
+    "start_frame": 416,
+    "duration_frames": 208,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 12,
+    "frame_path": "/tmp/p53_shadow_frames/012.jpg",
+    "clip_pred": {
+      "top1": "detail",
+      "top1_score": 0.425,
+      "top2": "ceremony",
+      "top2_score": 0.181,
+      "margin": 0.244
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0477
+  },
+  {
+    "shot_id": "3bc7cf3f-c9ae-571a-892c-ca28fc894f33",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7163.MP4",
+    "start_frame": 384,
+    "duration_frames": 192,
+    "frame_rate": "50/1",
+    "fallback_category": "bride",
+    "frame_index": 13,
+    "frame_path": "/tmp/p53_shadow_frames/013.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.546,
+      "top2": "family",
+      "top2_score": 0.158,
+      "margin": 0.388
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0246
+  },
+  {
+    "shot_id": "920f974d-55fc-53a0-9b5b-902385d3943d",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7170.MP4",
+    "start_frame": 0,
+    "duration_frames": 176,
+    "frame_rate": "50/1",
+    "fallback_category": "bride",
+    "frame_index": 14,
+    "frame_path": "/tmp/p53_shadow_frames/014.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.372,
+      "top2": "groom",
+      "top2_score": 0.289,
+      "margin": 0.083
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0266
+  },
+  {
+    "shot_id": "e21359c2-46b0-5e8d-b2a4-bb2a8b49f6e3",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7174.MP4",
+    "start_frame": 492,
+    "duration_frames": 246,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 15,
+    "frame_path": "/tmp/p53_shadow_frames/015.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.414,
+      "top2": "couple",
+      "top2_score": 0.325,
+      "margin": 0.089
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0479
+  },
+  {
+    "shot_id": "b5967fff-77fe-56cd-81fe-24ca0b587434",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7180.MP4",
+    "start_frame": 168,
+    "duration_frames": 168,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 16,
+    "frame_path": "/tmp/p53_shadow_frames/016.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.839,
+      "top2": "couple",
+      "top2_score": 0.073,
+      "margin": 0.765
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0238
+  },
+  {
+    "shot_id": "692fe4f0-5f06-57a3-9a46-f7b23fce2590",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7185.MP4",
+    "start_frame": 648,
+    "duration_frames": 216,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 17,
+    "frame_path": "/tmp/p53_shadow_frames/017.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.738,
+      "top2": "bride",
+      "top2_score": 0.171,
+      "margin": 0.567
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.046
+  },
+  {
+    "shot_id": "1051d5d4-b4bc-59c2-a4e9-ad01abd065e1",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7191.MP4",
+    "start_frame": 492,
+    "duration_frames": 246,
+    "frame_rate": "50/1",
+    "fallback_category": "bride",
+    "frame_index": 18,
+    "frame_path": "/tmp/p53_shadow_frames/018.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.594,
+      "top2": "groom_prep",
+      "top2_score": 0.224,
+      "margin": 0.37
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0472
+  },
+  {
+    "shot_id": "d104095d-7d6e-5d18-8564-050e3939bfdf",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7194.MP4",
+    "start_frame": 250,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 19,
+    "frame_path": "/tmp/p53_shadow_frames/019.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.421,
+      "top2": "couple",
+      "top2_score": 0.397,
+      "margin": 0.024
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0465
+  },
+  {
+    "shot_id": "642b48d8-b625-5436-bc2d-c498262e2e87",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7196.MP4",
+    "start_frame": 750,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 20,
+    "frame_path": "/tmp/p53_shadow_frames/020.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.766,
+      "top2": "couple",
+      "top2_score": 0.122,
+      "margin": 0.644
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.047
+  },
+  {
+    "shot_id": "22780f9e-1193-5306-93a1-0dd1234e3e87",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7201.MP4",
+    "start_frame": 0,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 21,
+    "frame_path": "/tmp/p53_shadow_frames/021.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.634,
+      "top2": "couple",
+      "top2_score": 0.288,
+      "margin": 0.346
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0267
+  },
+  {
+    "shot_id": "5d50cdd7-bd59-56e0-b082-3ca35d18cb62",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7205.MP4",
+    "start_frame": 0,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 22,
+    "frame_path": "/tmp/p53_shadow_frames/022.jpg",
+    "clip_pred": {
+      "top1": "couple",
+      "top1_score": 0.39,
+      "top2": "bride",
+      "top2_score": 0.366,
+      "margin": 0.024
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": false,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0254
+  },
+  {
+    "shot_id": "7b2548a4-4be7-5f3d-b3ec-e8e62a34cbc2",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7209.MP4",
+    "start_frame": 250,
+    "duration_frames": 86,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 23,
+    "frame_path": "/tmp/p53_shadow_frames/023.jpg",
+    "clip_pred": {
+      "top1": "couple",
+      "top1_score": 0.409,
+      "top2": "bride",
+      "top2_score": 0.333,
+      "margin": 0.076
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": false,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0272
+  },
+  {
+    "shot_id": "fe0333db-b809-5f03-a315-916904353d74",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7213.MP4",
+    "start_frame": 500,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 24,
+    "frame_path": "/tmp/p53_shadow_frames/024.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.473,
+      "top2": "bride",
+      "top2_score": 0.337,
+      "margin": 0.135
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0487
+  },
+  {
+    "shot_id": "5c193b35-3a5a-5642-b0a9-4ca139b58427",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7216.MP4",
+    "start_frame": 375,
+    "duration_frames": 57,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 25,
+    "frame_path": "/tmp/p53_shadow_frames/025.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.62,
+      "top2": "groom",
+      "top2_score": 0.244,
+      "margin": 0.377
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0253
+  },
+  {
+    "shot_id": "28d57c45-6e04-5290-a6cd-36806f611e02",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7220.MP4",
+    "start_frame": 0,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 26,
+    "frame_path": "/tmp/p53_shadow_frames/026.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.389,
+      "top2": "couple",
+      "top2_score": 0.343,
+      "margin": 0.045
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0269
+  },
+  {
+    "shot_id": "3389524e-6ae7-543a-bad8-a84f4d21f6d9",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7221.MP4",
+    "start_frame": 500,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 27,
+    "frame_path": "/tmp/p53_shadow_frames/027.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.448,
+      "top2": "groom_prep",
+      "top2_score": 0.428,
+      "margin": 0.02
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0249
+  },
+  {
+    "shot_id": "2181341c-031d-5b50-b550-21e353184aec",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7224.MP4",
+    "start_frame": 0,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 28,
+    "frame_path": "/tmp/p53_shadow_frames/028.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.777,
+      "top2": "couple",
+      "top2_score": 0.152,
+      "margin": 0.625
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0245
+  },
+  {
+    "shot_id": "adeb31e2-8e59-51c4-b606-1723f9b2fda4",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7226.MP4",
+    "start_frame": 625,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 29,
+    "frame_path": "/tmp/p53_shadow_frames/029.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.816,
+      "top2": "couple",
+      "top2_score": 0.121,
+      "margin": 0.695
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.024
+  },
+  {
+    "shot_id": "382165c1-3bdc-5942-a8ad-dc379d35fa82",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7230.MP4",
+    "start_frame": 0,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 30,
+    "frame_path": "/tmp/p53_shadow_frames/030.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.513,
+      "top2": "couple",
+      "top2_score": 0.348,
+      "margin": 0.165
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0284
+  },
+  {
+    "shot_id": "2b953ab9-0cdd-526e-a42c-5133d0b62d17",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7233.MP4",
+    "start_frame": 0,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 31,
+    "frame_path": "/tmp/p53_shadow_frames/031.jpg",
+    "clip_pred": {
+      "top1": "venue",
+      "top1_score": 0.806,
+      "top2": "ceremony",
+      "top2_score": 0.158,
+      "margin": 0.648
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0242
+  },
+  {
+    "shot_id": "24ba4697-18e9-5622-adf1-1637afa03ed6",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7236.MP4",
+    "start_frame": 0,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 32,
+    "frame_path": "/tmp/p53_shadow_frames/032.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.424,
+      "top2": "couple",
+      "top2_score": 0.313,
+      "margin": 0.111
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0273
+  },
+  {
+    "shot_id": "9f536485-f518-5f15-8c88-9b33d85d4742",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7239.MP4",
+    "start_frame": 375,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 33,
+    "frame_path": "/tmp/p53_shadow_frames/033.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.237,
+      "top2": "bride",
+      "top2_score": 0.224,
+      "margin": 0.012
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0261
+  },
+  {
+    "shot_id": "7caeca97-f93f-51f4-9380-c67c2f69e0c0",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7243.MP4",
+    "start_frame": 500,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 34,
+    "frame_path": "/tmp/p53_shadow_frames/034.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.601,
+      "top2": "couple",
+      "top2_score": 0.24,
+      "margin": 0.361
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0472
+  },
+  {
+    "shot_id": "3e183d62-04ac-5323-8e2c-db2eeb9d7111",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7244.MP4",
+    "start_frame": 1000,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 35,
+    "frame_path": "/tmp/p53_shadow_frames/035.jpg",
+    "clip_pred": {
+      "top1": "bride_prep",
+      "top1_score": 0.443,
+      "top2": "bride",
+      "top2_score": 0.368,
+      "margin": 0.075
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": false,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0245
+  },
+  {
+    "shot_id": "587e1eff-3833-5f7e-aad8-7bd59f543b36",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7248.MP4",
+    "start_frame": 250,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 36,
+    "frame_path": "/tmp/p53_shadow_frames/036.jpg",
+    "clip_pred": {
+      "top1": "couple",
+      "top1_score": 0.405,
+      "top2": "bride",
+      "top2_score": 0.319,
+      "margin": 0.086
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": false,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0259
+  },
+  {
+    "shot_id": "652538eb-f325-5efc-b41f-62914dfa5303",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7252.MP4",
+    "start_frame": 0,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 37,
+    "frame_path": "/tmp/p53_shadow_frames/037.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.4,
+      "top2": "couple",
+      "top2_score": 0.344,
+      "margin": 0.056
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0276
+  },
+  {
+    "shot_id": "8b7163ad-4bc2-53f4-9ba4-5d4078cf0f99",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7254.MP4",
+    "start_frame": 875,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 38,
+    "frame_path": "/tmp/p53_shadow_frames/038.jpg",
+    "clip_pred": {
+      "top1": "couple",
+      "top1_score": 0.395,
+      "top2": "bride",
+      "top2_score": 0.38,
+      "margin": 0.015
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": false,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0247
+  },
+  {
+    "shot_id": "4a27ce6b-77aa-5048-a72a-5f09c2fc6fab",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7258.MP4",
+    "start_frame": 125,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 39,
+    "frame_path": "/tmp/p53_shadow_frames/039.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.378,
+      "top2": "couple",
+      "top2_score": 0.362,
+      "margin": 0.016
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0491
+  },
+  {
+    "shot_id": "0b302c7e-269c-5fa0-811c-4a52c0b88b3d",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7261.MP4",
+    "start_frame": 875,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 40,
+    "frame_path": "/tmp/p53_shadow_frames/040.jpg",
+    "clip_pred": {
+      "top1": "couple",
+      "top1_score": 0.424,
+      "top2": "bride",
+      "top2_score": 0.372,
+      "margin": 0.052
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": false,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0272
+  },
+  {
+    "shot_id": "2dfda3d9-1aa9-501c-b29f-0eb8cb3fab2b",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7265.MP4",
+    "start_frame": 0,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 41,
+    "frame_path": "/tmp/p53_shadow_frames/041.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.582,
+      "top2": "bride",
+      "top2_score": 0.249,
+      "margin": 0.333
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0244
+  },
+  {
+    "shot_id": "c5c58465-8a13-5147-af8f-b394d56d3f8b",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7268.MP4",
+    "start_frame": 375,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 42,
+    "frame_path": "/tmp/p53_shadow_frames/042.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.534,
+      "top2": "couple",
+      "top2_score": 0.281,
+      "margin": 0.253
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0251
+  },
+  {
+    "shot_id": "f8390cf5-be66-500d-bc51-c2eef347c5fd",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7272.MP4",
+    "start_frame": 375,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 43,
+    "frame_path": "/tmp/p53_shadow_frames/043.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.667,
+      "top2": "groom",
+      "top2_score": 0.19,
+      "margin": 0.477
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0271
+  },
+  {
+    "shot_id": "cce24c3f-898d-5161-80fc-05e1aac2533b",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7279.MP4",
+    "start_frame": 250,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 44,
+    "frame_path": "/tmp/p53_shadow_frames/044.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.353,
+      "top2": "groom",
+      "top2_score": 0.331,
+      "margin": 0.021
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0261
+  },
+  {
+    "shot_id": "eeaa7f01-3774-5d6e-a049-56557371f4f1",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7285.MP4",
+    "start_frame": 0,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 45,
+    "frame_path": "/tmp/p53_shadow_frames/045.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.475,
+      "top2": "couple",
+      "top2_score": 0.273,
+      "margin": 0.202
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0239
+  },
+  {
+    "shot_id": "2a087997-3b4f-57b3-bf37-9dcd01d919c7",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7289.MP4",
+    "start_frame": 0,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 46,
+    "frame_path": "/tmp/p53_shadow_frames/046.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.649,
+      "top2": "bride",
+      "top2_score": 0.214,
+      "margin": 0.435
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0259
+  },
+  {
+    "shot_id": "ed6ce250-20a1-5d42-a467-f700b4e359d9",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7294.MP4",
+    "start_frame": 0,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 47,
+    "frame_path": "/tmp/p53_shadow_frames/047.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.443,
+      "top2": "groom",
+      "top2_score": 0.364,
+      "margin": 0.079
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": false,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0243
+  },
+  {
+    "shot_id": "47dcf701-9d98-51a7-b124-97703afba8d5",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7297.MP4",
+    "start_frame": 250,
+    "duration_frames": 38,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 48,
+    "frame_path": "/tmp/p53_shadow_frames/048.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.507,
+      "top2": "bride",
+      "top2_score": 0.216,
+      "margin": 0.291
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0275
+  },
+  {
+    "shot_id": "dea31a40-5b8d-54d3-b070-83744b88b660",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7302.MP4",
+    "start_frame": 250,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 49,
+    "frame_path": "/tmp/p53_shadow_frames/049.jpg",
+    "clip_pred": {
+      "top1": "couple",
+      "top1_score": 0.426,
+      "top2": "bride",
+      "top2_score": 0.351,
+      "margin": 0.075
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": false,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0248
+  },
+  {
+    "shot_id": "3ec2fb1a-7740-59d9-9f0c-a7b4dff001cc",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7308.MP4",
+    "start_frame": 250,
+    "duration_frames": 110,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 50,
+    "frame_path": "/tmp/p53_shadow_frames/050.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.424,
+      "top2": "couple",
+      "top2_score": 0.271,
+      "margin": 0.152
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.025
+  },
+  {
+    "shot_id": "0cd8b821-737e-55b4-850f-3db3342993ec",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7310.MP4",
+    "start_frame": 0,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 51,
+    "frame_path": "/tmp/p53_shadow_frames/051.jpg",
+    "clip_pred": {
+      "top1": "couple",
+      "top1_score": 0.502,
+      "top2": "bride",
+      "top2_score": 0.394,
+      "margin": 0.108
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": false,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0257
+  },
+  {
+    "shot_id": "08603456-daae-5e57-a0a5-b3b0f58af98e",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7315.MP4",
+    "start_frame": 125,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 52,
+    "frame_path": "/tmp/p53_shadow_frames/052.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.578,
+      "top2": "couple",
+      "top2_score": 0.218,
+      "margin": 0.36
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0246
+  },
+  {
+    "shot_id": "799ad748-e645-5efe-9811-9ed1e9ca3284",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7318.MP4",
+    "start_frame": 500,
+    "duration_frames": 52,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 53,
+    "frame_path": "/tmp/p53_shadow_frames/053.jpg",
+    "clip_pred": {
+      "top1": "couple",
+      "top1_score": 0.491,
+      "top2": "bride",
+      "top2_score": 0.333,
+      "margin": 0.158
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0459
+  },
+  {
+    "shot_id": "2321f243-3469-5a39-9649-97fce9fce602",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7323.MP4",
+    "start_frame": 250,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 54,
+    "frame_path": "/tmp/p53_shadow_frames/054.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.41,
+      "top2": "groom",
+      "top2_score": 0.375,
+      "margin": 0.034
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0479
+  },
+  {
+    "shot_id": "d92b9ea1-44af-55fc-85db-a5a35f296791",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7326.MP4",
+    "start_frame": 125,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 55,
+    "frame_path": "/tmp/p53_shadow_frames/055.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.59,
+      "top2": "bride",
+      "top2_score": 0.169,
+      "margin": 0.421
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0251
+  },
+  {
+    "shot_id": "32d7519c-4118-5b0c-bcf2-bfb010e8e238",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7330.MP4",
+    "start_frame": 125,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 56,
+    "frame_path": "/tmp/p53_shadow_frames/056.jpg",
+    "clip_pred": {
+      "top1": "couple",
+      "top1_score": 0.474,
+      "top2": "bride",
+      "top2_score": 0.334,
+      "margin": 0.14
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": false,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0459
+  },
+  {
+    "shot_id": "f0bc109f-1dd0-56c9-8ca3-1f4b9cb5adf1",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7334.MP4",
+    "start_frame": 250,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 57,
+    "frame_path": "/tmp/p53_shadow_frames/057.jpg",
+    "clip_pred": {
+      "top1": "couple",
+      "top1_score": 0.375,
+      "top2": "bride",
+      "top2_score": 0.363,
+      "margin": 0.012
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": false,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0257
+  },
+  {
+    "shot_id": "1cb0f4d2-b1a0-567a-9db3-8cfeddbb90d8",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7337.MP4",
+    "start_frame": 375,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 58,
+    "frame_path": "/tmp/p53_shadow_frames/058.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.507,
+      "top2": "couple",
+      "top2_score": 0.369,
+      "margin": 0.138
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0259
+  },
+  {
+    "shot_id": "0fd1eb0f-7c24-5145-85b5-29ac763e8877",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7340.MP4",
+    "start_frame": 250,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 59,
+    "frame_path": "/tmp/p53_shadow_frames/059.jpg",
+    "clip_pred": {
+      "top1": "family",
+      "top1_score": 0.555,
+      "top2": "bride",
+      "top2_score": 0.184,
+      "margin": 0.37
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0259
+  },
+  {
+    "shot_id": "fd5e4c13-4305-5660-a5bf-638bf4bf2d41",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7342.MP4",
+    "start_frame": 500,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 60,
+    "frame_path": "/tmp/p53_shadow_frames/060.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.752,
+      "top2": "couple",
+      "top2_score": 0.093,
+      "margin": 0.659
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0464
+  },
+  {
+    "shot_id": "910278ac-c50e-5af4-ba11-3267e29d203f",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7343.MP4",
+    "start_frame": 1375,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 61,
+    "frame_path": "/tmp/p53_shadow_frames/061.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.554,
+      "top2": "family",
+      "top2_score": 0.176,
+      "margin": 0.377
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.025
+  },
+  {
+    "shot_id": "701a3066-894d-5b8e-a4b4-25b13f2d150c",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7344.MP4",
+    "start_frame": 125,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 62,
+    "frame_path": "/tmp/p53_shadow_frames/062.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.347,
+      "top2": "bride",
+      "top2_score": 0.332,
+      "margin": 0.015
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0499
+  },
+  {
+    "shot_id": "1adbda40-4c26-582e-a8e5-56caa0a56fc7",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7346.MP4",
+    "start_frame": 0,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 63,
+    "frame_path": "/tmp/p53_shadow_frames/063.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.458,
+      "top2": "bride",
+      "top2_score": 0.2,
+      "margin": 0.258
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0239
+  },
+  {
+    "shot_id": "d133f2f1-90c5-5ecd-85a0-4693998302c1",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7350.MP4",
+    "start_frame": 0,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 64,
+    "frame_path": "/tmp/p53_shadow_frames/064.jpg",
+    "clip_pred": {
+      "top1": "couple",
+      "top1_score": 0.46,
+      "top2": "bride",
+      "top2_score": 0.238,
+      "margin": 0.222
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.025
+  },
+  {
+    "shot_id": "5ada6129-3bbb-5b8e-b254-abbd36d59924",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7351.MP4",
+    "start_frame": 1625,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 65,
+    "frame_path": "/tmp/p53_shadow_frames/065.jpg",
+    "clip_pred": {
+      "top1": "couple",
+      "top1_score": 0.362,
+      "top2": "bride",
+      "top2_score": 0.298,
+      "margin": 0.063
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": false,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.027
+  },
+  {
+    "shot_id": "5c3a2cc1-1028-50c3-9726-a8d84f231b19",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7351.MP4",
+    "start_frame": 3750,
+    "duration_frames": 42,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 66,
+    "frame_path": "/tmp/p53_shadow_frames/066.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.344,
+      "top2": "bride",
+      "top2_score": 0.271,
+      "margin": 0.073
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": false,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0278
+  },
+  {
+    "shot_id": "e7142a2d-7aad-52ec-be1f-ed9a58cacbf0",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7355.MP4",
+    "start_frame": 250,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 67,
+    "frame_path": "/tmp/p53_shadow_frames/067.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.661,
+      "top2": "couple",
+      "top2_score": 0.197,
+      "margin": 0.464
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0264
+  },
+  {
+    "shot_id": "de1c0275-b723-500f-9695-36928afa0c9a",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7358.MP4",
+    "start_frame": 500,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 68,
+    "frame_path": "/tmp/p53_shadow_frames/068.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.347,
+      "top2": "couple",
+      "top2_score": 0.208,
+      "margin": 0.138
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0264
+  },
+  {
+    "shot_id": "cb87f37e-fc64-5482-a370-62aad08caafb",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7362.MP4",
+    "start_frame": 125,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 69,
+    "frame_path": "/tmp/p53_shadow_frames/069.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.379,
+      "top2": "couple",
+      "top2_score": 0.247,
+      "margin": 0.132
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0241
+  },
+  {
+    "shot_id": "90ab889b-74c1-5e96-87ed-467d9a872a40",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7367.MP4",
+    "start_frame": 250,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 70,
+    "frame_path": "/tmp/p53_shadow_frames/070.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.525,
+      "top2": "groom",
+      "top2_score": 0.277,
+      "margin": 0.248
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0247
+  },
+  {
+    "shot_id": "9bae20ba-1225-53df-a4c3-8ff82496c259",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7370.MP4",
+    "start_frame": 0,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 71,
+    "frame_path": "/tmp/p53_shadow_frames/071.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.538,
+      "top2": "bride",
+      "top2_score": 0.175,
+      "margin": 0.362
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0262
+  },
+  {
+    "shot_id": "5463ddc6-eeeb-5307-ac37-6eab65eec108",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7372.MP4",
+    "start_frame": 1250,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 72,
+    "frame_path": "/tmp/p53_shadow_frames/072.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.489,
+      "top2": "party",
+      "top2_score": 0.323,
+      "margin": 0.166
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0268
+  },
+  {
+    "shot_id": "2e0d2b0f-4a5a-5921-9943-6a6ee3571267",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7377.MP4",
+    "start_frame": 750,
+    "duration_frames": 66,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 73,
+    "frame_path": "/tmp/p53_shadow_frames/073.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.635,
+      "top2": "couple",
+      "top2_score": 0.148,
+      "margin": 0.487
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0242
+  },
+  {
+    "shot_id": "67cd5528-b28d-5b52-aff2-6521e2ce45f8",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7382.MP4",
+    "start_frame": 250,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 74,
+    "frame_path": "/tmp/p53_shadow_frames/074.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.406,
+      "top2": "bride",
+      "top2_score": 0.306,
+      "margin": 0.1
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0492
+  },
+  {
+    "shot_id": "f4b6df1c-3ec0-51e2-80ac-e03c23d3c7b2",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7385.MP4",
+    "start_frame": 250,
+    "duration_frames": 86,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 75,
+    "frame_path": "/tmp/p53_shadow_frames/075.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.695,
+      "top2": "groom",
+      "top2_score": 0.171,
+      "margin": 0.523
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0255
+  },
+  {
+    "shot_id": "ade76b90-2cf2-545e-87b6-32e894dce4fd",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7390.MP4",
+    "start_frame": 125,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 76,
+    "frame_path": "/tmp/p53_shadow_frames/076.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.332,
+      "top2": "party",
+      "top2_score": 0.267,
+      "margin": 0.065
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0488
+  },
+  {
+    "shot_id": "abf4702e-9f52-58ba-add4-9bd683970e02",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7393.MP4",
+    "start_frame": 750,
+    "duration_frames": 42,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 77,
+    "frame_path": "/tmp/p53_shadow_frames/077.jpg",
+    "clip_pred": {
+      "top1": "couple",
+      "top1_score": 0.339,
+      "top2": "bride",
+      "top2_score": 0.305,
+      "margin": 0.034
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": false,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0267
+  },
+  {
+    "shot_id": "1b11c018-b22d-5dc7-b89b-456f351e655f",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7396.MP4",
+    "start_frame": 125,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 78,
+    "frame_path": "/tmp/p53_shadow_frames/078.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.602,
+      "top2": "groom",
+      "top2_score": 0.162,
+      "margin": 0.441
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.025
+  },
+  {
+    "shot_id": "6c18e64b-e8ae-5196-9f71-beb2394dc96e",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7398.MP4",
+    "start_frame": 125,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 79,
+    "frame_path": "/tmp/p53_shadow_frames/079.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.326,
+      "top2": "groom",
+      "top2_score": 0.311,
+      "margin": 0.015
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0665
+  },
+  {
+    "shot_id": "0762286f-1c4e-5f40-9752-7d2fa295aa36",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7401.MP4",
+    "start_frame": 125,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 80,
+    "frame_path": "/tmp/p53_shadow_frames/080.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.733,
+      "top2": "bride",
+      "top2_score": 0.151,
+      "margin": 0.582
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0268
+  },
+  {
+    "shot_id": "03fd8b52-5923-5a33-aac8-688c01772f21",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7404.MP4",
+    "start_frame": 125,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 81,
+    "frame_path": "/tmp/p53_shadow_frames/081.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.787,
+      "top2": "groom",
+      "top2_score": 0.111,
+      "margin": 0.676
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0447
+  },
+  {
+    "shot_id": "b33069f8-1d56-58ce-aefd-c3e6769e5e3e",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7404.MP4",
+    "start_frame": 2250,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 82,
+    "frame_path": "/tmp/p53_shadow_frames/082.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.499,
+      "top2": "couple",
+      "top2_score": 0.326,
+      "margin": 0.173
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0253
+  },
+  {
+    "shot_id": "fdef4049-e384-5789-a358-bd542a467ec0",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7407.MP4",
+    "start_frame": 0,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 83,
+    "frame_path": "/tmp/p53_shadow_frames/083.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.388,
+      "top2": "groom",
+      "top2_score": 0.221,
+      "margin": 0.167
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0284
+  },
+  {
+    "shot_id": "9e107471-1a34-536c-af16-834fabbfacdf",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7409.MP4",
+    "start_frame": 125,
+    "duration_frames": 91,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 84,
+    "frame_path": "/tmp/p53_shadow_frames/084.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.378,
+      "top2": "couple",
+      "top2_score": 0.361,
+      "margin": 0.017
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0242
+  },
+  {
+    "shot_id": "501b0a79-6cd9-5be4-8f2a-83e25ad1d070",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7413.MP4",
+    "start_frame": 625,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 85,
+    "frame_path": "/tmp/p53_shadow_frames/085.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.562,
+      "top2": "couple",
+      "top2_score": 0.194,
+      "margin": 0.368
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0278
+  },
+  {
+    "shot_id": "0047fc1d-37d4-5c31-8548-828af4a75a7b",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7416.MP4",
+    "start_frame": 125,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 86,
+    "frame_path": "/tmp/p53_shadow_frames/086.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.377,
+      "top2": "couple",
+      "top2_score": 0.336,
+      "margin": 0.041
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.044
+  },
+  {
+    "shot_id": "884eced0-532f-5c8c-ae86-7d8453ee3ad5",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7420.MP4",
+    "start_frame": 0,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 87,
+    "frame_path": "/tmp/p53_shadow_frames/087.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.499,
+      "top2": "bride",
+      "top2_score": 0.134,
+      "margin": 0.365
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0279
+  },
+  {
+    "shot_id": "401d821b-d963-5e00-8cf6-d3efe350db22",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7421.MP4",
+    "start_frame": 875,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 88,
+    "frame_path": "/tmp/p53_shadow_frames/088.jpg",
+    "clip_pred": {
+      "top1": "couple",
+      "top1_score": 0.528,
+      "top2": "groom",
+      "top2_score": 0.278,
+      "margin": 0.25
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0266
+  },
+  {
+    "shot_id": "69c77db8-571e-52dc-b187-a907f339994b",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7425.MP4",
+    "start_frame": 125,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 89,
+    "frame_path": "/tmp/p53_shadow_frames/089.jpg",
+    "clip_pred": {
+      "top1": "couple",
+      "top1_score": 0.353,
+      "top2": "bride",
+      "top2_score": 0.348,
+      "margin": 0.005
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": false,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.028
+  },
+  {
+    "shot_id": "f4a79d65-aa24-5467-8ad2-081f3ddfba86",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7429.MP4",
+    "start_frame": 375,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 90,
+    "frame_path": "/tmp/p53_shadow_frames/090.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.216,
+      "top2": "groom_prep",
+      "top2_score": 0.206,
+      "margin": 0.01
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0263
+  },
+  {
+    "shot_id": "ecce14fd-f957-5845-9249-248b55ebe6f4",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7433.MP4",
+    "start_frame": 250,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 91,
+    "frame_path": "/tmp/p53_shadow_frames/091.jpg",
+    "clip_pred": {
+      "top1": "couple",
+      "top1_score": 0.557,
+      "top2": "bride",
+      "top2_score": 0.345,
+      "margin": 0.212
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0254
+  },
+  {
+    "shot_id": "cb62bb35-bd3c-58d4-ae14-51d64447512b",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7436.MP4",
+    "start_frame": 250,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 92,
+    "frame_path": "/tmp/p53_shadow_frames/092.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.39,
+      "top2": "bride",
+      "top2_score": 0.358,
+      "margin": 0.032
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0277
+  },
+  {
+    "shot_id": "42dc4fa1-8e0a-58f0-b437-71cb4b59736c",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7440.MP4",
+    "start_frame": 0,
+    "duration_frames": 72,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 93,
+    "frame_path": "/tmp/p53_shadow_frames/093.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.4,
+      "top2": "party",
+      "top2_score": 0.242,
+      "margin": 0.158
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0278
+  },
+  {
+    "shot_id": "e6db859c-9998-5237-bc92-68619e3617ad",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7446.MP4",
+    "start_frame": 0,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 94,
+    "frame_path": "/tmp/p53_shadow_frames/094.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.584,
+      "top2": "bride",
+      "top2_score": 0.155,
+      "margin": 0.428
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0283
+  },
+  {
+    "shot_id": "5bb0bf0b-0b81-558f-909d-2ed7c1fef1e3",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7450.MP4",
+    "start_frame": 375,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 95,
+    "frame_path": "/tmp/p53_shadow_frames/095.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.294,
+      "top2": "party",
+      "top2_score": 0.278,
+      "margin": 0.016
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0265
+  },
+  {
+    "shot_id": "08e8d1c9-b7f7-533c-b87b-4d99677ebd75",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7451.MP4",
+    "start_frame": 1250,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 96,
+    "frame_path": "/tmp/p53_shadow_frames/096.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.621,
+      "top2": "groom",
+      "top2_score": 0.176,
+      "margin": 0.445
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0241
+  },
+  {
+    "shot_id": "cde3b762-d34e-5177-ace4-066e0b78e101",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7451.MP4",
+    "start_frame": 3375,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 97,
+    "frame_path": "/tmp/p53_shadow_frames/097.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.631,
+      "top2": "groom",
+      "top2_score": 0.184,
+      "margin": 0.448
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0262
+  },
+  {
+    "shot_id": "e082486d-6a24-5c06-b0ec-1c1dd4b1540f",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7451.MP4",
+    "start_frame": 5500,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 98,
+    "frame_path": "/tmp/p53_shadow_frames/098.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.54,
+      "top2": "couple",
+      "top2_score": 0.258,
+      "margin": 0.282
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.046
+  },
+  {
+    "shot_id": "6254172f-34a1-5cfb-a1da-e08e6044857f",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7451.MP4",
+    "start_frame": 7625,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 99,
+    "frame_path": "/tmp/p53_shadow_frames/099.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.608,
+      "top2": "couple",
+      "top2_score": 0.221,
+      "margin": 0.387
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0275
+  },
+  {
+    "shot_id": "0674375d-e9ef-53e6-a27a-6c3fde12cef5",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0522.MOV",
+    "start_frame": 189,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 100,
+    "frame_path": "/tmp/p53_shadow_frames/100.jpg",
+    "clip_pred": {
+      "top1": "venue",
+      "top1_score": 0.917,
+      "top2": "groom",
+      "top2_score": 0.032,
+      "margin": 0.885
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0252
+  },
+  {
+    "shot_id": "86949ef4-1d58-5a95-8400-c8fe2a0b25c4",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0523.MOV",
+    "start_frame": 378,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 101,
+    "frame_path": "/tmp/p53_shadow_frames/101.jpg",
+    "clip_pred": {
+      "top1": "venue",
+      "top1_score": 0.578,
+      "top2": "groom",
+      "top2_score": 0.15,
+      "margin": 0.428
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0252
+  },
+  {
+    "shot_id": "f4b24da8-fc7d-54d9-a8cd-9b65a1a9211a",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0524.MOV",
+    "start_frame": 819,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 102,
+    "frame_path": "/tmp/p53_shadow_frames/102.jpg",
+    "clip_pred": {
+      "top1": "venue",
+      "top1_score": 0.777,
+      "top2": "couple",
+      "top2_score": 0.123,
+      "margin": 0.654
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0252
+  },
+  {
+    "shot_id": "c260a10b-320a-5253-a347-a07ffa65a598",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0525.MOV",
+    "start_frame": 567,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 103,
+    "frame_path": "/tmp/p53_shadow_frames/103.jpg",
+    "clip_pred": {
+      "top1": "venue",
+      "top1_score": 0.719,
+      "top2": "couple",
+      "top2_score": 0.122,
+      "margin": 0.597
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0256
+  },
+  {
+    "shot_id": "26de862b-a63b-5b28-b540-43fe2af906c5",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0526.MOV",
+    "start_frame": 756,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 104,
+    "frame_path": "/tmp/p53_shadow_frames/104.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.498,
+      "top2": "venue",
+      "top2_score": 0.39,
+      "margin": 0.109
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": false,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0262
+  },
+  {
+    "shot_id": "a559fb1f-d759-535c-9db6-4296307ebc70",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0527.MOV",
+    "start_frame": 630,
+    "duration_frames": 56,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 105,
+    "frame_path": "/tmp/p53_shadow_frames/105.jpg",
+    "clip_pred": {
+      "top1": "venue",
+      "top1_score": 0.728,
+      "top2": "party",
+      "top2_score": 0.261,
+      "margin": 0.467
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0262
+  },
+  {
+    "shot_id": "f6502b46-48a7-5af2-822b-6d84e8cf7e8b",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0528.MOV",
+    "start_frame": 1008,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 106,
+    "frame_path": "/tmp/p53_shadow_frames/106.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.512,
+      "top2": "venue",
+      "top2_score": 0.435,
+      "margin": 0.077
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": false,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0274
+  },
+  {
+    "shot_id": "6bd5be6e-9cda-5bf1-bb23-6319728906ec",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0528.MOV",
+    "start_frame": 2079,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 107,
+    "frame_path": "/tmp/p53_shadow_frames/107.jpg",
+    "clip_pred": {
+      "top1": "venue",
+      "top1_score": 0.861,
+      "top2": "party",
+      "top2_score": 0.1,
+      "margin": 0.761
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.027
+  },
+  {
+    "shot_id": "7bc1de43-fc94-5d11-87eb-1ed73c16d96c",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0528.MOV",
+    "start_frame": 3150,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 108,
+    "frame_path": "/tmp/p53_shadow_frames/108.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.299,
+      "top2": "couple",
+      "top2_score": 0.282,
+      "margin": 0.018
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": false,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0276
+  },
+  {
+    "shot_id": "36283de4-74c6-5487-bb60-292e42aef568",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0528.MOV",
+    "start_frame": 4221,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 109,
+    "frame_path": "/tmp/p53_shadow_frames/109.jpg",
+    "clip_pred": {
+      "top1": "venue",
+      "top1_score": 0.479,
+      "top2": "couple",
+      "top2_score": 0.325,
+      "margin": 0.154
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0282
+  },
+  {
+    "shot_id": "df78af4d-b2c6-5dbe-9684-cf8577f3eab7",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0528.MOV",
+    "start_frame": 5292,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 110,
+    "frame_path": "/tmp/p53_shadow_frames/110.jpg",
+    "clip_pred": {
+      "top1": "venue",
+      "top1_score": 0.897,
+      "top2": "ceremony",
+      "top2_score": 0.034,
+      "margin": 0.862
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0256
+  },
+  {
+    "shot_id": "6673c7bd-7226-58e2-8882-61a3e1357f54",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0528.MOV",
+    "start_frame": 6363,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 111,
+    "frame_path": "/tmp/p53_shadow_frames/111.jpg",
+    "clip_pred": {
+      "top1": "venue",
+      "top1_score": 0.507,
+      "top2": "ceremony",
+      "top2_score": 0.28,
+      "margin": 0.227
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0258
+  },
+  {
+    "shot_id": "52105a72-a984-5f99-a2c4-86d20a331ce4",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0528.MOV",
+    "start_frame": 7434,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 112,
+    "frame_path": "/tmp/p53_shadow_frames/112.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.977,
+      "top2": "ceremony",
+      "top2_score": 0.007,
+      "margin": 0.97
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0243
+  },
+  {
+    "shot_id": "bdafe963-bf3b-5e54-ac08-7af0b74c4b79",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0528.MOV",
+    "start_frame": 8505,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 113,
+    "frame_path": "/tmp/p53_shadow_frames/113.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.987,
+      "top2": "ceremony",
+      "top2_score": 0.004,
+      "margin": 0.983
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0264
+  },
+  {
+    "shot_id": "cf2ef382-aea9-5568-9a64-2d86bb0f4314",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0528.MOV",
+    "start_frame": 9576,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 114,
+    "frame_path": "/tmp/p53_shadow_frames/114.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.998,
+      "top2": "venue",
+      "top2_score": 0.0,
+      "margin": 0.998
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0269
+  },
+  {
+    "shot_id": "e68bc5a0-f16e-5cdb-9863-d31ad1bf8eb8",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0528.MOV",
+    "start_frame": 10647,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 115,
+    "frame_path": "/tmp/p53_shadow_frames/115.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.985,
+      "top2": "venue",
+      "top2_score": 0.004,
+      "margin": 0.981
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.027
+  },
+  {
+    "shot_id": "493d7bd2-de67-5105-9a2a-6666816e05ba",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0528.MOV",
+    "start_frame": 11718,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 116,
+    "frame_path": "/tmp/p53_shadow_frames/116.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.984,
+      "top2": "bride",
+      "top2_score": 0.005,
+      "margin": 0.979
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0275
+  },
+  {
+    "shot_id": "a7a8aa53-6177-53b4-8978-00818785964e",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0528.MOV",
+    "start_frame": 12789,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 117,
+    "frame_path": "/tmp/p53_shadow_frames/117.jpg",
+    "clip_pred": {
+      "top1": "venue",
+      "top1_score": 0.64,
+      "top2": "party",
+      "top2_score": 0.169,
+      "margin": 0.471
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0283
+  },
+  {
+    "shot_id": "396ddbcf-f11a-5f9c-9605-20562f07ea93",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0528.MOV",
+    "start_frame": 13860,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 118,
+    "frame_path": "/tmp/p53_shadow_frames/118.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.476,
+      "top2": "venue",
+      "top2_score": 0.378,
+      "margin": 0.097
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": false,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0253
+  },
+  {
+    "shot_id": "cc74ba33-da4e-5059-9847-8481188a14d6",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0528.MOV",
+    "start_frame": 14931,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 119,
+    "frame_path": "/tmp/p53_shadow_frames/119.jpg",
+    "clip_pred": {
+      "top1": "venue",
+      "top1_score": 0.8,
+      "top2": "party",
+      "top2_score": 0.134,
+      "margin": 0.667
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0263
+  },
+  {
+    "shot_id": "e67c4925-49bc-502a-ab53-1f01079a1b70",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0528.MOV",
+    "start_frame": 16002,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 120,
+    "frame_path": "/tmp/p53_shadow_frames/120.jpg",
+    "clip_pred": {
+      "top1": "venue",
+      "top1_score": 0.577,
+      "top2": "party",
+      "top2_score": 0.404,
+      "margin": 0.172
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0284
+  },
+  {
+    "shot_id": "03ab9faa-777a-5331-a3a8-cff436ef29d2",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0528.MOV",
+    "start_frame": 17073,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 121,
+    "frame_path": "/tmp/p53_shadow_frames/121.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.999,
+      "top2": "ceremony",
+      "top2_score": 0.001,
+      "margin": 0.998
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0281
+  },
+  {
+    "shot_id": "8a4edbab-b325-571b-bbf6-8b9ac499d6f5",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0529.MOV",
+    "start_frame": 504,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 122,
+    "frame_path": "/tmp/p53_shadow_frames/122.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.757,
+      "top2": "venue",
+      "top2_score": 0.177,
+      "margin": 0.58
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0259
+  },
+  {
+    "shot_id": "a619a860-2271-545e-adbd-b43a3ef5a36a",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0529.MOV",
+    "start_frame": 1575,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 123,
+    "frame_path": "/tmp/p53_shadow_frames/123.jpg",
+    "clip_pred": {
+      "top1": "ceremony",
+      "top1_score": 0.484,
+      "top2": "party",
+      "top2_score": 0.174,
+      "margin": 0.31
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0257
+  },
+  {
+    "shot_id": "4b1e9724-3357-56a6-a56f-6765737c16c2",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0529.MOV",
+    "start_frame": 2646,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 124,
+    "frame_path": "/tmp/p53_shadow_frames/124.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.586,
+      "top2": "couple",
+      "top2_score": 0.152,
+      "margin": 0.434
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.026
+  },
+  {
+    "shot_id": "0a57921e-cd38-5e90-81fb-e50b9b9249dc",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0530.MOV",
+    "start_frame": 189,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 125,
+    "frame_path": "/tmp/p53_shadow_frames/125.jpg",
+    "clip_pred": {
+      "top1": "venue",
+      "top1_score": 0.768,
+      "top2": "party",
+      "top2_score": 0.097,
+      "margin": 0.671
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0259
+  },
+  {
+    "shot_id": "dd70164e-ad74-5f51-88c7-e5d16aede3ae",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0530.MOV",
+    "start_frame": 1260,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 126,
+    "frame_path": "/tmp/p53_shadow_frames/126.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.988,
+      "top2": "couple",
+      "top2_score": 0.003,
+      "margin": 0.985
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0278
+  },
+  {
+    "shot_id": "15fca1b5-de0e-51f6-a1db-3a2e82c8bb67",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0530.MOV",
+    "start_frame": 2331,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 127,
+    "frame_path": "/tmp/p53_shadow_frames/127.jpg",
+    "clip_pred": {
+      "top1": "venue",
+      "top1_score": 0.729,
+      "top2": "party",
+      "top2_score": 0.248,
+      "margin": 0.481
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0261
+  },
+  {
+    "shot_id": "24e2b503-0860-51fe-ac06-97c49fd0d6a9",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0530.MOV",
+    "start_frame": 3402,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 128,
+    "frame_path": "/tmp/p53_shadow_frames/128.jpg",
+    "clip_pred": {
+      "top1": "venue",
+      "top1_score": 0.759,
+      "top2": "party",
+      "top2_score": 0.207,
+      "margin": 0.552
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0259
+  },
+  {
+    "shot_id": "09dd5a02-73d8-5802-b186-74d65fb69ac4",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0530.MOV",
+    "start_frame": 4473,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 129,
+    "frame_path": "/tmp/p53_shadow_frames/129.jpg",
+    "clip_pred": {
+      "top1": "venue",
+      "top1_score": 0.682,
+      "top2": "party",
+      "top2_score": 0.29,
+      "margin": 0.392
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0251
+  },
+  {
+    "shot_id": "8669d9bd-2d62-58ad-8822-f5395be2d96f",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0530.MOV",
+    "start_frame": 5544,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 130,
+    "frame_path": "/tmp/p53_shadow_frames/130.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.486,
+      "top2": "venue",
+      "top2_score": 0.464,
+      "margin": 0.022
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": false,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0241
+  },
+  {
+    "shot_id": "b30c4ef6-8872-5e70-9167-902aa0bb23bd",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0530.MOV",
+    "start_frame": 6615,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 131,
+    "frame_path": "/tmp/p53_shadow_frames/131.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.992,
+      "top2": "ceremony",
+      "top2_score": 0.004,
+      "margin": 0.988
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0265
+  },
+  {
+    "shot_id": "0e630ce4-a9a6-50d6-a277-c24ce0085c20",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0530.MOV",
+    "start_frame": 7686,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 132,
+    "frame_path": "/tmp/p53_shadow_frames/132.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.455,
+      "top2": "venue",
+      "top2_score": 0.316,
+      "margin": 0.139
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": false,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0253
+  },
+  {
+    "shot_id": "eb1d027c-97f5-5648-822b-d1e0078e19fd",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0530.MOV",
+    "start_frame": 8757,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 133,
+    "frame_path": "/tmp/p53_shadow_frames/133.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.947,
+      "top2": "venue",
+      "top2_score": 0.029,
+      "margin": 0.918
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0256
+  },
+  {
+    "shot_id": "b82887f7-4bdd-5aad-bc1b-b183d025600c",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0530.MOV",
+    "start_frame": 9828,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 134,
+    "frame_path": "/tmp/p53_shadow_frames/134.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.962,
+      "top2": "couple",
+      "top2_score": 0.013,
+      "margin": 0.949
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0249
+  },
+  {
+    "shot_id": "2188583b-184a-596a-b5f1-13f23a5b3a22",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0530.MOV",
+    "start_frame": 10899,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 135,
+    "frame_path": "/tmp/p53_shadow_frames/135.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.855,
+      "top2": "ceremony",
+      "top2_score": 0.131,
+      "margin": 0.724
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0273
+  },
+  {
+    "shot_id": "731f8c20-8370-5252-9815-e7b2c14b61e3",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0530.MOV",
+    "start_frame": 11970,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 136,
+    "frame_path": "/tmp/p53_shadow_frames/136.jpg",
+    "clip_pred": {
+      "top1": "venue",
+      "top1_score": 0.51,
+      "top2": "couple",
+      "top2_score": 0.22,
+      "margin": 0.291
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0275
+  },
+  {
+    "shot_id": "5802ac6c-e8e6-5240-89dd-4a9fcb6b4880",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0530.MOV",
+    "start_frame": 13041,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 137,
+    "frame_path": "/tmp/p53_shadow_frames/137.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.777,
+      "top2": "couple",
+      "top2_score": 0.118,
+      "margin": 0.659
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0288
+  },
+  {
+    "shot_id": "ff412d5c-e3ad-59e6-8a34-db6c8e76abd3",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0530.MOV",
+    "start_frame": 14112,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 138,
+    "frame_path": "/tmp/p53_shadow_frames/138.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.641,
+      "top2": "venue",
+      "top2_score": 0.221,
+      "margin": 0.42
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0255
+  },
+  {
+    "shot_id": "c971fb1b-be40-5cfd-acdb-41710eb1c17d",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0530.MOV",
+    "start_frame": 15183,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 139,
+    "frame_path": "/tmp/p53_shadow_frames/139.jpg",
+    "clip_pred": {
+      "top1": "venue",
+      "top1_score": 0.898,
+      "top2": "couple",
+      "top2_score": 0.031,
+      "margin": 0.866
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0257
+  },
+  {
+    "shot_id": "97f0a7c1-678e-5ee0-ba2b-368b31606a03",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0530.MOV",
+    "start_frame": 16254,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 140,
+    "frame_path": "/tmp/p53_shadow_frames/140.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.996,
+      "top2": "ceremony",
+      "top2_score": 0.002,
+      "margin": 0.994
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0274
+  },
+  {
+    "shot_id": "d2d1ee51-08a0-574f-901c-7a787b579e59",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0530.MOV",
+    "start_frame": 17325,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 141,
+    "frame_path": "/tmp/p53_shadow_frames/141.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.948,
+      "top2": "ceremony",
+      "top2_score": 0.022,
+      "margin": 0.926
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0256
+  },
+  {
+    "shot_id": "d1ccf5a6-17dd-54bb-840f-ec3ed724938d",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0530.MOV",
+    "start_frame": 18396,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 142,
+    "frame_path": "/tmp/p53_shadow_frames/142.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.999,
+      "top2": "family",
+      "top2_score": 0.001,
+      "margin": 0.998
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0264
+  },
+  {
+    "shot_id": "d970ae14-98e9-558b-9d31-dd3848cabebd",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0530.MOV",
+    "start_frame": 19467,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 143,
+    "frame_path": "/tmp/p53_shadow_frames/143.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.999,
+      "top2": "family",
+      "top2_score": 0.001,
+      "margin": 0.999
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0265
+  },
+  {
+    "shot_id": "3d6c66e2-882b-59e6-9891-35f1afd839d0",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0530.MOV",
+    "start_frame": 20538,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 144,
+    "frame_path": "/tmp/p53_shadow_frames/144.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.963,
+      "top2": "family",
+      "top2_score": 0.019,
+      "margin": 0.944
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0241
+  },
+  {
+    "shot_id": "f4fe5aa4-794d-5a18-b7fa-224b018f8d15",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0530.MOV",
+    "start_frame": 21609,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 145,
+    "frame_path": "/tmp/p53_shadow_frames/145.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.991,
+      "top2": "venue",
+      "top2_score": 0.004,
+      "margin": 0.988
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0274
+  },
+  {
+    "shot_id": "c040fec8-e7e9-518d-a0db-e124f67b61c4",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0530.MOV",
+    "start_frame": 22680,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 146,
+    "frame_path": "/tmp/p53_shadow_frames/146.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.97,
+      "top2": "family",
+      "top2_score": 0.009,
+      "margin": 0.96
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0293
+  },
+  {
+    "shot_id": "fdf8cb4e-3270-5efb-93d6-1a8cad91bd27",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0530.MOV",
+    "start_frame": 23751,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 147,
+    "frame_path": "/tmp/p53_shadow_frames/147.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.982,
+      "top2": "family",
+      "top2_score": 0.013,
+      "margin": 0.969
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.026
+  },
+  {
+    "shot_id": "f1654f84-ff7f-5ad8-8ec6-e2cb1a7f287f",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0530.MOV",
+    "start_frame": 24822,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 148,
+    "frame_path": "/tmp/p53_shadow_frames/148.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.995,
+      "top2": "family",
+      "top2_score": 0.002,
+      "margin": 0.992
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0261
+  },
+  {
+    "shot_id": "ea466bf9-779e-58d8-9e12-6941e30afd36",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0530.MOV",
+    "start_frame": 25893,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 149,
+    "frame_path": "/tmp/p53_shadow_frames/149.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.899,
+      "top2": "venue",
+      "top2_score": 0.045,
+      "margin": 0.854
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0254
+  },
+  {
+    "shot_id": "93002d86-01fa-588f-9d54-55226bfa595e",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0530.MOV",
+    "start_frame": 26964,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 150,
+    "frame_path": "/tmp/p53_shadow_frames/150.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.87,
+      "top2": "venue",
+      "top2_score": 0.082,
+      "margin": 0.788
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0275
+  },
+  {
+    "shot_id": "e532c43c-ec7d-5193-a661-e86df9111287",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0530.MOV",
+    "start_frame": 28035,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 151,
+    "frame_path": "/tmp/p53_shadow_frames/151.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.874,
+      "top2": "ceremony",
+      "top2_score": 0.046,
+      "margin": 0.829
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0252
+  },
+  {
+    "shot_id": "b4cf8a05-96d4-5e10-a3b6-8544c8ccbda5",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0530.MOV",
+    "start_frame": 29106,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 152,
+    "frame_path": "/tmp/p53_shadow_frames/152.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.938,
+      "top2": "bride",
+      "top2_score": 0.021,
+      "margin": 0.917
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": false,
+      "r4_union": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0264
+  },
+  {
+    "shot_id": "f30e3b9f-33f2-5d49-a3ac-a3e356d00714",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0530.MOV",
+    "start_frame": 30177,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 153,
+    "frame_path": "/tmp/p53_shadow_frames/153.jpg",
+    "clip_pred": {
+      "top1": "venue",
+      "top1_score": 0.56,
+      "top2": "party",
+      "top2_score": 0.404,
+      "margin": 0.155
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0259
+  },
+  {
+    "shot_id": "8b76d6fa-61db-5fdf-a637-062302d70a59",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0530.MOV",
+    "start_frame": 31248,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 154,
+    "frame_path": "/tmp/p53_shadow_frames/154.jpg",
+    "clip_pred": {
+      "top1": "venue",
+      "top1_score": 0.465,
+      "top2": "family",
+      "top2_score": 0.288,
+      "margin": 0.177
+    },
+    "router": {
+      "r1_low_confidence": true,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0241
+  },
+  {
+    "shot_id": "3e2d5314-95ff-5d5e-b569-34d88b6738f3",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0531.MOV",
+    "start_frame": 756,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "fallback_category": "venue",
+    "frame_index": 155,
+    "frame_path": "/tmp/p53_shadow_frames/155.jpg",
+    "clip_pred": {
+      "top1": "venue",
+      "top1_score": 0.674,
+      "top2": "party",
+      "top2_score": 0.231,
+      "margin": 0.443
+    },
+    "router": {
+      "r1_low_confidence": false,
+      "r2_low_margin": false,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0258
+  }
+]
