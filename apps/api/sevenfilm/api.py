@@ -5,6 +5,7 @@ from __future__ import annotations
 import hashlib
 import json
 import logging
+import sqlite3
 import uuid
 from datetime import UTC, datetime
 from fractions import Fraction
@@ -19,7 +20,15 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field, field_validator
 
 from .config import data_root, database_path
-from .db import Database, now
+from .db import (
+    TERMINAL_STATUSES,
+    Database,
+    DuplicateActiveJobError,
+    JobCancelled,
+    now,
+    raise_if_cancelled,
+    recover_orphaned_jobs,
+)
 from .domain import MusicSegment
 from .services.analysis import (
     analyze_music,
@@ -173,33 +182,61 @@ def _style_profile() -> dict[str, Any] | None:
 
 def _create_job(project_id: str, kind: str, checkpoint: dict[str, Any]) -> str:
     job_id = str(uuid.uuid4())
-    DATABASE.insert(
-        "jobs",
-        {
-            "id": job_id,
-            "project_id": project_id,
-            "kind": kind,
-            "status": "queued",
-            "progress": 0.0,
-            "checkpoint_json": checkpoint,
-            "error": None,
-            "created_at": now(),
-            "updated_at": now(),
-        },
-    )
+    try:
+        DATABASE.insert(
+            "jobs",
+            {
+                "id": job_id,
+                "project_id": project_id,
+                "kind": kind,
+                "status": "queued",
+                "progress": 0.0,
+                "checkpoint_json": checkpoint,
+                "error": None,
+                "created_at": now(),
+                "updated_at": now(),
+            },
+        )
+    except sqlite3.IntegrityError as error:
+        # The partial unique index on (project_id, kind) is what actually enforces this; the
+        # `IntegrityError` it raises on a conflicting INSERT is the only place this can be
+        # caught, which is also what makes it race-safe against two requests arriving together.
+        raise DuplicateActiveJobError(project_id, kind) from error
     return job_id
+
+
+def _create_job_or_409(project_id: str, kind: str, checkpoint: dict[str, Any]) -> str:
+    try:
+        return _create_job(project_id, kind, checkpoint)
+    except DuplicateActiveJobError as error:
+        raise HTTPException(
+            status_code=409,
+            detail=f"Bu proje için zaten aktif bir {kind!r} işi var.") from error
 
 
 def _run_job(job_id: str) -> None:
     job = DATABASE.fetch_one("SELECT * FROM jobs WHERE id = ?", (job_id,))
     if job is None:
         return
+    if job["status"] in TERMINAL_STATUSES:
+        # A `queued` job can be cancelled before this BackgroundTask ever gets a turn to run —
+        # the HTTP response for "start" and the cancel request are two separate round trips,
+        # and nothing stops the second from winning the race. Finding the job already settled
+        # means there is nothing left for this call to do.
+        return
     checkpoint = json.loads(job["checkpoint_json"])
     # Cheap, and it closes a failure that cost an evening: a backend left running from before a
     # release serves the old schema, and the first job that writes a new column dies with a
     # message no one can read. Adding a missing column is a PRAGMA and an ALTER, nothing more.
     DATABASE.migrate()
-    DATABASE.update_job(job_id, status="running", progress=float(job["progress"]), checkpoint=checkpoint)
+    # A compare-and-swap, not the plain `update_job` every write below it is: the entry check
+    # above reads status once, and a cancel of this still-`queued` job can land in the gap
+    # between that read and this write. Losing the race here means returning, the same as
+    # finding the job already terminal above -- not overwriting the cancel that got there first.
+    # `running` is accepted too -- re-affirming a job this call already owns is a no-op, not a
+    # race to lose -- so only `cancel_requested` and the terminal statuses are refused here.
+    if not DATABASE.transition_job(job_id, "running", from_statuses=frozenset({"queued", "running"})):
+        return
     try:
         if job["kind"] == "index":
             index_folder(DATABASE, job["project_id"], Path(checkpoint["folder"]), job_id)
@@ -209,6 +246,7 @@ def _run_job(job_id: str) -> None:
             analyze_shots(DATABASE, job["project_id"], job_id)
         elif job["kind"] == "music":
             for position, raw in enumerate(checkpoint["paths"]):
+                raise_if_cancelled(DATABASE, job_id)
                 analyze_music(DATABASE, job["project_id"], Path(raw), position)
                 DATABASE.update_job(
                     job_id, status="running", progress=(position + 1) / len(checkpoint["paths"]))
@@ -216,6 +254,17 @@ def _run_job(job_id: str) -> None:
             raise ValueError(f"Bilinmeyen job türü: {job['kind']}")
         DATABASE.update_job(job_id, status="completed", progress=1.0)
         LOGGER.info(json.dumps({"event": "job_completed", "job_id": job_id, "kind": job["kind"]}))
+    except JobCancelled:
+        current = DATABASE.fetch_one("SELECT progress FROM jobs WHERE id = ?", (job_id,))
+        # `cancel_requested` -> `cancelled` here specifically, never through the generic
+        # exception branch below: a cancellation the worker itself observed and stopped for is
+        # not a failure, and showing it as one would make every deliberate cancel look broken.
+        DATABASE.transition_job(
+            job_id, "cancelled", from_statuses=frozenset({"cancel_requested", "running"}))
+        LOGGER.info(json.dumps({
+            "event": "job_cancelled", "job_id": job_id, "kind": job["kind"],
+            "progress": float(current["progress"] if current else 0),
+        }))
     except Exception as error:  # Boundary records safe-to-display job errors; traceback remains server-side.
         current = DATABASE.fetch_one("SELECT progress FROM jobs WHERE id = ?", (job_id,))
         DATABASE.update_job(job_id, status="failed", progress=float(current["progress"] if current else 0), error=str(error))
@@ -225,6 +274,14 @@ def _run_job(job_id: str) -> None:
 @app.on_event("startup")
 def startup() -> None:
     DATABASE.migrate()
+    # Anything still `queued`, `running` or `cancel_requested` at this instant belonged to a
+    # process that is not this one — nothing in this codebase resumes a job on its own, so a
+    # row in one of those states can only be left over from before this process existed. See
+    # `recover_orphaned_jobs` for why that is a `failed`, not silently forgotten or left to
+    # look like still-running work with no worker behind it.
+    recovered = recover_orphaned_jobs(DATABASE)
+    if recovered:
+        LOGGER.info(json.dumps({"event": "orphaned_jobs_recovered", "job_ids": recovered}))
 
 
 def source_fingerprint() -> str:
@@ -305,7 +362,7 @@ def get_project(project_id: str) -> dict[str, Any]:
 def start_index(project_id: str, request: FolderRequest, background_tasks: BackgroundTasks) -> dict[str, str]:
     _project(project_id)
     folder = _normalize_path(request.folder)
-    job_id = _create_job(project_id, "index", {"folder": str(folder), "completed_paths": []})
+    job_id = _create_job_or_409(project_id, "index", {"folder": str(folder), "completed_paths": []})
     background_tasks.add_task(_run_job, job_id)
     return {"job_id": job_id, "status": "queued"}
 
@@ -313,7 +370,7 @@ def start_index(project_id: str, request: FolderRequest, background_tasks: Backg
 @app.post("/api/projects/{project_id}/derivatives", status_code=202)
 def start_derivatives(project_id: str, background_tasks: BackgroundTasks) -> dict[str, str]:
     _project(project_id)
-    job_id = _create_job(project_id, "derivatives", {})
+    job_id = _create_job_or_409(project_id, "derivatives", {})
     background_tasks.add_task(_run_job, job_id)
     return {"job_id": job_id, "status": "queued"}
 
@@ -321,7 +378,7 @@ def start_derivatives(project_id: str, background_tasks: BackgroundTasks) -> dic
 @app.post("/api/projects/{project_id}/shots", status_code=202)
 def start_shot_analysis(project_id: str, background_tasks: BackgroundTasks) -> dict[str, str]:
     _project(project_id)
-    job_id = _create_job(project_id, "shots", {})
+    job_id = _create_job_or_409(project_id, "shots", {})
     background_tasks.add_task(_run_job, job_id)
     return {"job_id": job_id, "status": "queued"}
 
@@ -333,10 +390,12 @@ def start_music_analysis(project_id: str, request: MusicRequest, background_task
     if not chosen:
         raise HTTPException(status_code=422, detail="En az bir şarkı seçilmeli.")
     paths = [str(_normalize_path(item)) for item in chosen]
+    # Checked before anything is deleted: a rejected duplicate must leave the previous
+    # selection exactly as it was, not half-replaced.
+    job_id = _create_job_or_409(project_id, "music", {"paths": paths})
     # The chosen songs replace the previous selection outright: leaving the old rows behind
     # would silently add a song the editor has taken out of the running order.
     DATABASE.execute("DELETE FROM music_tracks WHERE project_id = ?", (project_id,))
-    job_id = _create_job(project_id, "music", {"paths": paths})
     background_tasks.add_task(_run_job, job_id)
     return {"job_id": job_id, "status": "queued"}
 
@@ -454,7 +513,7 @@ STALLED_JOB_SECONDS = 300
 
 def _job_payload(job: dict[str, Any]) -> dict[str, Any]:
     job["checkpoint"] = json.loads(job.pop("checkpoint_json"))
-    if job["status"] in {"queued", "running"}:
+    if job["status"] in {"queued", "running", "cancel_requested"}:
         updated = datetime.fromisoformat(job["updated_at"])
         job["stalled"] = (datetime.now(UTC) - updated).total_seconds() > STALLED_JOB_SECONDS
     else:
@@ -480,6 +539,42 @@ def read_job(job_id: str) -> dict[str, Any]:
     if job is None:
         raise HTTPException(status_code=404, detail="Job bulunamadı.")
     return _job_payload(job)
+
+
+@app.post("/api/jobs/{job_id}/cancel")
+def cancel_job(job_id: str) -> dict[str, Any]:
+    """Ask a job to stop. Cooperative: this returns as soon as the request is recorded, not
+    when the worker actually stops — the caller polls `GET /api/jobs/{job_id}` for that, the
+    same way it already polls for progress.
+
+    Addressed by job id alone, the same shape as `read_job` above and deliberately not
+    `/api/projects/{project_id}/jobs/{job_id}/cancel`: a job's `project_id` is immutable and
+    already stored on the row `_run_job` reads, so there is no ambient "current project" this
+    endpoint could be confused about the way project creation was. Accepting a `project_id`
+    from the caller here would only add a second, possibly stale opinion about who owns a job
+    that already has one, unambiguous answer sitting in the database.
+    """
+    job = DATABASE.fetch_one("SELECT * FROM jobs WHERE id = ?", (job_id,))
+    if job is None:
+        raise HTTPException(status_code=404, detail="Job bulunamadı.")
+
+    status = job["status"]
+    if status in TERMINAL_STATUSES or status == "cancel_requested":
+        # Idempotent: asking twice, or asking after it already finished on its own, is not an
+        # error — it is the answer "there is nothing left to cancel", reported honestly.
+        return _job_payload(job)
+    if status == "queued":
+        # No worker has started this job yet — there is nothing to cooperate with, so it can
+        # be settled immediately rather than waiting for a `_run_job` call that has not
+        # happened yet to notice a request it might never check for.
+        DATABASE.transition_job(job_id, "cancelled", from_statuses=frozenset({"queued"}))
+    elif status == "running":
+        DATABASE.transition_job(job_id, "cancel_requested", from_statuses=frozenset({"running"}))
+    else:
+        raise HTTPException(status_code=409, detail=f"Bilinmeyen job durumu: {status!r}")
+
+    refreshed = DATABASE.fetch_one("SELECT * FROM jobs WHERE id = ?", (job_id,))
+    return _job_payload(refreshed)
 
 
 class RejectionRequest(BaseModel):

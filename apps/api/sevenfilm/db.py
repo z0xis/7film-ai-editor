@@ -214,6 +214,24 @@ CREATE TABLE IF NOT EXISTS jobs (
 );
 """
 
+# At most one job of a given kind may be active (queued, running, or asked to stop but not yet
+# stopped) per project at a time. SQLite enforces this atomically at INSERT time, which is what
+# makes it safe against two requests racing each other -- a check-then-insert in Python cannot
+# be. Completed, failed and cancelled jobs are outside the index on purpose: a project's job
+# history is free to hold as many finished "shots" runs as it likes.
+#
+# Created outside the plain SCHEMA script, guarded by its own try/except: a database a running
+# job is already using could in principle hold two active rows of the same kind from before
+# this index existed, and CREATE UNIQUE INDEX over a violation raises rather than skipping. That
+# must never turn into `migrate()` failing and the whole app refusing to start next time it
+# does; the far smaller cost is that de-duplication is enforced from the next clean state
+# onward instead of retroactively.
+JOBS_ACTIVE_UNIQUE_INDEX = """
+CREATE UNIQUE INDEX IF NOT EXISTS jobs_one_active_per_kind
+    ON jobs (project_id, kind)
+    WHERE status IN ('queued', 'running', 'cancel_requested')
+"""
+
 
 # Columns added after the first release; migrate() adds any that an existing file is missing.
 ADDED_COLUMNS = (
@@ -266,6 +284,15 @@ class Database:
         with self.connection() as connection:
             connection.executescript(SCHEMA)
             self._add_missing_columns(connection)
+        with self.connection() as connection:
+            try:
+                connection.execute(JOBS_ACTIVE_UNIQUE_INDEX)
+            except sqlite3.IntegrityError:
+                # A database from before this index existed can already hold two active rows
+                # of the same (project_id, kind) -- see the comment on the index above. That is
+                # a fact to log and move past, not a reason for every future start of this
+                # process to fail.
+                pass
 
     @staticmethod
     def _add_missing_columns(connection: sqlite3.Connection) -> None:
@@ -312,4 +339,119 @@ class Database:
         sql += " WHERE id = ?"
         params.append(job_id)
         self.execute(sql, tuple(params))
+
+    def transition_job(
+        self, job_id: str, to_status: str, *, from_statuses: frozenset[str],
+        error: str | None = None,
+    ) -> bool:
+        """Move a job to `to_status`, but only from one of `from_statuses`, atomically.
+
+        A single `UPDATE ... WHERE status IN (...)` rather than a read-then-write: two requests
+        racing to cancel, or a cancel racing the worker's own completion, can both reach this at
+        the same instant, and whichever one's UPDATE actually matches a row is the one that
+        happened. Returns whether this call was the one that applied -- `False` means the job
+        was already somewhere `from_statuses` does not cover (a caller asking to cancel a job
+        that just completed gets `False`, not a lost update).
+        """
+        placeholders = ", ".join("?" for _ in from_statuses)
+        with self.connection() as connection:
+            cursor = connection.execute(
+                f"UPDATE jobs SET status = ?, updated_at = ?, error = ? "
+                f"WHERE id = ? AND status IN ({placeholders})",
+                (to_status, now(), error, job_id, *from_statuses),
+            )
+            return cursor.rowcount > 0
+
+    def replace_rows(
+        self, table: str, where_column: str, where_value: Any, rows: list[dict[str, Any]],
+    ) -> None:
+        """Delete every row matching `where_column = where_value` and insert `rows`, atomically.
+
+        Exists because the row-at-a-time version of this (`DELETE` then a loop of separate
+        `insert()` calls, each its own commit) left a real gap: a crash or a cooperative
+        cancellation partway through the loop left some of an asset's rows written and the rest
+        not, and nothing downstream could tell an interrupted asset from a finished one short
+        one row. One connection, one transaction: either every new row lands, or the delete
+        itself never commits and the table is exactly as it was before this call.
+        """
+        with self.connection() as connection:
+            connection.execute(f"DELETE FROM {table} WHERE {where_column} = ?", (where_value,))
+            for row in rows:
+                columns = ", ".join(row)
+                placeholders = ", ".join("?" for _ in row)
+                normalized = [
+                    json.dumps(v) if isinstance(v, (list, dict)) else v for v in row.values()
+                ]
+                connection.execute(
+                    f"INSERT INTO {table} ({columns}) VALUES ({placeholders})", normalized)
+
+
+class JobCancelled(Exception):
+    """Raised at a checkpoint boundary when a job's cooperative cancellation was seen.
+
+    Not a failure: `_run_job` catches this separately from a genuine error and settles the job
+    into `cancelled` rather than `failed`.
+    """
+
+    def __init__(self, job_id: str) -> None:
+        super().__init__(f"job {job_id} was cancelled")
+        self.job_id = job_id
+
+
+class DuplicateActiveJobError(ValueError):
+    """Raised when a project already has an active job of the kind being requested."""
+
+    def __init__(self, project_id: str, kind: str) -> None:
+        super().__init__(f"project {project_id} already has an active {kind!r} job")
+        self.project_id = project_id
+        self.kind = kind
+
+
+def raise_if_cancelled(database: Database, job_id: str) -> None:
+    """The one thing a long-running loop checks at each asset/file/song boundary.
+
+    A plain SELECT, not a lock or a second table -- cheap enough to call once per item without
+    it becoming the thing that competes with the actual work for I/O.
+    """
+    row = database.fetch_one("SELECT status FROM jobs WHERE id = ?", (job_id,))
+    if row is not None and row["status"] == "cancel_requested":
+        raise JobCancelled(job_id)
+
+
+TERMINAL_STATUSES = frozenset({"completed", "failed", "cancelled"})
+
+# What each status may become next. `cancel_requested` can still land on `completed` or
+# `failed` -- the worker might finish or hit a real error before it next checks -- and that is
+# correct, not a bug: a cancellation is a request observed at the next checkpoint, not a promise
+# to stop mid-instruction.
+VALID_JOB_TRANSITIONS: dict[str, frozenset[str]] = {
+    "queued": frozenset({"running", "cancelled", "failed"}),
+    "running": frozenset({"completed", "failed", "cancel_requested"}),
+    "cancel_requested": frozenset({"cancelled", "completed", "failed"}),
+    "completed": frozenset(),
+    "failed": frozenset(),
+    "cancelled": frozenset(),
+}
+
+
+def recover_orphaned_jobs(database: Database) -> list[str]:
+    """Every job left mid-flight by a process that no longer exists becomes a terminal failure.
+
+    Meant to run once, early in startup, before any request can reach a job. Nothing in this
+    codebase resumes a `_run_job` call on its own -- it was a Python call on a process that no
+    longer exists -- so a `queued`, `running` or `cancel_requested` row found here cannot mean
+    work is still happening; it means the worker that owned it is gone. Left alone, the desktop
+    client would show progress that will never move and offer a cancel button for a job that
+    has nothing left to cancel. This does not delete anything an asset already finished --
+    `shot_features`/`shots`/`media_assets` rows are untouched -- only the job's own status.
+    """
+    orphaned = database.fetch_all(
+        "SELECT id, progress FROM jobs WHERE status IN ('queued', 'running', 'cancel_requested')")
+    recovered = []
+    for row in orphaned:
+        database.update_job(
+            row["id"], status="failed", progress=row["progress"],
+            error="interrupted: backend_restart")
+        recovered.append(row["id"])
+    return recovered
 

@@ -13,7 +13,7 @@ from typing import Any
 
 import numpy as np
 
-from ..db import Database, now
+from ..db import Database, now, raise_if_cancelled
 from ..domain import BeatGrid, MediaAsset, Shot
 from ..timebase import FrameRate, TimeRange
 from .media import project_assets
@@ -166,22 +166,32 @@ def _store_features(
     metrics: list[FrameMetrics],
     embeddings: dict[int, Any],
 ) -> None:
-    database.execute("DELETE FROM shot_features WHERE asset_id = ?", (asset.id,))
-    for ordinal, source_range in enumerate(ranges):
-        embedding = embeddings.get(ordinal)
-        database.insert(
-            "shot_features",
-            {
-                "shot_id": _shot_id(asset.id, source_range),
-                "asset_id": asset.id,
-                "start_frame": source_range.start_frame,
-                "duration_frames": source_range.duration_frames,
-                "frame_rate": f"{source_range.rate.numerator}/{source_range.rate.denominator}",
-                "embedding": embedding.astype(np.float32).tobytes() if embedding is not None else None,
-                "metrics_json": asdict(metrics[ordinal]),
-                "created_at": now(),
-            },
-        )
+    """Replace this asset's `shot_features` rows, all of them or none of them.
+
+    `_asset_features` below reads "does this asset have any `shot_features` rows" as "has this
+    asset already been encoded" and skips it if so; that reading is only true if a row can never
+    exist half-written. `Database.replace_rows` is one transaction for the delete and every
+    insert together, so an interruption partway through (a cooperative cancellation, a crash, an
+    exception from a bad embedding) leaves either the asset's previous rows untouched or its new
+    ones complete -- never a mix a later run could mistake for "done".
+    """
+    rows = [
+        {
+            "shot_id": _shot_id(asset.id, source_range),
+            "asset_id": asset.id,
+            "start_frame": source_range.start_frame,
+            "duration_frames": source_range.duration_frames,
+            "frame_rate": f"{source_range.rate.numerator}/{source_range.rate.denominator}",
+            "embedding": (
+                embeddings[ordinal].astype(np.float32).tobytes()
+                if embeddings.get(ordinal) is not None else None
+            ),
+            "metrics_json": asdict(metrics[ordinal]),
+            "created_at": now(),
+        }
+        for ordinal, source_range in enumerate(ranges)
+    ]
+    database.replace_rows("shot_features", "asset_id", asset.id, rows)
 
 
 def _encode_asset(database: Database, classifier: VisionClassifier, asset: MediaAsset) -> None:
@@ -295,6 +305,10 @@ def analyze_shots(database: Database, project_id: str, job_id: str) -> list[Shot
         raise ValueError("Önce ham görüntüleri indeksleyin.")
     classifier = VisionClassifier()
     for index, asset in enumerate(assets, start=1):
+        # Checked before the expensive part of this iteration, not after: a cancellation seen
+        # here means the asset this call would have encoded next never starts, rather than
+        # being abandoned half done.
+        raise_if_cancelled(database, job_id)
         if not _asset_features(database, asset.id):
             _encode_asset(database, classifier, asset)
         database.update_job(
@@ -305,6 +319,7 @@ def analyze_shots(database: Database, project_id: str, job_id: str) -> list[Shot
         )
     priors = _project_prior(database, classifier, project_id)
     for index, asset in enumerate(assets, start=1):
+        raise_if_cancelled(database, job_id)
         _label_asset(database, classifier, asset, priors)
         database.update_job(
             job_id,
@@ -313,13 +328,14 @@ def analyze_shots(database: Database, project_id: str, job_id: str) -> list[Shot
             checkpoint={"last_asset_id": asset.id, "pass": "label"},
         )
     shots = project_shots(database, project_id)
-    _measure_shot_windows(database, project_id, assets, shots)
+    _measure_shot_windows(database, project_id, assets, shots, job_id=job_id)
     LOGGER.info(json.dumps({"event": "shots_analyzed", "project_id": project_id, "count": len(shots)}))
     return shots
 
 
 def _measure_shot_windows(
-    database: Database, project_id: str, assets: Sequence[MediaAsset], shots: Sequence[Shot]
+    database: Database, project_id: str, assets: Sequence[MediaAsset], shots: Sequence[Shot],
+    *, job_id: str | None = None,
 ) -> None:
     """Walk every shot half a second at a time, so the planner can choose the moment.
 
@@ -334,6 +350,8 @@ def _measure_shot_windows(
     """
     by_id = {asset.id: asset for asset in assets}
     for shot in shots:
+        if job_id is not None:
+            raise_if_cancelled(database, job_id)
         asset = by_id.get(shot.asset_id)
         if asset is None:
             continue

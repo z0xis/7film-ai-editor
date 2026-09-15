@@ -13,7 +13,7 @@ from fractions import Fraction
 from pathlib import Path
 from typing import Any
 
-from ..db import Database, now
+from ..db import Database, now, raise_if_cancelled
 from ..domain import MediaAsset
 from ..timebase import FrameRate
 
@@ -292,6 +292,7 @@ def index_folder(database: Database, project_id: str, folder: Path, job_id: str)
     completed_paths = set(checkpoint.get("completed_paths", []))
     unreadable: list[str] = []
     for index, path in enumerate(candidates, start=1):
+        raise_if_cancelled(database, job_id)
         if str(path) in completed_paths:
             continue
         existing = database.fetch_one(
@@ -400,6 +401,7 @@ def generate_derivatives(database: Database, project_id: str, cache_root: Path, 
         raise ValueError("Önce ham görüntüleri indeksleyin.")
     failed: list[str] = []
     for position, asset in enumerate(assets, start=1):
+        raise_if_cancelled(database, job_id)
         proxy, thumbnail = derivative_paths(cache_root, asset)
         try:
             if not proxy.exists():
