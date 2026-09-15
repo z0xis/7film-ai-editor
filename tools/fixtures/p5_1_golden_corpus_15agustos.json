@@ -1,0 +1,123 @@
+[
+  {
+    "sample_id": "00",
+    "asset_path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7117.MP4",
+    "shot_id": "85910788-156b-5cf2-b6f4-0d5e107fabcf",
+    "start_frame": 1240,
+    "duration_frames": 248,
+    "frame_rate": "50/1",
+    "opencv_fallback_category": "bride",
+    "visually_verified_ground_truth": "bride_prep",
+    "human_note": "hairstylist doing bride's hair in salon mirror"
+  },
+  {
+    "sample_id": "01",
+    "asset_path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7187.MP4",
+    "shot_id": "79b45725-e346-5acb-a069-56e82bb37bb8",
+    "start_frame": 702,
+    "duration_frames": 234,
+    "frame_rate": "50/1",
+    "opencv_fallback_category": "bride",
+    "visually_verified_ground_truth": "groom",
+    "human_note": "groom in tux, bow tie, seated, drinking -- fallback mislabelled 'bride' (wrong gender)"
+  },
+  {
+    "sample_id": "02",
+    "asset_path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7149.MP4",
+    "shot_id": "1f624fd6-415c-54c3-bb6d-c5e8c6b5bfee",
+    "start_frame": 0,
+    "duration_frames": 168,
+    "frame_rate": "50/1",
+    "opencv_fallback_category": "bride",
+    "visually_verified_ground_truth": "bride_prep",
+    "human_note": "bride getting makeup applied, in veil and dress"
+  },
+  {
+    "sample_id": "03",
+    "asset_path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7105.MP4",
+    "shot_id": "2411be3c-ddfe-50b0-be75-3045bc8576b8",
+    "start_frame": 216,
+    "duration_frames": 216,
+    "frame_rate": "50/1",
+    "opencv_fallback_category": "couple",
+    "visually_verified_ground_truth": "bride_prep",
+    "human_note": "hairstylist doing bride's hair -- fallback mislabelled 'couple' (2 faces, neither the groom)"
+  },
+  {
+    "sample_id": "04",
+    "asset_path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7103.MP4",
+    "shot_id": "ff72a259-d463-5386-adb3-81820bb02529",
+    "start_frame": 0,
+    "duration_frames": 210,
+    "frame_rate": "50/1",
+    "opencv_fallback_category": "couple",
+    "visually_verified_ground_truth": "bride_prep",
+    "human_note": "hairstylist doing bride's hair, close framing -- fallback mislabelled 'couple'"
+  },
+  {
+    "sample_id": "05",
+    "asset_path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7108.MP4",
+    "shot_id": "e575f167-ebbb-5c34-823c-5f6912a80e6b",
+    "start_frame": 692,
+    "duration_frames": 230,
+    "frame_rate": "50/1",
+    "opencv_fallback_category": "family",
+    "visually_verified_ground_truth": "bride_prep",
+    "human_note": "bride with hairstylist + onlooker (3 faces) -- fallback mislabelled 'family'"
+  },
+  {
+    "sample_id": "06",
+    "asset_path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7106.MP4",
+    "shot_id": "bce7b9cc-1f77-586a-ab76-1bc9baa26b83",
+    "start_frame": 594,
+    "duration_frames": 198,
+    "frame_rate": "50/1",
+    "opencv_fallback_category": "family",
+    "visually_verified_ground_truth": "bride_prep",
+    "human_note": "bride with hairstylist + onlooker, hairspray -- fallback mislabelled 'family'"
+  },
+  {
+    "sample_id": "07",
+    "asset_path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7377.MP4",
+    "shot_id": "4017e744-7973-593c-8ea7-bada52a2717f",
+    "start_frame": 500,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "opencv_fallback_category": "venue",
+    "visually_verified_ground_truth": "party",
+    "human_note": "night reception, guests dancing hands raised, band visible -- fallback mislabelled 'venue' (0 faces detected)"
+  },
+  {
+    "sample_id": "08",
+    "asset_path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7140.MP4",
+    "shot_id": "a68ac558-501a-5c7f-9c12-c2506da6a729",
+    "start_frame": 612,
+    "duration_frames": 204,
+    "frame_rate": "50/1",
+    "opencv_fallback_category": "venue",
+    "visually_verified_ground_truth": "bride_prep",
+    "human_note": "veil placement on bride, 3 faces -- fallback mislabelled 'venue'"
+  },
+  {
+    "sample_id": "09",
+    "asset_path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0528.MOV",
+    "shot_id": "418fea0c-6295-55d8-84df-e071d63398c2",
+    "start_frame": 12726,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "opencv_fallback_category": "venue",
+    "visually_verified_ground_truth": "venue",
+    "human_note": "drone aerial of lit reception venue at night, dance floor + tables visible"
+  },
+  {
+    "sample_id": "10",
+    "asset_path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0528.MOV",
+    "shot_id": "4250cb83-5117-52ab-aad4-a76ddedc584c",
+    "start_frame": 14175,
+    "duration_frames": 63,
+    "frame_rate": "25/1",
+    "opencv_fallback_category": "venue",
+    "visually_verified_ground_truth": "party",
+    "human_note": "drone aerial: bride and groom's FIRST DANCE on lit dance floor -- fallback mislabelled 'venue' (0 faces from altitude), missing the most editorially significant moment in the shot"
+  }
+]

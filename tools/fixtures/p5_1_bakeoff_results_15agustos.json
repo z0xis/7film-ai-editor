@@ -1,0 +1,458 @@
+{
+  "clip": {
+    "backend": "clip_vision",
+    "load_time": 0.57,
+    "infer_times": [
+      0.03598841582424939,
+      0.015351208159700036,
+      0.01457858388312161,
+      0.014355208026245236,
+      0.013956208946183324,
+      0.014390083961188793,
+      0.0146741250064224,
+      0.016099332831799984,
+      0.0148761251475662,
+      0.015005500055849552,
+      0.014378583058714867
+    ],
+    "results": [
+      {
+        "file": "00_bride.jpg",
+        "top1": "bride",
+        "top1_score": 0.66,
+        "top3": [
+          [
+            "bride",
+            0.66
+          ],
+          [
+            "bride_prep",
+            0.125
+          ],
+          [
+            "couple",
+            0.122
+          ]
+        ]
+      },
+      {
+        "file": "01_bride.jpg",
+        "top1": "groom",
+        "top1_score": 0.612,
+        "top3": [
+          [
+            "groom",
+            0.612
+          ],
+          [
+            "bride",
+            0.21
+          ],
+          [
+            "couple",
+            0.117
+          ]
+        ]
+      },
+      {
+        "file": "02_bride.jpg",
+        "top1": "bride",
+        "top1_score": 0.609,
+        "top3": [
+          [
+            "bride",
+            0.609
+          ],
+          [
+            "bride_prep",
+            0.164
+          ],
+          [
+            "couple",
+            0.14
+          ]
+        ]
+      },
+      {
+        "file": "03_couple.jpg",
+        "top1": "bride_prep",
+        "top1_score": 0.58,
+        "top3": [
+          [
+            "bride_prep",
+            0.58
+          ],
+          [
+            "bride",
+            0.355
+          ],
+          [
+            "groom",
+            0.039
+          ]
+        ]
+      },
+      {
+        "file": "04_couple.jpg",
+        "top1": "bride",
+        "top1_score": 0.536,
+        "top3": [
+          [
+            "bride",
+            0.536
+          ],
+          [
+            "bride_prep",
+            0.344
+          ],
+          [
+            "couple",
+            0.061
+          ]
+        ]
+      },
+      {
+        "file": "05_family.jpg",
+        "top1": "bride_prep",
+        "top1_score": 0.791,
+        "top3": [
+          [
+            "bride_prep",
+            0.791
+          ],
+          [
+            "bride",
+            0.18
+          ],
+          [
+            "groom",
+            0.014
+          ]
+        ]
+      },
+      {
+        "file": "06_family.jpg",
+        "top1": "bride",
+        "top1_score": 0.59,
+        "top3": [
+          [
+            "bride",
+            0.59
+          ],
+          [
+            "bride_prep",
+            0.246
+          ],
+          [
+            "groom",
+            0.09
+          ]
+        ]
+      },
+      {
+        "file": "07_venue.jpg",
+        "top1": "groom",
+        "top1_score": 0.56,
+        "top3": [
+          [
+            "groom",
+            0.56
+          ],
+          [
+            "bride",
+            0.219
+          ],
+          [
+            "couple",
+            0.114
+          ]
+        ]
+      },
+      {
+        "file": "08_venue.jpg",
+        "top1": "bride",
+        "top1_score": 0.502,
+        "top3": [
+          [
+            "bride",
+            0.502
+          ],
+          [
+            "bride_prep",
+            0.357
+          ],
+          [
+            "couple",
+            0.092
+          ]
+        ]
+      },
+      {
+        "file": "09_venue.jpg",
+        "top1": "venue",
+        "top1_score": 0.681,
+        "top3": [
+          [
+            "venue",
+            0.681
+          ],
+          [
+            "ceremony",
+            0.176
+          ],
+          [
+            "party",
+            0.085
+          ]
+        ]
+      },
+      {
+        "file": "10_venue.jpg",
+        "top1": "party",
+        "top1_score": 0.845,
+        "top3": [
+          [
+            "party",
+            0.845
+          ],
+          [
+            "ceremony",
+            0.073
+          ],
+          [
+            "venue",
+            0.04
+          ]
+        ]
+      }
+    ]
+  },
+  "siglip2": {
+    "backend": "siglip2_so400m",
+    "load_time": 6.49,
+    "infer_times": [
+      2.410260875010863,
+      0.5115443749818951,
+      0.5156635830644518,
+      0.8438365829642862,
+      0.8421930409967899,
+      0.8303445840720087,
+      0.8250494580715895,
+      0.846017292002216,
+      0.8405692919623107,
+      0.8227599170058966,
+      0.8246380419004709
+    ],
+    "results": [
+      {
+        "file": "00_bride.jpg",
+        "top1": "bride_prep",
+        "top1_score": 0.935,
+        "top3": [
+          [
+            "bride_prep",
+            0.935
+          ],
+          [
+            "bride",
+            0.064
+          ],
+          [
+            "couple",
+            0.001
+          ]
+        ]
+      },
+      {
+        "file": "01_bride.jpg",
+        "top1": "groom",
+        "top1_score": 0.844,
+        "top3": [
+          [
+            "groom",
+            0.844
+          ],
+          [
+            "groom_prep",
+            0.151
+          ],
+          [
+            "couple",
+            0.002
+          ]
+        ]
+      },
+      {
+        "file": "02_bride.jpg",
+        "top1": "bride_prep",
+        "top1_score": 0.985,
+        "top3": [
+          [
+            "bride_prep",
+            0.985
+          ],
+          [
+            "bride",
+            0.014
+          ],
+          [
+            "couple",
+            0.001
+          ]
+        ]
+      },
+      {
+        "file": "03_couple.jpg",
+        "top1": "bride_prep",
+        "top1_score": 0.999,
+        "top3": [
+          [
+            "bride_prep",
+            0.999
+          ],
+          [
+            "bride",
+            0.001
+          ],
+          [
+            "couple",
+            0.0
+          ]
+        ]
+      },
+      {
+        "file": "04_couple.jpg",
+        "top1": "bride_prep",
+        "top1_score": 1.0,
+        "top3": [
+          [
+            "bride_prep",
+            1.0
+          ],
+          [
+            "bride",
+            0.0
+          ],
+          [
+            "couple",
+            0.0
+          ]
+        ]
+      },
+      {
+        "file": "05_family.jpg",
+        "top1": "bride_prep",
+        "top1_score": 0.993,
+        "top3": [
+          [
+            "bride_prep",
+            0.993
+          ],
+          [
+            "bride",
+            0.007
+          ],
+          [
+            "couple",
+            0.0
+          ]
+        ]
+      },
+      {
+        "file": "06_family.jpg",
+        "top1": "bride_prep",
+        "top1_score": 0.948,
+        "top3": [
+          [
+            "bride_prep",
+            0.948
+          ],
+          [
+            "bride",
+            0.05
+          ],
+          [
+            "couple",
+            0.001
+          ]
+        ]
+      },
+      {
+        "file": "07_venue.jpg",
+        "top1": "groom",
+        "top1_score": 0.944,
+        "top3": [
+          [
+            "groom",
+            0.944
+          ],
+          [
+            "family",
+            0.021
+          ],
+          [
+            "party",
+            0.012
+          ]
+        ]
+      },
+      {
+        "file": "08_venue.jpg",
+        "top1": "bride_prep",
+        "top1_score": 0.957,
+        "top3": [
+          [
+            "bride_prep",
+            0.957
+          ],
+          [
+            "bride",
+            0.042
+          ],
+          [
+            "couple",
+            0.001
+          ]
+        ]
+      },
+      {
+        "file": "09_venue.jpg",
+        "top1": "venue",
+        "top1_score": 0.822,
+        "top3": [
+          [
+            "venue",
+            0.822
+          ],
+          [
+            "party",
+            0.17
+          ],
+          [
+            "family",
+            0.007
+          ]
+        ]
+      },
+      {
+        "file": "10_venue.jpg",
+        "top1": "party",
+        "top1_score": 0.574,
+        "top3": [
+          [
+            "party",
+            0.574
+          ],
+          [
+            "venue",
+            0.24
+          ],
+          [
+            "bride",
+            0.064
+          ]
+        ]
+      }
+    ]
+  }
+}
