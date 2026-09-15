@@ -1,0 +1,2202 @@
+[
+  {
+    "shot_id": "0d8fbfd9-0163-5020-838a-368f2dead314",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7102.MP4",
+    "start_frame": 222,
+    "duration_frames": 222,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 0,
+    "frame_path": "/tmp/p54_stress_frames/000.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.717,
+      "top2": "groom",
+      "top2_score": 0.14,
+      "margin": 0.578
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.1438
+  },
+  {
+    "shot_id": "c80be504-5a9f-5932-aa74-04e36d29584a",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7106.MP4",
+    "start_frame": 198,
+    "duration_frames": 198,
+    "frame_rate": "50/1",
+    "fallback_category": "couple",
+    "frame_index": 1,
+    "frame_path": "/tmp/p54_stress_frames/001.jpg",
+    "clip_pred": {
+      "top1": "bride_prep",
+      "top1_score": 0.906,
+      "top2": "bride",
+      "top2_score": 0.081,
+      "margin": 0.825
+    },
+    "router": {
+      "r3_not_story_critical": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.027
+  },
+  {
+    "shot_id": "2acb5332-553a-50bf-9aab-0f7c3bc720a5",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7110.MP4",
+    "start_frame": 228,
+    "duration_frames": 228,
+    "frame_rate": "50/1",
+    "fallback_category": "bride",
+    "frame_index": 2,
+    "frame_path": "/tmp/p54_stress_frames/002.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.594,
+      "top2": "bride_prep",
+      "top2_score": 0.316,
+      "margin": 0.278
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0253
+  },
+  {
+    "shot_id": "c15a0be6-76c1-5a4b-b59d-36aa55b7e2f3",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7114.MP4",
+    "start_frame": 208,
+    "duration_frames": 208,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 3,
+    "frame_path": "/tmp/p54_stress_frames/003.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.573,
+      "top2": "groom",
+      "top2_score": 0.24,
+      "margin": 0.334
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.024
+  },
+  {
+    "shot_id": "85910788-156b-5cf2-b6f4-0d5e107fabcf",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7117.MP4",
+    "start_frame": 1240,
+    "duration_frames": 248,
+    "frame_rate": "50/1",
+    "fallback_category": "bride",
+    "frame_index": 4,
+    "frame_path": "/tmp/p54_stress_frames/004.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.66,
+      "top2": "bride_prep",
+      "top2_score": 0.125,
+      "margin": 0.536
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0243
+  },
+  {
+    "shot_id": "07ce98d5-3aa1-5f70-946e-1c4784d23383",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7121.MP4",
+    "start_frame": 246,
+    "duration_frames": 246,
+    "frame_rate": "50/1",
+    "fallback_category": "couple",
+    "frame_index": 5,
+    "frame_path": "/tmp/p54_stress_frames/005.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.648,
+      "top2": "couple",
+      "top2_score": 0.235,
+      "margin": 0.413
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0281
+  },
+  {
+    "shot_id": "e172830a-823b-52dd-9081-7b8c49aee542",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7123.MP4",
+    "start_frame": 442,
+    "duration_frames": 221,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 6,
+    "frame_path": "/tmp/p54_stress_frames/006.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.636,
+      "top2": "groom",
+      "top2_score": 0.263,
+      "margin": 0.373
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0275
+  },
+  {
+    "shot_id": "a5078b1b-d03d-53fc-982a-93567291197b",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7128.MP4",
+    "start_frame": 0,
+    "duration_frames": 200,
+    "frame_rate": "50/1",
+    "fallback_category": "bride",
+    "frame_index": 7,
+    "frame_path": "/tmp/p54_stress_frames/007.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.581,
+      "top2": "bride_prep",
+      "top2_score": 0.242,
+      "margin": 0.339
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0258
+  },
+  {
+    "shot_id": "f4f8090a-8326-532e-b3a9-723fb0da2762",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7133.MP4",
+    "start_frame": 192,
+    "duration_frames": 192,
+    "frame_rate": "50/1",
+    "fallback_category": "bride",
+    "frame_index": 8,
+    "frame_path": "/tmp/p54_stress_frames/008.jpg",
+    "clip_pred": {
+      "top1": "bride_prep",
+      "top1_score": 0.809,
+      "top2": "bride",
+      "top2_score": 0.147,
+      "margin": 0.663
+    },
+    "router": {
+      "r3_not_story_critical": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0261
+  },
+  {
+    "shot_id": "16636874-dbe1-553f-ad65-8e745e66b822",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7138.MP4",
+    "start_frame": 476,
+    "duration_frames": 238,
+    "frame_rate": "50/1",
+    "fallback_category": "bride",
+    "frame_index": 9,
+    "frame_path": "/tmp/p54_stress_frames/009.jpg",
+    "clip_pred": {
+      "top1": "bride_prep",
+      "top1_score": 0.872,
+      "top2": "bride",
+      "top2_score": 0.11,
+      "margin": 0.762
+    },
+    "router": {
+      "r3_not_story_critical": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0259
+  },
+  {
+    "shot_id": "8b4ee72d-844c-57cd-b64f-af22c4837998",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7138.MP4",
+    "start_frame": 3564,
+    "duration_frames": 237,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 10,
+    "frame_path": "/tmp/p54_stress_frames/010.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.602,
+      "top2": "couple",
+      "top2_score": 0.3,
+      "margin": 0.303
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0255
+  },
+  {
+    "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7141.MP4",
+    "start_frame": 0,
+    "duration_frames": 132,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 11,
+    "frame_path": "/tmp/p54_stress_frames/011.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.628,
+      "top2": "groom",
+      "top2_score": 0.15,
+      "margin": 0.478
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0281
+  },
+  {
+    "shot_id": "1da0dfd3-073e-5c9b-b629-956d0449f441",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7146.MP4",
+    "start_frame": 0,
+    "duration_frames": 216,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 12,
+    "frame_path": "/tmp/p54_stress_frames/012.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.534,
+      "top2": "groom",
+      "top2_score": 0.198,
+      "margin": 0.336
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0245
+  },
+  {
+    "shot_id": "316aea96-f6d8-50b4-bd6b-8abf84d76b4a",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7151.MP4",
+    "start_frame": 678,
+    "duration_frames": 225,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 13,
+    "frame_path": "/tmp/p54_stress_frames/013.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.506,
+      "top2": "bride_prep",
+      "top2_score": 0.369,
+      "margin": 0.137
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0263
+  },
+  {
+    "shot_id": "f1693995-b362-51fb-bea4-401b29205543",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7152.MP4",
+    "start_frame": 2676,
+    "duration_frames": 243,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 14,
+    "frame_path": "/tmp/p54_stress_frames/014.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.811,
+      "top2": "couple",
+      "top2_score": 0.087,
+      "margin": 0.724
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0239
+  },
+  {
+    "shot_id": "008354cf-0dfc-5f57-b326-e4e6d33872c4",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7157.MP4",
+    "start_frame": 0,
+    "duration_frames": 168,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 15,
+    "frame_path": "/tmp/p54_stress_frames/015.jpg",
+    "clip_pred": {
+      "top1": "detail",
+      "top1_score": 0.22,
+      "top2": "ceremony",
+      "top2_score": 0.219,
+      "margin": 0.002
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0402
+  },
+  {
+    "shot_id": "90fe33d3-ca47-5fc8-90b2-55a13246ee2a",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7161.MP4",
+    "start_frame": 1148,
+    "duration_frames": 229,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 16,
+    "frame_path": "/tmp/p54_stress_frames/016.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.749,
+      "top2": "couple",
+      "top2_score": 0.175,
+      "margin": 0.574
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0267
+  },
+  {
+    "shot_id": "bcfadc20-0330-5608-918f-3db4af1a45e4",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7165.MP4",
+    "start_frame": 192,
+    "duration_frames": 192,
+    "frame_rate": "50/1",
+    "fallback_category": "bride",
+    "frame_index": 17,
+    "frame_path": "/tmp/p54_stress_frames/017.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.737,
+      "top2": "couple",
+      "top2_score": 0.176,
+      "margin": 0.561
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0261
+  },
+  {
+    "shot_id": "8d1ee926-2915-5f6f-82be-598880c5ffeb",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7170.MP4",
+    "start_frame": 176,
+    "duration_frames": 176,
+    "frame_rate": "50/1",
+    "fallback_category": "bride",
+    "frame_index": 18,
+    "frame_path": "/tmp/p54_stress_frames/018.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.481,
+      "top2": "groom",
+      "top2_score": 0.259,
+      "margin": 0.222
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0241
+  },
+  {
+    "shot_id": "e099b4cd-b696-525d-b8c9-b823e3a0941f",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7173.MP4",
+    "start_frame": 1878,
+    "duration_frames": 234,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 19,
+    "frame_path": "/tmp/p54_stress_frames/019.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.652,
+      "top2": "groom",
+      "top2_score": 0.18,
+      "margin": 0.473
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0256
+  },
+  {
+    "shot_id": "5c4777ea-bfad-5d95-8940-e007e6b65504",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7178.MP4",
+    "start_frame": 0,
+    "duration_frames": 232,
+    "frame_rate": "50/1",
+    "fallback_category": "couple",
+    "frame_index": 20,
+    "frame_path": "/tmp/p54_stress_frames/020.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.432,
+      "top2": "couple",
+      "top2_score": 0.377,
+      "margin": 0.055
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0234
+  },
+  {
+    "shot_id": "cb4982a5-1163-597b-9c59-a8f42adeb3a8",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7182.MP4",
+    "start_frame": 184,
+    "duration_frames": 184,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 21,
+    "frame_path": "/tmp/p54_stress_frames/021.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.739,
+      "top2": "couple",
+      "top2_score": 0.143,
+      "margin": 0.596
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0317
+  },
+  {
+    "shot_id": "718b8bc2-7f70-58a2-8235-dbafcc26491c",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7186.MP4",
+    "start_frame": 156,
+    "duration_frames": 156,
+    "frame_rate": "50/1",
+    "fallback_category": "bride",
+    "frame_index": 22,
+    "frame_path": "/tmp/p54_stress_frames/022.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.654,
+      "top2": "bride",
+      "top2_score": 0.22,
+      "margin": 0.434
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0319
+  },
+  {
+    "shot_id": "882d7e26-4d52-56f4-bff1-0d8698cfbd80",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7191.MP4",
+    "start_frame": 0,
+    "duration_frames": 246,
+    "frame_rate": "50/1",
+    "fallback_category": "bride",
+    "frame_index": 23,
+    "frame_path": "/tmp/p54_stress_frames/023.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.45,
+      "top2": "groom_prep",
+      "top2_score": 0.325,
+      "margin": 0.125
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0244
+  },
+  {
+    "shot_id": "062f52f1-025c-590f-a390-ce5bd18b37e2",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7193.MP4",
+    "start_frame": 1500,
+    "duration_frames": 249,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 24,
+    "frame_path": "/tmp/p54_stress_frames/024.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.405,
+      "top2": "couple",
+      "top2_score": 0.351,
+      "margin": 0.054
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0387
+  },
+  {
+    "shot_id": "8468c700-03d8-5fa4-860b-e9673003b02e",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7195.MP4",
+    "start_frame": 375,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 25,
+    "frame_path": "/tmp/p54_stress_frames/025.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.797,
+      "top2": "groom",
+      "top2_score": 0.128,
+      "margin": 0.67
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0244
+  },
+  {
+    "shot_id": "76e0e965-fc17-51f7-941a-6de56c6801d1",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7197.MP4",
+    "start_frame": 0,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 26,
+    "frame_path": "/tmp/p54_stress_frames/026.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.425,
+      "top2": "couple",
+      "top2_score": 0.302,
+      "margin": 0.123
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0258
+  },
+  {
+    "shot_id": "656ed3a8-cd47-59a9-aaac-8e6cb4e27970",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7200.MP4",
+    "start_frame": 250,
+    "duration_frames": 110,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 27,
+    "frame_path": "/tmp/p54_stress_frames/027.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.514,
+      "top2": "groom_prep",
+      "top2_score": 0.382,
+      "margin": 0.133
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0245
+  },
+  {
+    "shot_id": "17ec0563-4aab-53a0-9491-f325603b667b",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7204.MP4",
+    "start_frame": 125,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 28,
+    "frame_path": "/tmp/p54_stress_frames/028.jpg",
+    "clip_pred": {
+      "top1": "couple",
+      "top1_score": 0.419,
+      "top2": "bride",
+      "top2_score": 0.304,
+      "margin": 0.115
+    },
+    "router": {
+      "r3_not_story_critical": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0378
+  },
+  {
+    "shot_id": "5c9c5b71-1e8d-528d-bb2f-38c3ada4fec0",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7206.MP4",
+    "start_frame": 250,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 29,
+    "frame_path": "/tmp/p54_stress_frames/029.jpg",
+    "clip_pred": {
+      "top1": "couple",
+      "top1_score": 0.465,
+      "top2": "bride",
+      "top2_score": 0.299,
+      "margin": 0.165
+    },
+    "router": {
+      "r3_not_story_critical": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0244
+  },
+  {
+    "shot_id": "fd1b93c6-a8c5-5a71-82bd-5d03cc6ff82f",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7210.MP4",
+    "start_frame": 375,
+    "duration_frames": 57,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 30,
+    "frame_path": "/tmp/p54_stress_frames/030.jpg",
+    "clip_pred": {
+      "top1": "couple",
+      "top1_score": 0.431,
+      "top2": "groom",
+      "top2_score": 0.288,
+      "margin": 0.144
+    },
+    "router": {
+      "r3_not_story_critical": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0274
+  },
+  {
+    "shot_id": "fe0333db-b809-5f03-a315-916904353d74",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7213.MP4",
+    "start_frame": 500,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 31,
+    "frame_path": "/tmp/p54_stress_frames/031.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.473,
+      "top2": "bride",
+      "top2_score": 0.337,
+      "margin": 0.135
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0242
+  },
+  {
+    "shot_id": "dc9b706b-ded0-5cbe-8bbe-e1a742c1880d",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7215.MP4",
+    "start_frame": 375,
+    "duration_frames": 105,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 32,
+    "frame_path": "/tmp/p54_stress_frames/032.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.791,
+      "top2": "couple",
+      "top2_score": 0.103,
+      "margin": 0.688
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0275
+  },
+  {
+    "shot_id": "9008eb13-c46f-5d65-9f87-8de3d1c88e1e",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7218.MP4",
+    "start_frame": 250,
+    "duration_frames": 110,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 33,
+    "frame_path": "/tmp/p54_stress_frames/033.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.481,
+      "top2": "couple",
+      "top2_score": 0.249,
+      "margin": 0.233
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0283
+  },
+  {
+    "shot_id": "0052e977-dc7f-55e7-997e-6baccc38a864",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7220.MP4",
+    "start_frame": 625,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 34,
+    "frame_path": "/tmp/p54_stress_frames/034.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.401,
+      "top2": "groom",
+      "top2_score": 0.313,
+      "margin": 0.088
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0255
+  },
+  {
+    "shot_id": "c00b2de1-234e-5c0d-b757-1871d667b012",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7221.MP4",
+    "start_frame": 625,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 35,
+    "frame_path": "/tmp/p54_stress_frames/035.jpg",
+    "clip_pred": {
+      "top1": "couple",
+      "top1_score": 0.345,
+      "top2": "bride",
+      "top2_score": 0.257,
+      "margin": 0.089
+    },
+    "router": {
+      "r3_not_story_critical": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0257
+  },
+  {
+    "shot_id": "396755b3-9122-55d4-aa03-e92680a41b36",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7223.MP4",
+    "start_frame": 250,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 36,
+    "frame_path": "/tmp/p54_stress_frames/036.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.686,
+      "top2": "couple",
+      "top2_score": 0.2,
+      "margin": 0.486
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.024
+  },
+  {
+    "shot_id": "49e5a198-caa1-50d4-8ab2-018ebc6a6b55",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7225.MP4",
+    "start_frame": 750,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 37,
+    "frame_path": "/tmp/p54_stress_frames/037.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.736,
+      "top2": "couple",
+      "top2_score": 0.137,
+      "margin": 0.598
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0335
+  },
+  {
+    "shot_id": "06ea0fb7-092c-5d96-85b4-5c816c46cc78",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7228.MP4",
+    "start_frame": 125,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 38,
+    "frame_path": "/tmp/p54_stress_frames/038.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.426,
+      "top2": "couple",
+      "top2_score": 0.335,
+      "margin": 0.091
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0385
+  },
+  {
+    "shot_id": "db0ee96b-af3c-5279-b6d7-75bd871ebf07",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7230.MP4",
+    "start_frame": 250,
+    "duration_frames": 110,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 39,
+    "frame_path": "/tmp/p54_stress_frames/039.jpg",
+    "clip_pred": {
+      "top1": "couple",
+      "top1_score": 0.446,
+      "top2": "bride",
+      "top2_score": 0.296,
+      "margin": 0.151
+    },
+    "router": {
+      "r3_not_story_critical": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0277
+  },
+  {
+    "shot_id": "03449d9b-e29e-5753-91a8-684c5323ec3c",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7232.MP4",
+    "start_frame": 125,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 40,
+    "frame_path": "/tmp/p54_stress_frames/040.jpg",
+    "clip_pred": {
+      "top1": "venue",
+      "top1_score": 0.724,
+      "top2": "ceremony",
+      "top2_score": 0.2,
+      "margin": 0.524
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0343
+  },
+  {
+    "shot_id": "d48b9878-d3c9-51c4-b0e4-5f026dfebadd",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7235.MP4",
+    "start_frame": 375,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 41,
+    "frame_path": "/tmp/p54_stress_frames/041.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.418,
+      "top2": "couple",
+      "top2_score": 0.386,
+      "margin": 0.032
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0238
+  },
+  {
+    "shot_id": "3566537a-e31c-590e-b88e-8ee2528f5557",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7237.MP4",
+    "start_frame": 375,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 42,
+    "frame_path": "/tmp/p54_stress_frames/042.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.429,
+      "top2": "couple",
+      "top2_score": 0.423,
+      "margin": 0.006
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0251
+  },
+  {
+    "shot_id": "c5e728fe-3377-5bc7-9261-4bb2049dda05",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7239.MP4",
+    "start_frame": 750,
+    "duration_frames": 66,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 43,
+    "frame_path": "/tmp/p54_stress_frames/043.jpg",
+    "clip_pred": {
+      "top1": "couple",
+      "top1_score": 0.468,
+      "top2": "bride",
+      "top2_score": 0.347,
+      "margin": 0.122
+    },
+    "router": {
+      "r3_not_story_critical": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0242
+  },
+  {
+    "shot_id": "0d0bbbb1-b994-5871-a835-9184331f767d",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7243.MP4",
+    "start_frame": 375,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 44,
+    "frame_path": "/tmp/p54_stress_frames/044.jpg",
+    "clip_pred": {
+      "top1": "couple",
+      "top1_score": 0.463,
+      "top2": "bride",
+      "top2_score": 0.361,
+      "margin": 0.102
+    },
+    "router": {
+      "r3_not_story_critical": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.025
+  },
+  {
+    "shot_id": "b466b717-04ac-5130-b460-93f3c62c01ee",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7244.MP4",
+    "start_frame": 375,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 45,
+    "frame_path": "/tmp/p54_stress_frames/045.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.728,
+      "top2": "couple",
+      "top2_score": 0.158,
+      "margin": 0.57
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0266
+  },
+  {
+    "shot_id": "2914cefc-0a49-5a5c-a879-341761c02654",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7246.MP4",
+    "start_frame": 0,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 46,
+    "frame_path": "/tmp/p54_stress_frames/046.jpg",
+    "clip_pred": {
+      "top1": "couple",
+      "top1_score": 0.547,
+      "top2": "bride",
+      "top2_score": 0.271,
+      "margin": 0.276
+    },
+    "router": {
+      "r3_not_story_critical": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0247
+  },
+  {
+    "shot_id": "993c19a2-d6a6-5856-995f-52faddb5f944",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7249.MP4",
+    "start_frame": 375,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 47,
+    "frame_path": "/tmp/p54_stress_frames/047.jpg",
+    "clip_pred": {
+      "top1": "couple",
+      "top1_score": 0.566,
+      "top2": "bride",
+      "top2_score": 0.226,
+      "margin": 0.34
+    },
+    "router": {
+      "r3_not_story_critical": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0245
+  },
+  {
+    "shot_id": "652538eb-f325-5efc-b41f-62914dfa5303",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7252.MP4",
+    "start_frame": 0,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 48,
+    "frame_path": "/tmp/p54_stress_frames/048.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.4,
+      "top2": "couple",
+      "top2_score": 0.344,
+      "margin": 0.056
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0278
+  },
+  {
+    "shot_id": "55f98a04-9870-56e2-af13-af71c48c674e",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7254.MP4",
+    "start_frame": 375,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 49,
+    "frame_path": "/tmp/p54_stress_frames/049.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.375,
+      "top2": "groom",
+      "top2_score": 0.372,
+      "margin": 0.004
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0246
+  },
+  {
+    "shot_id": "35cc1820-d38f-5a4d-a2e5-a50e6792aba9",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7257.MP4",
+    "start_frame": 125,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 50,
+    "frame_path": "/tmp/p54_stress_frames/050.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.412,
+      "top2": "groom",
+      "top2_score": 0.35,
+      "margin": 0.061
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.027
+  },
+  {
+    "shot_id": "5ac60a0a-b7a6-5a2c-8e8e-c6ea117585b6",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7259.MP4",
+    "start_frame": 250,
+    "duration_frames": 38,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 51,
+    "frame_path": "/tmp/p54_stress_frames/051.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.693,
+      "top2": "couple",
+      "top2_score": 0.162,
+      "margin": 0.531
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0262
+  },
+  {
+    "shot_id": "9fd36029-ad46-57fa-b4f9-0f7308113988",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7261.MP4",
+    "start_frame": 1000,
+    "duration_frames": 32,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 52,
+    "frame_path": "/tmp/p54_stress_frames/052.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.438,
+      "top2": "couple",
+      "top2_score": 0.395,
+      "margin": 0.043
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0247
+  },
+  {
+    "shot_id": "7611993b-12bc-5914-8252-d54a04b5825c",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7264.MP4",
+    "start_frame": 0,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 53,
+    "frame_path": "/tmp/p54_stress_frames/053.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.693,
+      "top2": "bride",
+      "top2_score": 0.19,
+      "margin": 0.503
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0251
+  },
+  {
+    "shot_id": "7a0c8eb7-5599-5caf-9a74-354ae07710bf",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7267.MP4",
+    "start_frame": 125,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 54,
+    "frame_path": "/tmp/p54_stress_frames/054.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.681,
+      "top2": "groom",
+      "top2_score": 0.168,
+      "margin": 0.512
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.027
+  },
+  {
+    "shot_id": "2020d338-6c52-56da-a1ec-943e4ad0c409",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7269.MP4",
+    "start_frame": 500,
+    "duration_frames": 124,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 55,
+    "frame_path": "/tmp/p54_stress_frames/055.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.536,
+      "top2": "couple",
+      "top2_score": 0.249,
+      "margin": 0.288
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0267
+  },
+  {
+    "shot_id": "b6ff210d-08f3-504f-bc8a-6adbd31c61c5",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7272.MP4",
+    "start_frame": 625,
+    "duration_frames": 71,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 56,
+    "frame_path": "/tmp/p54_stress_frames/056.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.425,
+      "top2": "groom",
+      "top2_score": 0.322,
+      "margin": 0.104
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0244
+  },
+  {
+    "shot_id": "641014d4-9f6f-54fb-b124-60c6972208f4",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7279.MP4",
+    "start_frame": 0,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 57,
+    "frame_path": "/tmp/p54_stress_frames/057.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.589,
+      "top2": "couple",
+      "top2_score": 0.271,
+      "margin": 0.319
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.027
+  },
+  {
+    "shot_id": "d830c19a-d962-5cdf-9349-30fd4cf9155f",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7283.MP4",
+    "start_frame": 250,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 58,
+    "frame_path": "/tmp/p54_stress_frames/058.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.576,
+      "top2": "couple",
+      "top2_score": 0.285,
+      "margin": 0.291
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0269
+  },
+  {
+    "shot_id": "9f01f159-ba25-5834-922b-373c63df2c74",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7287.MP4",
+    "start_frame": 0,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 59,
+    "frame_path": "/tmp/p54_stress_frames/059.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.527,
+      "top2": "bride",
+      "top2_score": 0.211,
+      "margin": 0.316
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0278
+  },
+  {
+    "shot_id": "3097298e-218a-5b53-a79f-1d6deb2d4891",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7289.MP4",
+    "start_frame": 375,
+    "duration_frames": 81,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 60,
+    "frame_path": "/tmp/p54_stress_frames/060.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.567,
+      "top2": "bride",
+      "top2_score": 0.254,
+      "margin": 0.313
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.026
+  },
+  {
+    "shot_id": "c6275a95-5f91-5df7-9a2f-3e334e9613e2",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7293.MP4",
+    "start_frame": 250,
+    "duration_frames": 86,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 61,
+    "frame_path": "/tmp/p54_stress_frames/061.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.654,
+      "top2": "party",
+      "top2_score": 0.167,
+      "margin": 0.487
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0243
+  },
+  {
+    "shot_id": "7c70ff83-efa6-57f7-b20c-5a1c0f4b8965",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7296.MP4",
+    "start_frame": 250,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 62,
+    "frame_path": "/tmp/p54_stress_frames/062.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.536,
+      "top2": "groom",
+      "top2_score": 0.207,
+      "margin": 0.329
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0233
+  },
+  {
+    "shot_id": "765723c6-fc2a-575b-b338-e0089a7bda9d",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7299.MP4",
+    "start_frame": 375,
+    "duration_frames": 81,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 63,
+    "frame_path": "/tmp/p54_stress_frames/063.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.701,
+      "top2": "couple",
+      "top2_score": 0.203,
+      "margin": 0.498
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0234
+  },
+  {
+    "shot_id": "67fbce77-4751-588e-89e5-56f3de994a5f",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7304.MP4",
+    "start_frame": 125,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 64,
+    "frame_path": "/tmp/p54_stress_frames/064.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.625,
+      "top2": "couple",
+      "top2_score": 0.2,
+      "margin": 0.425
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0364
+  },
+  {
+    "shot_id": "3ec2fb1a-7740-59d9-9f0c-a7b4dff001cc",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7308.MP4",
+    "start_frame": 250,
+    "duration_frames": 110,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 65,
+    "frame_path": "/tmp/p54_stress_frames/065.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.424,
+      "top2": "couple",
+      "top2_score": 0.271,
+      "margin": 0.152
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0225
+  },
+  {
+    "shot_id": "15519b14-560c-52ae-8afa-53c951284f91",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7309.MP4",
+    "start_frame": 1500,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 66,
+    "frame_path": "/tmp/p54_stress_frames/066.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.385,
+      "top2": "couple",
+      "top2_score": 0.331,
+      "margin": 0.054
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0251
+  },
+  {
+    "shot_id": "fdcc8aca-03ab-56bd-9594-5f6e3acefc67",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7312.MP4",
+    "start_frame": 125,
+    "duration_frames": 91,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 67,
+    "frame_path": "/tmp/p54_stress_frames/067.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.47,
+      "top2": "couple",
+      "top2_score": 0.225,
+      "margin": 0.245
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0257
+  },
+  {
+    "shot_id": "5a0142d4-ee2c-5bdb-9c07-5e40cf7d20d1",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7316.MP4",
+    "start_frame": 125,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 68,
+    "frame_path": "/tmp/p54_stress_frames/068.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.449,
+      "top2": "couple",
+      "top2_score": 0.209,
+      "margin": 0.24
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0236
+  },
+  {
+    "shot_id": "027c30ec-182a-5ede-a0a8-48559bf9bb54",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7319.MP4",
+    "start_frame": 0,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 69,
+    "frame_path": "/tmp/p54_stress_frames/069.jpg",
+    "clip_pred": {
+      "top1": "couple",
+      "top1_score": 0.473,
+      "top2": "bride",
+      "top2_score": 0.349,
+      "margin": 0.124
+    },
+    "router": {
+      "r3_not_story_critical": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0247
+  },
+  {
+    "shot_id": "86143230-f760-5af8-919c-886a7dcdc8a7",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7322.MP4",
+    "start_frame": 125,
+    "duration_frames": 67,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 70,
+    "frame_path": "/tmp/p54_stress_frames/070.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.432,
+      "top2": "groom",
+      "top2_score": 0.308,
+      "margin": 0.124
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0245
+  },
+  {
+    "shot_id": "33ac0904-768a-565c-825f-d45dbf177370",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7324.MP4",
+    "start_frame": 500,
+    "duration_frames": 52,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 71,
+    "frame_path": "/tmp/p54_stress_frames/071.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.483,
+      "top2": "bride",
+      "top2_score": 0.243,
+      "margin": 0.24
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0366
+  },
+  {
+    "shot_id": "08bf84eb-e432-5981-be98-264239a447bb",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7327.MP4",
+    "start_frame": 500,
+    "duration_frames": 52,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 72,
+    "frame_path": "/tmp/p54_stress_frames/072.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.565,
+      "top2": "bride",
+      "top2_score": 0.234,
+      "margin": 0.331
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0278
+  },
+  {
+    "shot_id": "b110568c-4378-5191-a45c-17b1a0bace37",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7330.MP4",
+    "start_frame": 375,
+    "duration_frames": 105,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 73,
+    "frame_path": "/tmp/p54_stress_frames/073.jpg",
+    "clip_pred": {
+      "top1": "couple",
+      "top1_score": 0.677,
+      "top2": "bride",
+      "top2_score": 0.205,
+      "margin": 0.472
+    },
+    "router": {
+      "r3_not_story_critical": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0377
+  },
+  {
+    "shot_id": "99c167b9-4b87-5d98-aa95-4529f54bc574",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7334.MP4",
+    "start_frame": 0,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 74,
+    "frame_path": "/tmp/p54_stress_frames/074.jpg",
+    "clip_pred": {
+      "top1": "couple",
+      "top1_score": 0.468,
+      "top2": "bride",
+      "top2_score": 0.293,
+      "margin": 0.175
+    },
+    "router": {
+      "r3_not_story_critical": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0276
+  },
+  {
+    "shot_id": "0ed47207-b361-5363-9da6-e2ab044c38d4",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7336.MP4",
+    "start_frame": 125,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 75,
+    "frame_path": "/tmp/p54_stress_frames/075.jpg",
+    "clip_pred": {
+      "top1": "family",
+      "top1_score": 0.626,
+      "top2": "bride",
+      "top2_score": 0.155,
+      "margin": 0.471
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0317
+  },
+  {
+    "shot_id": "af1ece0a-a3c1-5e0c-8039-9aac05aa3e33",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7338.MP4",
+    "start_frame": 625,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 76,
+    "frame_path": "/tmp/p54_stress_frames/076.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.523,
+      "top2": "family",
+      "top2_score": 0.178,
+      "margin": 0.346
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0251
+  },
+  {
+    "shot_id": "ee81058f-272f-5314-81bc-e533d8bfc8af",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7340.MP4",
+    "start_frame": 625,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 77,
+    "frame_path": "/tmp/p54_stress_frames/077.jpg",
+    "clip_pred": {
+      "top1": "family",
+      "top1_score": 0.516,
+      "top2": "couple",
+      "top2_score": 0.209,
+      "margin": 0.307
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0258
+  },
+  {
+    "shot_id": "7c9d30ee-19ac-5a98-9995-dc43bd78e466",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7342.MP4",
+    "start_frame": 375,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 78,
+    "frame_path": "/tmp/p54_stress_frames/078.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.548,
+      "top2": "family",
+      "top2_score": 0.261,
+      "margin": 0.287
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0264
+  },
+  {
+    "shot_id": "c7148869-8361-597f-a083-14a9e7c71b7c",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7343.MP4",
+    "start_frame": 750,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 79,
+    "frame_path": "/tmp/p54_stress_frames/079.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.668,
+      "top2": "family",
+      "top2_score": 0.116,
+      "margin": 0.552
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0239
+  },
+  {
+    "shot_id": "0e85ad1b-7252-52e2-824c-765a35629974",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7343.MP4",
+    "start_frame": 2375,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 80,
+    "frame_path": "/tmp/p54_stress_frames/080.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.326,
+      "top2": "bride",
+      "top2_score": 0.231,
+      "margin": 0.095
+    },
+    "router": {
+      "r3_not_story_critical": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0276
+  },
+  {
+    "shot_id": "9ec6847d-363c-5307-8a78-4bf3bba224b1",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7344.MP4",
+    "start_frame": 625,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 81,
+    "frame_path": "/tmp/p54_stress_frames/081.jpg",
+    "clip_pred": {
+      "top1": "couple",
+      "top1_score": 0.346,
+      "top2": "groom",
+      "top2_score": 0.297,
+      "margin": 0.049
+    },
+    "router": {
+      "r3_not_story_critical": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0281
+  },
+  {
+    "shot_id": "1adbda40-4c26-582e-a8e5-56caa0a56fc7",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7346.MP4",
+    "start_frame": 0,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 82,
+    "frame_path": "/tmp/p54_stress_frames/082.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.458,
+      "top2": "bride",
+      "top2_score": 0.2,
+      "margin": 0.258
+    },
+    "router": {
+      "r3_not_story_critical": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0239
+  },
+  {
+    "shot_id": "390a884b-e32e-54e0-bfc4-9d930c6ce62a",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7349.MP4",
+    "start_frame": 125,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 83,
+    "frame_path": "/tmp/p54_stress_frames/083.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.489,
+      "top2": "couple",
+      "top2_score": 0.278,
+      "margin": 0.212
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.026
+  },
+  {
+    "shot_id": "b4f3c48f-473b-55a3-8207-31beedee1e22",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7351.MP4",
+    "start_frame": 625,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 84,
+    "frame_path": "/tmp/p54_stress_frames/084.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.302,
+      "top2": "couple",
+      "top2_score": 0.281,
+      "margin": 0.021
+    },
+    "router": {
+      "r3_not_story_critical": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0273
+  },
+  {
+    "shot_id": "f438483a-088b-582d-8809-a0c42c5c0a93",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7351.MP4",
+    "start_frame": 2250,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 85,
+    "frame_path": "/tmp/p54_stress_frames/085.jpg",
+    "clip_pred": {
+      "top1": "couple",
+      "top1_score": 0.378,
+      "top2": "bride",
+      "top2_score": 0.263,
+      "margin": 0.115
+    },
+    "router": {
+      "r3_not_story_critical": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0271
+  },
+  {
+    "shot_id": "de1196ee-d1c4-5f57-9307-59f7e06f44a8",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7352.MP4",
+    "start_frame": 0,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 86,
+    "frame_path": "/tmp/p54_stress_frames/086.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.472,
+      "top2": "couple",
+      "top2_score": 0.174,
+      "margin": 0.298
+    },
+    "router": {
+      "r3_not_story_critical": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0242
+  },
+  {
+    "shot_id": "6e41d835-f78f-5e88-b120-077489d85626",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7354.MP4",
+    "start_frame": 500,
+    "duration_frames": 52,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 87,
+    "frame_path": "/tmp/p54_stress_frames/087.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.622,
+      "top2": "couple",
+      "top2_score": 0.261,
+      "margin": 0.36
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.037
+  },
+  {
+    "shot_id": "5a841f7e-22cc-5696-a69f-5da605241f62",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7357.MP4",
+    "start_frame": 125,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 88,
+    "frame_path": "/tmp/p54_stress_frames/088.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.674,
+      "top2": "couple",
+      "top2_score": 0.179,
+      "margin": 0.495
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0245
+  },
+  {
+    "shot_id": "71c32a66-3b5f-5a4c-b7f7-9ed76eee11eb",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7359.MP4",
+    "start_frame": 250,
+    "duration_frames": 62,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 89,
+    "frame_path": "/tmp/p54_stress_frames/089.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.465,
+      "top2": "bride",
+      "top2_score": 0.255,
+      "margin": 0.211
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0283
+  },
+  {
+    "shot_id": "e8aba86d-afc0-5eaf-b046-8eeab72c1d62",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7362.MP4",
+    "start_frame": 375,
+    "duration_frames": 33,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 90,
+    "frame_path": "/tmp/p54_stress_frames/090.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.465,
+      "top2": "bride",
+      "top2_score": 0.23,
+      "margin": 0.234
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0242
+  },
+  {
+    "shot_id": "2bd566ef-e0a6-503a-bcbc-b4d92e8c60aa",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7367.MP4",
+    "start_frame": 0,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 91,
+    "frame_path": "/tmp/p54_stress_frames/091.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.609,
+      "top2": "bride",
+      "top2_score": 0.163,
+      "margin": 0.446
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0206
+  },
+  {
+    "shot_id": "b6b22a0f-7cc5-57e6-817a-57159cdf055c",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7368.MP4",
+    "start_frame": 0,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 92,
+    "frame_path": "/tmp/p54_stress_frames/092.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.532,
+      "top2": "couple",
+      "top2_score": 0.269,
+      "margin": 0.263
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0261
+  },
+  {
+    "shot_id": "ec3ee9de-244e-55da-84bd-6bc7ea7e3535",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7372.MP4",
+    "start_frame": 0,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 93,
+    "frame_path": "/tmp/p54_stress_frames/093.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.577,
+      "top2": "party",
+      "top2_score": 0.217,
+      "margin": 0.36
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0261
+  },
+  {
+    "shot_id": "73581c55-d9f4-5e52-8de9-ec93f9816ba8",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7373.MP4",
+    "start_frame": 125,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 94,
+    "frame_path": "/tmp/p54_stress_frames/094.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.787,
+      "top2": "bride",
+      "top2_score": 0.143,
+      "margin": 0.644
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0265
+  },
+  {
+    "shot_id": "232a5ba2-f67a-5a86-a001-dca64456035b",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7377.MP4",
+    "start_frame": 625,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 95,
+    "frame_path": "/tmp/p54_stress_frames/095.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.68,
+      "top2": "party",
+      "top2_score": 0.125,
+      "margin": 0.554
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0245
+  },
+  {
+    "shot_id": "4d640b2f-7cc3-5837-8296-c04e44a1fed8",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7381.MP4",
+    "start_frame": 125,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 96,
+    "frame_path": "/tmp/p54_stress_frames/096.jpg",
+    "clip_pred": {
+      "top1": "couple",
+      "top1_score": 0.446,
+      "top2": "bride",
+      "top2_score": 0.236,
+      "margin": 0.21
+    },
+    "router": {
+      "r3_not_story_critical": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0264
+  },
+  {
+    "shot_id": "4afdd8e7-7b49-5e49-a3e0-54f42c8e5b62",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7384.MP4",
+    "start_frame": 125,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 97,
+    "frame_path": "/tmp/p54_stress_frames/097.jpg",
+    "clip_pred": {
+      "top1": "party",
+      "top1_score": 0.317,
+      "top2": "groom",
+      "top2_score": 0.296,
+      "margin": 0.021
+    },
+    "router": {
+      "r3_not_story_critical": false,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0254
+  },
+  {
+    "shot_id": "df11c4eb-a1b6-5591-81b1-f3ed54e20581",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7386.MP4",
+    "start_frame": 375,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 98,
+    "frame_path": "/tmp/p54_stress_frames/098.jpg",
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.72,
+      "top2": "groom",
+      "top2_score": 0.221,
+      "margin": 0.499
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": false
+    },
+    "clip_latency_s": 0.0246
+  },
+  {
+    "shot_id": "ade76b90-2cf2-545e-87b6-32e894dce4fd",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7390.MP4",
+    "start_frame": 125,
+    "duration_frames": 125,
+    "frame_rate": "50/1",
+    "fallback_category": "venue",
+    "frame_index": 99,
+    "frame_path": "/tmp/p54_stress_frames/099.jpg",
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.332,
+      "top2": "party",
+      "top2_score": 0.267,
+      "margin": 0.065
+    },
+    "router": {
+      "r3_not_story_critical": true,
+      "r4b_conservative": true
+    },
+    "clip_latency_s": 0.0363
+  }
+]

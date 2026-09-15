@@ -1,0 +1,961 @@
+[
+  {
+    "frame_index": 2,
+    "frame_path": "/tmp/p54_stress_frames/002.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7110.MP4",
+    "start_frame": 228,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.594,
+      "top2": "bride_prep",
+      "top2_score": 0.316,
+      "margin": 0.278
+    },
+    "latency_s": 9.01,
+    "raw": "{\"broad_scene\": \"Wedding hair styling\", \"subjects\": [\"bride\", \"hair stylist\"], \"action\": \"hair stylist styling bride's hair\", \"event_present\": \"none\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Wedding hair styling",
+      "subjects": [
+        "bride",
+        "hair stylist"
+      ],
+      "action": "hair stylist styling bride's hair",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-stress-fresh"
+  },
+  {
+    "frame_index": 13,
+    "frame_path": "/tmp/p54_stress_frames/013.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7151.MP4",
+    "start_frame": 678,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.506,
+      "top2": "bride_prep",
+      "top2_score": 0.369,
+      "margin": 0.137
+    },
+    "latency_s": 5.35,
+    "raw": "{\"broad_scene\": \"Wedding makeup application\", \"subjects\": [\"bride\", \"makeup artist\"], \"action\": \"makeup artist applying lipstick to bride\", \"event_present\": \"none\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Wedding makeup application",
+      "subjects": [
+        "bride",
+        "makeup artist"
+      ],
+      "action": "makeup artist applying lipstick to bride",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-stress-fresh"
+  },
+  {
+    "frame_index": 15,
+    "frame_path": "/tmp/p54_stress_frames/015.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7157.MP4",
+    "start_frame": 0,
+    "clip_pred": {
+      "top1": "detail",
+      "top1_score": 0.22,
+      "top2": "ceremony",
+      "top2_score": 0.219,
+      "margin": 0.002
+    },
+    "latency_s": 5.08,
+    "raw": "{\"broad_scene\": \"Wedding table setup\", \"subjects\": [\"candles\", \"cosmetics\", \"bell\"], \"action\": \"Still arrangement\", \"event_present\": \"none\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Wedding table setup",
+      "subjects": [
+        "candles",
+        "cosmetics",
+        "bell"
+      ],
+      "action": "Still arrangement",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-stress-fresh"
+  },
+  {
+    "frame_index": 18,
+    "frame_path": "/tmp/p54_stress_frames/018.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7170.MP4",
+    "start_frame": 176,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.481,
+      "top2": "groom",
+      "top2_score": 0.259,
+      "margin": 0.222
+    },
+    "latency_s": 5.31,
+    "raw": "{\"broad_scene\": \"Wedding preparation\", \"subjects\": [\"bride\", \"groom\"], \"action\": \"Bride adjusting groom's shirt collar\", \"event_present\": \"none\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Wedding preparation",
+      "subjects": [
+        "bride",
+        "groom"
+      ],
+      "action": "Bride adjusting groom's shirt collar",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-stress-fresh"
+  },
+  {
+    "frame_index": 20,
+    "frame_path": "/tmp/p54_stress_frames/020.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7178.MP4",
+    "start_frame": 0,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.432,
+      "top2": "couple",
+      "top2_score": 0.377,
+      "margin": 0.055
+    },
+    "latency_s": 5.33,
+    "raw": "{\"broad_scene\": \"Wedding couple in ornate room\", \"subjects\": [\"groom\", \"bride\"], \"action\": \"Kissing\", \"event_present\": \"none\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Wedding couple in ornate room",
+      "subjects": [
+        "groom",
+        "bride"
+      ],
+      "action": "Kissing",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-stress-fresh"
+  },
+  {
+    "frame_index": 23,
+    "frame_path": "/tmp/p54_stress_frames/023.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7191.MP4",
+    "start_frame": 0,
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.45,
+      "top2": "groom_prep",
+      "top2_score": 0.325,
+      "margin": 0.125
+    },
+    "latency_s": 4.67,
+    "raw": "{\"broad_scene\": \"Wedding reception\", \"subjects\": [\"groom\"], \"action\": \"Adjusting tie\", \"event_present\": \"none\", \"confidence\": 0.92}",
+    "parsed": {
+      "broad_scene": "Wedding reception",
+      "subjects": [
+        "groom"
+      ],
+      "action": "Adjusting tie",
+      "event_present": "none",
+      "confidence": 0.92
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-stress-fresh"
+  },
+  {
+    "frame_index": 24,
+    "frame_path": "/tmp/p54_stress_frames/024.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7193.MP4",
+    "start_frame": 1500,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.405,
+      "top2": "couple",
+      "top2_score": 0.351,
+      "margin": 0.054
+    },
+    "latency_s": 5.43,
+    "raw": "{\"broad_scene\": \"Wedding couple in indoor setting\", \"subjects\": [\"bride\", \"groom\"], \"action\": \"Bride gently touches groom's face\", \"event_present\": \"none\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Wedding couple in indoor setting",
+      "subjects": [
+        "bride",
+        "groom"
+      ],
+      "action": "Bride gently touches groom's face",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-stress-fresh"
+  },
+  {
+    "frame_index": 26,
+    "frame_path": "/tmp/p54_stress_frames/026.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7197.MP4",
+    "start_frame": 0,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.425,
+      "top2": "couple",
+      "top2_score": 0.302,
+      "margin": 0.123
+    },
+    "latency_s": 5.62,
+    "raw": "{\"broad_scene\": \"Couple in wedding venue\", \"subjects\": [\"bride\", \"groom\"], \"action\": \"Groom touching window while bride smiles\", \"event_present\": \"none\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Couple in wedding venue",
+      "subjects": [
+        "bride",
+        "groom"
+      ],
+      "action": "Groom touching window while bride smiles",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-stress-fresh"
+  },
+  {
+    "frame_index": 27,
+    "frame_path": "/tmp/p54_stress_frames/027.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7200.MP4",
+    "start_frame": 250,
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.514,
+      "top2": "groom_prep",
+      "top2_score": 0.382,
+      "margin": 0.133
+    },
+    "latency_s": 6.43,
+    "raw": "{\n  \"broad_scene\": \"Man in formal attire walking through a modern indoor space\",\n  \"subjects\": [\n    \"man in tuxedo\"\n  ],\n  \"action\": \"walking forward\",\n  \"event_present\": \"none\",\n  \"confidence\": 0.95\n}",
+    "parsed": {
+      "broad_scene": "Man in formal attire walking through a modern indoor space",
+      "subjects": [
+        "man in tuxedo"
+      ],
+      "action": "walking forward",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-stress-fresh"
+  },
+  {
+    "frame_index": 31,
+    "frame_path": "/tmp/p54_stress_frames/031.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7213.MP4",
+    "start_frame": 500,
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.473,
+      "top2": "bride",
+      "top2_score": 0.337,
+      "margin": 0.135
+    },
+    "latency_s": 5.48,
+    "raw": "{\"broad_scene\": \"Wedding couple posing with vintage van\", \"subjects\": [\"groom\", \"bride\"], \"action\": \"Sitting on grass next to van\", \"event_present\": \"none\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Wedding couple posing with vintage van",
+      "subjects": [
+        "groom",
+        "bride"
+      ],
+      "action": "Sitting on grass next to van",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.3-fresh"
+  },
+  {
+    "frame_index": 33,
+    "frame_path": "/tmp/p54_stress_frames/033.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7218.MP4",
+    "start_frame": 250,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.481,
+      "top2": "couple",
+      "top2_score": 0.249,
+      "margin": 0.233
+    },
+    "latency_s": 4.9,
+    "raw": "{\"broad_scene\": \"Wedding dress and veil\", \"subjects\": [\"bride\"], \"action\": \"Standing still\", \"event_present\": \"none\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Wedding dress and veil",
+      "subjects": [
+        "bride"
+      ],
+      "action": "Standing still",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-stress-fresh"
+  },
+  {
+    "frame_index": 34,
+    "frame_path": "/tmp/p54_stress_frames/034.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7220.MP4",
+    "start_frame": 625,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.401,
+      "top2": "groom",
+      "top2_score": 0.313,
+      "margin": 0.088
+    },
+    "latency_s": 5.11,
+    "raw": "{\"broad_scene\": \"Wedding couple walking\", \"subjects\": [\"bride\", \"groom\"], \"action\": \"Walking together\", \"event_present\": \"none\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Wedding couple walking",
+      "subjects": [
+        "bride",
+        "groom"
+      ],
+      "action": "Walking together",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-stress-fresh"
+  },
+  {
+    "frame_index": 38,
+    "frame_path": "/tmp/p54_stress_frames/038.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7228.MP4",
+    "start_frame": 125,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.426,
+      "top2": "couple",
+      "top2_score": 0.335,
+      "margin": 0.091
+    },
+    "latency_s": 5.15,
+    "raw": "{\"broad_scene\": \"Intimate wedding moment\", \"subjects\": [\"groom\", \"bride\"], \"action\": \"Kissing\", \"event_present\": \"none\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Intimate wedding moment",
+      "subjects": [
+        "groom",
+        "bride"
+      ],
+      "action": "Kissing",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-stress-fresh"
+  },
+  {
+    "frame_index": 41,
+    "frame_path": "/tmp/p54_stress_frames/041.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7235.MP4",
+    "start_frame": 375,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.418,
+      "top2": "couple",
+      "top2_score": 0.386,
+      "margin": 0.032
+    },
+    "latency_s": 5.36,
+    "raw": "{\"broad_scene\": \"wedding couple\", \"subjects\": [\"groom\", \"bride\"], \"action\": \"groom kissing bride's cheek\", \"event_present\": \"none\", \"confidence\": 0.98}",
+    "parsed": {
+      "broad_scene": "wedding couple",
+      "subjects": [
+        "groom",
+        "bride"
+      ],
+      "action": "groom kissing bride's cheek",
+      "event_present": "none",
+      "confidence": 0.98
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-stress-fresh"
+  },
+  {
+    "frame_index": 42,
+    "frame_path": "/tmp/p54_stress_frames/042.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7237.MP4",
+    "start_frame": 375,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.429,
+      "top2": "couple",
+      "top2_score": 0.423,
+      "margin": 0.006
+    },
+    "latency_s": 5.23,
+    "raw": "{\"broad_scene\": \"Couple on couch\", \"subjects\": [\"bride\", \"groom\"], \"action\": \"Lovingly embracing\", \"event_present\": \"none\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Couple on couch",
+      "subjects": [
+        "bride",
+        "groom"
+      ],
+      "action": "Lovingly embracing",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-stress-fresh"
+  },
+  {
+    "frame_index": 48,
+    "frame_path": "/tmp/p54_stress_frames/048.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7252.MP4",
+    "start_frame": 0,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.4,
+      "top2": "couple",
+      "top2_score": 0.344,
+      "margin": 0.056
+    },
+    "latency_s": 9.65,
+    "raw": "{\n  \"broad_scene\": \"Outdoor wedding reception\",\n  \"subjects\": [\n    \"groom\",\n    \"bride\"\n  ],\n  \"action\": \"Dancing closely\",\n  \"event_present\": \"first_dance\",\n  \"confidence\": 0.95\n}",
+    "parsed": {
+      "broad_scene": "Outdoor wedding reception",
+      "subjects": [
+        "groom",
+        "bride"
+      ],
+      "action": "Dancing closely",
+      "event_present": "first_dance",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-fresh"
+  },
+  {
+    "frame_index": 49,
+    "frame_path": "/tmp/p54_stress_frames/049.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7254.MP4",
+    "start_frame": 375,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.375,
+      "top2": "groom",
+      "top2_score": 0.372,
+      "margin": 0.004
+    },
+    "latency_s": 6.63,
+    "raw": "{\n  \"broad_scene\": \"Wedding reception\",\n  \"subjects\": [\n    \"groom\",\n    \"bride\",\n    \"guests\"\n  ],\n  \"action\": \"Groom dancing with bride\",\n  \"event_present\": \"none\",\n  \"confidence\": 0.95\n}",
+    "parsed": {
+      "broad_scene": "Wedding reception",
+      "subjects": [
+        "groom",
+        "bride",
+        "guests"
+      ],
+      "action": "Groom dancing with bride",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-stress-fresh"
+  },
+  {
+    "frame_index": 50,
+    "frame_path": "/tmp/p54_stress_frames/050.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7257.MP4",
+    "start_frame": 125,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.412,
+      "top2": "groom",
+      "top2_score": 0.35,
+      "margin": 0.061
+    },
+    "latency_s": 8.03,
+    "raw": "{\n  \"broad_scene\": \"Wedding reception\",\n  \"subjects\": [\n    \"groom\",\n    \"bride\",\n    \"guests\"\n  ],\n  \"action\": \"Groom and bride embracing\",\n  \"event_present\": \"none\",\n  \"confidence\": 0.95\n}",
+    "parsed": {
+      "broad_scene": "Wedding reception",
+      "subjects": [
+        "groom",
+        "bride",
+        "guests"
+      ],
+      "action": "Groom and bride embracing",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-stress-fresh"
+  },
+  {
+    "frame_index": 52,
+    "frame_path": "/tmp/p54_stress_frames/052.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7261.MP4",
+    "start_frame": 1000,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.438,
+      "top2": "couple",
+      "top2_score": 0.395,
+      "margin": 0.043
+    },
+    "latency_s": 7.34,
+    "raw": "{\n  \"broad_scene\": \"Outdoor wedding reception\",\n  \"subjects\": [\n    \"bride\",\n    \"groom\",\n    \"guests\"\n  ],\n  \"action\": \"Couple dancing with arms outstretched\",\n  \"event_present\": \"first_dance\",\n  \"confidence\": 0.95\n}",
+    "parsed": {
+      "broad_scene": "Outdoor wedding reception",
+      "subjects": [
+        "bride",
+        "groom",
+        "guests"
+      ],
+      "action": "Couple dancing with arms outstretched",
+      "event_present": "first_dance",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-stress-fresh"
+  },
+  {
+    "frame_index": 55,
+    "frame_path": "/tmp/p54_stress_frames/055.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7269.MP4",
+    "start_frame": 500,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.536,
+      "top2": "couple",
+      "top2_score": 0.249,
+      "margin": 0.288
+    },
+    "latency_s": 7.36,
+    "raw": "{\n  \"broad_scene\": \"Wedding reception\",\n  \"subjects\": [\n    \"bride\",\n    \"guests\",\n    \"woman in hijab\"\n  ],\n  \"action\": \"Guests are seated and conversing\",\n  \"event_present\": \"none\",\n  \"confidence\": 0.95\n}",
+    "parsed": {
+      "broad_scene": "Wedding reception",
+      "subjects": [
+        "bride",
+        "guests",
+        "woman in hijab"
+      ],
+      "action": "Guests are seated and conversing",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-stress-fresh"
+  },
+  {
+    "frame_index": 56,
+    "frame_path": "/tmp/p54_stress_frames/056.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7272.MP4",
+    "start_frame": 625,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.425,
+      "top2": "groom",
+      "top2_score": 0.322,
+      "margin": 0.104
+    },
+    "latency_s": 7.78,
+    "raw": "{\n  \"broad_scene\": \"Nighttime outdoor gathering\",\n  \"subjects\": [\n    \"woman with glasses\",\n    \"woman with long hair and glasses\",\n    \"person in black veil or head covering\"\n  ],\n  \"action\": \"People are seated and conversing\",\n  \"event_present\": \"none\",\n  \"confidence\": 0.75\n}",
+    "parsed": {
+      "broad_scene": "Nighttime outdoor gathering",
+      "subjects": [
+        "woman with glasses",
+        "woman with long hair and glasses",
+        "person in black veil or head covering"
+      ],
+      "action": "People are seated and conversing",
+      "event_present": "none",
+      "confidence": 0.75
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-stress-fresh"
+  },
+  {
+    "frame_index": 58,
+    "frame_path": "/tmp/p54_stress_frames/058.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7283.MP4",
+    "start_frame": 250,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.576,
+      "top2": "couple",
+      "top2_score": 0.285,
+      "margin": 0.291
+    },
+    "latency_s": 5.16,
+    "raw": "{\"broad_scene\": \"Wedding reception\", \"subjects\": [\"bride\"], \"action\": \"Smiling while dancing\", \"event_present\": \"none\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Wedding reception",
+      "subjects": [
+        "bride"
+      ],
+      "action": "Smiling while dancing",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-stress-fresh"
+  },
+  {
+    "frame_index": 65,
+    "frame_path": "/tmp/p54_stress_frames/065.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7308.MP4",
+    "start_frame": 250,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.424,
+      "top2": "couple",
+      "top2_score": 0.271,
+      "margin": 0.152
+    },
+    "latency_s": 6.32,
+    "raw": "{\n  \"broad_scene\": \"Wedding reception with cake and guests\",\n  \"subjects\": [\n    \"groom\",\n    \"bride\"\n  ],\n  \"action\": \"Standing before wedding cake\",\n  \"event_present\": \"none\",\n  \"confidence\": 0.95\n}",
+    "parsed": {
+      "broad_scene": "Wedding reception with cake and guests",
+      "subjects": [
+        "groom",
+        "bride"
+      ],
+      "action": "Standing before wedding cake",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.3-fresh"
+  },
+  {
+    "frame_index": 66,
+    "frame_path": "/tmp/p54_stress_frames/066.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7309.MP4",
+    "start_frame": 1500,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.385,
+      "top2": "couple",
+      "top2_score": 0.331,
+      "margin": 0.054
+    },
+    "latency_s": 6.69,
+    "raw": "{\n  \"broad_scene\": \"Wedding cake cutting\",\n  \"subjects\": [\n    \"Groom\",\n    \"Bride\"\n  ],\n  \"action\": \"Cutting wedding cake together\",\n  \"event_present\": \"cake_cutting\",\n  \"confidence\": 0.98\n}",
+    "parsed": {
+      "broad_scene": "Wedding cake cutting",
+      "subjects": [
+        "Groom",
+        "Bride"
+      ],
+      "action": "Cutting wedding cake together",
+      "event_present": "cake_cutting",
+      "confidence": 0.98
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-stress-fresh"
+  },
+  {
+    "frame_index": 67,
+    "frame_path": "/tmp/p54_stress_frames/067.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7312.MP4",
+    "start_frame": 125,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.47,
+      "top2": "couple",
+      "top2_score": 0.225,
+      "margin": 0.245
+    },
+    "latency_s": 6.41,
+    "raw": "{\n  \"broad_scene\": \"Wedding reception\",\n  \"subjects\": [\n    \"Three women in elaborate costumes\"\n  ],\n  \"action\": \"Dancing in a line\",\n  \"event_present\": \"none\",\n  \"confidence\": 0.95\n}",
+    "parsed": {
+      "broad_scene": "Wedding reception",
+      "subjects": [
+        "Three women in elaborate costumes"
+      ],
+      "action": "Dancing in a line",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-stress-fresh"
+  },
+  {
+    "frame_index": 68,
+    "frame_path": "/tmp/p54_stress_frames/068.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7316.MP4",
+    "start_frame": 125,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.449,
+      "top2": "couple",
+      "top2_score": 0.209,
+      "margin": 0.24
+    },
+    "latency_s": 8.25,
+    "raw": "{\n  \"broad_scene\": \"Nighttime outdoor wedding event\",\n  \"subjects\": [\n    \"Woman in blue and gold dress\",\n    \"Woman in black and white costume\",\n    \"Musicians in background\"\n  ],\n  \"action\": \"Dancers performing at wedding\",\n  \"event_present\": \"none\",\n  \"confidence\": 0.85\n}",
+    "parsed": {
+      "broad_scene": "Nighttime outdoor wedding event",
+      "subjects": [
+        "Woman in blue and gold dress",
+        "Woman in black and white costume",
+        "Musicians in background"
+      ],
+      "action": "Dancers performing at wedding",
+      "event_present": "none",
+      "confidence": 0.85
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-stress-fresh"
+  },
+  {
+    "frame_index": 70,
+    "frame_path": "/tmp/p54_stress_frames/070.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7322.MP4",
+    "start_frame": 125,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.432,
+      "top2": "groom",
+      "top2_score": 0.308,
+      "margin": 0.124
+    },
+    "latency_s": 7.37,
+    "raw": "{\n  \"broad_scene\": \"Wedding reception with live music\",\n  \"subjects\": [\n    \"Woman in blue gown\",\n    \"Man playing drum\",\n    \"Other guests\"\n  ],\n  \"action\": \"Musician playing drum while guests dance\",\n  \"event_present\": \"none\",\n  \"confidence\": 0.92\n}",
+    "parsed": {
+      "broad_scene": "Wedding reception with live music",
+      "subjects": [
+        "Woman in blue gown",
+        "Man playing drum",
+        "Other guests"
+      ],
+      "action": "Musician playing drum while guests dance",
+      "event_present": "none",
+      "confidence": 0.92
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-stress-fresh"
+  },
+  {
+    "frame_index": 71,
+    "frame_path": "/tmp/p54_stress_frames/071.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7324.MP4",
+    "start_frame": 500,
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.483,
+      "top2": "bride",
+      "top2_score": 0.243,
+      "margin": 0.24
+    },
+    "latency_s": 6.01,
+    "raw": "{\n  \"broad_scene\": \"Wedding reception\",\n  \"subjects\": [\n    \"drummer\",\n    \"guests\"\n  ],\n  \"action\": \"Drummer playing drum\",\n  \"event_present\": \"none\",\n  \"confidence\": 0.95\n}",
+    "parsed": {
+      "broad_scene": "Wedding reception",
+      "subjects": [
+        "drummer",
+        "guests"
+      ],
+      "action": "Drummer playing drum",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-stress-fresh"
+  },
+  {
+    "frame_index": 78,
+    "frame_path": "/tmp/p54_stress_frames/078.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7342.MP4",
+    "start_frame": 375,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.548,
+      "top2": "family",
+      "top2_score": 0.261,
+      "margin": 0.287
+    },
+    "latency_s": 8.85,
+    "raw": "{\n  \"broad_scene\": \"Wedding ceremony at night\",\n  \"subjects\": [\n    \"Woman in red veil\",\n    \"Woman in striped shirt and hijab\",\n    \"Woman in black dress\",\n    \"Child in background\"\n  ],\n  \"action\": \"Woman in hijab placing something on the woman in red veil's hand\",\n  \"event_present\": \"ceremony_action\",\n  \"confidence\": 0.92\n}",
+    "parsed": {
+      "broad_scene": "Wedding ceremony at night",
+      "subjects": [
+        "Woman in red veil",
+        "Woman in striped shirt and hijab",
+        "Woman in black dress",
+        "Child in background"
+      ],
+      "action": "Woman in hijab placing something on the woman in red veil's hand",
+      "event_present": "ceremony_action",
+      "confidence": 0.92
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-stress-fresh"
+  },
+  {
+    "frame_index": 83,
+    "frame_path": "/tmp/p54_stress_frames/083.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7349.MP4",
+    "start_frame": 125,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.489,
+      "top2": "couple",
+      "top2_score": 0.278,
+      "margin": 0.212
+    },
+    "latency_s": 5.41,
+    "raw": "{\"broad_scene\": \"Wedding reception dance floor\", \"subjects\": [\"Bride\", \"Groom\"], \"action\": \"Bride dancing with groom\", \"event_present\": \"first_dance\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Wedding reception dance floor",
+      "subjects": [
+        "Bride",
+        "Groom"
+      ],
+      "action": "Bride dancing with groom",
+      "event_present": "first_dance",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-stress-fresh"
+  },
+  {
+    "frame_index": 89,
+    "frame_path": "/tmp/p54_stress_frames/089.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7359.MP4",
+    "start_frame": 250,
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.465,
+      "top2": "bride",
+      "top2_score": 0.255,
+      "margin": 0.211
+    },
+    "latency_s": 5.26,
+    "raw": "{\"broad_scene\": \"Wedding celebration\", \"subjects\": [\"Guests\", \"Man in green shirt\"], \"action\": \"Celebrating with raised arms\", \"event_present\": \"none\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Wedding celebration",
+      "subjects": [
+        "Guests",
+        "Man in green shirt"
+      ],
+      "action": "Celebrating with raised arms",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-stress-fresh"
+  },
+  {
+    "frame_index": 90,
+    "frame_path": "/tmp/p54_stress_frames/090.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7362.MP4",
+    "start_frame": 375,
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.465,
+      "top2": "bride",
+      "top2_score": 0.23,
+      "margin": 0.234
+    },
+    "latency_s": 7.29,
+    "raw": "{\n  \"broad_scene\": \"Outdoor wedding night celebration\",\n  \"subjects\": [\n    \"man in green hoodie\",\n    \"man in black shirt\",\n    \"person with bottle\"\n  ],\n  \"action\": \"Man in green hoodie raises bottle in toast\",\n  \"event_present\": \"none\",\n  \"confidence\": 0.85\n}",
+    "parsed": {
+      "broad_scene": "Outdoor wedding night celebration",
+      "subjects": [
+        "man in green hoodie",
+        "man in black shirt",
+        "person with bottle"
+      ],
+      "action": "Man in green hoodie raises bottle in toast",
+      "event_present": "none",
+      "confidence": 0.85
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-stress-fresh"
+  },
+  {
+    "frame_index": 92,
+    "frame_path": "/tmp/p54_stress_frames/092.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7368.MP4",
+    "start_frame": 0,
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.532,
+      "top2": "couple",
+      "top2_score": 0.269,
+      "margin": 0.263
+    },
+    "latency_s": 5.11,
+    "raw": "{\"broad_scene\": \"Wedding celebration\", \"subjects\": [\"Groom\", \"Guests\"], \"action\": \"Dancing and cheering\", \"event_present\": \"none\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Wedding celebration",
+      "subjects": [
+        "Groom",
+        "Guests"
+      ],
+      "action": "Dancing and cheering",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-stress-fresh"
+  },
+  {
+    "frame_index": 99,
+    "frame_path": "/tmp/p54_stress_frames/099.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7390.MP4",
+    "start_frame": 125,
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.332,
+      "top2": "party",
+      "top2_score": 0.267,
+      "margin": 0.065
+    },
+    "latency_s": 5.82,
+    "raw": "{\"broad_scene\": \"Wedding reception dance floor\", \"subjects\": [\"groom\", \"bride\", \"guests\"], \"action\": \"Couple dancing at wedding reception\", \"event_present\": \"none\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Wedding reception dance floor",
+      "subjects": [
+        "groom",
+        "bride",
+        "guests"
+      ],
+      "action": "Couple dancing at wedding reception",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.3-fresh"
+  }
+]

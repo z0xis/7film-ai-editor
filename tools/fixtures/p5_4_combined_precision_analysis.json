@@ -1,0 +1,22 @@
+{
+  "verdicts": {
+    "C7450.MP4::375": "TP",
+    "C7343.MP4::1375": "FP",
+    "DJI_0528.MOV::6363": "TP",
+    "C7252.MP4::0": "TP",
+    "C7344.MP4::125": "FP",
+    "DJI_0528.MOV::4221": "TP",
+    "C7261.MP4::1000": "TP",
+    "C7309.MP4::1500": "TP",
+    "C7342.MP4::375": "FP",
+    "C7349.MP4::125": "FP"
+  },
+  "raw_tp": 6,
+  "raw_fp": 4,
+  "accepted_tp": 6,
+  "accepted_fp": 1,
+  "abstained_correct": 3,
+  "abstained_wasted": 0,
+  "total_calls": 91,
+  "negative_calls": 81
+}

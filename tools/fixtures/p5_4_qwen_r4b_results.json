@@ -1,0 +1,1548 @@
+[
+  {
+    "shot_id": "c414e4d3-f991-58b4-b807-5fd30c9c8f17",
+    "frame_index": 6,
+    "frame_path": "/tmp/p53_shadow_frames/006.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7129.MP4",
+    "start_frame": 666,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.553,
+      "top2": "bride_prep",
+      "top2_score": 0.315,
+      "margin": 0.239
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 12.47,
+    "raw": "{\n  \"broad_scene\": \"Wedding salon\",\n  \"subjects\": [\n    \"bride\",\n    \"hair stylist\",\n    \"assistant\"\n  ],\n  \"action\": \"Bride is being styled by a hair stylist while an assistant holds a mirror\",\n  \"event_present\": \"none\",\n  \"confidence\": 0.95\n}",
+    "parsed": {
+      "broad_scene": "Wedding salon",
+      "subjects": [
+        "bride",
+        "hair stylist",
+        "assistant"
+      ],
+      "action": "Bride is being styled by a hair stylist while an assistant holds a mirror",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-fresh"
+  },
+  {
+    "shot_id": "0506dbd7-f884-5468-8397-301e63061d05",
+    "frame_index": 8,
+    "frame_path": "/tmp/p53_shadow_frames/008.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7138.MP4",
+    "start_frame": 3801,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.569,
+      "top2": "couple",
+      "top2_score": 0.306,
+      "margin": 0.264
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 7.12,
+    "raw": "{\"broad_scene\": \"Wedding veil detail\", \"subjects\": [\"Bride\"], \"action\": \"Wearing lace veil\", \"event_present\": \"none\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Wedding veil detail",
+      "subjects": [
+        "Bride"
+      ],
+      "action": "Wearing lace veil",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.3-fresh"
+  },
+  {
+    "shot_id": "89e929c7-bbd6-51ee-af50-e5da9b863a85",
+    "frame_index": 12,
+    "frame_path": "/tmp/p53_shadow_frames/012.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7158.MP4",
+    "start_frame": 416,
+    "clip_pred": {
+      "top1": "detail",
+      "top1_score": 0.425,
+      "top2": "ceremony",
+      "top2_score": 0.181,
+      "margin": 0.244
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 5.75,
+    "raw": "{\"broad_scene\": \"Wedding display table\", \"subjects\": [\"gift boxes\", \"handkerchief\", \"vases\"], \"action\": \"Displaying wedding gifts\", \"event_present\": \"none\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Wedding display table",
+      "subjects": [
+        "gift boxes",
+        "handkerchief",
+        "vases"
+      ],
+      "action": "Displaying wedding gifts",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.3-fresh"
+  },
+  {
+    "shot_id": "920f974d-55fc-53a0-9b5b-902385d3943d",
+    "frame_index": 14,
+    "frame_path": "/tmp/p53_shadow_frames/014.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7170.MP4",
+    "start_frame": 0,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.372,
+      "top2": "groom",
+      "top2_score": 0.289,
+      "margin": 0.083
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 5.16,
+    "raw": "{\"broad_scene\": \"Wedding preparation\", \"subjects\": [\"bride\", \"groom\"], \"action\": \"Bride adjusting groom's bow tie\", \"event_present\": \"none\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Wedding preparation",
+      "subjects": [
+        "bride",
+        "groom"
+      ],
+      "action": "Bride adjusting groom's bow tie",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-fresh"
+  },
+  {
+    "shot_id": "e21359c2-46b0-5e8d-b2a4-bb2a8b49f6e3",
+    "frame_index": 15,
+    "frame_path": "/tmp/p53_shadow_frames/015.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7174.MP4",
+    "start_frame": 492,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.414,
+      "top2": "couple",
+      "top2_score": 0.325,
+      "margin": 0.089
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 5.61,
+    "raw": "{\"broad_scene\": \"Wedding couple in ornate room\", \"subjects\": [\"groom\", \"bride\"], \"action\": \"Smiling and looking at each other\", \"event_present\": \"none\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Wedding couple in ornate room",
+      "subjects": [
+        "groom",
+        "bride"
+      ],
+      "action": "Smiling and looking at each other",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-fresh"
+  },
+  {
+    "shot_id": "d104095d-7d6e-5d18-8564-050e3939bfdf",
+    "frame_index": 19,
+    "frame_path": "/tmp/p53_shadow_frames/019.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7194.MP4",
+    "start_frame": 250,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.421,
+      "top2": "couple",
+      "top2_score": 0.397,
+      "margin": 0.024
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 4.84,
+    "raw": "{\"broad_scene\": \"Wedding portrait session\", \"subjects\": [\"bride\"], \"action\": \"Standing in front of mirror\", \"event_present\": \"none\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Wedding portrait session",
+      "subjects": [
+        "bride"
+      ],
+      "action": "Standing in front of mirror",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.3-fresh"
+  },
+  {
+    "shot_id": "fe0333db-b809-5f03-a315-916904353d74",
+    "frame_index": 24,
+    "frame_path": "/tmp/p53_shadow_frames/024.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7213.MP4",
+    "start_frame": 500,
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.473,
+      "top2": "bride",
+      "top2_score": 0.337,
+      "margin": 0.135
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 5.48,
+    "raw": "{\"broad_scene\": \"Wedding couple posing with vintage van\", \"subjects\": [\"groom\", \"bride\"], \"action\": \"Sitting on grass next to van\", \"event_present\": \"none\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Wedding couple posing with vintage van",
+      "subjects": [
+        "groom",
+        "bride"
+      ],
+      "action": "Sitting on grass next to van",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.3-fresh"
+  },
+  {
+    "shot_id": "28d57c45-6e04-5290-a6cd-36806f611e02",
+    "frame_index": 26,
+    "frame_path": "/tmp/p53_shadow_frames/026.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7220.MP4",
+    "start_frame": 0,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.389,
+      "top2": "couple",
+      "top2_score": 0.343,
+      "margin": 0.045
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 6.1,
+    "raw": "{\n  \"broad_scene\": \"Wedding couple standing together\",\n  \"subjects\": [\n    \"bride\",\n    \"groom\"\n  ],\n  \"action\": \"Standing side by side\",\n  \"event_present\": \"none\",\n  \"confidence\": 0.95\n}",
+    "parsed": {
+      "broad_scene": "Wedding couple standing together",
+      "subjects": [
+        "bride",
+        "groom"
+      ],
+      "action": "Standing side by side",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.3-fresh"
+  },
+  {
+    "shot_id": "3389524e-6ae7-543a-bad8-a84f4d21f6d9",
+    "frame_index": 27,
+    "frame_path": "/tmp/p53_shadow_frames/027.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7221.MP4",
+    "start_frame": 500,
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.448,
+      "top2": "groom_prep",
+      "top2_score": 0.428,
+      "margin": 0.02
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 5.24,
+    "raw": "{\"broad_scene\": \"Wedding couple\", \"subjects\": [\"groom\", \"bride\"], \"action\": \"Groom holding bride's hand\", \"event_present\": \"none\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Wedding couple",
+      "subjects": [
+        "groom",
+        "bride"
+      ],
+      "action": "Groom holding bride's hand",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-fresh"
+  },
+  {
+    "shot_id": "382165c1-3bdc-5942-a8ad-dc379d35fa82",
+    "frame_index": 30,
+    "frame_path": "/tmp/p53_shadow_frames/030.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7230.MP4",
+    "start_frame": 0,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.513,
+      "top2": "couple",
+      "top2_score": 0.348,
+      "margin": 0.165
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 6.49,
+    "raw": "{\"broad_scene\": \"Wedding couple posing\", \"subjects\": [\"bride\", \"groom\"], \"action\": \"Bride holding bouquet, groom standing beside her\", \"event_present\": \"none\", \"confidence\": 0.85}",
+    "parsed": {
+      "broad_scene": "Wedding couple posing",
+      "subjects": [
+        "bride",
+        "groom"
+      ],
+      "action": "Bride holding bouquet, groom standing beside her",
+      "event_present": "none",
+      "confidence": 0.85
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-fresh"
+  },
+  {
+    "shot_id": "24ba4697-18e9-5622-adf1-1637afa03ed6",
+    "frame_index": 32,
+    "frame_path": "/tmp/p53_shadow_frames/032.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7236.MP4",
+    "start_frame": 0,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.424,
+      "top2": "couple",
+      "top2_score": 0.313,
+      "margin": 0.111
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 7.06,
+    "raw": "{\"broad_scene\": \"Wedding room decor\", \"subjects\": [\"Paintings\"], \"action\": \"Static display\", \"event_present\": \"none\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Wedding room decor",
+      "subjects": [
+        "Paintings"
+      ],
+      "action": "Static display",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-fresh"
+  },
+  {
+    "shot_id": "9f536485-f518-5f15-8c88-9b33d85d4742",
+    "frame_index": 33,
+    "frame_path": "/tmp/p53_shadow_frames/033.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7239.MP4",
+    "start_frame": 375,
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.237,
+      "top2": "bride",
+      "top2_score": 0.224,
+      "margin": 0.012
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 6.71,
+    "raw": "{\"broad_scene\": \"blurry outdoor scene\", \"subjects\": [], \"action\": \"none\", \"event_present\": \"none\", \"confidence\": 0.1}",
+    "parsed": {
+      "broad_scene": "blurry outdoor scene",
+      "subjects": [],
+      "action": "none",
+      "event_present": "none",
+      "confidence": 0.1
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-fresh"
+  },
+  {
+    "shot_id": "652538eb-f325-5efc-b41f-62914dfa5303",
+    "frame_index": 37,
+    "frame_path": "/tmp/p53_shadow_frames/037.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7252.MP4",
+    "start_frame": 0,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.4,
+      "top2": "couple",
+      "top2_score": 0.344,
+      "margin": 0.056
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 9.65,
+    "raw": "{\n  \"broad_scene\": \"Outdoor wedding reception\",\n  \"subjects\": [\n    \"groom\",\n    \"bride\"\n  ],\n  \"action\": \"Dancing closely\",\n  \"event_present\": \"first_dance\",\n  \"confidence\": 0.95\n}",
+    "parsed": {
+      "broad_scene": "Outdoor wedding reception",
+      "subjects": [
+        "groom",
+        "bride"
+      ],
+      "action": "Dancing closely",
+      "event_present": "first_dance",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-fresh"
+  },
+  {
+    "shot_id": "4a27ce6b-77aa-5048-a72a-5f09c2fc6fab",
+    "frame_index": 39,
+    "frame_path": "/tmp/p53_shadow_frames/039.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7258.MP4",
+    "start_frame": 125,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.378,
+      "top2": "couple",
+      "top2_score": 0.362,
+      "margin": 0.016
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 7.83,
+    "raw": "{\"broad_scene\": \"Wedding reception\", \"subjects\": [\"groom\", \"bride\"], \"action\": \"Dancing together\", \"event_present\": \"none\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Wedding reception",
+      "subjects": [
+        "groom",
+        "bride"
+      ],
+      "action": "Dancing together",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-fresh"
+  },
+  {
+    "shot_id": "c5c58465-8a13-5147-af8f-b394d56d3f8b",
+    "frame_index": 42,
+    "frame_path": "/tmp/p53_shadow_frames/042.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7268.MP4",
+    "start_frame": 375,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.534,
+      "top2": "couple",
+      "top2_score": 0.281,
+      "margin": 0.253
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 5.17,
+    "raw": "{\"broad_scene\": \"Wedding reception\", \"subjects\": [\"bride\", \"guests\"], \"action\": \"Guests dancing with bride\", \"event_present\": \"none\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Wedding reception",
+      "subjects": [
+        "bride",
+        "guests"
+      ],
+      "action": "Guests dancing with bride",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.3-fresh"
+  },
+  {
+    "shot_id": "cce24c3f-898d-5161-80fc-05e1aac2533b",
+    "frame_index": 44,
+    "frame_path": "/tmp/p53_shadow_frames/044.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7279.MP4",
+    "start_frame": 250,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.353,
+      "top2": "groom",
+      "top2_score": 0.331,
+      "margin": 0.021
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 5.35,
+    "raw": "{\"broad_scene\": \"Outdoor wedding reception\", \"subjects\": [\"woman with long hair\", \"guests\"], \"action\": \"Woman watching guests dance\", \"event_present\": \"none\", \"confidence\": 0.85}",
+    "parsed": {
+      "broad_scene": "Outdoor wedding reception",
+      "subjects": [
+        "woman with long hair",
+        "guests"
+      ],
+      "action": "Woman watching guests dance",
+      "event_present": "none",
+      "confidence": 0.85
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.3-fresh"
+  },
+  {
+    "shot_id": "eeaa7f01-3774-5d6e-a049-56557371f4f1",
+    "frame_index": 45,
+    "frame_path": "/tmp/p53_shadow_frames/045.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7285.MP4",
+    "start_frame": 0,
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.475,
+      "top2": "couple",
+      "top2_score": 0.273,
+      "margin": 0.202
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 10.44,
+    "raw": "{\n  \"broad_scene\": \"Outdoor wedding reception\",\n  \"subjects\": [\n    \"man in suit\",\n    \"guests\"\n  ],\n  \"action\": \"Man in suit gesturing with arms outstretched\",\n  \"event_present\": \"none\",\n  \"confidence\": 0.85\n}",
+    "parsed": {
+      "broad_scene": "Outdoor wedding reception",
+      "subjects": [
+        "man in suit",
+        "guests"
+      ],
+      "action": "Man in suit gesturing with arms outstretched",
+      "event_present": "none",
+      "confidence": 0.85
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-fresh"
+  },
+  {
+    "shot_id": "47dcf701-9d98-51a7-b124-97703afba8d5",
+    "frame_index": 48,
+    "frame_path": "/tmp/p53_shadow_frames/048.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7297.MP4",
+    "start_frame": 250,
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.507,
+      "top2": "bride",
+      "top2_score": 0.216,
+      "margin": 0.291
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 6.55,
+    "raw": "{\n  \"broad_scene\": \"Outdoor wedding reception\",\n  \"subjects\": [\n    \"Man in light shirt\",\n    \"Man in suit\",\n    \"Photographer\"\n  ],\n  \"action\": \"Men walking through reception area\",\n  \"event_present\": \"none\",\n  \"confidence\": 0.85\n}",
+    "parsed": {
+      "broad_scene": "Outdoor wedding reception",
+      "subjects": [
+        "Man in light shirt",
+        "Man in suit",
+        "Photographer"
+      ],
+      "action": "Men walking through reception area",
+      "event_present": "none",
+      "confidence": 0.85
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.3-fresh"
+  },
+  {
+    "shot_id": "3ec2fb1a-7740-59d9-9f0c-a7b4dff001cc",
+    "frame_index": 50,
+    "frame_path": "/tmp/p53_shadow_frames/050.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7308.MP4",
+    "start_frame": 250,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.424,
+      "top2": "couple",
+      "top2_score": 0.271,
+      "margin": 0.152
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 6.32,
+    "raw": "{\n  \"broad_scene\": \"Wedding reception with cake and guests\",\n  \"subjects\": [\n    \"groom\",\n    \"bride\"\n  ],\n  \"action\": \"Standing before wedding cake\",\n  \"event_present\": \"none\",\n  \"confidence\": 0.95\n}",
+    "parsed": {
+      "broad_scene": "Wedding reception with cake and guests",
+      "subjects": [
+        "groom",
+        "bride"
+      ],
+      "action": "Standing before wedding cake",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.3-fresh"
+  },
+  {
+    "shot_id": "2321f243-3469-5a39-9649-97fce9fce602",
+    "frame_index": 54,
+    "frame_path": "/tmp/p53_shadow_frames/054.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7323.MP4",
+    "start_frame": 250,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.41,
+      "top2": "groom",
+      "top2_score": 0.375,
+      "margin": 0.034
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 6.8,
+    "raw": "{\n  \"broad_scene\": \"Outdoor wedding celebration\",\n  \"subjects\": [\n    \"man playing drum\",\n    \"woman dancing\",\n    \"guests watching\"\n  ],\n  \"action\": \"Man plays drum while woman dances\",\n  \"event_present\": \"none\",\n  \"confidence\": 0.95\n}",
+    "parsed": {
+      "broad_scene": "Outdoor wedding celebration",
+      "subjects": [
+        "man playing drum",
+        "woman dancing",
+        "guests watching"
+      ],
+      "action": "Man plays drum while woman dances",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.3-fresh"
+  },
+  {
+    "shot_id": "1cb0f4d2-b1a0-567a-9db3-8cfeddbb90d8",
+    "frame_index": 58,
+    "frame_path": "/tmp/p53_shadow_frames/058.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7337.MP4",
+    "start_frame": 375,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.507,
+      "top2": "couple",
+      "top2_score": 0.369,
+      "margin": 0.138
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 7.35,
+    "raw": "{\n  \"broad_scene\": \"Wedding reception\",\n  \"subjects\": [\n    \"woman in floral dress\",\n    \"woman with bun\",\n    \"man in green shirt\"\n  ],\n  \"action\": \"Woman in floral dress dancing with red fabric\",\n  \"event_present\": \"none\",\n  \"confidence\": 0.85\n}",
+    "parsed": {
+      "broad_scene": "Wedding reception",
+      "subjects": [
+        "woman in floral dress",
+        "woman with bun",
+        "man in green shirt"
+      ],
+      "action": "Woman in floral dress dancing with red fabric",
+      "event_present": "none",
+      "confidence": 0.85
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.3-fresh"
+  },
+  {
+    "shot_id": "701a3066-894d-5b8e-a4b4-25b13f2d150c",
+    "frame_index": 62,
+    "frame_path": "/tmp/p53_shadow_frames/062.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7344.MP4",
+    "start_frame": 125,
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.347,
+      "top2": "bride",
+      "top2_score": 0.332,
+      "margin": 0.015
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 11.11,
+    "raw": "{\n  \"broad_scene\": \"Wedding reception\",\n  \"subjects\": [\n    \"woman in hijab\",\n    \"man in tuxedo\",\n    \"woman in green dress\",\n    \"woman in black dress with beaded details\"\n  ],\n  \"action\": \"Woman in hijab places ring on man's finger\",\n  \"event_present\": \"ceremony_action\",\n  \"confidence\": 0.95\n}",
+    "parsed": {
+      "broad_scene": "Wedding reception",
+      "subjects": [
+        "woman in hijab",
+        "man in tuxedo",
+        "woman in green dress",
+        "woman in black dress with beaded details"
+      ],
+      "action": "Woman in hijab places ring on man's finger",
+      "event_present": "ceremony_action",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-fresh"
+  },
+  {
+    "shot_id": "de1c0275-b723-500f-9695-36928afa0c9a",
+    "frame_index": 68,
+    "frame_path": "/tmp/p53_shadow_frames/068.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7358.MP4",
+    "start_frame": 500,
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.347,
+      "top2": "couple",
+      "top2_score": 0.208,
+      "margin": 0.138
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 7.73,
+    "raw": "{\n  \"broad_scene\": \"Outdoor wedding reception\",\n  \"subjects\": [\n    \"man in green shawl\",\n    \"man in white shirt\",\n    \"woman in white dress\",\n    \"man in white tank top\"\n  ],\n  \"action\": \"Guests laughing and celebrating\",\n  \"event_present\": \"none\",\n  \"confidence\": 0.95\n}",
+    "parsed": {
+      "broad_scene": "Outdoor wedding reception",
+      "subjects": [
+        "man in green shawl",
+        "man in white shirt",
+        "woman in white dress",
+        "man in white tank top"
+      ],
+      "action": "Guests laughing and celebrating",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.3-fresh"
+  },
+  {
+    "shot_id": "cb87f37e-fc64-5482-a370-62aad08caafb",
+    "frame_index": 69,
+    "frame_path": "/tmp/p53_shadow_frames/069.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7362.MP4",
+    "start_frame": 125,
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.379,
+      "top2": "couple",
+      "top2_score": 0.247,
+      "margin": 0.132
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 6.5,
+    "raw": "{\n  \"broad_scene\": \"Wedding dance\",\n  \"subjects\": [\n    \"Man in green jacket\",\n    \"Other dancers\"\n  ],\n  \"action\": \"Dancing with arms raised\",\n  \"event_present\": \"none\",\n  \"confidence\": 0.95\n}",
+    "parsed": {
+      "broad_scene": "Wedding dance",
+      "subjects": [
+        "Man in green jacket",
+        "Other dancers"
+      ],
+      "action": "Dancing with arms raised",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-fresh"
+  },
+  {
+    "shot_id": "5463ddc6-eeeb-5307-ac37-6eab65eec108",
+    "frame_index": 72,
+    "frame_path": "/tmp/p53_shadow_frames/072.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7372.MP4",
+    "start_frame": 1250,
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.489,
+      "top2": "party",
+      "top2_score": 0.323,
+      "margin": 0.166
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 6.16,
+    "raw": "{\n  \"broad_scene\": \"Wedding reception dance floor\",\n  \"subjects\": [\n    \"men\",\n    \"women\"\n  ],\n  \"action\": \"Men and women dancing together in a group\",\n  \"event_present\": \"none\",\n  \"confidence\": 0.95\n}",
+    "parsed": {
+      "broad_scene": "Wedding reception dance floor",
+      "subjects": [
+        "men",
+        "women"
+      ],
+      "action": "Men and women dancing together in a group",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.3-fresh"
+  },
+  {
+    "shot_id": "67cd5528-b28d-5b52-aff2-6521e2ce45f8",
+    "frame_index": 74,
+    "frame_path": "/tmp/p53_shadow_frames/074.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7382.MP4",
+    "start_frame": 250,
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.406,
+      "top2": "bride",
+      "top2_score": 0.306,
+      "margin": 0.1
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 4.52,
+    "raw": "{\"broad_scene\": \"Wedding celebration\", \"subjects\": [\"Couple\"], \"action\": \"Dancing together\", \"event_present\": \"none\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Wedding celebration",
+      "subjects": [
+        "Couple"
+      ],
+      "action": "Dancing together",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.3-fresh"
+  },
+  {
+    "shot_id": "ade76b90-2cf2-545e-87b6-32e894dce4fd",
+    "frame_index": 76,
+    "frame_path": "/tmp/p53_shadow_frames/076.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7390.MP4",
+    "start_frame": 125,
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.332,
+      "top2": "party",
+      "top2_score": 0.267,
+      "margin": 0.065
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 5.82,
+    "raw": "{\"broad_scene\": \"Wedding reception dance floor\", \"subjects\": [\"groom\", \"bride\", \"guests\"], \"action\": \"Couple dancing at wedding reception\", \"event_present\": \"none\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Wedding reception dance floor",
+      "subjects": [
+        "groom",
+        "bride",
+        "guests"
+      ],
+      "action": "Couple dancing at wedding reception",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.3-fresh"
+  },
+  {
+    "shot_id": "6c18e64b-e8ae-5196-9f71-beb2394dc96e",
+    "frame_index": 79,
+    "frame_path": "/tmp/p53_shadow_frames/079.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7398.MP4",
+    "start_frame": 125,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.326,
+      "top2": "groom",
+      "top2_score": 0.311,
+      "margin": 0.015
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 7.2,
+    "raw": "{\n  \"broad_scene\": \"Wedding reception dance floor\",\n  \"subjects\": [\n    \"groom\",\n    \"bride\",\n    \"guests\"\n  ],\n  \"action\": \"Couple dancing together\",\n  \"event_present\": \"none\",\n  \"confidence\": 0.95\n}",
+    "parsed": {
+      "broad_scene": "Wedding reception dance floor",
+      "subjects": [
+        "groom",
+        "bride",
+        "guests"
+      ],
+      "action": "Couple dancing together",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-fresh"
+  },
+  {
+    "shot_id": "b33069f8-1d56-58ce-aefd-c3e6769e5e3e",
+    "frame_index": 82,
+    "frame_path": "/tmp/p53_shadow_frames/082.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7404.MP4",
+    "start_frame": 2250,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.499,
+      "top2": "couple",
+      "top2_score": 0.326,
+      "margin": 0.173
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 5.78,
+    "raw": "{\n  \"broad_scene\": \"Outdoor wedding celebration\",\n  \"subjects\": [\n    \"Bride\"\n  ],\n  \"action\": \"Spraying champagne\",\n  \"event_present\": \"none\",\n  \"confidence\": 0.95\n}",
+    "parsed": {
+      "broad_scene": "Outdoor wedding celebration",
+      "subjects": [
+        "Bride"
+      ],
+      "action": "Spraying champagne",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-fresh"
+  },
+  {
+    "shot_id": "fdef4049-e384-5789-a358-bd542a467ec0",
+    "frame_index": 83,
+    "frame_path": "/tmp/p53_shadow_frames/083.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7407.MP4",
+    "start_frame": 0,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.388,
+      "top2": "groom",
+      "top2_score": 0.221,
+      "margin": 0.167
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 6.86,
+    "raw": "{\n  \"broad_scene\": \"Wedding reception dance\",\n  \"subjects\": [\n    \"bride\",\n    \"groom\",\n    \"guests\"\n  ],\n  \"action\": \"Dancing together\",\n  \"event_present\": \"none\",\n  \"confidence\": 0.95\n}",
+    "parsed": {
+      "broad_scene": "Wedding reception dance",
+      "subjects": [
+        "bride",
+        "groom",
+        "guests"
+      ],
+      "action": "Dancing together",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-fresh"
+  },
+  {
+    "shot_id": "9e107471-1a34-536c-af16-834fabbfacdf",
+    "frame_index": 84,
+    "frame_path": "/tmp/p53_shadow_frames/084.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7409.MP4",
+    "start_frame": 125,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.378,
+      "top2": "couple",
+      "top2_score": 0.361,
+      "margin": 0.017
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 6.92,
+    "raw": "{\n  \"broad_scene\": \"Wedding dance\",\n  \"subjects\": [\n    \"groom\",\n    \"bride\",\n    \"dancer1\",\n    \"dancer2\"\n  ],\n  \"action\": \"Dancing together\",\n  \"event_present\": \"none\",\n  \"confidence\": 0.95\n}",
+    "parsed": {
+      "broad_scene": "Wedding dance",
+      "subjects": [
+        "groom",
+        "bride",
+        "dancer1",
+        "dancer2"
+      ],
+      "action": "Dancing together",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.3-fresh"
+  },
+  {
+    "shot_id": "0047fc1d-37d4-5c31-8548-828af4a75a7b",
+    "frame_index": 86,
+    "frame_path": "/tmp/p53_shadow_frames/086.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7416.MP4",
+    "start_frame": 125,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.377,
+      "top2": "couple",
+      "top2_score": 0.336,
+      "margin": 0.041
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 6.69,
+    "raw": "{\n  \"broad_scene\": \"Wedding reception\",\n  \"subjects\": [\n    \"man\",\n    \"woman\",\n    \"bride\",\n    \"guest\"\n  ],\n  \"action\": \"Guests conversing at reception\",\n  \"event_present\": \"none\",\n  \"confidence\": 0.95\n}",
+    "parsed": {
+      "broad_scene": "Wedding reception",
+      "subjects": [
+        "man",
+        "woman",
+        "bride",
+        "guest"
+      ],
+      "action": "Guests conversing at reception",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.3-fresh"
+  },
+  {
+    "shot_id": "f4a79d65-aa24-5467-8ad2-081f3ddfba86",
+    "frame_index": 90,
+    "frame_path": "/tmp/p53_shadow_frames/090.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7429.MP4",
+    "start_frame": 375,
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.216,
+      "top2": "groom_prep",
+      "top2_score": 0.206,
+      "margin": 0.01
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 5.57,
+    "raw": "{\"broad_scene\": \"Wedding reception\", \"subjects\": [\"groom\", \"bride\"], \"action\": \"Groom holds a white object above the bride\", \"event_present\": \"none\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Wedding reception",
+      "subjects": [
+        "groom",
+        "bride"
+      ],
+      "action": "Groom holds a white object above the bride",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.3-fresh"
+  },
+  {
+    "shot_id": "cb62bb35-bd3c-58d4-ae14-51d64447512b",
+    "frame_index": 92,
+    "frame_path": "/tmp/p53_shadow_frames/092.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7436.MP4",
+    "start_frame": 250,
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.39,
+      "top2": "bride",
+      "top2_score": 0.358,
+      "margin": 0.032
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 4.95,
+    "raw": "{\"broad_scene\": \"Outdoor wedding reception\", \"subjects\": [\"groom\", \"bride\"], \"action\": \"Groom speaking to bride\", \"event_present\": \"none\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Outdoor wedding reception",
+      "subjects": [
+        "groom",
+        "bride"
+      ],
+      "action": "Groom speaking to bride",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.3-fresh"
+  },
+  {
+    "shot_id": "42dc4fa1-8e0a-58f0-b437-71cb4b59736c",
+    "frame_index": 93,
+    "frame_path": "/tmp/p53_shadow_frames/093.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7440.MP4",
+    "start_frame": 0,
+    "clip_pred": {
+      "top1": "groom",
+      "top1_score": 0.4,
+      "top2": "party",
+      "top2_score": 0.242,
+      "margin": 0.158
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 6.47,
+    "raw": "{\n  \"broad_scene\": \"Wedding celebration\",\n  \"subjects\": [\n    \"Man with grey hair\",\n    \"Man in white shirt\"\n  ],\n  \"action\": \"Dancing together\",\n  \"event_present\": \"none\",\n  \"confidence\": 0.95\n}",
+    "parsed": {
+      "broad_scene": "Wedding celebration",
+      "subjects": [
+        "Man with grey hair",
+        "Man in white shirt"
+      ],
+      "action": "Dancing together",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-fresh"
+  },
+  {
+    "shot_id": "5bb0bf0b-0b81-558f-909d-2ed7c1fef1e3",
+    "frame_index": 95,
+    "frame_path": "/tmp/p53_shadow_frames/095.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7450.MP4",
+    "start_frame": 375,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.294,
+      "top2": "party",
+      "top2_score": 0.278,
+      "margin": 0.016
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r2_low_margin": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 13.39,
+    "raw": "{\n  \"broad_scene\": \"Wedding reception dance floor\",\n  \"subjects\": [\n    \"bride\",\n    \"groom\"\n  ],\n  \"action\": \"Dancing together\",\n  \"event_present\": \"first_dance\",\n  \"confidence\": 0.95\n}",
+    "parsed": {
+      "broad_scene": "Wedding reception dance floor",
+      "subjects": [
+        "bride",
+        "groom"
+      ],
+      "action": "Dancing together",
+      "event_present": "first_dance",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.3-fresh"
+  },
+  {
+    "shot_id": "e082486d-6a24-5c06-b0ec-1c1dd4b1540f",
+    "frame_index": 98,
+    "frame_path": "/tmp/p53_shadow_frames/098.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7451.MP4",
+    "start_frame": 5500,
+    "clip_pred": {
+      "top1": "bride",
+      "top1_score": 0.54,
+      "top2": "couple",
+      "top2_score": 0.258,
+      "margin": 0.282
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 6.74,
+    "raw": "{\n  \"broad_scene\": \"Wedding reception\",\n  \"subjects\": [\n    \"bride\",\n    \"groom\",\n    \"guests\"\n  ],\n  \"action\": \"Dancing together\",\n  \"event_present\": \"none\",\n  \"confidence\": 0.95\n}",
+    "parsed": {
+      "broad_scene": "Wedding reception",
+      "subjects": [
+        "bride",
+        "groom",
+        "guests"
+      ],
+      "action": "Dancing together",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-fresh"
+  },
+  {
+    "shot_id": "36283de4-74c6-5487-bb60-292e42aef568",
+    "frame_index": 109,
+    "frame_path": "/tmp/p53_shadow_frames/109.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0528.MOV",
+    "start_frame": 4221,
+    "clip_pred": {
+      "top1": "venue",
+      "top1_score": 0.479,
+      "top2": "couple",
+      "top2_score": 0.325,
+      "margin": 0.154
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 5.39,
+    "raw": "{\"broad_scene\": \"wedding dance floor\", \"subjects\": [\"couple\"], \"action\": \"dancing\", \"event_present\": \"first_dance\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "wedding dance floor",
+      "subjects": [
+        "couple"
+      ],
+      "action": "dancing",
+      "event_present": "first_dance",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-fresh"
+  },
+  {
+    "shot_id": "6673c7bd-7226-58e2-8882-61a3e1357f54",
+    "frame_index": 111,
+    "frame_path": "/tmp/p53_shadow_frames/111.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0528.MOV",
+    "start_frame": 6363,
+    "clip_pred": {
+      "top1": "venue",
+      "top1_score": 0.507,
+      "top2": "ceremony",
+      "top2_score": 0.28,
+      "margin": 0.227
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 6.32,
+    "raw": "{\n  \"broad_scene\": \"Outdoor wedding reception\",\n  \"subjects\": [\n    \"couple\",\n    \"guests\"\n  ],\n  \"action\": \"Couple dancing on a decorated dance floor\",\n  \"event_present\": \"first_dance\",\n  \"confidence\": 0.95\n}",
+    "parsed": {
+      "broad_scene": "Outdoor wedding reception",
+      "subjects": [
+        "couple",
+        "guests"
+      ],
+      "action": "Couple dancing on a decorated dance floor",
+      "event_present": "first_dance",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.3-fresh"
+  },
+  {
+    "shot_id": "e67c4925-49bc-502a-ab53-1f01079a1b70",
+    "frame_index": 120,
+    "frame_path": "/tmp/p53_shadow_frames/120.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0528.MOV",
+    "start_frame": 16002,
+    "clip_pred": {
+      "top1": "venue",
+      "top1_score": 0.577,
+      "top2": "party",
+      "top2_score": 0.404,
+      "margin": 0.172
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 7.76,
+    "raw": "{\n  \"broad_scene\": \"Outdoor wedding reception\",\n  \"subjects\": [\n    \"guests\",\n    \"waiter\",\n    \"tables\",\n    \"chairs\",\n    \"trees\",\n    \"lights\"\n  ],\n  \"action\": \"Guests seated at tables, waiter serving food\",\n  \"event_present\": \"none\",\n  \"confidence\": 0.95\n}",
+    "parsed": {
+      "broad_scene": "Outdoor wedding reception",
+      "subjects": [
+        "guests",
+        "waiter",
+        "tables",
+        "chairs",
+        "trees",
+        "lights"
+      ],
+      "action": "Guests seated at tables, waiter serving food",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-fresh"
+  },
+  {
+    "shot_id": "731f8c20-8370-5252-9815-e7b2c14b61e3",
+    "frame_index": 136,
+    "frame_path": "/tmp/p53_shadow_frames/136.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0530.MOV",
+    "start_frame": 11970,
+    "clip_pred": {
+      "top1": "venue",
+      "top1_score": 0.51,
+      "top2": "couple",
+      "top2_score": 0.22,
+      "margin": 0.291
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 5.34,
+    "raw": "{\"broad_scene\": \"Nighttime forest scene\", \"subjects\": [\"Trees\", \"Lights\"], \"action\": \"Trees illuminated by green and white lights at night\", \"event_present\": \"none\", \"confidence\": 0.95}",
+    "parsed": {
+      "broad_scene": "Nighttime forest scene",
+      "subjects": [
+        "Trees",
+        "Lights"
+      ],
+      "action": "Trees illuminated by green and white lights at night",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.4-fresh"
+  },
+  {
+    "shot_id": "f30e3b9f-33f2-5d49-a3ac-a3e356d00714",
+    "frame_index": 153,
+    "frame_path": "/tmp/p53_shadow_frames/153.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0530.MOV",
+    "start_frame": 30177,
+    "clip_pred": {
+      "top1": "venue",
+      "top1_score": 0.56,
+      "top2": "party",
+      "top2_score": 0.404,
+      "margin": 0.155
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 7.22,
+    "raw": "{\n  \"broad_scene\": \"Outdoor wedding reception\",\n  \"subjects\": [\n    \"guests\",\n    \"tables\",\n    \"chairs\",\n    \"trees\",\n    \"lighting\"\n  ],\n  \"action\": \"Guests dining and socializing at tables\",\n  \"event_present\": \"none\",\n  \"confidence\": 0.95\n}",
+    "parsed": {
+      "broad_scene": "Outdoor wedding reception",
+      "subjects": [
+        "guests",
+        "tables",
+        "chairs",
+        "trees",
+        "lighting"
+      ],
+      "action": "Guests dining and socializing at tables",
+      "event_present": "none",
+      "confidence": 0.95
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.3-fresh"
+  },
+  {
+    "shot_id": "8b76d6fa-61db-5fdf-a637-062302d70a59",
+    "frame_index": 154,
+    "frame_path": "/tmp/p53_shadow_frames/154.jpg",
+    "path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0530.MOV",
+    "start_frame": 31248,
+    "clip_pred": {
+      "top1": "venue",
+      "top1_score": 0.465,
+      "top2": "family",
+      "top2_score": 0.288,
+      "margin": 0.177
+    },
+    "router_reason": {
+      "r1_low_confidence": true,
+      "r3_not_story_critical": true,
+      "r4_union": true,
+      "r4b_conservative": true
+    },
+    "latency_s": 7.27,
+    "raw": "{\n  \"broad_scene\": \"Nighttime outdoor wedding event\",\n  \"subjects\": [\n    \"guests\",\n    \"bicycle\",\n    \"bow-tie archway\",\n    \"green hedge\"\n  ],\n  \"action\": \"Guests gather near decorative archway\",\n  \"event_present\": \"none\",\n  \"confidence\": 0.85\n}",
+    "parsed": {
+      "broad_scene": "Nighttime outdoor wedding event",
+      "subjects": [
+        "guests",
+        "bicycle",
+        "bow-tie archway",
+        "green hedge"
+      ],
+      "action": "Guests gather near decorative archway",
+      "event_present": "none",
+      "confidence": 0.85
+    },
+    "parse_failed": false,
+    "exception": null,
+    "cache_source": "p5.3-fresh"
+  }
+]
