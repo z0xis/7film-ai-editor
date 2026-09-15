@@ -30,7 +30,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from fractions import Fraction
 from pathlib import Path
-from typing import Any
+from typing import Any, Self
 
 from ..db import Database
 from ..domain import MediaAsset, Shot
@@ -100,10 +100,65 @@ def _face_framing(box: Any, width: int, height: int) -> tuple[float, float]:
     return round(ratio, 5), round(edge, 3)
 
 
-def measure_windows(asset: MediaAsset, shot: Shot, source: Path) -> list[ShotWindow]:
-    """Walk a shot half a second at a time and report what each window holds."""
-    import cv2  # type: ignore[import-not-found]
+def _measure_shot_on_open_capture(
+    cv2: Any, capture: Any, detector: Any, width: int, height: int, shot: Shot,
+) -> list[ShotWindow]:
+    """The per-shot measurement loop, unchanged from before this was split out -- given an
+    already-open capture and an already-built detector rather than opening/building its own.
+    Every seek, read, and computed value is identical to what a fresh `measure_windows` call
+    would have produced for this shot; only the open/init work above it is shared now."""
     import numpy as np
+
+    rate = shot.source_range.rate
+    step = max(1, rate.frames_from_seconds(WINDOW_SECONDS, rounding="nearest"))
+    windows: list[ShotWindow] = []
+    previous = None
+    for offset in range(0, shot.source_range.duration_frames, step):
+        capture.set(cv2.CAP_PROP_POS_FRAMES, shot.source_range.start_frame + offset)
+        ok, frame = capture.read()
+        if not ok or frame is None:
+            break
+        grey = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        sharpness = _sharpness(cv2, grey)
+        faces: list[Any] = []
+        if detector is not None:
+            _ok, detected = detector.detect(frame)
+            if detected is not None:
+                faces = list(detected)
+        ratio, edge, bystanders = 0.0, 0.0, 0
+        if faces:
+            largest = max(faces, key=lambda box: box[2] * box[3])
+            ratio, edge = _face_framing(largest, width, height)
+            area = float(largest[2] * largest[3])
+            bystanders = sum(
+                1 for box in faces if float(box[2] * box[3]) < area * BYSTANDER_RATIO
+            )
+        small = cv2.resize(grey, (160, 90)).astype(np.int16)
+        motion = 0.0 if previous is None else float(np.abs(small - previous).mean())
+        previous = small
+        windows.append(ShotWindow(
+            shot_id=shot.id,
+            offset_frames=offset,
+            sharpness=round(sharpness, 2),
+            motion=round(motion, 3),
+            face_ratio=ratio,
+            face_edge=edge,
+            face_count=len(faces),
+            bystanders=bystanders,
+        ))
+    return windows
+
+
+def measure_windows(asset: MediaAsset, shot: Shot, source: Path) -> list[ShotWindow]:
+    """Walk a shot half a second at a time and report what each window holds.
+
+    Opens its own capture and its own face detector, measures the one shot, and releases both.
+    Correct on its own and still used that way by anything measuring a single shot in isolation
+    (the shadow research tooling, tests); `AssetWindowMeasurer` below is the batched form
+    `_measure_shot_windows` actually calls in production, for assets with more than one shot to
+    measure.
+    """
+    import cv2  # type: ignore[import-not-found]
 
     model = Path(__file__).parent.parent / "models" / "face_detection_yunet_2023mar.onnx"
     capture = cv2.VideoCapture(str(source))
@@ -120,46 +175,67 @@ def measure_windows(asset: MediaAsset, shot: Shot, source: Path) -> list[ShotWin
                 str(model), "", (width, height),
                 score_threshold=BYSTANDER_SCORE, nms_threshold=0.3,
             )
-        rate = shot.source_range.rate
-        step = max(1, rate.frames_from_seconds(WINDOW_SECONDS, rounding="nearest"))
-        windows: list[ShotWindow] = []
-        previous = None
-        for offset in range(0, shot.source_range.duration_frames, step):
-            capture.set(cv2.CAP_PROP_POS_FRAMES, shot.source_range.start_frame + offset)
-            ok, frame = capture.read()
-            if not ok or frame is None:
-                break
-            grey = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            sharpness = _sharpness(cv2, grey)
-            faces: list[Any] = []
-            if detector is not None:
-                _ok, detected = detector.detect(frame)
-                if detected is not None:
-                    faces = list(detected)
-            ratio, edge, bystanders = 0.0, 0.0, 0
-            if faces:
-                largest = max(faces, key=lambda box: box[2] * box[3])
-                ratio, edge = _face_framing(largest, width, height)
-                area = float(largest[2] * largest[3])
-                bystanders = sum(
-                    1 for box in faces if float(box[2] * box[3]) < area * BYSTANDER_RATIO
-                )
-            small = cv2.resize(grey, (160, 90)).astype(np.int16)
-            motion = 0.0 if previous is None else float(np.abs(small - previous).mean())
-            previous = small
-            windows.append(ShotWindow(
-                shot_id=shot.id,
-                offset_frames=offset,
-                sharpness=round(sharpness, 2),
-                motion=round(motion, 3),
-                face_ratio=ratio,
-                face_edge=edge,
-                face_count=len(faces),
-                bystanders=bystanders,
-            ))
-        return windows
+        return _measure_shot_on_open_capture(cv2, capture, detector, width, height, shot)
     finally:
         capture.release()
+
+
+class AssetWindowMeasurer:
+    """`measure_windows`, batched across every shot of one asset that share it: one
+    `cv2.VideoCapture` and one `cv2.FaceDetectorYN`, opened once and reused, instead of a fresh
+    pair per shot.
+
+    Nothing about *what* is measured changes -- every shot still seeks and reads exactly the
+    frames `measure_windows` would have, in the same order, and produces the same
+    `ShotWindow` values; see `test_windows.py`'s equivalence tests. What changes is that
+    `_measure_shot_windows` (whose shots already arrive grouped by asset -- `project_shots`
+    orders by `media_assets.path, shots.start_frame`) no longer pays a fresh file-open and a
+    fresh ONNX-model load for every one of an asset's shots, only for the asset itself.
+
+    A shot whose own measurement raises still leaves this measurer usable for the next shot of
+    the same asset -- the capture and detector are this object's, not the failed call's, and
+    nothing here closes them on a per-shot exception. Cancellation between shots is the caller's
+    job, same as before: this only holds the capture open across calls, it does not loop itself.
+    """
+
+    def __init__(self, asset: MediaAsset) -> None:
+        import cv2  # type: ignore[import-not-found]
+
+        self._cv2 = cv2
+        model = Path(__file__).parent.parent / "models" / "face_detection_yunet_2023mar.onnx"
+        self._capture = cv2.VideoCapture(str(asset.path))
+        self._usable = self._capture.isOpened()
+        self._width = 0
+        self._height = 0
+        self._detector = None
+        if self._usable:
+            self._width = int(self._capture.get(cv2.CAP_PROP_FRAME_WIDTH))
+            self._height = int(self._capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
+            if self._width <= 0 or self._height <= 0:
+                self._usable = False
+            elif hasattr(cv2, "FaceDetectorYN") and model.exists():
+                self._detector = cv2.FaceDetectorYN.create(
+                    str(model), "", (self._width, self._height),
+                    score_threshold=BYSTANDER_SCORE, nms_threshold=0.3,
+                )
+
+    def measure(self, shot: Shot) -> list[ShotWindow]:
+        """The same result `measure_windows(asset, shot, asset.path)` would return -- an
+        asset whose file could not be opened or has no readable dimensions returns `[]` for
+        every shot, exactly as a fresh `measure_windows` call would have for each of them."""
+        if not self._usable:
+            return []
+        return _measure_shot_on_open_capture(
+            self._cv2, self._capture, self._detector, self._width, self._height, shot)
+
+    def close(self) -> None:
+        self._capture.release()
+
+    def __enter__(self) -> Self:
+        return self
+
+    def __exit__(self, *exc_info: object) -> None:
+        self.close()
 
 
 def store_windows(database: Database, shot_id: str, windows: list[ShotWindow]) -> None:

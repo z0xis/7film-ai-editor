@@ -16,6 +16,7 @@ import numpy as np
 from ..db import Database, now, raise_if_cancelled
 from ..domain import BeatGrid, MediaAsset, Shot
 from ..timebase import FrameRate, TimeRange
+from . import windows as windows_module
 from .media import project_assets
 from .music import MusicTrack
 from .vision import FrameMetrics, VisionClassifier, measure_frames
@@ -369,46 +370,65 @@ def _measure_shot_windows(
     *walked*, never `shot_windows` rows written: one shot can produce several windows, or none
     at all on a failure or an unreadable stretch, and neither says anything about how far
     through the shot list this call actually is.
+
+    P4: `shots` arrives grouped by asset -- `project_shots` orders by `media_assets.path,
+    shots.start_frame` -- so consecutive shots of the same asset share one `AssetWindowMeasurer`
+    (one open file, one loaded face-detection model) instead of each opening and releasing its
+    own, the repeated-open-per-shot cost a static audit found here. The measurer is keyed by
+    `asset_id` and reopened whenever that changes, which stays correct even if a caller ever
+    hands this an unsorted `shots` list -- it would just stop sharing across the gap, never
+    measure anything wrong.
     """
     by_id = {asset.id: asset for asset in assets}
     total = len(shots)
-    for index, shot in enumerate(shots, start=1):
-        if job_id is not None:
-            raise_if_cancelled(database, job_id)
-            # A heartbeat *before* the expensive part of this iteration, not folded into the
-            # progress write after it: the two can be minutes apart on this shoot's slowest
-            # shots, and a caller asking "is anyone still there" deserves an answer that isn't
-            # gated on the shot in progress actually finishing. See `touch_heartbeat`'s own
-            # docstring for the limitation this does not solve -- a single very long decode or
-            # inference call inside `measure_windows` still cannot be interrupted mid-call.
-            database.touch_heartbeat(job_id)
-        asset = by_id.get(shot.asset_id)
-        if asset is None:
+    current_asset_id: str | None = None
+    measurer: windows_module.AssetWindowMeasurer | None = None
+    try:
+        for index, shot in enumerate(shots, start=1):
+            if job_id is not None:
+                raise_if_cancelled(database, job_id)
+                # A heartbeat *before* the expensive part of this iteration, not folded into the
+                # progress write after it: the two can be minutes apart on this shoot's slowest
+                # shots, and a caller asking "is anyone still there" deserves an answer that isn't
+                # gated on the shot in progress actually finishing. See `touch_heartbeat`'s own
+                # docstring for the limitation this does not solve -- a single very long decode or
+                # inference call inside `measure_windows` still cannot be interrupted mid-call.
+                database.touch_heartbeat(job_id)
+            asset = by_id.get(shot.asset_id)
+            if asset is None:
+                if job_id is not None:
+                    database.update_job_progress(
+                        job_id, stage="windows", processed=index, total=total,
+                        checkpoint={"last_shot_id": shot.id, "last_shot_index": index, "pass": "windows"},
+                    )
+                continue
+            if asset.id != current_asset_id:
+                if measurer is not None:
+                    measurer.close()
+                measurer = windows_module.AssetWindowMeasurer(asset)
+                current_asset_id = asset.id
+            try:
+                windows = measurer.measure(shot)
+            except Exception:
+                LOGGER.exception(json.dumps({"event": "shot_windows_failed", "shot_id": shot.id}))
+                windows = None
+            if windows:
+                store_windows(database, shot.id, windows)
+            # Written after the shot's own work (the `measurer.measure`/`store_windows` above),
+            # not before: a crash between the heartbeat and here leaves this shot's `processed`
+            # count exactly where it was -- unfinished, not falsely counted as done. See the
+            # module docstring on `Database.replace_rows` for the same ordering argument applied
+            # to `shot_features`.
             if job_id is not None:
                 database.update_job_progress(
                     job_id, stage="windows", processed=index, total=total,
-                    checkpoint={"last_shot_id": shot.id, "last_shot_index": index, "pass": "windows"},
+                    checkpoint={"last_shot_id": shot.id, "last_shot_index": index,
+                                "current_asset_id": asset.id, "current_asset_display": asset.name,
+                                "pass": "windows"},
                 )
-            continue
-        try:
-            windows = measure_windows(asset, shot, asset.path)
-        except Exception:
-            LOGGER.exception(json.dumps({"event": "shot_windows_failed", "shot_id": shot.id}))
-            windows = None
-        if windows:
-            store_windows(database, shot.id, windows)
-        # Written after the shot's own work (the `measure_windows`/`store_windows` above), not
-        # before: a crash between the heartbeat and here leaves this shot's `processed` count
-        # exactly where it was -- unfinished, not falsely counted as done. See the module
-        # docstring on `Database.replace_rows` for the same ordering argument applied to
-        # `shot_features`.
-        if job_id is not None:
-            database.update_job_progress(
-                job_id, stage="windows", processed=index, total=total,
-                checkpoint={"last_shot_id": shot.id, "last_shot_index": index,
-                            "current_asset_id": asset.id, "current_asset_display": asset.name,
-                            "pass": "windows"},
-            )
+    finally:
+        if measurer is not None:
+            measurer.close()
 
 
 def _fallback_beats(duration: Fraction, bpm: float = 120.0) -> tuple[Fraction, ...]:

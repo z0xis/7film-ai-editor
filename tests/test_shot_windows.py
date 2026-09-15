@@ -9,8 +9,11 @@ against the shoot's 45 to 78, a bystander standing in a doorway.
 """
 
 import unittest
+import unittest.mock
 from fractions import Fraction
+from pathlib import Path
 
+from sevenfilm.domain import MediaAsset, Shot
 from sevenfilm.services.planner import (
     BYSTANDER_PENALTY,
     WINDOW_QUALITY_WEIGHT,
@@ -19,8 +22,14 @@ from sevenfilm.services.planner import (
     _source_range_for_duration,
     _window_score,
 )
-from sevenfilm.services.windows import SHARPNESS_WIDTH, ShotWindow, _sharpness
-from sevenfilm.timebase import FrameRate
+from sevenfilm.services.windows import (
+    SHARPNESS_WIDTH,
+    AssetWindowMeasurer,
+    ShotWindow,
+    _sharpness,
+    measure_windows,
+)
+from sevenfilm.timebase import FrameRate, TimeRange
 
 from tests.test_recording_tail import shot as make_shot
 
@@ -225,3 +234,131 @@ class SharpnessIsNotNoiseTests(unittest.TestCase):
 
     def test_the_width_is_well_below_a_4k_frame(self):
         self.assertLess(SHARPNESS_WIDTH, 1920)
+
+
+class _FakeCapture:
+    """A `cv2.VideoCapture` stand-in that never touches a real file: frames are generated
+    deterministically from the requested frame index, so two measurement passes over the same
+    shot always see the same "video" without any real decode cost -- fast enough to run in a
+    normal test suite, and exact rather than approximate proof that the batched measurer reads
+    the same frames the per-shot one does.
+    """
+
+    WIDTH, HEIGHT = 96, 54
+
+    def __init__(self, path=None):
+        self._pos = 0
+        self.opens = 1
+
+    def isOpened(self):
+        return True
+
+    def get(self, prop):
+        import cv2
+
+        if prop == cv2.CAP_PROP_FRAME_WIDTH:
+            return self.WIDTH
+        if prop == cv2.CAP_PROP_FRAME_HEIGHT:
+            return self.HEIGHT
+        return 0
+
+    def set(self, prop, value):
+        self._pos = value
+        return True
+
+    def read(self):
+        import numpy as np
+
+        rng = np.random.default_rng(self._pos)
+        frame = rng.integers(0, 256, (self.HEIGHT, self.WIDTH, 3), dtype="uint8")
+        return True, frame
+
+    def release(self):
+        pass
+
+
+class AssetWindowMeasurerEquivalenceTests(unittest.TestCase):
+    """P4: `AssetWindowMeasurer` (one capture/detector shared across an asset's shots) must
+    produce exactly what `measure_windows` (a fresh capture/detector per shot) already did --
+    the whole basis for calling the batching a safe, semantic-preserving optimisation rather
+    than a behaviour change. No face detector here (patched out on both sides equally): the
+    point of this test is the seek/read/sharpness/motion path every shot goes through, not the
+    ONNX model, which neither call controls differently from the other.
+    """
+
+    def setUp(self):
+        import cv2
+
+        class _NoFaceDetector:
+            def detect(self, frame):
+                return True, None
+
+        class _FakeFaceDetectorYN:
+            @staticmethod
+            def create(*args, **kwargs):
+                return _NoFaceDetector()
+
+        patcher = unittest.mock.patch.object(cv2, "VideoCapture", _FakeCapture)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+        # A no-op detector, not a disabled one: the point is that both call paths see the same
+        # (absent) faces, not that face detection itself is untested here -- see test_vision.py
+        # for that.
+        detector_patcher = unittest.mock.patch.object(cv2, "FaceDetectorYN", _FakeFaceDetectorYN)
+        detector_patcher.start()
+        self.addCleanup(detector_patcher.stop)
+
+        self.asset = MediaAsset(
+            id="a1", project_id="p", path=Path("/m/a1.mov"), name="a1.mov",
+            duration=Fraction(20), frame_rate=FrameRate(50), width=96, height=54)
+        self.shots = [
+            Shot(id="s1", asset_id="a1", source_range=TimeRange(0, 150, FrameRate(50))),
+            Shot(id="s2", asset_id="a1", source_range=TimeRange(150, 200, FrameRate(50))),
+            Shot(id="s3", asset_id="a1", source_range=TimeRange(350, 75, FrameRate(50))),
+        ]
+
+    def test_batched_measurement_matches_per_shot_measurement_exactly(self):
+        per_shot = [measure_windows(self.asset, shot, self.asset.path) for shot in self.shots]
+
+        with AssetWindowMeasurer(self.asset) as measurer:
+            batched = [measurer.measure(shot) for shot in self.shots]
+
+        self.assertEqual(per_shot, batched)
+        # Not vacuously equal: each shot actually produced windows to compare.
+        self.assertTrue(all(per_shot))
+
+    def test_batched_measurement_opens_the_capture_once_not_per_shot(self):
+        opens = []
+        real_init = _FakeCapture.__init__
+
+        def counting_init(self, *args, **kwargs):
+            opens.append(1)
+            real_init(self, *args, **kwargs)
+
+        with (
+            unittest.mock.patch.object(_FakeCapture, "__init__", counting_init),
+            AssetWindowMeasurer(self.asset) as measurer,
+        ):
+            for shot in self.shots:
+                measurer.measure(shot)
+        self.assertEqual(len(opens), 1)
+
+    def test_an_unopenable_asset_returns_empty_for_every_shot_not_an_exception(self):
+        class _UnopenableCapture(_FakeCapture):
+            def isOpened(self):
+                return False
+
+        with (
+            unittest.mock.patch("cv2.VideoCapture", _UnopenableCapture),
+            AssetWindowMeasurer(self.asset) as measurer,
+        ):
+            for shot in self.shots:
+                self.assertEqual(measurer.measure(shot), [])
+
+    def test_a_shot_whose_asset_frame_range_starts_past_end_of_video_still_closes_cleanly(self):
+        # `_FakeCapture.read` always succeeds here (unlike a real decoder past EOF), so this
+        # exercises only that close() after a normal pass never raises -- not early-stop
+        # behaviour, which real `measure_windows` already covers via its own frame-read guard.
+        with AssetWindowMeasurer(self.asset) as measurer:
+            measurer.measure(self.shots[0])
+        # No exception on __exit__ is the assertion.
