@@ -150,14 +150,20 @@ class JobResumeTests(unittest.TestCase):
                 "created_at": now(), "updated_at": now()})
         cls.client = TestClient(api.app)
 
-    def add_job(self, job_id, status, progress, *, minutes_ago=0, kind="shots"):
+    def add_job(self, job_id, status, progress, *, minutes_ago=0, kind="shots",
+                stage=None, processed=None, total=None):
         from datetime import UTC, datetime, timedelta
         stamp = (datetime.now(UTC) - timedelta(minutes=minutes_ago)).isoformat()
+        checkpoint = {"pass": "encode"}
+        if stage is not None:
+            checkpoint |= {"stage": stage, "processed": processed, "total": total}
         api.DATABASE.insert("jobs", {
             "id": job_id, "project_id": "p", "kind": kind, "status": status,
-            "progress": progress, "checkpoint_json": {"pass": "encode"}, "error": None,
+            "progress": progress, "checkpoint_json": checkpoint, "error": None,
             "created_at": stamp, "updated_at": stamp})
-        api.DATABASE.execute("UPDATE jobs SET updated_at = ? WHERE id = ?", (stamp, job_id))
+        api.DATABASE.execute(
+            "UPDATE jobs SET updated_at = ?, last_heartbeat_at = ? WHERE id = ?",
+            (stamp, stamp, job_id))
 
     def tearDown(self):
         api.DATABASE.execute("DELETE FROM jobs", ())
@@ -167,13 +173,19 @@ class JobResumeTests(unittest.TestCase):
 
     def test_the_running_job_comes_back_after_a_reload(self):
         self.add_job("j1", "completed", 1.0, minutes_ago=30)
-        self.add_job("j2", "running", 0.4)
+        # `stage_progress` (2/5 assets encoded), not the legacy `progress` float directly: since
+        # P2, `progress`/`overall_progress` are computed from the checkpoint's own stage weight
+        # (see `_overall_progress` in api.py), not passed through verbatim -- a bare number with
+        # no stage behind it is exactly the kind of unfalsifiable percentage that contract
+        # refuses to trust.
+        self.add_job("j2", "running", 0.4, stage="encode", processed=2, total=5)
 
         job = self.client.get("/api/projects/p/jobs/latest").json()
 
         self.assertEqual(job["id"], "j2")
         self.assertEqual(job["kind"], "shots")
-        self.assertAlmostEqual(job["progress"], 0.4)
+        self.assertAlmostEqual(job["stage_progress"], 0.4)
+        self.assertEqual(job["stage"], "encode")
         self.assertFalse(job["stalled"])
 
     def test_the_checkpoint_says_which_pass_it_is_on(self):

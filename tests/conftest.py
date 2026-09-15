@@ -12,16 +12,3 @@ import tempfile
 # settles the race the same way regardless of which files exist or what they're named.
 _ROOT = tempfile.TemporaryDirectory()
 os.environ.setdefault("SEVENFILM_DATA_ROOT", _ROOT.name)
-
-
-def pytest_runtest_setup(item):
-    if item.nodeid.endswith("JobResumeTests::test_a_failed_job_carries_its_reason"):
-        import sys
-        sys.path.insert(0, "apps/api")
-        from sevenfilm import api
-        rows = api.DATABASE.fetch_all("SELECT id, project_id, kind, status, updated_at FROM jobs")
-        print("\n[DEBUG jobs table before test]", len(rows), "rows")
-        for r in rows:
-            print(" ", dict(r))
-        projects = api.DATABASE.fetch_all("SELECT id, name FROM projects")
-        print("[DEBUG projects]", [dict(p) for p in projects])

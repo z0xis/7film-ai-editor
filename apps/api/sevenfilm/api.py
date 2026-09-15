@@ -245,11 +245,15 @@ def _run_job(job_id: str) -> None:
         elif job["kind"] == "shots":
             analyze_shots(DATABASE, job["project_id"], job_id)
         elif job["kind"] == "music":
+            total_songs = len(checkpoint["paths"])
             for position, raw in enumerate(checkpoint["paths"]):
                 raise_if_cancelled(DATABASE, job_id)
+                DATABASE.touch_heartbeat(job_id)
                 analyze_music(DATABASE, job["project_id"], Path(raw), position)
-                DATABASE.update_job(
-                    job_id, status="running", progress=(position + 1) / len(checkpoint["paths"]))
+                DATABASE.update_job_progress(
+                    job_id, stage="music", processed=position + 1, total=total_songs,
+                    checkpoint={"paths": checkpoint["paths"], "current_song_display": Path(raw).name},
+                )
         else:
             raise ValueError(f"Bilinmeyen job türü: {job['kind']}")
         DATABASE.update_job(job_id, status="completed", progress=1.0)
@@ -506,18 +510,129 @@ def download_export(timeline_id: str, kind: Literal["plan", "otio", "fcpxml"]) -
     return FileResponse(paths[kind], filename=paths[kind].name)
 
 
-# A job whose progress has not moved for this long is not being worked on any more: the
-# process that was running it is gone, and nothing will ever mark it finished.
+# A job whose *heartbeat* has not moved for this long is not being worked on any more: the
+# process that was running it is gone, and nothing will ever mark it finished. This used to be
+# read off `updated_at` -- the same column a progress write touches -- which is exactly how a
+# job that was genuinely still running, CPU busy, `_measure_shot_windows` landing new rows every
+# few seconds, read as "unresponsive": that stage wrote neither a progress update nor anything
+# else for hours at a time. See `Database.touch_heartbeat`.
 STALLED_JOB_SECONDS = 300
+
+# Every stage a job of this kind moves through, in the order it moves through them. A stage
+# absent from a kind's own `STAGE_WEIGHTS` (or a kind absent here entirely -- a job row this old
+# never recorded one) falls back to treating whatever `stage_progress` it has as the whole of
+# `overall_progress`, still subject to the same non-terminal cap below.
+STAGE_ORDER: dict[str, tuple[str, ...]] = {
+    "shots": ("encode", "label", "windows", "finalize"),
+    "index": ("index",),
+    "derivatives": ("derivatives",),
+    "music": ("music",),
+}
+# Deliberately not measured off this shoot's own timings: P2 is an observability contract, not
+# a performance claim, and calibrating these against one project's runtime would smuggle a
+# performance number in under a different name. `encode`/`label` cost about the same per asset
+# (one CLIP pass each); `windows` is the one pass with no natural per-asset unit, and measured
+# far more expensive in wall time than either on real footage, so it is weighted heaviest of the
+# three. `finalize` does no real work today -- see the comment where `analyze_shots` writes it --
+# and exists so `stage` has somewhere to be between the last `windows` shot and `completed`
+# rather than jumping straight from "windows, shot 2638/2638" to "completed" with nothing
+# between. These may be recalibrated once P4's own profiling has real evidence to calibrate
+# them against; until then this is a deterministic, documented placeholder, not a measurement.
+STAGE_WEIGHTS: dict[str, dict[str, float]] = {
+    "shots": {"encode": 0.30, "label": 0.30, "windows": 0.39, "finalize": 0.01},
+    "index": {"index": 1.0},
+    "derivatives": {"derivatives": 1.0},
+    "music": {"music": 1.0},
+}
+# However close the weighted sum below gets to 1.0, nothing but `status == "completed"` may ever
+# read as fully done: `_measure_shot_windows` finishing its last shot is not the same instant as
+# `_run_job` writing `completed`, and the gap between them is exactly where the false "100%,
+# then stalled" reading this package exists to fix came from.
+NON_TERMINAL_PROGRESS_CAP = 0.99
+
+
+def _stage_progress(processed: Any, total: Any) -> float | None:
+    """`processed/total` inside the current stage, or `None` when `total` is not a real count.
+
+    Never invented: a stage that cannot count its own work in advance (none of this codebase's
+    job kinds currently work that way, but the contract allows for one) reports `None` here
+    rather than a percentage nothing measured.
+    """
+    if not isinstance(processed, int) or not isinstance(total, int) or total <= 0:
+        return None
+    return max(0.0, min(1.0, processed / total))
+
+
+def _overall_progress(kind: str, stage: str, stage_progress: float | None, status: str) -> float:
+    """The one number `progress`/`overall_progress` in the response actually carries.
+
+    Monotonic within a job and across its stage transitions: each stage's full weight is only
+    ever added once it is genuinely behind the current stage in that kind's `STAGE_ORDER`, so a
+    transition from `encode` to `label` cannot read as a drop, and `windows` starting cannot
+    read as `encode`+`label` costing anything less than they already earned. Never 1.0 outside
+    `status == "completed"` -- see `NON_TERMINAL_PROGRESS_CAP`.
+    """
+    if status == "completed":
+        return 1.0
+    order = STAGE_ORDER.get(kind)
+    weights = STAGE_WEIGHTS.get(kind)
+    if not order or not weights or stage not in weights:
+        # An unrecognised stage (a pre-P2 job row that never recorded one, or a job kind this
+        # table does not know) has nothing better to report than its own stage_progress, honestly
+        # capped -- not zero, which would look like no work has happened at all.
+        return min(stage_progress if stage_progress is not None else 0.0, NON_TERMINAL_PROGRESS_CAP)
+    completed_weight = sum(weights[s] for s in order[: order.index(stage)])
+    value = completed_weight + weights[stage] * (stage_progress if stage_progress is not None else 0.0)
+    return min(value, NON_TERMINAL_PROGRESS_CAP)
 
 
 def _job_payload(job: dict[str, Any]) -> dict[str, Any]:
-    job["checkpoint"] = json.loads(job.pop("checkpoint_json"))
-    if job["status"] in {"queued", "running", "cancel_requested"}:
-        updated = datetime.fromisoformat(job["updated_at"])
-        job["stalled"] = (datetime.now(UTC) - updated).total_seconds() > STALLED_JOB_SECONDS
-    else:
+    checkpoint = json.loads(job.pop("checkpoint_json"))
+    job["checkpoint"] = checkpoint
+    status = job["status"]
+    kind = job["kind"]
+
+    stage = checkpoint.get("stage") or ("queued" if status == "queued" else "")
+    processed = checkpoint.get("processed")
+    total = checkpoint.get("total")
+    stage_progress = _stage_progress(processed, total)
+
+    job["stage"] = stage
+    job["processed"] = processed if isinstance(processed, int) else None
+    job["total"] = total if isinstance(total, int) else None
+    job["stage_progress"] = stage_progress
+    overall_progress = _overall_progress(kind, stage, stage_progress, status)
+    job["overall_progress"] = overall_progress
+    # The field every existing consumer (backend tests, the desktop app) already reads. Same
+    # name, same JSON position, same 0..1 float -- what changed is that this now always agrees
+    # with `overall_progress` instead of a formula that could reach 1.0 hours before the job
+    # that computed it was actually done.
+    job["progress"] = overall_progress
+
+    job["current_asset_id"] = checkpoint.get("current_asset_id") or checkpoint.get("last_asset_id")
+    job["current_asset_display"] = checkpoint.get("current_asset_display")
+    job["current_shot_id"] = checkpoint.get("last_shot_id")
+    job["current_shot_index"] = checkpoint.get("last_shot_index")
+
+    job["last_progress_at"] = job.get("last_progress_at")
+    job["last_heartbeat_at"] = job.get("last_heartbeat_at")
+
+    if status in TERMINAL_STATUSES:
         job["stalled"] = False
+    elif status == "queued":
+        # Nothing has run yet, so there is no heartbeat to check -- a queued job is only ever
+        # "stalled" in the sense of "the backend has not picked it up", measured off when it was
+        # created rather than a liveness signal that does not exist yet.
+        created = datetime.fromisoformat(job["created_at"])
+        job["stalled"] = (datetime.now(UTC) - created).total_seconds() > STALLED_JOB_SECONDS
+    else:
+        # `running` and `cancel_requested` both mean a worker owns this job and is expected to
+        # be checking in -- `cancel_requested` is not yet settled, so it is judged the same way.
+        # `last_heartbeat_at` first; `updated_at` only for a row from before this column existed
+        # or one `recover_orphaned_jobs` never gave a heartbeat to attribute this failure to.
+        heartbeat = job.get("last_heartbeat_at") or job["updated_at"]
+        age = (datetime.now(UTC) - datetime.fromisoformat(heartbeat)).total_seconds()
+        job["stalled"] = age > STALLED_JOB_SECONDS
     return job
 
 

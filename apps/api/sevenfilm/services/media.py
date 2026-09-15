@@ -293,6 +293,7 @@ def index_folder(database: Database, project_id: str, folder: Path, job_id: str)
     unreadable: list[str] = []
     for index, path in enumerate(candidates, start=1):
         raise_if_cancelled(database, job_id)
+        database.touch_heartbeat(job_id)
         if str(path) in completed_paths:
             continue
         existing = database.fetch_one(
@@ -310,12 +311,11 @@ def index_folder(database: Database, project_id: str, folder: Path, job_id: str)
                                 "path": str(path), "reason": type(error).__name__})
                 )
                 completed_paths.add(str(path))
-                database.update_job(
-                    job_id,
-                    status="running",
-                    progress=index / len(candidates),
+                database.update_job_progress(
+                    job_id, stage="index", processed=index, total=len(candidates),
                     checkpoint={"completed_paths": sorted(completed_paths),
                                 "source_folder": str(source_folder),
+                                "current_asset_display": path.name,
                                 "unreadable": sorted(unreadable)},
                 )
                 continue
@@ -336,11 +336,11 @@ def index_folder(database: Database, project_id: str, folder: Path, job_id: str)
                     )
                 )
                 completed_paths.add(str(path))
-                database.update_job(
-                    job_id,
-                    status="running",
-                    progress=index / len(candidates),
-                    checkpoint={"completed_paths": sorted(completed_paths), "source_folder": str(source_folder)},
+                database.update_job_progress(
+                    job_id, stage="index", processed=index, total=len(candidates),
+                    checkpoint={"completed_paths": sorted(completed_paths),
+                                "source_folder": str(source_folder),
+                                "current_asset_display": path.name},
                 )
                 continue
             asset_id = str(uuid.uuid5(uuid.NAMESPACE_URL, f"sevenfilm:{project_id}:{path}"))
@@ -365,11 +365,10 @@ def index_folder(database: Database, project_id: str, folder: Path, job_id: str)
         else:
             _refresh_metadata(database, str(existing["id"]), path, project_id)
         completed_paths.add(str(path))
-        database.update_job(
-            job_id,
-            status="running",
-            progress=index / len(candidates),
+        database.update_job_progress(
+            job_id, stage="index", processed=index, total=len(candidates),
             checkpoint={"completed_paths": sorted(completed_paths), "source_folder": str(source_folder),
+                        "current_asset_display": path.name,
                         "unreadable": sorted(unreadable)},
         )
         LOGGER.info(json.dumps({"event": "media_indexed", "project_id": project_id, "path": str(path)}))
@@ -402,6 +401,7 @@ def generate_derivatives(database: Database, project_id: str, cache_root: Path, 
     failed: list[str] = []
     for position, asset in enumerate(assets, start=1):
         raise_if_cancelled(database, job_id)
+        database.touch_heartbeat(job_id)
         proxy, thumbnail = derivative_paths(cache_root, asset)
         try:
             if not proxy.exists():
@@ -437,22 +437,20 @@ def generate_derivatives(database: Database, project_id: str, cache_root: Path, 
             failed.append(asset.name)
             LOGGER.warning(json.dumps({"event": "derivative_failed", "asset_id": asset.id,
                                        "path": str(asset.path), "reason": type(error).__name__}))
-            database.update_job(
-                job_id,
-                status="running",
-                progress=position / len(assets),
-                checkpoint={"last_asset_id": asset.id, "failed": sorted(failed)},
+            database.update_job_progress(
+                job_id, stage="derivatives", processed=position, total=len(assets),
+                checkpoint={"last_asset_id": asset.id, "current_asset_display": asset.name,
+                            "failed": sorted(failed)},
             )
             continue
         database.execute(
             "UPDATE media_assets SET proxy_path = ?, thumbnail_path = ? WHERE id = ?",
             (str(proxy), str(thumbnail), asset.id),
         )
-        database.update_job(
-            job_id,
-            status="running",
-            progress=position / len(assets),
-            checkpoint={"last_asset_id": asset.id, "failed": sorted(failed)},
+        database.update_job_progress(
+            job_id, stage="derivatives", processed=position, total=len(assets),
+            checkpoint={"last_asset_id": asset.id, "current_asset_display": asset.name,
+                        "failed": sorted(failed)},
         )
         LOGGER.info(json.dumps({"event": "derivatives_created", "asset_id": asset.id}))
     if failed and len(failed) == len(assets):

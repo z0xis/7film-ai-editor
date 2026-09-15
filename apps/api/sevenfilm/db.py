@@ -255,6 +255,15 @@ ADDED_COLUMNS = (
     # the frame cuts it. Zero reads as "no face" and as "measured before this existed" alike.
     ("shots", "face_ratio", "REAL NOT NULL DEFAULT 0"),
     ("shots", "face_edge", "REAL NOT NULL DEFAULT 0"),
+    # Two independent proofs of life, deliberately not the same column: `last_progress_at`
+    # moves only when a real unit of work (an asset, a shot, a song) finished; `last_heartbeat_at`
+    # moves whenever a worker checks in, whether or not it has anything new to report. Collapsing
+    # both onto `updated_at` is what let a job that was genuinely still working -- CPU busy,
+    # `shot_windows` rows landing -- read as "unresponsive" for having gone ten minutes without a
+    # *progress* write. NULL on a job created before this column existed, or on one recovered as
+    # an orphan without ever having taken a cooperative-cancellation checkpoint.
+    ("jobs", "last_progress_at", "TEXT"),
+    ("jobs", "last_heartbeat_at", "TEXT"),
 )
 
 
@@ -339,6 +348,41 @@ class Database:
         sql += " WHERE id = ?"
         params.append(job_id)
         self.execute(sql, tuple(params))
+
+    def update_job_progress(
+        self, job_id: str, *, stage: str, processed: int, total: int | None,
+        checkpoint: dict[str, Any],
+    ) -> None:
+        """Record a real unit of work finishing: `processed`/`total` inside `stage`, plus
+        whatever the caller needs to resume or display this stage (a durable checkpoint).
+
+        A real progress write is also the strongest available proof of life, so it counts as a
+        heartbeat too -- `last_heartbeat_at` moves alongside `last_progress_at` here, never the
+        other way round; see `touch_heartbeat` for a check-in that carries no new work.
+        `total=None` means genuinely unknown, not zero and not guessed -- callers that cannot
+        count their work in advance should pass it through rather than invent a number.
+        """
+        stamp = now()
+        payload = {**checkpoint, "stage": stage, "processed": processed, "total": total}
+        self.execute(
+            "UPDATE jobs SET status = 'running', updated_at = ?, last_progress_at = ?, "
+            "last_heartbeat_at = ?, checkpoint_json = ? WHERE id = ?",
+            (stamp, stamp, stamp, json.dumps(payload), job_id),
+        )
+
+    def touch_heartbeat(self, job_id: str) -> None:
+        """Prove a job is still alive without claiming any work finished.
+
+        Never touches `checkpoint_json` or `last_progress_at` -- a worker still inside one very
+        long shot or asset can call this on its own without it reading as that item having
+        completed. `updated_at` still moves, for the sake of anything that only ever knew about
+        that one column.
+        """
+        stamp = now()
+        self.execute(
+            "UPDATE jobs SET updated_at = ?, last_heartbeat_at = ? WHERE id = ?",
+            (stamp, stamp, job_id),
+        )
 
     def transition_job(
         self, job_id: str, to_status: str, *, from_statuses: frozenset[str],

@@ -309,26 +309,41 @@ def analyze_shots(database: Database, project_id: str, job_id: str) -> list[Shot
         # here means the asset this call would have encoded next never starts, rather than
         # being abandoned half done.
         raise_if_cancelled(database, job_id)
+        database.touch_heartbeat(job_id)
         if not _asset_features(database, asset.id):
             _encode_asset(database, classifier, asset)
-        database.update_job(
-            job_id,
-            status="running",
-            progress=index / (2 * len(assets)),
-            checkpoint={"last_asset_id": asset.id, "pass": "encode"},
+        # `update_job_progress`, not the plain `update_job` this used to be: `processed`/`total`
+        # here are the honest unit of work (assets encoded, out of all of them), not a fraction
+        # of the whole job pre-baked to imply the windows pass barely exists. See
+        # `_overall_progress` in api.py for how a stage's own progress becomes the number the
+        # UI shows.
+        database.update_job_progress(
+            job_id, stage="encode", processed=index, total=len(assets),
+            checkpoint={"last_asset_id": asset.id, "current_asset_display": asset.name,
+                        "pass": "encode"},
         )
     priors = _project_prior(database, classifier, project_id)
     for index, asset in enumerate(assets, start=1):
         raise_if_cancelled(database, job_id)
+        database.touch_heartbeat(job_id)
         _label_asset(database, classifier, asset, priors)
-        database.update_job(
-            job_id,
-            status="running",
-            progress=0.5 + index / (2 * len(assets)),
-            checkpoint={"last_asset_id": asset.id, "pass": "label"},
+        database.update_job_progress(
+            job_id, stage="label", processed=index, total=len(assets),
+            checkpoint={"last_asset_id": asset.id, "current_asset_display": asset.name,
+                        "pass": "label"},
         )
     shots = project_shots(database, project_id)
     _measure_shot_windows(database, project_id, assets, shots, job_id=job_id)
+    if job_id is not None:
+        # A real stage, not a free 1.0: `_measure_shot_windows` is the last unit of *measured*
+        # work, but `analyze_shots` still has to return and `_run_job` still has to write
+        # `completed` above it. Nothing here does real work -- it exists so a caller watching
+        # `stage` sees "finalize", never sees `windows` at 100% and nothing after it, and never
+        # sees this job's own `progress` read 1.0 before `_run_job` actually marks it done.
+        database.update_job_progress(
+            job_id, stage="finalize", processed=1, total=1,
+            checkpoint={"pass": "finalize"},
+        )
     LOGGER.info(json.dumps({"event": "shots_analyzed", "project_id": project_id, "count": len(shots)}))
     return shots
 
@@ -347,21 +362,53 @@ def _measure_shot_windows(
 
     A failure here leaves the shot unmeasured rather than failing the job: without windows the
     planner cuts the way it did before, which is worse but not broken.
+
+    This used to be the one pass in this whole job that wrote neither progress nor a heartbeat
+    -- the exact reason a job sitting here for hours, CPU busy and `shot_windows` rows landing,
+    read as "not responding" past `STALLED_JOB_SECONDS`. `processed`/`total` here count shots
+    *walked*, never `shot_windows` rows written: one shot can produce several windows, or none
+    at all on a failure or an unreadable stretch, and neither says anything about how far
+    through the shot list this call actually is.
     """
     by_id = {asset.id: asset for asset in assets}
-    for shot in shots:
+    total = len(shots)
+    for index, shot in enumerate(shots, start=1):
         if job_id is not None:
             raise_if_cancelled(database, job_id)
+            # A heartbeat *before* the expensive part of this iteration, not folded into the
+            # progress write after it: the two can be minutes apart on this shoot's slowest
+            # shots, and a caller asking "is anyone still there" deserves an answer that isn't
+            # gated on the shot in progress actually finishing. See `touch_heartbeat`'s own
+            # docstring for the limitation this does not solve -- a single very long decode or
+            # inference call inside `measure_windows` still cannot be interrupted mid-call.
+            database.touch_heartbeat(job_id)
         asset = by_id.get(shot.asset_id)
         if asset is None:
+            if job_id is not None:
+                database.update_job_progress(
+                    job_id, stage="windows", processed=index, total=total,
+                    checkpoint={"last_shot_id": shot.id, "last_shot_index": index, "pass": "windows"},
+                )
             continue
         try:
             windows = measure_windows(asset, shot, asset.path)
         except Exception:
             LOGGER.exception(json.dumps({"event": "shot_windows_failed", "shot_id": shot.id}))
-            continue
+            windows = None
         if windows:
             store_windows(database, shot.id, windows)
+        # Written after the shot's own work (the `measure_windows`/`store_windows` above), not
+        # before: a crash between the heartbeat and here leaves this shot's `processed` count
+        # exactly where it was -- unfinished, not falsely counted as done. See the module
+        # docstring on `Database.replace_rows` for the same ordering argument applied to
+        # `shot_features`.
+        if job_id is not None:
+            database.update_job_progress(
+                job_id, stage="windows", processed=index, total=total,
+                checkpoint={"last_shot_id": shot.id, "last_shot_index": index,
+                            "current_asset_id": asset.id, "current_asset_display": asset.name,
+                            "pass": "windows"},
+            )
 
 
 def _fallback_beats(duration: Fraction, bpm: float = 120.0) -> tuple[Fraction, ...]:
