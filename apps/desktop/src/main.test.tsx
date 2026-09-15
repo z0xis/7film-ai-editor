@@ -248,3 +248,152 @@ describe("P3 regression — 7d261b5 ticket guard still holds", () => {
     expect(screen.queryByText("Proje A")).not.toBeInTheDocument();
   }, 10000);
 });
+
+describe("P3.1 transient polling failure — HTTP poll failure != backend job failed", () => {
+  it("1. a poll request failure keeps the last-known job running and busy, polling continues", async () => {
+    const proj = project();
+    stubBaseline(proj, job({ status: "running" }));
+    mocked.job.mockRejectedValue(new Error("network"));
+
+    render(<App />);
+    await waitFor(() => expect(screen.getByText(/Bağlantı sorunu/)).toBeInTheDocument());
+    // The job itself is untouched by the failed request: still "running" underneath the
+    // transient warning shown in its place, and still busy -- Cancel stays offered, and the
+    // workflow buttons stay disabled, exactly as they were before the failed request.
+    expect(screen.getByText("İptal et")).toBeInTheDocument();
+    expect(screen.getByText(/1\. İndeksle/).closest("button")).toBeDisabled();
+  }, 10000);
+
+  it("2. the next successful poll (still running) clears the transient warning, busy stays true", async () => {
+    const proj = project();
+    stubBaseline(proj, job({ status: "running" }));
+    mocked.job
+      .mockRejectedValueOnce(new Error("network"))
+      .mockResolvedValue(job({ status: "running" }));
+
+    render(<App />);
+    await waitFor(() => expect(screen.getByText(/Bağlantı sorunu/)).toBeInTheDocument());
+    await waitFor(() => expect(screen.queryByText(/Bağlantı sorunu/)).not.toBeInTheDocument(),
+      { timeout: 3000 });
+    expect(screen.getByText(/shots: çalışıyor/)).toBeInTheDocument();
+    expect(screen.getByText(/1\. İndeksle/).closest("button")).toBeDisabled();
+  }, 10000);
+
+  it("3. a poll failure followed by completed reconciles: warning clears, completed shown, busy false, polling stops", async () => {
+    const proj = project();
+    stubBaseline(proj, job({ status: "running" }));
+    mocked.job
+      .mockRejectedValueOnce(new Error("network"))
+      .mockResolvedValueOnce(job({ status: "completed", overall_progress: 1 }));
+
+    render(<App />);
+    await waitFor(() => expect(screen.getByText(/Bağlantı sorunu/)).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText(/tamamlandı/)).toBeInTheDocument(), { timeout: 3000 });
+    expect(screen.queryByText(/Bağlantı sorunu/)).not.toBeInTheDocument();
+    expect(screen.getByText(/1\. İndeksle/).closest("button")).not.toBeDisabled();
+  }, 10000);
+
+  it("4. a poll failure followed by failed reconciles: backend failure shown, polling stops", async () => {
+    const proj = project();
+    stubBaseline(proj, job({ status: "running" }));
+    mocked.job
+      .mockRejectedValueOnce(new Error("network"))
+      .mockResolvedValueOnce(job({ status: "failed", error: "disk doldu" }));
+
+    render(<App />);
+    await waitFor(() => expect(screen.getByText(/Bağlantı sorunu/)).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText("disk doldu")).toBeInTheDocument(), { timeout: 3000 });
+    expect(screen.getByText(/1\. İndeksle/).closest("button")).not.toBeDisabled();
+  }, 10000);
+
+  it("5. a poll failure followed by cancelled reconciles: cancelled shown, polling stops", async () => {
+    const proj = project();
+    stubBaseline(proj, job({ status: "running" }));
+    mocked.job
+      .mockRejectedValueOnce(new Error("network"))
+      .mockResolvedValueOnce(job({ status: "cancelled" }));
+
+    render(<App />);
+    await waitFor(() => expect(screen.getByText(/Bağlantı sorunu/)).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText(/iptal edildi/)).toBeInTheDocument(), { timeout: 3000 });
+    expect(screen.queryByText(/Bağlantı sorunu/)).not.toBeInTheDocument();
+    expect(screen.getByText(/1\. İndeksle/).closest("button")).not.toBeDisabled();
+  }, 10000);
+
+  it("6. a poll failure during cancel_requested keeps polling, still cancelling afterwards", async () => {
+    const proj = project();
+    stubBaseline(proj, job({ status: "cancel_requested" }));
+    mocked.job
+      .mockRejectedValueOnce(new Error("network"))
+      .mockResolvedValue(job({ status: "cancel_requested" }));
+
+    render(<App />);
+    await waitFor(() => expect(screen.getByText(/Bağlantı sorunu/)).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText(/iptal ediliyor/)).toBeInTheDocument(), { timeout: 3000 });
+    expect(screen.getByText(/1\. İndeksle/).closest("button")).toBeDisabled();
+  }, 10000);
+
+  it("7. a project switch during a poll retry means the stale retry cannot touch the new project", async () => {
+    const projA = project({ id: "proj-a", name: "Proje A" });
+    const projB = project({ id: "proj-b", name: "Proje B" });
+    mocked.projects.mockResolvedValue([projA, projB]);
+    mocked.latestTimeline.mockRejectedValue(new Error("no timeline"));
+    mocked.rejections.mockResolvedValue({ clips: [] });
+    mocked.getProject.mockImplementation((id: string) => Promise.resolve(id === "proj-a" ? projA : projB));
+    mocked.latestJob.mockImplementation((id: string) =>
+      id === "proj-a" ? Promise.resolve(job({ id: "job-a", status: "running" })) : Promise.reject(new Error("none")));
+
+    let resolveRetry: (value: Job) => void = () => undefined;
+    const heldRetry = new Promise<Job>((resolve) => { resolveRetry = resolve; });
+    mocked.job
+      .mockRejectedValueOnce(new Error("network")) // the poll that fails and triggers a retry
+      .mockImplementation(() => heldRetry); // the retry itself, held open past the project switch
+
+    render(<App />);
+    await waitFor(() => expect(screen.getByText("Proje A")).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText(/Bağlantı sorunu/)).toBeInTheDocument());
+
+    screen.getByText("Değiştir").click();
+    const openB = await screen.findAllByText("Proje B");
+    openB[0].closest("button")!.click();
+    await waitFor(() => expect(screen.getByText("Proje B")).toBeInTheDocument());
+
+    // The retry that was already in flight for project A resolves now, long after the switch.
+    resolveRetry(job({ id: "job-a", kind: "shots", status: "running" }));
+    await new Promise((resolve) => setTimeout(resolve, 50));
+
+    expect(screen.getByText("Proje B")).toBeInTheDocument();
+    expect(screen.queryByText(/Bağlantı sorunu/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/shots: çalışıyor/)).not.toBeInTheDocument();
+  }, 10000);
+
+  it("8. unmounting during a poll failure stops further polling and state updates", async () => {
+    const proj = project();
+    stubBaseline(proj, job({ status: "running" }));
+    mocked.job.mockRejectedValue(new Error("network"));
+
+    const { unmount } = render(<App />);
+    await waitFor(() => expect(screen.getByText(/Bağlantı sorunu/)).toBeInTheDocument());
+    const callsAtUnmount = mocked.job.mock.calls.length;
+    unmount();
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    // No further poll attempts after teardown -- the retry loop did not keep running headless.
+    expect(mocked.job.mock.calls.length).toBe(callsAtUnmount);
+  }, 10000);
+
+  it("9. repeated transient failures never locally turn the job into failed", async () => {
+    const proj = project();
+    stubBaseline(proj, job({ status: "running" }));
+    mocked.job.mockRejectedValue(new Error("network"));
+
+    render(<App />);
+    await waitFor(() => expect(screen.getByText(/Bağlantı sorunu/)).toBeInTheDocument());
+    // Let several retry cycles elapse on the same persistent failure.
+    await new Promise((resolve) => setTimeout(resolve, 2200));
+    expect(screen.queryByText(/başarısız/)).not.toBeInTheDocument();
+    // Still busy, still cancellable -- the repeated failures never flipped the job to a
+    // terminal state on their own.
+    expect(screen.getByText("İptal et")).toBeInTheDocument();
+    expect(screen.getByText(/1\. İndeksle/).closest("button")).toBeDisabled();
+  }, 10000);
+});

@@ -346,11 +346,34 @@ export function App() {
   async function follow(jobId: string) {
     if (!project) return;
     const ticket = projectSelection.current;
+    // Set only by the request-failure branch below, and only read by it: this loop's own way
+    // of knowing whether the message currently on screen is its own transient warning (safe to
+    // clear on the next successful poll) or something else entirely (an unrelated operation's
+    // error, which this must never clobber).
+    let pollWarningShown = false;
     try {
       let next: Job;
       for (;;) {
-        next = await api.job(jobId);
+        try {
+          next = await api.job(jobId);
+        } catch (cause) {
+          // A single failed poll *request* is not the backend reporting the job failed --
+          // the exact conflation that, before this, would have ended the loop over a plain
+          // network hiccup. The last-known job (and so `busy`, and the Cancel action) stays
+          // exactly as it was; this only shows a transient warning and tries again on the
+          // same cadence as a normal poll.
+          if (!mounted.current || projectSelection.current !== ticket) return;
+          setError(`Bağlantı sorunu, tekrar deneniyor: ${String(cause)}`);
+          pollWarningShown = true;
+          await new Promise((resolve) => setTimeout(resolve, 700));
+          if (!mounted.current || projectSelection.current !== ticket) return;
+          continue;
+        }
         if (!mounted.current || projectSelection.current !== ticket) return;
+        if (pollWarningShown) {
+          setError("");
+          pollWarningShown = false;
+        }
         setJob(next);
         if (isTerminal(next.status)) break;
         await new Promise((resolve) => setTimeout(resolve, 700));
