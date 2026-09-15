@@ -19,6 +19,14 @@ import numpy as np
 
 LOGGER = logging.getLogger(__name__)
 MODEL_NAME = "openai/clip-vit-base-patch32"
+# The last label `classify_features`/`_fallback` ever write is which of these produced the
+# row -- the one piece of machine-readable provenance this module has always carried, even
+# before anything read it back. `SEMANTIC_BACKEND_CLIP` is the semantics the wedding story
+# vocabulary (bride_prep, ceremony, party, ...) actually depends on; `SEMANTIC_BACKEND_FALLBACK`
+# can only ever produce {family, couple, bride, detail, venue} off a face count -- see
+# `semantic_readiness` in analysis.py, which is what actually reads this back.
+SEMANTIC_BACKEND_CLIP = "clip_vision"
+SEMANTIC_BACKEND_FALLBACK = "opencv_fallback"
 # A quarter of the frame blown to pure white, or almost no contrast at all, is the
 # point where a frame stops being usable footage and becomes a flare or a blank wall.
 CLIPPING_LIMIT = 0.25
@@ -308,7 +316,7 @@ class VisionClassifier:
             "shot_scale": scale,
             "aesthetic_score": metrics.technical_quality,
             "confidence": 0.25,
-            "labels": (category, scale, f"faces:{metrics.face_count}", "opencv_fallback"),
+            "labels": (category, scale, f"faces:{metrics.face_count}", SEMANTIC_BACKEND_FALLBACK),
         }
 
     def encode(self, frames: list[np.ndarray]) -> np.ndarray | None:
@@ -394,7 +402,7 @@ class VisionClassifier:
                         *(category_names[int(item)] for item in order),
                         scale_names[scale_index],
                         f"faces:{frame_metrics.face_count}",
-                        "clip_vision",
+                        SEMANTIC_BACKEND_CLIP,
                     ),
                 }
             )
@@ -409,3 +417,28 @@ class VisionClassifier:
         if not frames:
             return []
         return self.classify_features(self.encode(frames), metrics, priors)
+
+
+def semantic_backend_status() -> dict[str, object]:
+    """Whether the intended CLIP semantic classifier would actually load right now, checked
+    the same way `VisionClassifier.encode`/`classify` do -- not inferred from a previous run,
+    a cached flag, or an old failure. Cheap enough to call before starting a multi-hour shot
+    analysis job: the load attempt itself is the cost (a few seconds either way), and nothing
+    here decodes a frame or runs inference.
+
+    This is a live, process-local answer: the local model cache this checks can change between
+    calls (an operator installs or removes the model), so nothing should cache this result
+    beyond the request that asked for it.
+    """
+    classifier = VisionClassifier()
+    available = classifier._load()
+    return {
+        "available": available,
+        "backend": SEMANTIC_BACKEND_CLIP if available else SEMANTIC_BACKEND_FALLBACK,
+        "model_id": MODEL_NAME if available else None,
+        "device": classifier._device if available else None,
+        "reason": None if available else (
+            f"{type(classifier._load_error).__name__}: {classifier._load_error}"
+            if classifier._load_error else "unknown"
+        ),
+    }

@@ -31,10 +31,12 @@ from .db import (
 )
 from .domain import MusicSegment
 from .services.analysis import (
+    NOT_READY_FOR_ROUGH_CUT,
     analyze_music,
     analyze_shots,
     project_music,
     project_shots,
+    semantic_readiness,
     stale_analysis,
 )
 from .services.exporter import export_all, plan_as_dict
@@ -55,6 +57,7 @@ from .services.rejections import (
     rejected_names,
     restore_clips,
 )
+from .services.vision import semantic_backend_status
 from .services.windows import project_windows
 from .timebase import FrameRate
 
@@ -359,7 +362,18 @@ def get_project(project_id: str) -> dict[str, Any]:
     profile = _style_profile()
     project["style_reference_count"] = int(profile.get("reference_count", 0)) if profile else 0
     project["stale_analysis"] = stale_analysis(DATABASE, project_id)
+    project["semantic_readiness"] = semantic_readiness(DATABASE, project_id)
     return project
+
+
+@app.get("/api/capabilities")
+def capabilities() -> dict[str, Any]:
+    """What this backend can actually do right now, checked live -- not cached, not inferred
+    from a previous job's outcome. Meant to be called before starting a multi-hour shot
+    analysis, so a missing semantic model is a decision made in seconds rather than discovered
+    hours into a job that only produced the OpenCV fallback's face-count labels.
+    """
+    return {"semantic": semantic_backend_status()}
 
 
 @app.post("/api/projects/{project_id}/index", status_code=202)
@@ -428,6 +442,20 @@ def list_shots(project_id: str) -> list[dict[str, Any]]:
 @app.post("/api/projects/{project_id}/timelines", status_code=201)
 def create_timeline(project_id: str, request: TimelineRequest) -> dict[str, Any]:
     project = _project(project_id)
+    # Fail loud, before any planning runs: a project whose shots exist but were not all
+    # produced by the semantic classifier has no way to hold `bride_prep`/`ceremony`/`party`/
+    # `groom_prep`/`groom` candidates, whatever its technical measurements say. `total == 0`
+    # (no shots yet) is left to `build_timeline`'s own "index and analyse first" error below --
+    # that is a different problem than degraded semantics, and deserves its own message.
+    readiness = semantic_readiness(DATABASE, project_id)
+    if readiness["total"] and readiness["status"] == NOT_READY_FOR_ROUGH_CUT:
+        raise HTTPException(status_code=422, detail=(
+            "Semantik görüntü analizi eksik: "
+            f"{readiness['total'] - readiness['full']}/{readiness['total']} shot tam CLIP "
+            "modeliyle değil, düşürülmüş (opencv_fallback) yöntemle analiz edilmiş. Bu "
+            "kategoriler (hazırlık, nikâh, parti vb.) düğün hikâyesi için yeterli değil. Kaba "
+            "kurgu oluşturmadan önce shot analizini tam semantik modelle yeniden çalıştırın."
+        ))
     target = Fraction(request.target_duration_seconds or project["target_duration_seconds"])
     songs = project_music(DATABASE, project_id)
     music_segments: tuple[MusicSegment, ...] = ()

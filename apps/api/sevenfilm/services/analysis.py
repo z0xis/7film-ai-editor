@@ -19,7 +19,13 @@ from ..timebase import FrameRate, TimeRange
 from . import windows as windows_module
 from .media import project_assets
 from .music import MusicTrack
-from .vision import FrameMetrics, VisionClassifier, measure_frames
+from .vision import (
+    SEMANTIC_BACKEND_CLIP,
+    SEMANTIC_BACKEND_FALLBACK,
+    FrameMetrics,
+    VisionClassifier,
+    measure_frames,
+)
 from .windows import measure_windows, store_windows
 
 LOGGER = logging.getLogger(__name__)
@@ -596,6 +602,51 @@ def stale_analysis(database: Database, project_id: str) -> dict[str, bool]:
         "shots": bool(shots and shots["total"]),
         "music": bool(music and music["total"]),
     }
+
+
+# Story-vocabulary categories (`ceremony`, `party`, `bride_prep`, `groom_prep`, `groom`) can
+# only ever come from `SEMANTIC_BACKEND_CLIP`; the OpenCV fallback's `_fallback` reads a face
+# count and nothing else, and cannot produce them by construction. A project whose shots were
+# not analysed by CLIP is missing the vocabulary a wedding rough cut is planned from, however
+# clean its technical measurements are -- see the 15 Ağustos forensic audit this closes: 2638
+# shots, all `opencv_fallback`, still produced a 129-clip rough cut with none of ceremony,
+# party, bride_prep, groom_prep or groom in it, because nothing checked before planning ran.
+READY_FOR_ROUGH_CUT = "FULL"
+NOT_READY_FOR_ROUGH_CUT = "DEGRADED"
+
+
+def semantic_readiness(database: Database, project_id: str) -> dict[str, Any]:
+    """How many of this project's shots carry semantic-vocabulary labels a rough cut can
+    actually be planned from, versus the OpenCV fallback's face-count-only categories.
+
+    Read off `labels_json`'s last entry, the provenance `classify_features`/`_fallback` have
+    always stamped there -- no schema change, no new column, just reading back what was always
+    written. A row from before that convention existed (or any other value) counts as
+    `unknown`, not `full`: a status this consequential has to be earned, not assumed.
+
+    `status` is `FULL` only when every shot is `clip_vision` and none are unknown -- a project
+    that is only partly analysed by CLIP (a resumed run, a version mixed with an older one) is
+    exactly the case precision requires failing loud on rather than silently blending two
+    semantic vocabularies into one rough cut; see the P5 package this belongs to.
+    """
+    rows = database.fetch_all(
+        """SELECT shots.labels_json FROM shots JOIN media_assets ON media_assets.id = shots.asset_id
+           WHERE media_assets.project_id = ?""",
+        (project_id,),
+    )
+    full = degraded = unknown = 0
+    for row in rows:
+        labels = json.loads(row["labels_json"])
+        tag = labels[-1] if labels else None
+        if tag == SEMANTIC_BACKEND_CLIP:
+            full += 1
+        elif tag == SEMANTIC_BACKEND_FALLBACK:
+            degraded += 1
+        else:
+            unknown += 1
+    total = full + degraded + unknown
+    status = READY_FOR_ROUGH_CUT if total and degraded == 0 and unknown == 0 else NOT_READY_FOR_ROUGH_CUT
+    return {"status": status, "full": full, "degraded": degraded, "unknown": unknown, "total": total}
 
 
 def project_music(database: Database, project_id: str) -> list[MusicTrack]:
