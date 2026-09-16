@@ -1,0 +1,62 @@
+[
+  {
+    "case": "cake_C7309_zero",
+    "shot_id": "b21ae921-9369-5413-b5a4-2c21c03ade3a",
+    "expect": "zero",
+    "source_path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7309.MP4",
+    "stored_technical_quality": 0.0,
+    "frames_read_now": 3,
+    "fresh_technical_quality": 0.434,
+    "delta": 0.434
+  },
+  {
+    "case": "kiss_C7228_zero",
+    "shot_id": "bd091ada-671e-5211-8577-44e7e82a588d",
+    "expect": "zero",
+    "source_path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7228.MP4",
+    "stored_technical_quality": 0.0,
+    "frames_read_now": 3,
+    "fresh_technical_quality": 0.466,
+    "delta": 0.466
+  },
+  {
+    "case": "first_dance_DJI_0528_zero",
+    "shot_id": "f5e4fa8a-7392-5efb-80b7-739e5693ec0a",
+    "expect": "zero",
+    "source_path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0528.MOV",
+    "stored_technical_quality": 0.0,
+    "frames_read_now": 3,
+    "fresh_technical_quality": 0.55,
+    "delta": 0.55
+  },
+  {
+    "case": "first_dance_DJI_0529_zero",
+    "shot_id": "cd10866a-83c4-5878-a7cc-0adf2a701557",
+    "expect": "zero",
+    "source_path": "/Volumes/T7 2TB-1/15 AĞUSTOS/drone /DJI_0529.MOV",
+    "stored_technical_quality": 0.0,
+    "frames_read_now": 3,
+    "fresh_technical_quality": 0.589,
+    "delta": 0.589
+  },
+  {
+    "case": "ring_C7161_nonzero_control",
+    "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+    "expect": "nonzero",
+    "source_path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7161.MP4",
+    "stored_technical_quality": 0.36,
+    "frames_read_now": 3,
+    "fresh_technical_quality": 0.36,
+    "delta": 0.0
+  },
+  {
+    "case": "entrance_C7176_nonzero_control",
+    "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+    "expect": "nonzero",
+    "source_path": "/Volumes/T7 2TB-1/15 AĞUSTOS/CLIP hikaye /C7176.MP4",
+    "stored_technical_quality": 0.349,
+    "frames_read_now": 3,
+    "fresh_technical_quality": 0.349,
+    "delta": 0.0
+  }
+]
