@@ -1,0 +1,5353 @@
+{
+  "plan_item_count": 136,
+  "captured_calls": 32305,
+  "reconstructed_cuts": 136,
+  "moment_member_selected_cuts": [
+    {
+      "plan_index": 8,
+      "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+      "asset_id": "285e2034-5cf4-55d7-920e-680af1149cbf",
+      "moment_names": [
+        "ring"
+      ],
+      "score": 0.6545,
+      "timeline_start": "727"
+    },
+    {
+      "plan_index": 11,
+      "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+      "asset_id": "1d307f87-ab25-50b9-91e0-65e2188efca1",
+      "moment_names": [
+        "entrance"
+      ],
+      "score": 0.511,
+      "timeline_start": "1050"
+    },
+    {
+      "plan_index": 12,
+      "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+      "asset_id": "16302d8e-2b34-5d0a-8da1-8eb912a79160",
+      "moment_names": [
+        "ring"
+      ],
+      "score": 0.6501,
+      "timeline_start": "1238"
+    },
+    {
+      "plan_index": 30,
+      "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+      "asset_id": "46a24dfe-f7b6-541d-9a87-5cdaac923474",
+      "moment_names": [
+        "entrance"
+      ],
+      "score": 0.5662,
+      "timeline_start": "2576"
+    },
+    {
+      "plan_index": 72,
+      "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+      "asset_id": "46a24dfe-f7b6-541d-9a87-5cdaac923474",
+      "moment_names": [
+        "entrance"
+      ],
+      "score": 0.1431,
+      "timeline_start": "5363"
+    }
+  ],
+  "cut_summaries": [
+    {
+      "cut_index": 0,
+      "progress": 0.0,
+      "pool_size": 113,
+      "winner_shot_id": "144f8edb-968c-5e00-8796-8c9d6dba8e7a",
+      "winner_score": 0.6577150982933787,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": []
+    },
+    {
+      "cut_index": 1,
+      "progress": 0.015555555555555555,
+      "pool_size": 151,
+      "winner_shot_id": "472bec76-d6d7-5be0-858d-8a4a522e2e47",
+      "winner_score": 0.5562596932490298,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": 0.3973586081237669,
+          "rank": 78
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": 0.3673573455850346,
+          "rank": 89
+        }
+      ]
+    },
+    {
+      "cut_index": 2,
+      "progress": 0.024555555555555556,
+      "pool_size": 151,
+      "winner_shot_id": "c2f609f2-28ba-5ced-980e-c36be0f8608a",
+      "winner_score": 0.6368796924893412,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": 0.582594149279222,
+          "rank": 34
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": 0.20578562188895339,
+          "rank": 142
+        }
+      ]
+    },
+    {
+      "cut_index": 3,
+      "progress": 0.03344444444444444,
+      "pool_size": 152,
+      "winner_shot_id": "8f79921c-d9e9-56b9-9a4c-84f877c4c96f",
+      "winner_score": 0.5510105899149705,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": 0.3939031873360064,
+          "rank": 75
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": 0.38631531841195993,
+          "rank": 81
+        }
+      ]
+    },
+    {
+      "cut_index": 4,
+      "progress": 0.03944444444444444,
+      "pool_size": 152,
+      "winner_shot_id": "fa1d15d6-0d0e-5746-87a5-ce43c07ba15e",
+      "winner_score": 0.6406154078576632,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": 0.5864337925815648,
+          "rank": 31
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": 0.22654466469189888,
+          "rank": 141
+        }
+      ]
+    },
+    {
+      "cut_index": 5,
+      "progress": 0.04544444444444445,
+      "pool_size": 311,
+      "winner_shot_id": "2608ac87-3037-5974-bcc9-5322bc675cca",
+      "winner_score": 0.5708722987864433,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": 0.4625238938692397,
+          "rank": 56
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": 0.32452843471572795,
+          "rank": 248
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.3262963946594377,
+          "rank": 242
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.324271616867727,
+          "rank": 250
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.33368051605951105,
+          "rank": 234
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": 0.36435858306989155,
+          "rank": 198
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.35528507842751983,
+          "rank": 211
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": 0.42062919019367345,
+          "rank": 108
+        }
+      ]
+    },
+    {
+      "cut_index": 6,
+      "progress": 0.05722222222222222,
+      "pool_size": 311,
+      "winner_shot_id": "ecc5ca4c-a0b8-5573-a373-3992de5f9a30",
+      "winner_score": 0.6528029633223335,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": 0.6376485447362488,
+          "rank": 3
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": 0.5166004049759456,
+          "rank": 153
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.5250000354510057,
+          "rank": 142
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.5181678702227038,
+          "rank": 149
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.5131853421137949,
+          "rank": 157
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": 0.2050459714752062,
+          "rank": 302
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.37083159711216496,
+          "rank": 264
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": 0.4300895297853194,
+          "rank": 232
+        }
+      ]
+    },
+    {
+      "cut_index": 7,
+      "progress": 0.069,
+      "pool_size": 311,
+      "winner_shot_id": "d2f29806-2d1e-5eb3-b951-2d88385f866a",
+      "winner_score": 0.5797870184166827,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": 0.4650393526631363,
+          "rank": 53
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": 0.37946226814848755,
+          "rank": 201
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.3659334835891404,
+          "rank": 225
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.35767248666882484,
+          "rank": 236
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.353533633211537,
+          "rank": 244
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": 0.3944180720437857,
+          "rank": 174
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.37682424693183214,
+          "rank": 205
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": 0.4654801758941723,
+          "rank": 52
+        }
+      ]
+    },
+    {
+      "cut_index": 8,
+      "progress": 0.08077777777777778,
+      "pool_size": 311,
+      "winner_shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+      "winner_score": 0.6544546726621631,
+      "winner_is_moment_member": true,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": 0.6544546726621631,
+          "rank": 1
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": 0.5655731073512645,
+          "rank": 99
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.5391236788221603,
+          "rank": 138
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.5425996400695533,
+          "rank": 131
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.5411069206103087,
+          "rank": 133
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": 0.399764478793518,
+          "rank": 228
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.40203632261576644,
+          "rank": 227
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": 0.28329476411512416,
+          "rank": 279
+        }
+      ]
+    },
+    {
+      "cut_index": 9,
+      "progress": 0.09288888888888888,
+      "pool_size": 311,
+      "winner_shot_id": "2411be3c-ddfe-50b0-be75-3045bc8576b8",
+      "winner_score": 0.5680538884574712,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": 0.19623033545937138,
+          "rank": 301
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": 0.4264437568541038,
+          "rank": 138
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.39349439088248583,
+          "rank": 202
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.38404248743231073,
+          "rank": 221
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.40424127719647956,
+          "rank": 183
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": 0.4121094638061341,
+          "rank": 166
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.40442617566301925,
+          "rank": 181
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": 0.479962063045024,
+          "rank": 48
+        }
+      ]
+    },
+    {
+      "cut_index": 10,
+      "progress": 0.10466666666666667,
+      "pool_size": 311,
+      "winner_shot_id": "071140f5-36e8-50e7-abd1-aab7c0fec6d4",
+      "winner_score": 0.5870119199970824,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.35331980170979244,
+          "rank": 306
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": 0.5181886165180443,
+          "rank": 110
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.5057189833804376,
+          "rank": 133
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.5114405958055505,
+          "rank": 125
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.5099215750429009,
+          "rank": 127
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": 0.44008777047221276,
+          "rank": 230
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.45844269807744603,
+          "rank": 202
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": 0.3298730219130807,
+          "rank": 268
+        }
+      ]
+    },
+    {
+      "cut_index": 11,
+      "progress": 0.11666666666666667,
+      "pool_size": 2,
+      "winner_shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+      "winner_score": 0.510983188676009,
+      "winner_is_moment_member": true,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": 0.510983188676009,
+          "rank": 1
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": 0.4766500751663898,
+          "rank": 2
+        }
+      ]
+    },
+    {
+      "cut_index": 12,
+      "progress": 0.13755555555555554,
+      "pool_size": 311,
+      "winner_shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+      "winner_score": 0.6500623768326982,
+      "winner_is_moment_member": true,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.34805524044178227,
+          "rank": 306
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": 0.6500623768326982,
+          "rank": 1
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.6350703471632654,
+          "rank": 4
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.6389580337861189,
+          "rank": 3
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.6442443788970738,
+          "rank": 2
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": 0.49581001584277395,
+          "rank": 194
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.5123469568554763,
+          "rank": 154
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": 0.1006757246422457,
+          "rank": 300
+        }
+      ]
+    },
+    {
+      "cut_index": 13,
+      "progress": 0.15244444444444444,
+      "pool_size": 311,
+      "winner_shot_id": "8d1ee926-2915-5f6f-82be-598880c5ffeb",
+      "winner_score": 0.6072471957585086,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.511388790657648,
+          "rank": 307
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": 0.08182613781009937,
+          "rank": 298
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.3590712498508315,
+          "rank": 174
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.3601347357424991,
+          "rank": 171
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.3614089651970838,
+          "rank": 167
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": 0.4935490393831218,
+          "rank": 70
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.5572038551394136,
+          "rank": 17
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.37972831868398194,
+          "rank": 302
+        }
+      ]
+    },
+    {
+      "cut_index": 14,
+      "progress": 0.16133333333333333,
+      "pool_size": 311,
+      "winner_shot_id": "9183c3ca-661b-5101-b512-820f06288f4a",
+      "winner_score": 0.5880394258624965,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.33538149438468656,
+          "rank": 299
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.3925202594833537,
+          "rank": 307
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.45203794398991226,
+          "rank": 178
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.44204287663491126,
+          "rank": 187
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.46895385058788913,
+          "rank": 156
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": 0.5114252776060576,
+          "rank": 116
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.39456110888926066,
+          "rank": 233
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.3484142094391616,
+          "rank": 300
+        }
+      ]
+    },
+    {
+      "cut_index": 15,
+      "progress": 0.17333333333333334,
+      "pool_size": 311,
+      "winner_shot_id": "67e1852b-68ec-53fa-9871-d8b7ac5ae1e6",
+      "winner_score": 0.600379435337831,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.5199964907852449,
+          "rank": 306
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.5659134234633684,
+          "rank": 309
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.29463596329723435,
+          "rank": 239
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.298004597165331,
+          "rank": 237
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.28922816792226885,
+          "rank": 245
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": 0.5080023443095071,
+          "rank": 70
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.5675595561609338,
+          "rank": 16
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.34647370826661494,
+          "rank": 300
+        }
+      ]
+    },
+    {
+      "cut_index": 16,
+      "progress": 0.18422222222222223,
+      "pool_size": 311,
+      "winner_shot_id": "e099b4cd-b696-525d-b8c9-b823e3a0941f",
+      "winner_score": 0.5960749953115907,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.33335276109781103,
+          "rank": 297
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.382376558165917,
+          "rank": 305
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.45908290632219995,
+          "rank": 153
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.4730791525547752,
+          "rank": 147
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.4621635299179234,
+          "rank": 151
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": 0.5048077243379359,
+          "rank": 125
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.38422407089874966,
+          "rank": 237
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.33731820674405677,
+          "rank": 299
+        }
+      ]
+    },
+    {
+      "cut_index": 17,
+      "progress": 0.1971111111111111,
+      "pool_size": 311,
+      "winner_shot_id": "718b8bc2-7f70-58a2-8235-dbafcc26491c",
+      "winner_score": 0.6074560412779745,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.5372879620575357,
+          "rank": 305
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.5707879689024363,
+          "rank": 308
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.27717445778581623,
+          "rank": 241
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.26190455219902053,
+          "rank": 246
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.2772233858465563,
+          "rank": 240
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": 0.519623064469987,
+          "rank": 56
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.5555568388336604,
+          "rank": 32
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.34528280777451886,
+          "rank": 299
+        }
+      ]
+    },
+    {
+      "cut_index": 18,
+      "progress": 0.209,
+      "pool_size": 311,
+      "winner_shot_id": "6445392f-174c-5e44-b695-18eaaf5391ea",
+      "winner_score": 0.5710725285679935,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.37724123378001345,
+          "rank": 297
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.39194082067362607,
+          "rank": 300
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.4696220505021697,
+          "rank": 128
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.4498125024629981,
+          "rank": 142
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.4511026377240845,
+          "rank": 141
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": 0.4977005544068377,
+          "rank": 101
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.4086604643946859,
+          "rank": 175
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.3609169863585953,
+          "rank": 296
+        }
+      ]
+    },
+    {
+      "cut_index": 19,
+      "progress": 0.21488888888888888,
+      "pool_size": 311,
+      "winner_shot_id": "f55a0459-98e4-5c87-885c-b6308c402a1b",
+      "winner_score": 0.5939686917717262,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.38777411646090976,
+          "rank": 300
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.4160103949065741,
+          "rank": 304
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.44537949465092547,
+          "rank": 190
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.4592714383968675,
+          "rank": 179
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.4396295710505595,
+          "rank": 193
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": 0.32555069651699753,
+          "rank": 272
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.5593789624974148,
+          "rank": 21
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.3744980931725533,
+          "rank": 299
+        }
+      ]
+    },
+    {
+      "cut_index": 20,
+      "progress": 0.22088888888888888,
+      "pool_size": 311,
+      "winner_shot_id": "190f77fc-bbcc-5db4-94d3-4a44a5001860",
+      "winner_score": 0.5676726269576943,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.3882656745276897,
+          "rank": 297
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.39844575546006594,
+          "rank": 299
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.4660558648906237,
+          "rank": 121
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.44655378075054036,
+          "rank": 134
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.4544578523424916,
+          "rank": 129
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": 0.5035458061714381,
+          "rank": 90
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.39988735495050387,
+          "rank": 168
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.377601050043606,
+          "rank": 294
+        }
+      ]
+    },
+    {
+      "cut_index": 21,
+      "progress": 0.2268888888888889,
+      "pool_size": 311,
+      "winner_shot_id": "882d7e26-4d52-56f4-bff1-0d8698cfbd80",
+      "winner_score": 0.5931955555430077,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.5828936867633635,
+          "rank": 306
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.5967826593975284,
+          "rank": 307
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.2710178284694679,
+          "rank": 221
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.26180317630874395,
+          "rank": 224
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.28525496783397447,
+          "rank": 210
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": 0.5112403047286224,
+          "rank": 49
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.5455579589969604,
+          "rank": 24
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.3631741159495801,
+          "rank": 298
+        }
+      ]
+    },
+    {
+      "cut_index": 22,
+      "progress": 0.2328888888888889,
+      "pool_size": 311,
+      "winner_shot_id": "316aea96-f6d8-50b4-bd6b-8abf84d76b4a",
+      "winner_score": 0.5716695897445301,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.4068476933345012,
+          "rank": 298
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.3958722069734166,
+          "rank": 296
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.44993470503293087,
+          "rank": 123
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.4676450849764471,
+          "rank": 112
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.462711351405331,
+          "rank": 117
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": 0.5041356051989794,
+          "rank": 80
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.39349316212535074,
+          "rank": 162
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.3609653196831419,
+          "rank": 294
+        }
+      ]
+    },
+    {
+      "cut_index": 23,
+      "progress": 0.23866666666666667,
+      "pool_size": 311,
+      "winner_shot_id": "aab90a51-b0c8-5641-8350-03b56fd516ae",
+      "winner_score": 0.6016585815058383,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.5822462195494243,
+          "rank": 307
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.55670338058751,
+          "rank": 304
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.2906607400734339,
+          "rank": 188
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.2840834238197781,
+          "rank": 198
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.29676927310354556,
+          "rank": 184
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": 0.5138723971481026,
+          "rank": 42
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.5506933778415758,
+          "rank": 15
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.3837794230437677,
+          "rank": 297
+        }
+      ]
+    },
+    {
+      "cut_index": 24,
+      "progress": 0.24455555555555555,
+      "pool_size": 311,
+      "winner_shot_id": "008354cf-0dfc-5f57-b326-e4e6d33872c4",
+      "winner_score": 0.567584645431194,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.40804119961946106,
+          "rank": 296
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.3944596564581477,
+          "rank": 295
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.4695908782834117,
+          "rank": 97
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.44892538586980574,
+          "rank": 115
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.4541126116715667,
+          "rank": 109
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": 0.5146284819924726,
+          "rank": 56
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.3701667833798492,
+          "rank": 172
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.3660669237412553,
+          "rank": 290
+        }
+      ]
+    },
+    {
+      "cut_index": 25,
+      "progress": 0.25066666666666665,
+      "pool_size": 152,
+      "winner_shot_id": "6762afe4-0512-548f-9d64-21b3febd90a5",
+      "winner_score": 0.6337571843508496,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.5701976598355976,
+          "rank": 148
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.3452444553350219,
+          "rank": 137
+        }
+      ]
+    },
+    {
+      "cut_index": 26,
+      "progress": 0.2688888888888889,
+      "pool_size": 130,
+      "winner_shot_id": "60cbaa5a-5219-50f7-8662-b627496b5f67",
+      "winner_score": 0.5629136897194807,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": 0.5140337794957894,
+          "rank": 14
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.3855752763640015,
+          "rank": 29
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.37476120960206605,
+          "rank": 118
+        }
+      ]
+    },
+    {
+      "cut_index": 27,
+      "progress": 0.27155555555555555,
+      "pool_size": 130,
+      "winner_shot_id": "d68378fe-3869-55dc-b490-17765839fd42",
+      "winner_score": 0.5835192986081925,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": 0.5132851970999062,
+          "rank": 29
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.5591797869938115,
+          "rank": 4
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.5192815905276997,
+          "rank": 125
+        }
+      ]
+    },
+    {
+      "cut_index": 28,
+      "progress": 0.2742222222222222,
+      "pool_size": 311,
+      "winner_shot_id": "d8d6a5da-0b34-587e-b392-a543994589e2",
+      "winner_score": 0.5589199766770414,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.44717920289845636,
+          "rank": 295
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.4045393854687638,
+          "rank": 292
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.46704246338134053,
+          "rank": 78
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.44188891631124005,
+          "rank": 98
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.4621981061368621,
+          "rank": 81
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": 0.5153060440643211,
+          "rank": 30
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.3796943109348518,
+          "rank": 140
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.3825848514300441,
+          "rank": 288
+        }
+      ]
+    },
+    {
+      "cut_index": 29,
+      "progress": 0.28055555555555556,
+      "pool_size": 311,
+      "winner_shot_id": "6d9a07df-00b1-5281-b2d1-9035d0329a14",
+      "winner_score": 0.5998498444391209,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.43511119525257785,
+          "rank": 299
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.36232920143301817,
+          "rank": 288
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.47717063567711016,
+          "rank": 100
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.48172951486104726,
+          "rank": 94
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.4718559733449501,
+          "rank": 105
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": 0.5884804493604192,
+          "rank": 2
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.5197706264089467,
+          "rank": 56
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.5245200425559775,
+          "rank": 307
+        }
+      ]
+    },
+    {
+      "cut_index": 30,
+      "progress": 0.2862222222222222,
+      "pool_size": 311,
+      "winner_shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+      "winner_score": 0.5661603641776096,
+      "winner_is_moment_member": true,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.6255170415221566,
+          "rank": 308
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.574933281163431,
+          "rank": 304
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.2967724256033204,
+          "rank": 156
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.30986950719767753,
+          "rank": 145
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.29693732518278415,
+          "rank": 155
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": 0.5661603641776096,
+          "rank": 1
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.5350304816055412,
+          "rank": 5
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.3713103627061713,
+          "rank": 285
+        }
+      ]
+    },
+    {
+      "cut_index": 31,
+      "progress": 0.29233333333333333,
+      "pool_size": 311,
+      "winner_shot_id": "cb4982a5-1163-597b-9c59-a8f42adeb3a8",
+      "winner_score": 0.5867276845986891,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.4314249168956614,
+          "rank": 300
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.39658183506062644,
+          "rank": 297
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.4581139231121414,
+          "rank": 117
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.46040341845795174,
+          "rank": 114
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.45697171343081394,
+          "rank": 121
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": 0.12582250767079445,
+          "rank": 275
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.5149478554696536,
+          "rank": 54
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.38421621836806485,
+          "rank": 293
+        }
+      ]
+    },
+    {
+      "cut_index": 32,
+      "progress": 0.29833333333333334,
+      "pool_size": 311,
+      "winner_shot_id": "c4d0f4b0-6cd8-51af-8739-dd483e2d1e4f",
+      "winner_score": 0.5571373770003265,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.6140648197361357,
+          "rank": 307
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.5697420571299096,
+          "rank": 303
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.2836777648017884,
+          "rank": 153
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.2699267055409801,
+          "rank": 166
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.2774915577650209,
+          "rank": 158
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.34967504409334516,
+          "rank": 281
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.45087997114839334,
+          "rank": 40
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.37723770784195954,
+          "rank": 287
+        }
+      ]
+    },
+    {
+      "cut_index": 33,
+      "progress": 0.30433333333333334,
+      "pool_size": 311,
+      "winner_shot_id": "471e693d-f997-51f7-87ef-0c61b8b6fd73",
+      "winner_score": 0.5804311142567659,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.4623556077096784,
+          "rank": 298
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.39902264175186974,
+          "rank": 295
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.4638038702885277,
+          "rank": 87
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.4570106954245048,
+          "rank": 92
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.4669034273897084,
+          "rank": 85
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.3389328476526493,
+          "rank": 282
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.4781818430504161,
+          "rank": 76
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.5640525227741766,
+          "rank": 307
+        }
+      ]
+    },
+    {
+      "cut_index": 34,
+      "progress": 0.3101111111111111,
+      "pool_size": 311,
+      "winner_shot_id": "470f1831-549a-5d49-abf2-adbe6a2c53bf",
+      "winner_score": 0.5339936389758246,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.6387212620877082,
+          "rank": 306
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.5807461405658417,
+          "rank": 303
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.2674671970222895,
+          "rank": 153
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.26755308471568323,
+          "rank": 152
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.27897628833160665,
+          "rank": 140
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.3423008471795626,
+          "rank": 279
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.4556931643040228,
+          "rank": 38
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.3756251721670326,
+          "rank": 283
+        }
+      ]
+    },
+    {
+      "cut_index": 35,
+      "progress": 0.31622222222222224,
+      "pool_size": 311,
+      "winner_shot_id": "1fc55cde-7dad-5695-93d1-ae145aa02195",
+      "winner_score": 0.5709805968916323,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.4300274528154362,
+          "rank": 295
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.414635530313201,
+          "rank": 293
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.4352054263395473,
+          "rank": 98
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.45560516831536385,
+          "rank": 83
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.43466581808286975,
+          "rank": 100
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.3631040238358948,
+          "rank": 284
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.4679899209228584,
+          "rank": 78
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.533346640019207,
+          "rank": 302
+        }
+      ]
+    },
+    {
+      "cut_index": 36,
+      "progress": 0.32511111111111113,
+      "pool_size": 130,
+      "winner_shot_id": "5c4777ea-bfad-5d95-8940-e007e6b65504",
+      "winner_score": 0.5318086754487021,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.35334633631024415,
+          "rank": 110
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.4493489141918568,
+          "rank": 34
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.3597073924178324,
+          "rank": 111
+        }
+      ]
+    },
+    {
+      "cut_index": 37,
+      "progress": 0.328,
+      "pool_size": 311,
+      "winner_shot_id": "fc821db2-5e26-5cfa-b261-af4473599606",
+      "winner_score": 0.5577481853122889,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.47813555820517156,
+          "rank": 296
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.4299538039836257,
+          "rank": 293
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.43722662952563895,
+          "rank": 89
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.43551517192049366,
+          "rank": 91
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.413845985765301,
+          "rank": 106
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.3679701945969742,
+          "rank": 282
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.4529047273874188,
+          "rank": 76
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.5463059652537964,
+          "rank": 300
+        }
+      ]
+    },
+    {
+      "cut_index": 38,
+      "progress": 0.334,
+      "pool_size": 311,
+      "winner_shot_id": "fd6ffead-dbe9-5744-9e6d-5a8c80c04f9c",
+      "winner_score": 0.5000044315968629,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.6574107489041627,
+          "rank": 306
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.6280883305643735,
+          "rank": 304
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.2507048601388803,
+          "rank": 137
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.2453711470345123,
+          "rank": 140
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.23346853756088465,
+          "rank": 149
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.3789978873974291,
+          "rank": 280
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.44421969411678197,
+          "rank": 28
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.3777598644653662,
+          "rank": 279
+        }
+      ]
+    },
+    {
+      "cut_index": 39,
+      "progress": 0.34,
+      "pool_size": 130,
+      "winner_shot_id": "9a7814fe-03e2-57ee-9888-e86f1436fbe7",
+      "winner_score": 0.49235192387544324,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.3764903635226105,
+          "rank": 113
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.4497201338476532,
+          "rank": 17
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.5274111969905825,
+          "rank": 120
+        }
+      ]
+    },
+    {
+      "cut_index": 40,
+      "progress": 0.343,
+      "pool_size": 311,
+      "winner_shot_id": "77ba6386-8838-58bc-84fe-bca565b1345d",
+      "winner_score": 0.5350246607789606,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.5120993716631083,
+          "rank": 294
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.46106496372427486,
+          "rank": 290
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.4148255744311325,
+          "rank": 70
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.4054523688921191,
+          "rank": 80
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.4039952111514154,
+          "rank": 81
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.3751681198641602,
+          "rank": 279
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.2901990340825228,
+          "rank": 162
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.36815112028859887,
+          "rank": 276
+        }
+      ]
+    },
+    {
+      "cut_index": 41,
+      "progress": 0.3488888888888889,
+      "pool_size": 311,
+      "winner_shot_id": "d61ee681-da94-5d3c-bcb5-bb0bf1daacc2",
+      "winner_score": 0.49877549537413224,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.6810782189502462,
+          "rank": 306
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.6453902347503243,
+          "rank": 303
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.217645027685882,
+          "rank": 147
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.20728969102234462,
+          "rank": 153
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.20957297135214015,
+          "rank": 151
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.39666957327796054,
+          "rank": 277
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.44025910950834996,
+          "rank": 18
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.3705574388082556,
+          "rank": 273
+        }
+      ]
+    },
+    {
+      "cut_index": 42,
+      "progress": 0.35488888888888886,
+      "pool_size": 311,
+      "winner_shot_id": "65158b6b-115c-535f-97ca-7d340777e4dc",
+      "winner_score": 0.5314066546535084,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.5255480461665509,
+          "rank": 294
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.46560527368102905,
+          "rank": 290
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.3865644668602761,
+          "rank": 100
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.38290136174708117,
+          "rank": 105
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.3904632667364788,
+          "rank": 96
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.4028605902296748,
+          "rank": 280
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.42558102631467204,
+          "rank": 68
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.5620727776257313,
+          "rank": 299
+        }
+      ]
+    },
+    {
+      "cut_index": 43,
+      "progress": 0.36077777777777775,
+      "pool_size": 311,
+      "winner_shot_id": "a0312b41-ce51-51a8-9524-c0c2832758b5",
+      "winner_score": 0.4809247595499606,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.7112451264553186,
+          "rank": 307
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.6557652214517521,
+          "rank": 304
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.21100984058679262,
+          "rank": 136
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.1987481675697653,
+          "rank": 147
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.22035333123913037,
+          "rank": 129
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.41305963403311574,
+          "rank": 275
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.42164450941208936,
+          "rank": 22
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.38481969960075085,
+          "rank": 273
+        }
+      ]
+    },
+    {
+      "cut_index": 44,
+      "progress": 0.36677777777777776,
+      "pool_size": 311,
+      "winner_shot_id": "d0882d30-4431-591a-b6e2-bdbf0ae0d7ee",
+      "winner_score": 0.5091175282608763,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.5302512192700285,
+          "rank": 294
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.47780313342955244,
+          "rank": 289
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.3813811297245663,
+          "rank": 90
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.373053954042313,
+          "rank": 100
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.3842289655724568,
+          "rank": 85
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.41688752582762056,
+          "rank": 279
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.40436343817987974,
+          "rank": 73
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.5830386148737255,
+          "rank": 297
+        }
+      ]
+    },
+    {
+      "cut_index": 45,
+      "progress": 0.37244444444444447,
+      "pool_size": 311,
+      "winner_shot_id": "50c951b2-bc6f-51ea-bd23-df14eb1006e4",
+      "winner_score": 0.4731682100377449,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.7234018874486667,
+          "rank": 308
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.6786418454936882,
+          "rank": 304
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.20493280675450823,
+          "rank": 131
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.18370755081245205,
+          "rank": 152
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.18882895424591217,
+          "rank": 144
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.42296198679427877,
+          "rank": 273
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.3938682774926862,
+          "rank": 27
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.40002695964902907,
+          "rank": 270
+        }
+      ]
+    },
+    {
+      "cut_index": 46,
+      "progress": 0.37866666666666665,
+      "pool_size": 152,
+      "winner_shot_id": "61c38443-83c9-5f50-af67-12c248a94a0a",
+      "winner_score": 0.5122030258515011,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.5063552098768788,
+          "rank": 134
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.3716402693451281,
+          "rank": 116
+        }
+      ]
+    },
+    {
+      "cut_index": 47,
+      "progress": 0.3937777777777778,
+      "pool_size": 311,
+      "winner_shot_id": "7265901f-59f1-5246-9aa3-3250e37a4505",
+      "winner_score": 0.44835164970474944,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.708566686061796,
+          "rank": 306
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.6994675509479569,
+          "rank": 304
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.17129483903120024,
+          "rank": 146
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.17586830803933798,
+          "rank": 136
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.1634609097021573,
+          "rank": 151
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.459701397396209,
+          "rank": 271
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.36668803766559177,
+          "rank": 29
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.3987490657377943,
+          "rank": 266
+        }
+      ]
+    },
+    {
+      "cut_index": 48,
+      "progress": 0.4053333333333333,
+      "pool_size": 311,
+      "winner_shot_id": "a3439320-65bf-5ffe-9cfe-10de5e192354",
+      "winner_score": 0.48281907597349166,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.5484103030712175,
+          "rank": 300
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.49397429236874196,
+          "rank": 291
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.35852991017681535,
+          "rank": 90
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.34144590564409094,
+          "rank": 110
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.34893917533469776,
+          "rank": 103
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.5909377138351074,
+          "rank": 304
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.3826790054711534,
+          "rank": 68
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.456037276016529,
+          "rank": 279
+        }
+      ]
+    },
+    {
+      "cut_index": 49,
+      "progress": 0.42033333333333334,
+      "pool_size": 311,
+      "winner_shot_id": "53e2c558-cd58-5178-80f6-63e6b777ac94",
+      "winner_score": 0.4515850305716079,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.7778698968797463,
+          "rank": 307
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.7203771086240652,
+          "rank": 303
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.13605603713186046,
+          "rank": 149
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.11429586862782103,
+          "rank": 165
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.127313753616176,
+          "rank": 156
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.48554408697013185,
+          "rank": 274
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.36239984657964097,
+          "rank": 24
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.43840079881136307,
+          "rank": 267
+        }
+      ]
+    },
+    {
+      "cut_index": 50,
+      "progress": 0.43522222222222223,
+      "pool_size": 311,
+      "winner_shot_id": "bcfadc20-0330-5608-918f-3db4af1a45e4",
+      "winner_score": 0.3821081570421969,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.5961466248588213,
+          "rank": 292
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.5765412114153805,
+          "rank": 287
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.2802100927984651,
+          "rank": 89
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.2601644279304222,
+          "rank": 107
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.273362032359183,
+          "rank": 96
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.5335870761051474,
+          "rank": 279
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.32472840367061684,
+          "rank": 46
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.6164616072362595,
+          "rank": 295
+        }
+      ]
+    },
+    {
+      "cut_index": 51,
+      "progress": 0.44722222222222224,
+      "pool_size": 311,
+      "winner_shot_id": "f8362879-086e-5d79-be8b-c26334b22468",
+      "winner_score": 0.39498776322063645,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.6084977747846131,
+          "rank": 291
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.591052521638351,
+          "rank": 288
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.27369359211911615,
+          "rank": 68
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.2814542340935271,
+          "rank": 64
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.25956392522423444,
+          "rank": 77
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.5308476521547689,
+          "rank": 280
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.1702255066619911,
+          "rank": 150
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.4801192640533652,
+          "rank": 266
+        }
+      ]
+    },
+    {
+      "cut_index": 52,
+      "progress": 0.462,
+      "pool_size": 311,
+      "winner_shot_id": "3c6c9761-79b1-52ca-bff1-8320d5b0c58f",
+      "winner_score": 0.34781619557785537,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.6305399739247646,
+          "rank": 290
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.6054449378551023,
+          "rank": 286
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.2331624819311029,
+          "rank": 97
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.22103233693538152,
+          "rank": 109
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.23547855988755234,
+          "rank": 94
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.5667847871986667,
+          "rank": 276
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.3011910964340105,
+          "rank": 36
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.6887144283988653,
+          "rank": 297
+        }
+      ]
+    },
+    {
+      "cut_index": 53,
+      "progress": 0.474,
+      "pool_size": 311,
+      "winner_shot_id": "c93cdbf0-e749-5ee4-9b5c-529d53d47c72",
+      "winner_score": 0.3289455627216978,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.8621969470192571,
+          "rank": 307
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.8261426277302977,
+          "rank": 304
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.04926363369693344,
+          "rank": 139
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.04331179940004355,
+          "rank": 146
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.031241147885833327,
+          "rank": 154
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.5750008231960224,
+          "rank": 272
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.2830182513954811,
+          "rank": 18
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.5317055870102775,
+          "rank": 262
+        }
+      ]
+    },
+    {
+      "cut_index": 54,
+      "progress": 0.4797777777777778,
+      "pool_size": 311,
+      "winner_shot_id": "b5967fff-77fe-56cd-81fe-24ca0b587434",
+      "winner_score": 0.3007778487449557,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.7018219481249024,
+          "rank": 291
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.6589307069182532,
+          "rank": 287
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.21968531584955522,
+          "rank": 81
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.21812230662534396,
+          "rank": 83
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.19822691449575416,
+          "rank": 98
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.5613615687656347,
+          "rank": 261
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.27489042878458503,
+          "rank": 26
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.7305332701119532,
+          "rank": 297
+        }
+      ]
+    },
+    {
+      "cut_index": 55,
+      "progress": 0.48577777777777775,
+      "pool_size": 311,
+      "winner_shot_id": "b8ec20c8-82df-5a29-bdb8-63eb5aca02f4",
+      "winner_score": 0.31088656672288945,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.8973911854819496,
+          "rank": 308
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.8447205820844723,
+          "rank": 304
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.022147623684063346,
+          "rank": 145
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.02835186516420013,
+          "rank": 138
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.009280467378220308,
+          "rank": 160
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.5787319804264284,
+          "rank": 267
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.26459638584785783,
+          "rank": 17
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.5538655340130304,
+          "rank": 264
+        }
+      ]
+    },
+    {
+      "cut_index": 56,
+      "progress": 0.49177777777777776,
+      "pool_size": 311,
+      "winner_shot_id": "c54a4599-996f-5749-9389-6b8ceb5cde44",
+      "winner_score": 0.3007093539279934,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.7255369739168399,
+          "rank": 293
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.6781797736822983,
+          "rank": 286
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.20575433790249859,
+          "rank": 82
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.18003845873081012,
+          "rank": 97
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.19692242773541918,
+          "rank": 87
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.5965603510072773,
+          "rank": 265
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.2757487737714122,
+          "rank": 9
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.7227896125534257,
+          "rank": 292
+        }
+      ]
+    },
+    {
+      "cut_index": 57,
+      "progress": 0.49777777777777776,
+      "pool_size": 311,
+      "winner_shot_id": "d2005c36-e8c2-5e9c-9466-b3e04ddfb9bf",
+      "winner_score": 0.3040373794741777,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.7077466966722307,
+          "rank": 291
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.67048322632237,
+          "rank": 287
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.18676667917249057,
+          "rank": 64
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.18071039957890228,
+          "rank": 71
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.19940652995509375,
+          "rank": 53
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.5892754842180179,
+          "rank": 264
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.097592582958207,
+          "rank": 135
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.5771994342597323,
+          "rank": 261
+        }
+      ]
+    },
+    {
+      "cut_index": 58,
+      "progress": 0.5036666666666667,
+      "pool_size": 311,
+      "winner_shot_id": "436bbb50-d1f4-59d7-9b9d-9527d61c2791",
+      "winner_score": 0.2750718073334789,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.7367202562025323,
+          "rank": 291
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.6777932510669991,
+          "rank": 284
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.16626705985548643,
+          "rank": 101
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.19559905447934306,
+          "rank": 77
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.16368610847262105,
+          "rank": 105
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.6043848458453369,
+          "rank": 258
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.23764905807277226,
+          "rank": 33
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.7384258956159229,
+          "rank": 293
+        }
+      ]
+    },
+    {
+      "cut_index": 59,
+      "progress": 0.5096666666666667,
+      "pool_size": 152,
+      "winner_shot_id": "cde6e8db-3642-5d24-b021-3fae46a65fa7",
+      "winner_score": 0.30357910808240524,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.8801719837555341,
+          "rank": 149
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.5578177370982625,
+          "rank": 111
+        }
+      ]
+    },
+    {
+      "cut_index": 60,
+      "progress": 0.5305555555555556,
+      "pool_size": 130,
+      "winner_shot_id": "0581664f-b67d-5b7a-a419-94187fa85b37",
+      "winner_score": 0.23657056969856305,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.6210521332761401,
+          "rank": 100
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.04057190857871474,
+          "rank": 29
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.6084594649519265,
+          "rank": 97
+        }
+      ]
+    },
+    {
+      "cut_index": 61,
+      "progress": 0.5334444444444445,
+      "pool_size": 311,
+      "winner_shot_id": "247e6633-d2bd-5806-a5d4-2ea6b76b1a48",
+      "winner_score": 0.23344077782463568,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.7611331009420648,
+          "rank": 286
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.7149022505661902,
+          "rank": 278
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.14573030576264928,
+          "rank": 79
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.15896177291999283,
+          "rank": 68
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.14894423496311324,
+          "rank": 75
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.6238125525270847,
+          "rank": 253
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.2202536347018701,
+          "rank": 5
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.7879900136703893,
+          "rank": 290
+        }
+      ]
+    },
+    {
+      "cut_index": 62,
+      "progress": 0.5394444444444444,
+      "pool_size": 311,
+      "winner_shot_id": "c8db5af8-b99a-5540-b619-f6d375c97df0",
+      "winner_score": 0.22380773291221606,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.9566488514255855,
+          "rank": 307
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.885480233529087,
+          "rank": 301
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": -0.02999980177504931,
+          "rank": 124
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": -0.040864234442860525,
+          "rank": 136
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": -0.05748834670763193,
+          "rank": 144
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.653217943925883,
+          "rank": 259
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.21430773016392288,
+          "rank": 4
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.6063548489652255,
+          "rank": 253
+        }
+      ]
+    },
+    {
+      "cut_index": 63,
+      "progress": 0.5453333333333333,
+      "pool_size": 311,
+      "winner_shot_id": "c42bd18c-4504-55d7-b944-b34a731484e0",
+      "winner_score": 0.2137599517271521,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.7722336484300257,
+          "rank": 289
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.7327812411535419,
+          "rank": 283
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.11706456287805973,
+          "rank": 67
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.1358915037736636,
+          "rank": 53
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.1338947775457248,
+          "rank": 55
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.6447980362923488,
+          "rank": 255
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.036943369308223124,
+          "rank": 131
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.6282083901014084,
+          "rank": 252
+        }
+      ]
+    },
+    {
+      "cut_index": 64,
+      "progress": 0.5513333333333333,
+      "pool_size": 311,
+      "winner_shot_id": "9d03ecdc-f701-5272-9a2b-65843af7d298",
+      "winner_score": 0.21707628360565195,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.9642231976925338,
+          "rank": 307
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.9065887343055363,
+          "rank": 300
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": -0.06205178116731611,
+          "rank": 142
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": -0.0575407356693104,
+          "rank": 138
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": -0.055677846426146566,
+          "rank": 135
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.673261569124543,
+          "rank": 259
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.19074891812770398,
+          "rank": 8
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.6424609370049715,
+          "rank": 253
+        }
+      ]
+    },
+    {
+      "cut_index": 65,
+      "progress": 0.5572222222222222,
+      "pool_size": 311,
+      "winner_shot_id": "e0f3d37c-9d39-5a1a-889b-65fdf7643906",
+      "winner_score": 0.1969086517460912,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.8024214535221122,
+          "rank": 291
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.7323960809523089,
+          "rank": 276
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.12598888405916647,
+          "rank": 49
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.12506356397694457,
+          "rank": 50
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.09950662971306146,
+          "rank": 72
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.6720623725301675,
+          "rank": 254
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.013071667156528148,
+          "rank": 132
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.6319057726637285,
+          "rank": 248
+        }
+      ]
+    },
+    {
+      "cut_index": 66,
+      "progress": 0.5632222222222222,
+      "pool_size": 311,
+      "winner_shot_id": "2c2dcd36-f048-5b6a-855e-e328c8f530d3",
+      "winner_score": 0.18802025516921672,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.966723545480418,
+          "rank": 306
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.9148191591267281,
+          "rank": 300
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": -0.07874334195703409,
+          "rank": 141
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": -0.06022159391537099,
+          "rank": 122
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": -0.05955134671030436,
+          "rank": 120
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.6837365130605545,
+          "rank": 256
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.17902407152855623,
+          "rank": 5
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.6398206813147713,
+          "rank": 249
+        }
+      ]
+    },
+    {
+      "cut_index": 67,
+      "progress": 0.5691111111111111,
+      "pool_size": 311,
+      "winner_shot_id": "a52d86d8-590c-59e1-ae84-0d1329958151",
+      "winner_score": 0.18642095036136708,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.8166523474091308,
+          "rank": 289
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.7646616700972286,
+          "rank": 279
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.09040844187418096,
+          "rank": 59
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.09571556757599249,
+          "rank": 56
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.1027953989039051,
+          "rank": 51
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.6744432001032697,
+          "rank": 249
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.007806427658999098,
+          "rank": 125
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.6446152158256684,
+          "rank": 247
+        }
+      ]
+    },
+    {
+      "cut_index": 68,
+      "progress": 0.5751111111111111,
+      "pool_size": 311,
+      "winner_shot_id": "48da6fa8-e441-5415-b210-8e472ba51bf3",
+      "winner_score": 0.1869185979182221,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.9802278240464427,
+          "rank": 305
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.9337858314492958,
+          "rank": 300
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": -0.09849189403711914,
+          "rank": 142
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": -0.08540133244171108,
+          "rank": 128
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": -0.09687397916711034,
+          "rank": 141
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.6815910177926745,
+          "rank": 250
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.15446365452484584,
+          "rank": 7
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.6727486899896737,
+          "rank": 248
+        }
+      ]
+    },
+    {
+      "cut_index": 69,
+      "progress": 0.5838888888888889,
+      "pool_size": 130,
+      "winner_shot_id": "0f22fc06-70e4-5b51-ba7b-ccda71ef401f",
+      "winner_score": 0.10928162743033405,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.7023926328879632,
+          "rank": 96
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -0.0018699450704065604,
+          "rank": 17
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.6685500864710597,
+          "rank": 92
+        }
+      ]
+    },
+    {
+      "cut_index": 70,
+      "progress": 0.587,
+      "pool_size": 130,
+      "winner_shot_id": "760fac42-4af7-501c-83bb-3ed2113a2211",
+      "winner_score": 0.16246740185929986,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.6930400438412286,
+          "rank": 91
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.16069132236586028,
+          "rank": 2
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.8723646566769571,
+          "rank": 114
+        }
+      ]
+    },
+    {
+      "cut_index": 71,
+      "progress": 0.59,
+      "pool_size": 311,
+      "winner_shot_id": "9fb1b6d3-d087-5275-adf5-3ff8182f9ea4",
+      "winner_score": 0.1581898143814937,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.8317521822770167,
+          "rank": 285
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.7882373835409427,
+          "rank": 278
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.06480321247364283,
+          "rank": 61
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.06730426596002337,
+          "rank": 60
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.08148938857770326,
+          "rank": 49
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.7092040674259457,
+          "rank": 247
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -0.03669750401746247,
+          "rank": 133
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.6833378657032013,
+          "rank": 243
+        }
+      ]
+    },
+    {
+      "cut_index": 72,
+      "progress": 0.5958888888888889,
+      "pool_size": 311,
+      "winner_shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+      "winner_score": 0.14310933002152645,
+      "winner_is_moment_member": true,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.9984330794062405,
+          "rank": 304
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.9524435126670852,
+          "rank": 293
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": -0.09659241775906166,
+          "rank": 118
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": -0.10436665811063685,
+          "rank": 125
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": -0.10619315544951484,
+          "rank": 128
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.7146109309726315,
+          "rank": 247
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": 0.14310933002152645,
+          "rank": 1
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.6785218069137503,
+          "rank": 243
+        }
+      ]
+    },
+    {
+      "cut_index": 73,
+      "progress": 0.6018888888888889,
+      "pool_size": 311,
+      "winner_shot_id": "6a8afc8a-75e1-5326-a0aa-bc9568c01b16",
+      "winner_score": 0.13661000292478068,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.8608788661590134,
+          "rank": 287
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.7950426518970655,
+          "rank": 275
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.07788878573718444,
+          "rank": 41
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.06984642370751859,
+          "rank": 43
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.06488164638132564,
+          "rank": 49
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.7911628423891758,
+          "rank": 272
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -0.32056106259997025,
+          "rank": 232
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.6912685177224485,
+          "rank": 241
+        }
+      ]
+    },
+    {
+      "cut_index": 74,
+      "progress": 0.6078888888888889,
+      "pool_size": 311,
+      "winner_shot_id": "9bd1db45-255b-5ca1-8b3d-94ced79936f6",
+      "winner_score": 0.1203316753177363,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -1.0230992290716001,
+          "rank": 305
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.977407402721693,
+          "rank": 297
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": -0.09897369860281237,
+          "rank": 105
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": -0.09365909694405537,
+          "rank": 98
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": -0.11012267950033776,
+          "rank": 117
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.7966233869851101,
+          "rank": 267
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -0.7927662729270919,
+          "rank": 264
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.6914626191974741,
+          "rank": 241
+        }
+      ]
+    },
+    {
+      "cut_index": 75,
+      "progress": 0.6137777777777778,
+      "pool_size": 311,
+      "winner_shot_id": "566b05a8-ed70-56b3-a163-014829523de5",
+      "winner_score": 0.11940734962343724,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.8481762728268095,
+          "rank": 279
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.8099795518251494,
+          "rank": 272
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.0560428240105713,
+          "rank": 41
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.04396197061264859,
+          "rank": 55
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.04929962064930127,
+          "rank": 49
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.795544675685528,
+          "rank": 263
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -0.9718110392798209,
+          "rank": 304
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.7166042210379141,
+          "rank": 239
+        }
+      ]
+    },
+    {
+      "cut_index": 76,
+      "progress": 0.6197777777777778,
+      "pool_size": 311,
+      "winner_shot_id": "535adfc0-a220-5c13-af6e-433961a6fb08",
+      "winner_score": 0.1093671277915658,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -1.037121746569359,
+          "rank": 304
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.9865578145263496,
+          "rank": 291
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": -0.12004296696355327,
+          "rank": 107
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": -0.12949078991872864,
+          "rank": 114
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": -0.10927755359295854,
+          "rank": 98
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.8114729512611583,
+          "rank": 263
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -0.8253845270484527,
+          "rank": 273
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.7322560131858183,
+          "rank": 240
+        }
+      ]
+    },
+    {
+      "cut_index": 77,
+      "progress": 0.6256666666666667,
+      "pool_size": 311,
+      "winner_shot_id": "f41a0f6c-ff4f-5d93-aabf-4f77f3f6c0ee",
+      "winner_score": 0.10892654413344485,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.8876441575916607,
+          "rank": 285
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.8140742750651846,
+          "rank": 264
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": 0.044169519607076047,
+          "rank": 35
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": 0.034000586117356894,
+          "rank": 47
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": 0.03460286656899009,
+          "rank": 45
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.8523101197359764,
+          "rank": 277
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -0.9714756578949727,
+          "rank": 307
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.6958233522433159,
+          "rank": 237
+        }
+      ]
+    },
+    {
+      "cut_index": 78,
+      "progress": 0.6316666666666667,
+      "pool_size": 130,
+      "winner_shot_id": "1051d5d4-b4bc-59c2-a4e9-ad01abd065e1",
+      "winner_score": 0.1320974237544379,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.8480478954617955,
+          "rank": 124
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -0.7838875431102812,
+          "rank": 112
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.7087588953307412,
+          "rank": 88
+        }
+      ]
+    },
+    {
+      "cut_index": 79,
+      "progress": 0.6346666666666667,
+      "pool_size": 130,
+      "winner_shot_id": "3aaa840e-5dff-50a9-b46c-344625c13a7a",
+      "winner_score": 0.06041489929202555,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.8377376186606436,
+          "rank": 103
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -0.9696456161582448,
+          "rank": 121
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.7334458007023549,
+          "rank": 87
+        }
+      ]
+    },
+    {
+      "cut_index": 80,
+      "progress": 0.6375555555555555,
+      "pool_size": 130,
+      "winner_shot_id": "66e137df-f762-5856-a5e0-b3a977c52a0d",
+      "winner_score": 0.1159526686968476,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.8567846241437315,
+          "rank": 107
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -0.7955053321361868,
+          "rank": 95
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.8967933117224306,
+          "rank": 112
+        }
+      ]
+    },
+    {
+      "cut_index": 81,
+      "progress": 0.6405555555555555,
+      "pool_size": 152,
+      "winner_shot_id": "692fe4f0-5f06-57a3-9a46-f7b23fce2590",
+      "winner_score": 0.12477994502821291,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.867499311503451,
+          "rank": 132
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.7664816067493656,
+          "rank": 110
+        }
+      ]
+    },
+    {
+      "cut_index": 82,
+      "progress": 0.6608888888888889,
+      "pool_size": 311,
+      "winner_shot_id": "faab2396-393f-5c2a-a647-5d238c9b022a",
+      "winner_score": 0.06766473104210764,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -1.101159238864161,
+          "rank": 307
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -1.0488181517907116,
+          "rank": 297
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": -0.19466842181855395,
+          "rank": 124
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": -0.1757723304912432,
+          "rank": 105
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": -0.20447696182379,
+          "rank": 135
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.8935862568240965,
+          "rank": 273
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -0.8044535626262742,
+          "rank": 247
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.8260154712707379,
+          "rank": 260
+        }
+      ]
+    },
+    {
+      "cut_index": 83,
+      "progress": 0.6644444444444444,
+      "pool_size": 130,
+      "winner_shot_id": "844746ca-2271-5d0d-b3cb-6728b36b33ac",
+      "winner_score": 0.006115391624137219,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.8998626818857602,
+          "rank": 100
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -0.9734547924701963,
+          "rank": 110
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.8038272055358711,
+          "rank": 90
+        }
+      ]
+    },
+    {
+      "cut_index": 84,
+      "progress": 0.6673333333333333,
+      "pool_size": 130,
+      "winner_shot_id": "c0ee1c51-f8b4-5a7f-bf7f-8c31f1b7b897",
+      "winner_score": 0.07678671669787221,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.8808991344100691,
+          "rank": 105
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -0.8212468165700988,
+          "rank": 90
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.9896511754056713,
+          "rank": 117
+        }
+      ]
+    },
+    {
+      "cut_index": 85,
+      "progress": 0.6703333333333333,
+      "pool_size": 311,
+      "winner_shot_id": "7c11e4ab-d0d7-56dc-9b39-e154310d74f0",
+      "winner_score": 0.05777943703336358,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.9240223473741824,
+          "rank": 276
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.8912744901016088,
+          "rank": 262
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": -0.021784331836187328,
+          "rank": 43
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": -0.02241454841564466,
+          "rank": 44
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": -0.015380925698833932,
+          "rank": 36
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.9091630428533839,
+          "rank": 269
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -0.9964028864726233,
+          "rank": 291
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.8393360835588539,
+          "rank": 244
+        }
+      ]
+    },
+    {
+      "cut_index": 86,
+      "progress": 0.6763333333333333,
+      "pool_size": 130,
+      "winner_shot_id": "9ff1e2e0-3b8f-5fb2-8e29-92fd73f8c6f6",
+      "winner_score": 0.052034786492086156,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.906432534833439,
+          "rank": 120
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -0.8426309143885278,
+          "rank": 103
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.8321788572964245,
+          "rank": 97
+        }
+      ]
+    },
+    {
+      "cut_index": 87,
+      "progress": 0.6792222222222222,
+      "pool_size": 130,
+      "winner_shot_id": "0996cdb9-5560-59b8-acb9-93c8125e2e7d",
+      "winner_score": -0.03587402749232295,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.9061861097374915,
+          "rank": 96
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -0.9878740085443283,
+          "rank": 108
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.8319264099347775,
+          "rank": 91
+        }
+      ]
+    },
+    {
+      "cut_index": 88,
+      "progress": 0.6822222222222222,
+      "pool_size": 130,
+      "winner_shot_id": "87d65d30-863d-54f2-820c-e9a6bf1c6877",
+      "winner_score": 0.03227734418564783,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.9085223177714096,
+          "rank": 103
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -0.835695204602465,
+          "rank": 85
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -1.0278890565568453,
+          "rank": 119
+        }
+      ]
+    },
+    {
+      "cut_index": 89,
+      "progress": 0.6852222222222222,
+      "pool_size": 130,
+      "winner_shot_id": "f6ef4d88-772c-59c6-ae07-c9dc22578feb",
+      "winner_score": -0.04944560259442293,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.9063661107333588,
+          "rank": 93
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -1.0177585542842502,
+          "rank": 113
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.8327486398656211,
+          "rank": 84
+        }
+      ]
+    },
+    {
+      "cut_index": 90,
+      "progress": 0.6882222222222222,
+      "pool_size": 130,
+      "winner_shot_id": "754f79e5-0c25-596b-a448-c5afa32290b9",
+      "winner_score": 0.023865206043328677,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.9222099256910216,
+          "rank": 104
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -0.8542109937339843,
+          "rank": 86
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -1.0343605263448508,
+          "rank": 118
+        }
+      ]
+    },
+    {
+      "cut_index": 91,
+      "progress": 0.6912222222222222,
+      "pool_size": 130,
+      "winner_shot_id": "7f6532dd-66d7-5893-bc70-870417073181",
+      "winner_score": -0.06399877349438192,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.9097191197998734,
+          "rank": 91
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -1.0208289711573215,
+          "rank": 109
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.8380600908534002,
+          "rank": 82
+        }
+      ]
+    },
+    {
+      "cut_index": 92,
+      "progress": 0.6941111111111111,
+      "pool_size": 130,
+      "winner_shot_id": "920f974d-55fc-53a0-9b5b-902385d3943d",
+      "winner_score": 0.02800768238090721,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -1.099743288874162,
+          "rank": 127
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -0.8629865030798658,
+          "rank": 95
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.8597132917162135,
+          "rank": 90
+        }
+      ]
+    },
+    {
+      "cut_index": 93,
+      "progress": 0.6971111111111111,
+      "pool_size": 311,
+      "winner_shot_id": "a40787b1-b136-5fbe-8841-8f037296f355",
+      "winner_score": 0.01728605943535983,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -0.973031377323909,
+          "rank": 272
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.9045419885130292,
+          "rank": 247
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": -0.05306266518610783,
+          "rank": 39
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": -0.04637836402233933,
+          "rank": 33
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": -0.049052593303334974,
+          "rank": 36
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.9220466413191901,
+          "rank": 254
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -1.0353138550306002,
+          "rank": 286
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.8512609041207031,
+          "rank": 229
+        }
+      ]
+    },
+    {
+      "cut_index": 94,
+      "progress": 0.7031111111111111,
+      "pool_size": 130,
+      "winner_shot_id": "f55314c4-f22f-5a93-ac00-16291fe5aa7f",
+      "winner_score": 0.00015416611417142304,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.9329888258931257,
+          "rank": 118
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -0.854862463408666,
+          "rank": 83
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.8664792090817504,
+          "rank": 89
+        }
+      ]
+    },
+    {
+      "cut_index": 95,
+      "progress": 0.7058888888888889,
+      "pool_size": 130,
+      "winner_shot_id": "d4c349e8-dad5-5f3d-b840-16a78d796f46",
+      "winner_score": -0.10790332348713175,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.9277106873694265,
+          "rank": 88
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -1.019497893641433,
+          "rank": 99
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.8713954023677303,
+          "rank": 84
+        }
+      ]
+    },
+    {
+      "cut_index": 96,
+      "progress": 0.709,
+      "pool_size": 130,
+      "winner_shot_id": "79b45725-e346-5acb-a069-56e82bb37bb8",
+      "winner_score": -0.006465696460882235,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.9436153810635387,
+          "rank": 100
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -0.8832710902396576,
+          "rank": 81
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -1.0606896102697188,
+          "rank": 117
+        }
+      ]
+    },
+    {
+      "cut_index": 97,
+      "progress": 0.712,
+      "pool_size": 130,
+      "winner_shot_id": "d4f02ae3-ddb3-5f58-ab1c-bff8a317b5fe",
+      "winner_score": -0.11128179274338075,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.9528289616848724,
+          "rank": 86
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -1.0632603777660827,
+          "rank": 108
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.872108453942673,
+          "rank": 79
+        }
+      ]
+    },
+    {
+      "cut_index": 98,
+      "progress": 0.715,
+      "pool_size": 130,
+      "winner_shot_id": "aafd8081-dbdc-551e-b5c4-dff59207b60f",
+      "winner_score": -0.02440787347229545,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -0.9566694480707245,
+          "rank": 100
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -0.8851419378735559,
+          "rank": 78
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -1.057672425544624,
+          "rank": 114
+        }
+      ]
+    },
+    {
+      "cut_index": 99,
+      "progress": 0.718,
+      "pool_size": 130,
+      "winner_shot_id": "f65097d6-2910-56a6-a333-1ef8bf6957ab",
+      "winner_score": -0.11507107032218548,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -1.0147791832067177,
+          "rank": 91
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -1.1412485506073604,
+          "rank": 129
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.8824511929730946,
+          "rank": 77
+        }
+      ]
+    },
+    {
+      "cut_index": 100,
+      "progress": 0.7208888888888889,
+      "pool_size": 130,
+      "winner_shot_id": "d7ca27eb-0b99-54f4-b772-1e644caf66f4",
+      "winner_score": -0.024811113566419848,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -1.0132677597193631,
+          "rank": 104
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -0.9373052065991674,
+          "rank": 87
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -1.0326263100584738,
+          "rank": 106
+        }
+      ]
+    },
+    {
+      "cut_index": 101,
+      "progress": 0.7238888888888889,
+      "pool_size": 311,
+      "winner_shot_id": "beef02ee-af6e-5c2e-a6c3-9a137acb9506",
+      "winner_score": -0.025425335217670115,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -1.008283753306705,
+          "rank": 266
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -0.9445050441800694,
+          "rank": 242
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": -0.09516308934333051,
+          "rank": 34
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": -0.09399086631130708,
+          "rank": 29
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": -0.0988776142290601,
+          "rank": 40
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -1.0070533644174242,
+          "rank": 264
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -1.1001520585789044,
+          "rank": 296
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.8951255836504126,
+          "rank": 224
+        }
+      ]
+    },
+    {
+      "cut_index": 102,
+      "progress": 0.7297777777777777,
+      "pool_size": 130,
+      "winner_shot_id": "6a69a366-be6f-5745-a337-2b47a0888456",
+      "winner_score": -0.03879399075805665,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -1.0266284288971734,
+          "rank": 121
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -0.9755594693926835,
+          "rank": 113
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.8965168719246266,
+          "rank": 79
+        }
+      ]
+    },
+    {
+      "cut_index": 103,
+      "progress": 0.7328888888888889,
+      "pool_size": 130,
+      "winner_shot_id": "852b689e-c767-50a0-9f96-572d3dfae276",
+      "winner_score": -0.12304592538373667,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -1.0346836061731985,
+          "rank": 87
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -1.1410575144903887,
+          "rank": 119
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.9105283711397058,
+          "rank": 74
+        }
+      ]
+    },
+    {
+      "cut_index": 104,
+      "progress": 0.7357777777777778,
+      "pool_size": 130,
+      "winner_shot_id": "61f941e5-e518-564a-af28-ef57b254ae46",
+      "winner_score": -0.0437441073192796,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -1.2030477615886768,
+          "rank": 127
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -0.9789369262535258,
+          "rank": 111
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.9056141978464276,
+          "rank": 78
+        }
+      ]
+    },
+    {
+      "cut_index": 105,
+      "progress": 0.7388888888888889,
+      "pool_size": 130,
+      "winner_shot_id": "c414e4d3-f991-58b4-b807-5fd30c9c8f17",
+      "winner_score": -0.14220250611915242,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -1.0274228759412463,
+          "rank": 85
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -1.1533354582841542,
+          "rank": 125
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.9194207183033117,
+          "rank": 74
+        }
+      ]
+    },
+    {
+      "cut_index": 106,
+      "progress": 0.7417777777777778,
+      "pool_size": 130,
+      "winner_shot_id": "88542273-51b8-53e8-8d8c-77953dfdb461",
+      "winner_score": -0.05031580908191776,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -1.0476903418000922,
+          "rank": 100
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -0.9688270415137568,
+          "rank": 87
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -1.1016028014339736,
+          "rank": 111
+        }
+      ]
+    },
+    {
+      "cut_index": 107,
+      "progress": 0.7447777777777778,
+      "pool_size": 130,
+      "winner_shot_id": "4701a449-dc7c-5532-978d-afa824679b05",
+      "winner_score": -0.1687951353244069,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -1.0420203680538846,
+          "rank": 83
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -1.1673922186593448,
+          "rank": 123
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.9256214083050653,
+          "rank": 70
+        }
+      ]
+    },
+    {
+      "cut_index": 108,
+      "progress": 0.7477777777777778,
+      "pool_size": 130,
+      "winner_shot_id": "32dd23b2-dfa1-5b2d-bc62-5110a638ac75",
+      "winner_score": -0.08503597710908674,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -1.0496386228856627,
+          "rank": 100
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -0.9847760550263396,
+          "rank": 84
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -1.1008354150783999,
+          "rank": 110
+        }
+      ]
+    },
+    {
+      "cut_index": 109,
+      "progress": 0.7506666666666667,
+      "pool_size": 311,
+      "winner_shot_id": "659c824e-4836-54fb-b757-ef3abc48fd0f",
+      "winner_score": -0.06056453446068151,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -1.0310430445020822,
+          "rank": 254
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -1.0223382220452601,
+          "rank": 250
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": -0.18991219042964824,
+          "rank": 86
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": -0.19175441116312142,
+          "rank": 90
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": -0.17440138764087035,
+          "rank": 75
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -1.0624452392875496,
+          "rank": 261
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -1.144664763588312,
+          "rank": 297
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.9252261693148458,
+          "rank": 212
+        }
+      ]
+    },
+    {
+      "cut_index": 110,
+      "progress": 0.7566666666666667,
+      "pool_size": 130,
+      "winner_shot_id": "df600212-15b7-52c5-a151-aaddefde25d4",
+      "winner_score": -0.10328476737162604,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -1.0512011678476012,
+          "rank": 116
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -0.9954233077452767,
+          "rank": 101
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.9209194277108129,
+          "rank": 67
+        }
+      ]
+    },
+    {
+      "cut_index": 111,
+      "progress": 0.7596666666666667,
+      "pool_size": 130,
+      "winner_shot_id": "aa354d5d-ea78-560f-8bba-a622abe3380f",
+      "winner_score": -0.21433634272781923,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -1.050284963871935,
+          "rank": 78
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -1.164173161739323,
+          "rank": 116
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.9276797773200088,
+          "rank": 65
+        }
+      ]
+    },
+    {
+      "cut_index": 112,
+      "progress": 0.7625555555555555,
+      "pool_size": 130,
+      "winner_shot_id": "a2125989-3225-5374-817a-fd666901a726",
+      "winner_score": -0.102825445743282,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -1.0713854474950646,
+          "rank": 98
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -0.9965887456685445,
+          "rank": 81
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -1.1088241284415135,
+          "rank": 107
+        }
+      ]
+    },
+    {
+      "cut_index": 113,
+      "progress": 0.7656666666666667,
+      "pool_size": 130,
+      "winner_shot_id": "852b91b8-d6ee-57be-a7c0-91bd374b01ae",
+      "winner_score": -0.22505721418750474,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -1.0614409403527603,
+          "rank": 76
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -1.1941708292188875,
+          "rank": 124
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.9292125147291354,
+          "rank": 62
+        }
+      ]
+    },
+    {
+      "cut_index": 114,
+      "progress": 0.7685555555555555,
+      "pool_size": 130,
+      "winner_shot_id": "8f0b54bd-94cc-5cb2-b6cb-9cae68a29987",
+      "winner_score": -0.12016453394284934,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -1.0841479014607736,
+          "rank": 96
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -1.0132818173206906,
+          "rank": 84
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -1.1368646948254737,
+          "rank": 110
+        }
+      ]
+    },
+    {
+      "cut_index": 115,
+      "progress": 0.7715555555555556,
+      "pool_size": 152,
+      "winner_shot_id": "99411747-c8b4-5114-85e2-69747aee786c",
+      "winner_score": -0.04772977698820126,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -1.0192667190253892,
+          "rank": 113
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.9098345687967752,
+          "rank": 91
+        }
+      ]
+    },
+    {
+      "cut_index": 116,
+      "progress": 0.7923333333333333,
+      "pool_size": 130,
+      "winner_shot_id": "212fa1ca-b917-5338-a4d1-7f169f6af4b5",
+      "winner_score": -0.14302374674461843,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -1.0926086661089094,
+          "rank": 112
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -1.0411420391813515,
+          "rank": 93
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.9762584342154446,
+          "rank": 67
+        }
+      ]
+    },
+    {
+      "cut_index": 117,
+      "progress": 0.7953333333333333,
+      "pool_size": 311,
+      "winner_shot_id": "9a359a1d-ab4f-5aed-ac6e-7c0de4e5c664",
+      "winner_score": -0.12078899400595468,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -1.081851293226633,
+          "rank": 245
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -1.077740943094027,
+          "rank": 242
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": -0.2288481577032963,
+          "rank": 63
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": -0.23197773892436865,
+          "rank": 66
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": -0.24468632828621675,
+          "rank": 74
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -1.091440901549053,
+          "rank": 248
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -1.2150011367455966,
+          "rank": 295
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.9798243857548571,
+          "rank": 205
+        }
+      ]
+    },
+    {
+      "cut_index": 118,
+      "progress": 0.8013333333333333,
+      "pool_size": 130,
+      "winner_shot_id": "2bbad92d-0d64-538a-9ffb-b38d8b497382",
+      "winner_score": -0.18103568012159582,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -1.122874001386925,
+          "rank": 114
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -1.057551292030806,
+          "rank": 94
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.9710784382702321,
+          "rank": 62
+        }
+      ]
+    },
+    {
+      "cut_index": 119,
+      "progress": 0.804,
+      "pool_size": 130,
+      "winner_shot_id": "8a999ef5-bf5f-5376-9bba-58f65a742bc0",
+      "winner_score": -0.30503243218062515,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -1.1022177644486932,
+          "rank": 72
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -1.2218440830559898,
+          "rank": 115
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -1.0003312642855178,
+          "rank": 61
+        }
+      ]
+    },
+    {
+      "cut_index": 120,
+      "progress": 0.8068888888888889,
+      "pool_size": 130,
+      "winner_shot_id": "c744933d-83fb-5306-a0c2-c221966a6b5b",
+      "winner_score": -0.1930894603431699,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -1.1070091312388712,
+          "rank": 92
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -1.0575776654237208,
+          "rank": 77
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -1.1790148025307876,
+          "rank": 109
+        }
+      ]
+    },
+    {
+      "cut_index": 121,
+      "progress": 0.8097777777777778,
+      "pool_size": 311,
+      "winner_shot_id": "ad740b4e-9114-59a8-98eb-45a7523e4a20",
+      "winner_score": -0.15208706859752924,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -1.063286148289934,
+          "rank": 225
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -1.0901097745485933,
+          "rank": 239
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": -0.22776206251890968,
+          "rank": 54
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": -0.23877929020341182,
+          "rank": 60
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": -0.25000132236925726,
+          "rank": 66
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -1.1335056727088093,
+          "rank": 251
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -1.236231886340573,
+          "rank": 295
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.9855713189791581,
+          "rank": 197
+        }
+      ]
+    },
+    {
+      "cut_index": 122,
+      "progress": 0.819,
+      "pool_size": 311,
+      "winner_shot_id": "beca3cb2-ff32-5701-a406-b7efa8cb2992",
+      "winner_score": -0.20438795503344867,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -1.2522631524471128,
+          "rank": 298
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -1.2909376539586712,
+          "rank": 306
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": -0.426706033837681,
+          "rank": 106
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": -0.4365627742507093,
+          "rank": 111
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": -0.42193473502199996,
+          "rank": 102
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -1.151987951753533,
+          "rank": 260
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -1.0832479930593022,
+          "rank": 240
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -0.9603882958747804,
+          "rank": 195
+        }
+      ]
+    },
+    {
+      "cut_index": 123,
+      "progress": 0.8308888888888889,
+      "pool_size": 311,
+      "winner_shot_id": "ccf643bd-3e3b-5c21-82bf-71be674b675d",
+      "winner_score": -0.13703404288600035,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -1.077784031677238,
+          "rank": 226
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -1.118870861693337,
+          "rank": 247
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": -0.23892927171166448,
+          "rank": 56
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": -0.2603056738871206,
+          "rank": 73
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": -0.25365894987433446,
+          "rank": 66
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -1.0888611019001593,
+          "rank": 234
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -1.311665662117651,
+          "rank": 299
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -1.000076795910018,
+          "rank": 196
+        }
+      ]
+    },
+    {
+      "cut_index": 124,
+      "progress": 0.8458888888888889,
+      "pool_size": 311,
+      "winner_shot_id": "3bc7cf3f-c9ae-571a-892c-ca28fc894f33",
+      "winner_score": -0.25196166701395517,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -1.2462727101072628,
+          "rank": 288
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -1.2800536523981085,
+          "rank": 300
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": -0.4178855904627842,
+          "rank": 85
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": -0.43038609387014204,
+          "rank": 97
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": -0.4225173894766071,
+          "rank": 90
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -1.1154342130743087,
+          "rank": 227
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -1.1385721195372693,
+          "rank": 236
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -1.0329264709964168,
+          "rank": 198
+        }
+      ]
+    },
+    {
+      "cut_index": 125,
+      "progress": 0.8607777777777778,
+      "pool_size": 311,
+      "winner_shot_id": "43c36f18-c51f-5519-983d-8f67f79e49f8",
+      "winner_score": -0.2148492804518718,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -1.1134474557454224,
+          "rank": 219
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -1.1558156336843506,
+          "rank": 240
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": -0.30935624111719123,
+          "rank": 68
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": -0.3179285915212699,
+          "rank": 72
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": -0.29036223822729473,
+          "rank": 56
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -1.142947628840386,
+          "rank": 234
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -1.3299427689082117,
+          "rank": 291
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -1.0535650570616077,
+          "rank": 192
+        }
+      ]
+    },
+    {
+      "cut_index": 126,
+      "progress": 0.8724444444444445,
+      "pool_size": 311,
+      "winner_shot_id": "e575f167-ebbb-5c34-823c-5f6912a80e6b",
+      "winner_score": -0.3064495070496974,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -1.3086073198855932,
+          "rank": 293
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -1.3433112388937578,
+          "rank": 307
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": -0.48641832253956446,
+          "rank": 112
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": -0.48489893602491385,
+          "rank": 110
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": -0.4709091071194402,
+          "rank": 97
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -1.1235676898948044,
+          "rank": 209
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -1.1848515764481902,
+          "rank": 240
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -1.0551482632125821,
+          "rank": 192
+        }
+      ]
+    },
+    {
+      "cut_index": 127,
+      "progress": 0.8874444444444445,
+      "pool_size": 311,
+      "winner_shot_id": "9ce9e099-01c6-53d4-957f-c192d9951f26",
+      "winner_score": -0.22180348608863315,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -1.1432879938533507,
+          "rank": 232
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -1.1675633337550455,
+          "rank": 254
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": -0.30755902552715336,
+          "rank": 53
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": -0.3123083750416209,
+          "rank": 54
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": -0.3158976645389575,
+          "rank": 60
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -1.3415929792279429,
+          "rank": 306
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -1.203713263590293,
+          "rank": 274
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -1.0672292285725373,
+          "rank": 192
+        }
+      ]
+    },
+    {
+      "cut_index": 128,
+      "progress": 0.9024444444444445,
+      "pool_size": 311,
+      "winner_shot_id": "ec2e1f29-d757-5995-9744-4b3a1ff72dec",
+      "winner_score": -0.3649882511819964,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -1.3810212354550744,
+          "rank": 301
+        },
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -1.4058893228136193,
+          "rank": 306
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": -0.5268692282922863,
+          "rank": 86
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": -0.5237898410911088,
+          "rank": 83
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": -0.538794703882468,
+          "rank": 98
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -1.2017142077363465,
+          "rank": 214
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -1.2325890326382674,
+          "rank": 235
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -1.134644748384542,
+          "rank": 194
+        }
+      ]
+    },
+    {
+      "cut_index": 129,
+      "progress": 0.9085555555555556,
+      "pool_size": 152,
+      "winner_shot_id": "fdd31d46-f3a8-54c5-bdf5-db0c70686ffe",
+      "winner_score": -0.25262502116505997,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+          "score": -1.1982277194908253,
+          "rank": 112
+        },
+        {
+          "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+          "score": -1.1009662939484515,
+          "rank": 84
+        }
+      ]
+    },
+    {
+      "cut_index": 130,
+      "progress": 0.9322222222222222,
+      "pool_size": 284,
+      "winner_shot_id": "30fc28a7-5aff-5efe-aa09-5e11d8de9d58",
+      "winner_score": -0.3896748818571621,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+          "score": -1.425605603831439,
+          "rank": 277
+        },
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": -0.5548051212846561,
+          "rank": 76
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": -0.5542040461344182,
+          "rank": 75
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": -0.5482724162656698,
+          "rank": 66
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -1.2041747399396965,
+          "rank": 200
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -1.253813636875257,
+          "rank": 215
+        }
+      ]
+    },
+    {
+      "cut_index": 131,
+      "progress": 0.9393333333333334,
+      "pool_size": 277,
+      "winner_shot_id": "9f3737da-3bf5-5361-98b1-e39e1199697b",
+      "winner_score": -0.3269292818446533,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": -0.39764575664535984,
+          "rank": 38
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": -0.40996892382146005,
+          "rank": 51
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": -0.41798211930058193,
+          "rank": 62
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -1.2379999796468422,
+          "rank": 209
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -1.4316326367165615,
+          "rank": 252
+        }
+      ]
+    },
+    {
+      "cut_index": 132,
+      "progress": 0.9475555555555556,
+      "pool_size": 270,
+      "winner_shot_id": "69cfae82-d32a-5c63-b7f5-25f19b0b7942",
+      "winner_score": -0.4418750194363308,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": -0.5711482442965088,
+          "rank": 61
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": -0.5891582516287078,
+          "rank": 80
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": -0.573244467074181,
+          "rank": 66
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -1.2400231515254216,
+          "rank": 198
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -1.2792671218846718,
+          "rank": 215
+        }
+      ]
+    },
+    {
+      "cut_index": 133,
+      "progress": 0.9568888888888889,
+      "pool_size": 260,
+      "winner_shot_id": "f67fcb98-3e19-5870-82cc-f7c2455c8154",
+      "winner_score": -0.27967215407461243,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": -0.3742552315833176,
+          "rank": 43
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": -0.3651507779338365,
+          "rank": 37
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": -0.38303706005942384,
+          "rank": 52
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -1.3040178808365752,
+          "rank": 208
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -1.4290835813819245,
+          "rank": 236
+        }
+      ]
+    },
+    {
+      "cut_index": 134,
+      "progress": 0.968,
+      "pool_size": 243,
+      "winner_shot_id": "29a7416c-24f0-5029-b2a0-7a24258598e2",
+      "winner_score": -0.44133785097934997,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": -0.5572057588658124,
+          "rank": 73
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": -0.5479687445495993,
+          "rank": 63
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": -0.5539372250774263,
+          "rank": 68
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -1.3074381483281552,
+          "rank": 209
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -1.2864160321786613,
+          "rank": 197
+        }
+      ]
+    },
+    {
+      "cut_index": 135,
+      "progress": 0.9768888888888889,
+      "pool_size": 242,
+      "winner_shot_id": "5a6f29f0-b692-51e0-8607-8168375cd2e2",
+      "winner_score": -0.4650082601437558,
+      "winner_is_moment_member": false,
+      "moment_members_in_pool": [
+        {
+          "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+          "score": -0.5699056000649741,
+          "rank": 70
+        },
+        {
+          "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+          "score": -0.5700023857752772,
+          "rank": 71
+        },
+        {
+          "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+          "score": -0.5573202583620281,
+          "rank": 59
+        },
+        {
+          "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+          "score": -1.3084583580197333,
+          "rank": 204
+        },
+        {
+          "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+          "score": -1.3022629170415008,
+          "rank": 200
+        }
+      ]
+    }
+  ]
+}
