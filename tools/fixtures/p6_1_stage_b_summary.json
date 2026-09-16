@@ -1,0 +1,8 @@
+{
+  "total_shots": 2638,
+  "successful": 2638,
+  "failed": 0,
+  "failures_sample": [],
+  "total_runtime_s": 2266.1,
+  "median_per_shot_s": 0.859
+}

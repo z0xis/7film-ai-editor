@@ -1,0 +1,207 @@
+{
+  "n_shadow_embeddings": 2638,
+  "moments": [
+    {
+      "name": "entrance",
+      "label": "çiftin girişi",
+      "shot_ids": [
+        "0237cda9-c1de-5ce9-af99-d346d78c9f7a",
+        "7fd9e99b-aaee-531f-890b-4498711384b1",
+        "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+        "3972bb9b-a9bd-50c5-bdf6-7e4b9f30f006",
+        "9a4ed279-5ba9-5f80-be32-0d593d1bcd87",
+        "a04a606a-4a59-5715-b54e-2a75fcb2cb8d",
+        "0e41f14f-740b-5530-beb8-cc2532f837c3",
+        "885d2795-b868-5b65-bf04-07f6679cccce"
+      ],
+      "scores": [
+        0.3363,
+        0.3275,
+        0.3256,
+        0.3236,
+        0.3236,
+        0.3235,
+        0.3228,
+        0.3214
+      ],
+      "best": 0.3363,
+      "median": 0.2496
+    },
+    {
+      "name": "ring",
+      "label": "yüzük",
+      "shot_ids": [
+        "c83d488f-4372-5482-9369-5ecf951f537e",
+        "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+        "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+        "c00b2de1-234e-5c0d-b757-1871d667b012",
+        "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+        "9793d369-cfec-5a45-99e4-8f11b00b891e",
+        "5476176d-4ade-50c4-b2a9-c4436b3e52b2",
+        "0ed9b29d-1326-5484-a95b-2f2a49bd8b15"
+      ],
+      "scores": [
+        0.3327,
+        0.3297,
+        0.3252,
+        0.3182,
+        0.3022,
+        0.3014,
+        0.3012,
+        0.2954
+      ],
+      "best": 0.3327,
+      "median": 0.2032
+    },
+    {
+      "name": "kiss",
+      "label": "öpücük",
+      "shot_ids": [
+        "bd091ada-671e-5211-8577-44e7e82a588d",
+        "a0240fc9-552d-5a63-a6bb-d7f636eafe7f",
+        "47e9ee77-5167-5fbe-836b-88763b80b28b",
+        "06ea0fb7-092c-5d96-85b4-5c816c46cc78",
+        "48418013-133e-5e0f-bbf4-9ad1b1cf9071",
+        "706a148f-d249-5ee6-ba96-3add2e22fdde",
+        "9793d369-cfec-5a45-99e4-8f11b00b891e",
+        "642f3479-dfba-5b2a-9aba-6d7ffa7b8abe"
+      ],
+      "scores": [
+        0.328,
+        0.3227,
+        0.3216,
+        0.3197,
+        0.3187,
+        0.3186,
+        0.3182,
+        0.315
+      ],
+      "best": 0.328,
+      "median": 0.2439
+    },
+    {
+      "name": "cake",
+      "label": "pasta kesme",
+      "shot_ids": [
+        "b21ae921-9369-5413-b5a4-2c21c03ade3a",
+        "f98d80bc-82f8-5057-8547-41ed7b76a3e7",
+        "5b56bf52-97a0-52f8-85e9-2963e13319b7",
+        "6cc0df32-4c16-57b1-b241-2add39efaf59",
+        "46adc211-9dd2-57b2-b1a7-7cdf4bfc15a9",
+        "5b9b2d4b-4b7f-588f-80f1-3e38be2f7acb",
+        "15519b14-560c-52ae-8afa-53c951284f91",
+        "91099494-4a7a-543c-bcd9-39afa7de000c"
+      ],
+      "scores": [
+        0.3599,
+        0.3505,
+        0.3503,
+        0.3492,
+        0.347,
+        0.3454,
+        0.3421,
+        0.3383
+      ],
+      "best": 0.3599,
+      "median": 0.2355
+    },
+    {
+      "name": "cake_feed",
+      "label": "pasta yedirme",
+      "shot_ids": [
+        "b21ae921-9369-5413-b5a4-2c21c03ade3a",
+        "15519b14-560c-52ae-8afa-53c951284f91",
+        "5b56bf52-97a0-52f8-85e9-2963e13319b7",
+        "b835f0cc-fa95-54a8-96fc-3d5d13d1bae4",
+        "6cc0df32-4c16-57b1-b241-2add39efaf59",
+        "853fb6f0-2bbc-532b-b358-48631306051b",
+        "a2b62fa5-3993-5018-aa51-ae4cfbf913b7",
+        "0cd8b821-737e-55b4-850f-3db3342993ec"
+      ],
+      "scores": [
+        0.3325,
+        0.3313,
+        0.3308,
+        0.3292,
+        0.3285,
+        0.3278,
+        0.3276,
+        0.3266
+      ],
+      "best": 0.3325,
+      "median": 0.241
+    },
+    {
+      "name": "first_dance",
+      "label": "ilk dans",
+      "shot_ids": [
+        "cd10866a-83c4-5878-a7cc-0adf2a701557",
+        "6d804937-6ef8-50fa-aa2d-3f084dc049d7",
+        "202d960b-697b-58bc-8eed-ea2cf8cd67c0",
+        "3b04178c-a203-5ed9-967b-e19c0504af5f",
+        "24bbfc53-f66f-5eed-a64a-ab150053fe0b",
+        "393b5d06-fdff-5676-b1b5-2f16b75de6f9",
+        "f5e4fa8a-7392-5efb-80b7-739e5693ec0a",
+        "8081ef29-840e-58e7-a81b-69103e81a538"
+      ],
+      "scores": [
+        0.3534,
+        0.3517,
+        0.3456,
+        0.3438,
+        0.3425,
+        0.3423,
+        0.3421,
+        0.3394
+      ],
+      "best": 0.3534,
+      "median": 0.2592
+    }
+  ],
+  "distraction_count": 494,
+  "obstruction_count": 264,
+  "opening_sign_count": 27,
+  "opening_sign_top10": [
+    {
+      "shot_id": "b15b29eb-064a-5ea3-80be-5039c32916f0",
+      "score": 0.2959
+    },
+    {
+      "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+      "score": 0.287
+    },
+    {
+      "shot_id": "472d1549-f32d-5294-a835-0be9b3556ca6",
+      "score": 0.2851
+    },
+    {
+      "shot_id": "5778ea81-0279-5f2b-b150-c4a5c48eed7a",
+      "score": 0.2836
+    },
+    {
+      "shot_id": "b21ae921-9369-5413-b5a4-2c21c03ade3a",
+      "score": 0.2828
+    },
+    {
+      "shot_id": "c65c057c-1681-57b5-8f19-03faf558972b",
+      "score": 0.2825
+    },
+    {
+      "shot_id": "5b9b2d4b-4b7f-588f-80f1-3e38be2f7acb",
+      "score": 0.2814
+    },
+    {
+      "shot_id": "5a6ec2b7-025c-5880-a202-a886b507f146",
+      "score": 0.2809
+    },
+    {
+      "shot_id": "4054a7ac-65d6-5975-b2a0-3aed9dfa0a64",
+      "score": 0.2808
+    },
+    {
+      "shot_id": "1e9d143b-0cb8-566a-8cd6-d7e1d7c6e2bb",
+      "score": 0.2806
+    }
+  ],
+  "table_setting_count": 132
+}

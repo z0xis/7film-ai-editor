@@ -1,0 +1,621 @@
+{
+  "moment_prompts": {
+    "entrance": "a bride and groom entering a room while guests applaud",
+    "ring": "putting a wedding ring on a finger, close up of hands",
+    "kiss": "a bride and groom kissing",
+    "cake": "a bride and groom cutting a wedding cake together with a knife",
+    "cake_feed": "a bride and groom feeding each other a piece of cake",
+    "first_dance": "a bride in a white dress and a groom in a suit slow dancing together, holding each other"
+  },
+  "moment_names": {
+    "entrance": "çiftin girişi",
+    "ring": "yüzük",
+    "kiss": "öpücük",
+    "cake": "pasta kesme",
+    "cake_feed": "pasta yedirme",
+    "first_dance": "ilk dans"
+  },
+  "moment_lift": 1.25,
+  "background_population_n": 156,
+  "background_median_latency_s": 0.02,
+  "cases": [
+    {
+      "case_id": "genuine_first_dance_C7450",
+      "path": "/tmp/p53_shadow_frames/095.jpg",
+      "human_label": "first_dance_TP",
+      "moment_similarities": {
+        "entrance": {
+          "similarity": 0.2778,
+          "background_median": 0.2431,
+          "threshold_pass": false
+        },
+        "ring": {
+          "similarity": 0.2014,
+          "background_median": 0.2003,
+          "threshold_pass": false
+        },
+        "kiss": {
+          "similarity": 0.2531,
+          "background_median": 0.2425,
+          "threshold_pass": false
+        },
+        "cake": {
+          "similarity": 0.2654,
+          "background_median": 0.2364,
+          "threshold_pass": false
+        },
+        "cake_feed": {
+          "similarity": 0.2692,
+          "background_median": 0.2399,
+          "threshold_pass": false
+        },
+        "first_dance": {
+          "similarity": 0.3082,
+          "background_median": 0.2545,
+          "threshold_pass": false
+        }
+      },
+      "rank_order": [
+        "first_dance",
+        "entrance",
+        "cake_feed",
+        "cake",
+        "kiss",
+        "ring"
+      ],
+      "latency_s": 0.02
+    },
+    {
+      "case_id": "genuine_first_dance_drone_A",
+      "path": "/tmp/p53_shadow_frames/111.jpg",
+      "human_label": "first_dance_TP",
+      "moment_similarities": {
+        "entrance": {
+          "similarity": 0.2596,
+          "background_median": 0.2431,
+          "threshold_pass": false
+        },
+        "ring": {
+          "similarity": 0.2003,
+          "background_median": 0.2003,
+          "threshold_pass": false
+        },
+        "kiss": {
+          "similarity": 0.2805,
+          "background_median": 0.2425,
+          "threshold_pass": false
+        },
+        "cake": {
+          "similarity": 0.2373,
+          "background_median": 0.2364,
+          "threshold_pass": false
+        },
+        "cake_feed": {
+          "similarity": 0.265,
+          "background_median": 0.2399,
+          "threshold_pass": false
+        },
+        "first_dance": {
+          "similarity": 0.281,
+          "background_median": 0.2545,
+          "threshold_pass": false
+        }
+      },
+      "rank_order": [
+        "first_dance",
+        "kiss",
+        "cake_feed",
+        "entrance",
+        "cake",
+        "ring"
+      ],
+      "latency_s": 0.02
+    },
+    {
+      "case_id": "genuine_first_dance_drone_B",
+      "path": "/tmp/p53_shadow_frames/109.jpg",
+      "human_label": "first_dance_TP",
+      "moment_similarities": {
+        "entrance": {
+          "similarity": 0.232,
+          "background_median": 0.2431,
+          "threshold_pass": false
+        },
+        "ring": {
+          "similarity": 0.1869,
+          "background_median": 0.2003,
+          "threshold_pass": false
+        },
+        "kiss": {
+          "similarity": 0.2481,
+          "background_median": 0.2425,
+          "threshold_pass": false
+        },
+        "cake": {
+          "similarity": 0.2011,
+          "background_median": 0.2364,
+          "threshold_pass": false
+        },
+        "cake_feed": {
+          "similarity": 0.2139,
+          "background_median": 0.2399,
+          "threshold_pass": false
+        },
+        "first_dance": {
+          "similarity": 0.2501,
+          "background_median": 0.2545,
+          "threshold_pass": false
+        }
+      },
+      "rank_order": [
+        "first_dance",
+        "kiss",
+        "entrance",
+        "cake_feed",
+        "cake",
+        "ring"
+      ],
+      "latency_s": 0.02
+    },
+    {
+      "case_id": "genuine_first_dance_C7252",
+      "path": "/tmp/p53_shadow_frames/037.jpg",
+      "human_label": "first_dance_TP",
+      "moment_similarities": {
+        "entrance": {
+          "similarity": 0.2665,
+          "background_median": 0.2431,
+          "threshold_pass": false
+        },
+        "ring": {
+          "similarity": 0.2378,
+          "background_median": 0.2003,
+          "threshold_pass": false
+        },
+        "kiss": {
+          "similarity": 0.2818,
+          "background_median": 0.2425,
+          "threshold_pass": false
+        },
+        "cake": {
+          "similarity": 0.2707,
+          "background_median": 0.2364,
+          "threshold_pass": false
+        },
+        "cake_feed": {
+          "similarity": 0.2741,
+          "background_median": 0.2399,
+          "threshold_pass": false
+        },
+        "first_dance": {
+          "similarity": 0.2981,
+          "background_median": 0.2545,
+          "threshold_pass": false
+        }
+      },
+      "rank_order": [
+        "first_dance",
+        "kiss",
+        "cake_feed",
+        "cake",
+        "entrance",
+        "ring"
+      ],
+      "latency_s": 0.02
+    },
+    {
+      "case_id": "genuine_first_dance_C7261",
+      "path": "/tmp/p54_stress_frames/052.jpg",
+      "human_label": "first_dance_TP",
+      "moment_similarities": {
+        "entrance": {
+          "similarity": 0.2784,
+          "background_median": 0.2431,
+          "threshold_pass": false
+        },
+        "ring": {
+          "similarity": 0.2316,
+          "background_median": 0.2003,
+          "threshold_pass": false
+        },
+        "kiss": {
+          "similarity": 0.2928,
+          "background_median": 0.2425,
+          "threshold_pass": false
+        },
+        "cake": {
+          "similarity": 0.2791,
+          "background_median": 0.2364,
+          "threshold_pass": false
+        },
+        "cake_feed": {
+          "similarity": 0.2778,
+          "background_median": 0.2399,
+          "threshold_pass": false
+        },
+        "first_dance": {
+          "similarity": 0.29,
+          "background_median": 0.2545,
+          "threshold_pass": false
+        }
+      },
+      "rank_order": [
+        "kiss",
+        "first_dance",
+        "cake",
+        "entrance",
+        "cake_feed",
+        "ring"
+      ],
+      "latency_s": 0.02
+    },
+    {
+      "case_id": "genuine_cake_cutting_C7309",
+      "path": "/tmp/p54_stress_frames/066.jpg",
+      "human_label": "cake_TP",
+      "moment_similarities": {
+        "entrance": {
+          "similarity": 0.2477,
+          "background_median": 0.2431,
+          "threshold_pass": false
+        },
+        "ring": {
+          "similarity": 0.2402,
+          "background_median": 0.2003,
+          "threshold_pass": false
+        },
+        "kiss": {
+          "similarity": 0.2822,
+          "background_median": 0.2425,
+          "threshold_pass": false
+        },
+        "cake": {
+          "similarity": 0.3421,
+          "background_median": 0.2364,
+          "threshold_pass": true
+        },
+        "cake_feed": {
+          "similarity": 0.3313,
+          "background_median": 0.2399,
+          "threshold_pass": true
+        },
+        "first_dance": {
+          "similarity": 0.275,
+          "background_median": 0.2545,
+          "threshold_pass": false
+        }
+      },
+      "rank_order": [
+        "cake",
+        "cake_feed",
+        "kiss",
+        "first_dance",
+        "entrance",
+        "ring"
+      ],
+      "latency_s": 0.02
+    },
+    {
+      "case_id": "HARMFUL_solo_performer_C7349",
+      "path": "/tmp/p54_stress_frames/083.jpg",
+      "human_label": "solo_performer_FP_confusable",
+      "moment_similarities": {
+        "entrance": {
+          "similarity": 0.2537,
+          "background_median": 0.2431,
+          "threshold_pass": false
+        },
+        "ring": {
+          "similarity": 0.1827,
+          "background_median": 0.2003,
+          "threshold_pass": false
+        },
+        "kiss": {
+          "similarity": 0.2549,
+          "background_median": 0.2425,
+          "threshold_pass": false
+        },
+        "cake": {
+          "similarity": 0.2329,
+          "background_median": 0.2364,
+          "threshold_pass": false
+        },
+        "cake_feed": {
+          "similarity": 0.2539,
+          "background_median": 0.2399,
+          "threshold_pass": false
+        },
+        "first_dance": {
+          "similarity": 0.2742,
+          "background_median": 0.2545,
+          "threshold_pass": false
+        }
+      },
+      "rank_order": [
+        "first_dance",
+        "kiss",
+        "cake_feed",
+        "entrance",
+        "cake",
+        "ring"
+      ],
+      "latency_s": 0.02
+    },
+    {
+      "case_id": "ordinary_dance_crowd_076",
+      "path": "/tmp/p53_shadow_frames/076.jpg",
+      "human_label": "ordinary_dance_confusable",
+      "moment_similarities": {
+        "entrance": {
+          "similarity": 0.2647,
+          "background_median": 0.2431,
+          "threshold_pass": false
+        },
+        "ring": {
+          "similarity": 0.2116,
+          "background_median": 0.2003,
+          "threshold_pass": false
+        },
+        "kiss": {
+          "similarity": 0.2636,
+          "background_median": 0.2425,
+          "threshold_pass": false
+        },
+        "cake": {
+          "similarity": 0.2623,
+          "background_median": 0.2364,
+          "threshold_pass": false
+        },
+        "cake_feed": {
+          "similarity": 0.2722,
+          "background_median": 0.2399,
+          "threshold_pass": false
+        },
+        "first_dance": {
+          "similarity": 0.3124,
+          "background_median": 0.2545,
+          "threshold_pass": false
+        }
+      },
+      "rank_order": [
+        "first_dance",
+        "cake_feed",
+        "entrance",
+        "kiss",
+        "cake",
+        "ring"
+      ],
+      "latency_s": 0.02
+    },
+    {
+      "case_id": "ordinary_dance_couple_in_crowd_079",
+      "path": "/tmp/p53_shadow_frames/079.jpg",
+      "human_label": "ordinary_dance_confusable",
+      "moment_similarities": {
+        "entrance": {
+          "similarity": 0.2711,
+          "background_median": 0.2431,
+          "threshold_pass": false
+        },
+        "ring": {
+          "similarity": 0.2212,
+          "background_median": 0.2003,
+          "threshold_pass": false
+        },
+        "kiss": {
+          "similarity": 0.2691,
+          "background_median": 0.2425,
+          "threshold_pass": false
+        },
+        "cake": {
+          "similarity": 0.2821,
+          "background_median": 0.2364,
+          "threshold_pass": false
+        },
+        "cake_feed": {
+          "similarity": 0.2815,
+          "background_median": 0.2399,
+          "threshold_pass": false
+        },
+        "first_dance": {
+          "similarity": 0.3247,
+          "background_median": 0.2545,
+          "threshold_pass": true
+        }
+      },
+      "rank_order": [
+        "first_dance",
+        "cake",
+        "cake_feed",
+        "entrance",
+        "kiss",
+        "ring"
+      ],
+      "latency_s": 0.02
+    },
+    {
+      "case_id": "cake_visible_only_050",
+      "path": "/tmp/p53_shadow_frames/050.jpg",
+      "human_label": "cake_visible_only_confusable",
+      "moment_similarities": {
+        "entrance": {
+          "similarity": 0.2752,
+          "background_median": 0.2431,
+          "threshold_pass": false
+        },
+        "ring": {
+          "similarity": 0.2344,
+          "background_median": 0.2003,
+          "threshold_pass": false
+        },
+        "kiss": {
+          "similarity": 0.2741,
+          "background_median": 0.2425,
+          "threshold_pass": false
+        },
+        "cake": {
+          "similarity": 0.31,
+          "background_median": 0.2364,
+          "threshold_pass": true
+        },
+        "cake_feed": {
+          "similarity": 0.3077,
+          "background_median": 0.2399,
+          "threshold_pass": true
+        },
+        "first_dance": {
+          "similarity": 0.2675,
+          "background_median": 0.2545,
+          "threshold_pass": false
+        }
+      },
+      "rank_order": [
+        "cake",
+        "cake_feed",
+        "entrance",
+        "kiss",
+        "first_dance",
+        "ring"
+      ],
+      "latency_s": 0.02
+    },
+    {
+      "case_id": "ceremony_halluc_C7343",
+      "path": "/tmp/p53_shadow_frames/061.jpg",
+      "human_label": "henna_confusable",
+      "moment_similarities": {
+        "entrance": {
+          "similarity": 0.2211,
+          "background_median": 0.2431,
+          "threshold_pass": false
+        },
+        "ring": {
+          "similarity": 0.1966,
+          "background_median": 0.2003,
+          "threshold_pass": false
+        },
+        "kiss": {
+          "similarity": 0.2291,
+          "background_median": 0.2425,
+          "threshold_pass": false
+        },
+        "cake": {
+          "similarity": 0.2663,
+          "background_median": 0.2364,
+          "threshold_pass": false
+        },
+        "cake_feed": {
+          "similarity": 0.2685,
+          "background_median": 0.2399,
+          "threshold_pass": false
+        },
+        "first_dance": {
+          "similarity": 0.2176,
+          "background_median": 0.2545,
+          "threshold_pass": false
+        }
+      },
+      "rank_order": [
+        "cake_feed",
+        "cake",
+        "kiss",
+        "entrance",
+        "first_dance",
+        "ring"
+      ],
+      "latency_s": 0.02
+    },
+    {
+      "case_id": "ceremony_halluc_C7344",
+      "path": "/tmp/p53_shadow_frames/062.jpg",
+      "human_label": "henna_confusable",
+      "moment_similarities": {
+        "entrance": {
+          "similarity": 0.2425,
+          "background_median": 0.2431,
+          "threshold_pass": false
+        },
+        "ring": {
+          "similarity": 0.2281,
+          "background_median": 0.2003,
+          "threshold_pass": false
+        },
+        "kiss": {
+          "similarity": 0.2373,
+          "background_median": 0.2425,
+          "threshold_pass": false
+        },
+        "cake": {
+          "similarity": 0.2639,
+          "background_median": 0.2364,
+          "threshold_pass": false
+        },
+        "cake_feed": {
+          "similarity": 0.2826,
+          "background_median": 0.2399,
+          "threshold_pass": false
+        },
+        "first_dance": {
+          "similarity": 0.2543,
+          "background_median": 0.2545,
+          "threshold_pass": false
+        }
+      },
+      "rank_order": [
+        "cake_feed",
+        "cake",
+        "first_dance",
+        "entrance",
+        "kiss",
+        "ring"
+      ],
+      "latency_s": 0.02
+    },
+    {
+      "case_id": "ceremony_borderline_C7342",
+      "path": "/tmp/p54_stress_frames/078.jpg",
+      "human_label": "henna_confusable",
+      "moment_similarities": {
+        "entrance": {
+          "similarity": 0.2212,
+          "background_median": 0.2431,
+          "threshold_pass": false
+        },
+        "ring": {
+          "similarity": 0.1867,
+          "background_median": 0.2003,
+          "threshold_pass": false
+        },
+        "kiss": {
+          "similarity": 0.2122,
+          "background_median": 0.2425,
+          "threshold_pass": false
+        },
+        "cake": {
+          "similarity": 0.2275,
+          "background_median": 0.2364,
+          "threshold_pass": false
+        },
+        "cake_feed": {
+          "similarity": 0.2348,
+          "background_median": 0.2399,
+          "threshold_pass": false
+        },
+        "first_dance": {
+          "similarity": 0.2029,
+          "background_median": 0.2545,
+          "threshold_pass": false
+        }
+      },
+      "rank_order": [
+        "cake_feed",
+        "cake",
+        "entrance",
+        "kiss",
+        "first_dance",
+        "ring"
+      ],
+      "latency_s": 0.02
+    }
+  ]
+}
