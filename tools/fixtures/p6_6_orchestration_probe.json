@@ -1,0 +1,11 @@
+{
+  "foreign_keys_pragma_on_normal_connection": 0,
+  "probe_shot_id": "ecc5ca4c-a0b8-5573-a373-3992de5f9a30",
+  "shot_present_before_delete": true,
+  "delete_raised_fk_error": false,
+  "shot_present_after_delete": false,
+  "timeline_item_still_present_after_delete": true,
+  "timeline_item_now_dangling": true,
+  "timeline_items_referencing_this_asset": 1,
+  "job_uniqueness_enforced": true
+}
