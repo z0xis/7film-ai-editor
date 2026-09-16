@@ -1,0 +1,920 @@
+[
+  {
+    "case_id": "genuine_first_dance_C7450",
+    "event": "first_dance",
+    "human_verdict": "TP",
+    "episode": "C7450",
+    "claims": [
+      {
+        "prompt": "v1_atomic_checklist",
+        "person_count": 2,
+        "paired": true,
+        "dance": true,
+        "solo": false,
+        "cake_vis": false,
+        "cutting": false,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v2_describe_then_structure",
+        "person_count": 2,
+        "paired": true,
+        "dance": true,
+        "solo": "UNKNOWN",
+        "cake_vis": false,
+        "cutting": false,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v3_contradiction_first",
+        "person_count": 2,
+        "paired": true,
+        "dance": true,
+        "solo": false,
+        "cake_vis": "UNKNOWN",
+        "cutting": false,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v4_relationship_geometry",
+        "person_count": 2,
+        "paired": true,
+        "dance": true,
+        "solo": "UNKNOWN",
+        "cake_vis": false,
+        "cutting": false,
+        "inconsistent": false
+      }
+    ],
+    "decisions": {
+      "M1_unanimous": "ACCEPT",
+      "M2_simple_majority": "ACCEPT",
+      "M3_supermajority": "ACCEPT",
+      "M4_contradiction_veto": "ACCEPT"
+    }
+  },
+  {
+    "case_id": "genuine_first_dance_drone_A",
+    "event": "first_dance",
+    "human_verdict": "TP",
+    "episode": "drone_DJI_0528",
+    "claims": [
+      {
+        "prompt": "v1_atomic_checklist",
+        "person_count": 2,
+        "paired": true,
+        "dance": true,
+        "solo": false,
+        "cake_vis": false,
+        "cutting": false,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v2_describe_then_structure",
+        "person_count": 2,
+        "paired": true,
+        "dance": true,
+        "solo": "UNKNOWN",
+        "cake_vis": false,
+        "cutting": false,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v3_contradiction_first",
+        "person_count": 2,
+        "paired": true,
+        "dance": true,
+        "solo": false,
+        "cake_vis": "UNKNOWN",
+        "cutting": false,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v4_relationship_geometry",
+        "person_count": 2,
+        "paired": true,
+        "dance": true,
+        "solo": "UNKNOWN",
+        "cake_vis": false,
+        "cutting": false,
+        "inconsistent": false
+      }
+    ],
+    "decisions": {
+      "M1_unanimous": "ACCEPT",
+      "M2_simple_majority": "ACCEPT",
+      "M3_supermajority": "ACCEPT",
+      "M4_contradiction_veto": "ACCEPT"
+    }
+  },
+  {
+    "case_id": "genuine_first_dance_drone_B",
+    "event": "first_dance",
+    "human_verdict": "TP",
+    "episode": "drone_DJI_0528",
+    "claims": [
+      {
+        "prompt": "v1_atomic_checklist",
+        "person_count": 2,
+        "paired": true,
+        "dance": true,
+        "solo": false,
+        "cake_vis": false,
+        "cutting": false,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v2_describe_then_structure",
+        "person_count": 2,
+        "paired": true,
+        "dance": false,
+        "solo": "UNKNOWN",
+        "cake_vis": false,
+        "cutting": false,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v3_contradiction_first",
+        "person_count": 2,
+        "paired": false,
+        "dance": true,
+        "solo": false,
+        "cake_vis": "UNKNOWN",
+        "cutting": true,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v4_relationship_geometry",
+        "person_count": 2,
+        "paired": true,
+        "dance": true,
+        "solo": "UNKNOWN",
+        "cake_vis": false,
+        "cutting": false,
+        "inconsistent": false
+      }
+    ],
+    "decisions": {
+      "M1_unanimous": "ABSTAIN_UNKNOWN",
+      "M2_simple_majority": "ABSTAIN_UNKNOWN",
+      "M3_supermajority": "ABSTAIN_UNKNOWN",
+      "M4_contradiction_veto": "ACCEPT"
+    }
+  },
+  {
+    "case_id": "genuine_first_dance_C7252",
+    "event": "first_dance",
+    "human_verdict": "TP",
+    "episode": "C7252",
+    "claims": [
+      {
+        "prompt": "v1_atomic_checklist",
+        "person_count": 2,
+        "paired": true,
+        "dance": true,
+        "solo": false,
+        "cake_vis": false,
+        "cutting": false,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v2_describe_then_structure",
+        "person_count": 2,
+        "paired": true,
+        "dance": false,
+        "solo": "UNKNOWN",
+        "cake_vis": false,
+        "cutting": false,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v3_contradiction_first",
+        "person_count": 2,
+        "paired": true,
+        "dance": true,
+        "solo": false,
+        "cake_vis": "UNKNOWN",
+        "cutting": true,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v4_relationship_geometry",
+        "person_count": 2,
+        "paired": true,
+        "dance": true,
+        "solo": "UNKNOWN",
+        "cake_vis": false,
+        "cutting": false,
+        "inconsistent": false
+      }
+    ],
+    "decisions": {
+      "M1_unanimous": "ABSTAIN_UNKNOWN",
+      "M2_simple_majority": "ACCEPT",
+      "M3_supermajority": "ACCEPT",
+      "M4_contradiction_veto": "ACCEPT"
+    }
+  },
+  {
+    "case_id": "genuine_first_dance_C7261",
+    "event": "first_dance",
+    "human_verdict": "TP",
+    "episode": "C7261",
+    "claims": [
+      {
+        "prompt": "v1_atomic_checklist",
+        "person_count": "UNKNOWN",
+        "paired": "UNKNOWN",
+        "dance": "UNKNOWN",
+        "solo": "UNKNOWN",
+        "cake_vis": "UNKNOWN",
+        "cutting": "UNKNOWN",
+        "inconsistent": true
+      },
+      {
+        "prompt": "v2_describe_then_structure",
+        "person_count": 2,
+        "paired": true,
+        "dance": true,
+        "solo": "UNKNOWN",
+        "cake_vis": false,
+        "cutting": false,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v3_contradiction_first",
+        "person_count": 2,
+        "paired": true,
+        "dance": true,
+        "solo": false,
+        "cake_vis": "UNKNOWN",
+        "cutting": false,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v4_relationship_geometry",
+        "person_count": 2,
+        "paired": true,
+        "dance": true,
+        "solo": "UNKNOWN",
+        "cake_vis": false,
+        "cutting": false,
+        "inconsistent": false
+      }
+    ],
+    "decisions": {
+      "M1_unanimous": "ACCEPT",
+      "M2_simple_majority": "ACCEPT",
+      "M3_supermajority": "ACCEPT",
+      "M4_contradiction_veto": "ACCEPT"
+    }
+  },
+  {
+    "case_id": "genuine_cake_cutting_C7309",
+    "event": "cake_cutting",
+    "human_verdict": "TP",
+    "episode": "C7309",
+    "claims": [
+      {
+        "prompt": "v1_atomic_checklist",
+        "person_count": 2,
+        "paired": true,
+        "dance": false,
+        "solo": false,
+        "cake_vis": true,
+        "cutting": true,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v2_describe_then_structure",
+        "person_count": 2,
+        "paired": true,
+        "dance": false,
+        "solo": "UNKNOWN",
+        "cake_vis": true,
+        "cutting": true,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v3_contradiction_first",
+        "person_count": 2,
+        "paired": true,
+        "dance": false,
+        "solo": false,
+        "cake_vis": "UNKNOWN",
+        "cutting": true,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v4_relationship_geometry",
+        "person_count": 2,
+        "paired": true,
+        "dance": true,
+        "solo": "UNKNOWN",
+        "cake_vis": true,
+        "cutting": true,
+        "inconsistent": false
+      }
+    ],
+    "decisions": {
+      "M1_unanimous": "ABSTAIN_UNKNOWN",
+      "M2_simple_majority": "ACCEPT",
+      "M3_supermajority": "ACCEPT",
+      "M4_contradiction_veto": "ACCEPT"
+    }
+  },
+  {
+    "case_id": "HARMFUL_solo_performer_C7349",
+    "event": "first_dance",
+    "human_verdict": "FP",
+    "episode": "C7349",
+    "claims": [
+      {
+        "prompt": "v1_atomic_checklist",
+        "person_count": "UNKNOWN",
+        "paired": "UNKNOWN",
+        "dance": "UNKNOWN",
+        "solo": "UNKNOWN",
+        "cake_vis": "UNKNOWN",
+        "cutting": "UNKNOWN",
+        "inconsistent": true
+      },
+      {
+        "prompt": "v2_describe_then_structure",
+        "person_count": 2,
+        "paired": true,
+        "dance": true,
+        "solo": "UNKNOWN",
+        "cake_vis": false,
+        "cutting": false,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v3_contradiction_first",
+        "person_count": "UNKNOWN",
+        "paired": "UNKNOWN",
+        "dance": "UNKNOWN",
+        "solo": "UNKNOWN",
+        "cake_vis": "UNKNOWN",
+        "cutting": "UNKNOWN",
+        "inconsistent": true
+      },
+      {
+        "prompt": "v4_relationship_geometry",
+        "person_count": 2,
+        "paired": true,
+        "dance": true,
+        "solo": "UNKNOWN",
+        "cake_vis": false,
+        "cutting": false,
+        "inconsistent": false
+      }
+    ],
+    "decisions": {
+      "M1_unanimous": "ACCEPT",
+      "M2_simple_majority": "ACCEPT",
+      "M3_supermajority": "ACCEPT",
+      "M4_contradiction_veto": "ACCEPT"
+    }
+  },
+  {
+    "case_id": "ceremony_halluc_C7343",
+    "event": "ceremony_action",
+    "human_verdict": "FP",
+    "episode": "C7343",
+    "claims": [
+      {
+        "prompt": "v1_atomic_checklist",
+        "person_count": 4,
+        "paired": true,
+        "dance": false,
+        "solo": false,
+        "cake_vis": false,
+        "cutting": false,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v2_describe_then_structure",
+        "person_count": 3,
+        "paired": true,
+        "dance": false,
+        "solo": "UNKNOWN",
+        "cake_vis": false,
+        "cutting": false,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v3_contradiction_first",
+        "person_count": 3,
+        "paired": true,
+        "dance": false,
+        "solo": false,
+        "cake_vis": "UNKNOWN",
+        "cutting": false,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v4_relationship_geometry",
+        "person_count": 2,
+        "paired": true,
+        "dance": true,
+        "solo": "UNKNOWN",
+        "cake_vis": false,
+        "cutting": false,
+        "inconsistent": false
+      }
+    ],
+    "decisions": {
+      "M1_unanimous": "ABSTAIN_UNKNOWN (unsupported event)",
+      "M2_simple_majority": "ABSTAIN_UNKNOWN (unsupported event)",
+      "M3_supermajority": "ABSTAIN_UNKNOWN (unsupported event)",
+      "M4_contradiction_veto": "ABSTAIN_UNKNOWN (unsupported event)"
+    }
+  },
+  {
+    "case_id": "ceremony_halluc_C7344",
+    "event": "ceremony_action",
+    "human_verdict": "FP",
+    "episode": "C7344",
+    "claims": [
+      {
+        "prompt": "v1_atomic_checklist",
+        "person_count": 4,
+        "paired": true,
+        "dance": false,
+        "solo": false,
+        "cake_vis": true,
+        "cutting": true,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v2_describe_then_structure",
+        "person_count": 2,
+        "paired": true,
+        "dance": false,
+        "solo": "UNKNOWN",
+        "cake_vis": true,
+        "cutting": true,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v3_contradiction_first",
+        "person_count": 2,
+        "paired": true,
+        "dance": false,
+        "solo": false,
+        "cake_vis": "UNKNOWN",
+        "cutting": false,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v4_relationship_geometry",
+        "person_count": 2,
+        "paired": true,
+        "dance": true,
+        "solo": "UNKNOWN",
+        "cake_vis": true,
+        "cutting": false,
+        "inconsistent": false
+      }
+    ],
+    "decisions": {
+      "M1_unanimous": "ABSTAIN_UNKNOWN (unsupported event)",
+      "M2_simple_majority": "ABSTAIN_UNKNOWN (unsupported event)",
+      "M3_supermajority": "ABSTAIN_UNKNOWN (unsupported event)",
+      "M4_contradiction_veto": "ABSTAIN_UNKNOWN (unsupported event)"
+    }
+  },
+  {
+    "case_id": "ceremony_borderline_C7342",
+    "event": "ceremony_action",
+    "human_verdict": "FP",
+    "episode": "C7342",
+    "claims": [
+      {
+        "prompt": "v1_atomic_checklist",
+        "person_count": 3,
+        "paired": true,
+        "dance": false,
+        "solo": false,
+        "cake_vis": false,
+        "cutting": false,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v2_describe_then_structure",
+        "person_count": 4,
+        "paired": true,
+        "dance": false,
+        "solo": "UNKNOWN",
+        "cake_vis": true,
+        "cutting": true,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v3_contradiction_first",
+        "person_count": 3,
+        "paired": true,
+        "dance": false,
+        "solo": false,
+        "cake_vis": "UNKNOWN",
+        "cutting": false,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v4_relationship_geometry",
+        "person_count": 2,
+        "paired": true,
+        "dance": true,
+        "solo": "UNKNOWN",
+        "cake_vis": true,
+        "cutting": true,
+        "inconsistent": false
+      }
+    ],
+    "decisions": {
+      "M1_unanimous": "ABSTAIN_UNKNOWN (unsupported event)",
+      "M2_simple_majority": "ABSTAIN_UNKNOWN (unsupported event)",
+      "M3_supermajority": "ABSTAIN_UNKNOWN (unsupported event)",
+      "M4_contradiction_veto": "ABSTAIN_UNKNOWN (unsupported event)"
+    }
+  },
+  {
+    "case_id": "ordinary_dance_crowd_076",
+    "event": "none",
+    "human_verdict": "TN",
+    "episode": "shot_076",
+    "claims": [
+      {
+        "prompt": "v1_atomic_checklist",
+        "person_count": "UNKNOWN",
+        "paired": "UNKNOWN",
+        "dance": "UNKNOWN",
+        "solo": "UNKNOWN",
+        "cake_vis": "UNKNOWN",
+        "cutting": "UNKNOWN",
+        "inconsistent": true
+      },
+      {
+        "prompt": "v2_describe_then_structure",
+        "person_count": 2,
+        "paired": true,
+        "dance": true,
+        "solo": "UNKNOWN",
+        "cake_vis": false,
+        "cutting": false,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v3_contradiction_first",
+        "person_count": 2,
+        "paired": true,
+        "dance": true,
+        "solo": false,
+        "cake_vis": "UNKNOWN",
+        "cutting": true,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v4_relationship_geometry",
+        "person_count": 2,
+        "paired": true,
+        "dance": true,
+        "solo": "UNKNOWN",
+        "cake_vis": false,
+        "cutting": false,
+        "inconsistent": false
+      }
+    ],
+    "decisions": {
+      "M1_unanimous": "ABSTAIN_UNKNOWN (unsupported event)",
+      "M2_simple_majority": "ABSTAIN_UNKNOWN (unsupported event)",
+      "M3_supermajority": "ABSTAIN_UNKNOWN (unsupported event)",
+      "M4_contradiction_veto": "ABSTAIN_UNKNOWN (unsupported event)"
+    }
+  },
+  {
+    "case_id": "ordinary_dance_couple_in_crowd_079",
+    "event": "none",
+    "human_verdict": "TN",
+    "episode": "shot_079",
+    "claims": [
+      {
+        "prompt": "v1_atomic_checklist",
+        "person_count": "UNKNOWN",
+        "paired": "UNKNOWN",
+        "dance": "UNKNOWN",
+        "solo": "UNKNOWN",
+        "cake_vis": "UNKNOWN",
+        "cutting": "UNKNOWN",
+        "inconsistent": true
+      },
+      {
+        "prompt": "v2_describe_then_structure",
+        "person_count": 2,
+        "paired": true,
+        "dance": true,
+        "solo": "UNKNOWN",
+        "cake_vis": false,
+        "cutting": false,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v3_contradiction_first",
+        "person_count": 2,
+        "paired": true,
+        "dance": true,
+        "solo": false,
+        "cake_vis": "UNKNOWN",
+        "cutting": false,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v4_relationship_geometry",
+        "person_count": 2,
+        "paired": true,
+        "dance": true,
+        "solo": "UNKNOWN",
+        "cake_vis": false,
+        "cutting": false,
+        "inconsistent": false
+      }
+    ],
+    "decisions": {
+      "M1_unanimous": "ABSTAIN_UNKNOWN (unsupported event)",
+      "M2_simple_majority": "ABSTAIN_UNKNOWN (unsupported event)",
+      "M3_supermajority": "ABSTAIN_UNKNOWN (unsupported event)",
+      "M4_contradiction_veto": "ABSTAIN_UNKNOWN (unsupported event)"
+    }
+  },
+  {
+    "case_id": "cake_visible_only_050",
+    "event": "none",
+    "human_verdict": "TN",
+    "episode": "shot_050",
+    "claims": [
+      {
+        "prompt": "v1_atomic_checklist",
+        "person_count": 2,
+        "paired": false,
+        "dance": false,
+        "solo": false,
+        "cake_vis": true,
+        "cutting": false,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v2_describe_then_structure",
+        "person_count": 2,
+        "paired": true,
+        "dance": false,
+        "solo": "UNKNOWN",
+        "cake_vis": true,
+        "cutting": false,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v3_contradiction_first",
+        "person_count": 2,
+        "paired": false,
+        "dance": false,
+        "solo": false,
+        "cake_vis": "UNKNOWN",
+        "cutting": false,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v4_relationship_geometry",
+        "person_count": 2,
+        "paired": false,
+        "dance": false,
+        "solo": "UNKNOWN",
+        "cake_vis": true,
+        "cutting": false,
+        "inconsistent": false
+      }
+    ],
+    "decisions": {
+      "M1_unanimous": "ABSTAIN_UNKNOWN (unsupported event)",
+      "M2_simple_majority": "ABSTAIN_UNKNOWN (unsupported event)",
+      "M3_supermajority": "ABSTAIN_UNKNOWN (unsupported event)",
+      "M4_contradiction_veto": "ABSTAIN_UNKNOWN (unsupported event)"
+    }
+  },
+  {
+    "case_id": "ambiguous_napkin_090",
+    "event": "none",
+    "human_verdict": "TN",
+    "episode": "shot_090",
+    "claims": [
+      {
+        "prompt": "v1_atomic_checklist",
+        "person_count": 2,
+        "paired": true,
+        "dance": false,
+        "solo": false,
+        "cake_vis": false,
+        "cutting": false,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v2_describe_then_structure",
+        "person_count": 2,
+        "paired": true,
+        "dance": false,
+        "solo": "UNKNOWN",
+        "cake_vis": false,
+        "cutting": false,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v3_contradiction_first",
+        "person_count": 2,
+        "paired": true,
+        "dance": false,
+        "solo": false,
+        "cake_vis": "UNKNOWN",
+        "cutting": false,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v4_relationship_geometry",
+        "person_count": 2,
+        "paired": true,
+        "dance": true,
+        "solo": "UNKNOWN",
+        "cake_vis": false,
+        "cutting": false,
+        "inconsistent": false
+      }
+    ],
+    "decisions": {
+      "M1_unanimous": "ABSTAIN_UNKNOWN (unsupported event)",
+      "M2_simple_majority": "ABSTAIN_UNKNOWN (unsupported event)",
+      "M3_supermajority": "ABSTAIN_UNKNOWN (unsupported event)",
+      "M4_contradiction_veto": "ABSTAIN_UNKNOWN (unsupported event)"
+    }
+  },
+  {
+    "case_id": "gift_table_detail_012",
+    "event": "none",
+    "human_verdict": "TN",
+    "episode": "shot_012",
+    "claims": [
+      {
+        "prompt": "v1_atomic_checklist",
+        "person_count": 0,
+        "paired": false,
+        "dance": false,
+        "solo": false,
+        "cake_vis": false,
+        "cutting": false,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v2_describe_then_structure",
+        "person_count": 0,
+        "paired": "UNKNOWN",
+        "dance": false,
+        "solo": "UNKNOWN",
+        "cake_vis": false,
+        "cutting": false,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v3_contradiction_first",
+        "person_count": 0,
+        "paired": false,
+        "dance": false,
+        "solo": false,
+        "cake_vis": "UNKNOWN",
+        "cutting": false,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v4_relationship_geometry",
+        "person_count": 0,
+        "paired": false,
+        "dance": false,
+        "solo": "UNKNOWN",
+        "cake_vis": false,
+        "cutting": false,
+        "inconsistent": false
+      }
+    ],
+    "decisions": {
+      "M1_unanimous": "ABSTAIN_UNKNOWN (unsupported event)",
+      "M2_simple_majority": "ABSTAIN_UNKNOWN (unsupported event)",
+      "M3_supermajority": "ABSTAIN_UNKNOWN (unsupported event)",
+      "M4_contradiction_veto": "ABSTAIN_UNKNOWN (unsupported event)"
+    }
+  },
+  {
+    "case_id": "bride_mirror_019",
+    "event": "none",
+    "human_verdict": "TN",
+    "episode": "shot_019",
+    "claims": [
+      {
+        "prompt": "v1_atomic_checklist",
+        "person_count": 1,
+        "paired": false,
+        "dance": false,
+        "solo": true,
+        "cake_vis": false,
+        "cutting": false,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v2_describe_then_structure",
+        "person_count": 1,
+        "paired": false,
+        "dance": false,
+        "solo": "UNKNOWN",
+        "cake_vis": false,
+        "cutting": false,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v3_contradiction_first",
+        "person_count": 1,
+        "paired": false,
+        "dance": false,
+        "solo": true,
+        "cake_vis": "UNKNOWN",
+        "cutting": true,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v4_relationship_geometry",
+        "person_count": 1,
+        "paired": false,
+        "dance": false,
+        "solo": "UNKNOWN",
+        "cake_vis": false,
+        "cutting": false,
+        "inconsistent": false
+      }
+    ],
+    "decisions": {
+      "M1_unanimous": "ABSTAIN_UNKNOWN (unsupported event)",
+      "M2_simple_majority": "ABSTAIN_UNKNOWN (unsupported event)",
+      "M3_supermajority": "ABSTAIN_UNKNOWN (unsupported event)",
+      "M4_contradiction_veto": "ABSTAIN_UNKNOWN (unsupported event)"
+    }
+  },
+  {
+    "case_id": "wide_reception_dancing_155",
+    "event": "none",
+    "human_verdict": "TN",
+    "episode": "shot_155",
+    "claims": [
+      {
+        "prompt": "v1_atomic_checklist",
+        "person_count": 0,
+        "paired": false,
+        "dance": false,
+        "solo": false,
+        "cake_vis": false,
+        "cutting": false,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v2_describe_then_structure",
+        "person_count": 12,
+        "paired": false,
+        "dance": false,
+        "solo": "UNKNOWN",
+        "cake_vis": false,
+        "cutting": false,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v3_contradiction_first",
+        "person_count": 0,
+        "paired": false,
+        "dance": false,
+        "solo": false,
+        "cake_vis": "UNKNOWN",
+        "cutting": false,
+        "inconsistent": false
+      },
+      {
+        "prompt": "v4_relationship_geometry",
+        "person_count": 0,
+        "paired": false,
+        "dance": false,
+        "solo": "UNKNOWN",
+        "cake_vis": false,
+        "cutting": false,
+        "inconsistent": false
+      }
+    ],
+    "decisions": {
+      "M1_unanimous": "ABSTAIN_UNKNOWN (unsupported event)",
+      "M2_simple_majority": "ABSTAIN_UNKNOWN (unsupported event)",
+      "M3_supermajority": "ABSTAIN_UNKNOWN (unsupported event)",
+      "M4_contradiction_veto": "ABSTAIN_UNKNOWN (unsupported event)"
+    }
+  }
+]

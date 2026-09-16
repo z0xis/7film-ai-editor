@@ -1,0 +1,1073 @@
+[
+  {
+    "case_id": "genuine_first_dance_C7450",
+    "path": "/tmp/p53_shadow_frames/095.jpg",
+    "event": "first_dance",
+    "human_verdict": "TP",
+    "episode": "C7450",
+    "prompt_results": {
+      "v1_atomic_checklist": {
+        "raw": "{\n  \"primary_person_count\": 2,\n  \"two_people_interacting\": true,\n  \"dance_like_movement_visible\": true,\n  \"solo_performer_pattern\": false,\n  \"cake_visible\": false,\n  \"cake_cutting_action_visible\": false,\n  \"confidence_in_this_read\": 0.95\n}",
+        "parsed": {
+          "primary_person_count": 2,
+          "two_people_interacting": true,
+          "dance_like_movement_visible": true,
+          "solo_performer_pattern": false,
+          "cake_visible": false,
+          "cake_cutting_action_visible": false,
+          "confidence_in_this_read": 0.95
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 13.84
+      },
+      "v2_describe_then_structure": {
+        "raw": "{\n  \"literal_description\": \"A man and a woman are dancing together on a wooden floor at an outdoor venue with string lights and seated guests in the background.\",\n  \"number_of_people_clearly_in_focus\": 2,\n  \"are_two_of_them_moving_or_interacting_as_a_pair\": true,\n  \"does_the_scene_show_dance_like_motion\": true,\n  \"is_a_cake_present\": false,\n  \"is_someone_actively_cutting_the_cake\": false\n}",
+        "parsed": {
+          "literal_description": "A man and a woman are dancing together on a wooden floor at an outdoor venue with string lights and seated guests in the background.",
+          "number_of_people_clearly_in_focus": 2,
+          "are_two_of_them_moving_or_interacting_as_a_pair": true,
+          "does_the_scene_show_dance_like_motion": true,
+          "is_a_cake_present": false,
+          "is_someone_actively_cutting_the_cake": false
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 9.91
+      },
+      "v3_contradiction_first": {
+        "raw": "{\n  \"is_only_one_person_clearly_the_dominant_focus\": false,\n  \"is_there_clearly_no_second_person_interacting_with_the_main_subject\": false,\n  \"is_the_cake_merely_visible_in_frame_without_anyone_cutting_it\": true,\n  \"is_movement_or_posture_dance_like\": true,\n  \"primary_subject_count_estimate\": 2\n}",
+        "parsed": {
+          "is_only_one_person_clearly_the_dominant_focus": false,
+          "is_there_clearly_no_second_person_interacting_with_the_main_subject": false,
+          "is_the_cake_merely_visible_in_frame_without_anyone_cutting_it": true,
+          "is_movement_or_posture_dance_like": true,
+          "primary_subject_count_estimate": 2
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 8.41
+      },
+      "v4_relationship_geometry": {
+        "raw": "{\n  \"how_many_dominant_people_are_in_the_frame\": 2,\n  \"are_two_dominant_people_spatially_close_and_facing_or_holding_each_other\": true,\n  \"does_their_movement_appear_coordinated_with_each_other\": true,\n  \"is_there_a_cake_and_is_a_cutting_motion_visible_toward_it\": \"no_cake\"\n}",
+        "parsed": {
+          "how_many_dominant_people_are_in_the_frame": 2,
+          "are_two_dominant_people_spatially_close_and_facing_or_holding_each_other": true,
+          "does_their_movement_appear_coordinated_with_each_other": true,
+          "is_there_a_cake_and_is_a_cutting_motion_visible_toward_it": "no_cake"
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 8.08
+      }
+    }
+  },
+  {
+    "case_id": "genuine_first_dance_drone_A",
+    "path": "/tmp/p53_shadow_frames/111.jpg",
+    "event": "first_dance",
+    "human_verdict": "TP",
+    "episode": "drone_DJI_0528",
+    "prompt_results": {
+      "v1_atomic_checklist": {
+        "raw": "{\n  \"primary_person_count\": 2,\n  \"two_people_interacting\": true,\n  \"dance_like_movement_visible\": true,\n  \"solo_performer_pattern\": false,\n  \"cake_visible\": false,\n  \"cake_cutting_action_visible\": false,\n  \"confidence_in_this_read\": 0.95\n}",
+        "parsed": {
+          "primary_person_count": 2,
+          "two_people_interacting": true,
+          "dance_like_movement_visible": true,
+          "solo_performer_pattern": false,
+          "cake_visible": false,
+          "cake_cutting_action_visible": false,
+          "confidence_in_this_read": 0.95
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.45
+      },
+      "v2_describe_then_structure": {
+        "raw": "{\n  \"literal_description\": \"A couple is dancing on a wooden dance floor surrounded by string lights and tables with guests seated around them at an outdoor venue.\",\n  \"number_of_people_clearly_in_focus\": 2,\n  \"are_two_of_them_moving_or_interacting_as_a_pair\": true,\n  \"does_the_scene_show_dance_like_motion\": true,\n  \"is_a_cake_present\": false,\n  \"is_someone_actively_cutting_the_cake\": false\n}",
+        "parsed": {
+          "literal_description": "A couple is dancing on a wooden dance floor surrounded by string lights and tables with guests seated around them at an outdoor venue.",
+          "number_of_people_clearly_in_focus": 2,
+          "are_two_of_them_moving_or_interacting_as_a_pair": true,
+          "does_the_scene_show_dance_like_motion": true,
+          "is_a_cake_present": false,
+          "is_someone_actively_cutting_the_cake": false
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 9.9
+      },
+      "v3_contradiction_first": {
+        "raw": "{\n  \"is_only_one_person_clearly_the_dominant_focus\": false,\n  \"is_there_clearly_no_second_person_interacting_with_the_main_subject\": false,\n  \"is_the_cake_merely_visible_in_frame_without_anyone_cutting_it\": true,\n  \"is_movement_or_posture_dance_like\": true,\n  \"primary_subject_count_estimate\": 2\n}",
+        "parsed": {
+          "is_only_one_person_clearly_the_dominant_focus": false,
+          "is_there_clearly_no_second_person_interacting_with_the_main_subject": false,
+          "is_the_cake_merely_visible_in_frame_without_anyone_cutting_it": true,
+          "is_movement_or_posture_dance_like": true,
+          "primary_subject_count_estimate": 2
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 8.28
+      },
+      "v4_relationship_geometry": {
+        "raw": "{\n  \"how_many_dominant_people_are_in_the_frame\": 2,\n  \"are_two_dominant_people_spatially_close_and_facing_or_holding_each_other\": true,\n  \"does_their_movement_appear_coordinated_with_each_other\": true,\n  \"is_there_a_cake_and_is_a_cutting_motion_visible_toward_it\": \"no_cake\"\n}",
+        "parsed": {
+          "how_many_dominant_people_are_in_the_frame": 2,
+          "are_two_dominant_people_spatially_close_and_facing_or_holding_each_other": true,
+          "does_their_movement_appear_coordinated_with_each_other": true,
+          "is_there_a_cake_and_is_a_cutting_motion_visible_toward_it": "no_cake"
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.95
+      }
+    }
+  },
+  {
+    "case_id": "genuine_first_dance_drone_B",
+    "path": "/tmp/p53_shadow_frames/109.jpg",
+    "event": "first_dance",
+    "human_verdict": "TP",
+    "episode": "drone_DJI_0528",
+    "prompt_results": {
+      "v1_atomic_checklist": {
+        "raw": "{\n  \"primary_person_count\": 2,\n  \"two_people_interacting\": true,\n  \"dance_like_movement_visible\": true,\n  \"solo_performer_pattern\": false,\n  \"cake_visible\": false,\n  \"cake_cutting_action_visible\": false,\n  \"confidence_in_this_read\": 0.95\n}",
+        "parsed": {
+          "primary_person_count": 2,
+          "two_people_interacting": true,
+          "dance_like_movement_visible": true,
+          "solo_performer_pattern": false,
+          "cake_visible": false,
+          "cake_cutting_action_visible": false,
+          "confidence_in_this_read": 0.95
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.48
+      },
+      "v2_describe_then_structure": {
+        "raw": "{\n  \"literal_description\": \"An overhead view captures two individuals standing close together on a large wooden dance floor surrounded by string lights, with a person walking on a nearby grassy area and another person standing on a raised platform to the left.\",\n  \"number_of_people_clearly_in_focus\": 2,\n  \"are_two_of_them_moving_or_interacting_as_a_pair\": true,\n  \"does_the_scene_show_dance_like_motion\": false,\n  \"is_a_cake_present\": false,\n  \"is_someone_actively_cutting_the_cake\": false\n}",
+        "parsed": {
+          "literal_description": "An overhead view captures two individuals standing close together on a large wooden dance floor surrounded by string lights, with a person walking on a nearby grassy area and another person standing on a raised platform to the left.",
+          "number_of_people_clearly_in_focus": 2,
+          "are_two_of_them_moving_or_interacting_as_a_pair": true,
+          "does_the_scene_show_dance_like_motion": false,
+          "is_a_cake_present": false,
+          "is_someone_actively_cutting_the_cake": false
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 11.22
+      },
+      "v3_contradiction_first": {
+        "raw": "{\n  \"is_only_one_person_clearly_the_dominant_focus\": false,\n  \"is_there_clearly_no_second_person_interacting_with_the_main_subject\": true,\n  \"is_the_cake_merely_visible_in_frame_without_anyone_cutting_it\": false,\n  \"is_movement_or_posture_dance_like\": true,\n  \"primary_subject_count_estimate\": 2\n}",
+        "parsed": {
+          "is_only_one_person_clearly_the_dominant_focus": false,
+          "is_there_clearly_no_second_person_interacting_with_the_main_subject": true,
+          "is_the_cake_merely_visible_in_frame_without_anyone_cutting_it": false,
+          "is_movement_or_posture_dance_like": true,
+          "primary_subject_count_estimate": 2
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 8.09
+      },
+      "v4_relationship_geometry": {
+        "raw": "{\n  \"how_many_dominant_people_are_in_the_frame\": 2,\n  \"are_two_dominant_people_spatially_close_and_facing_or_holding_each_other\": true,\n  \"does_their_movement_appear_coordinated_with_each_other\": true,\n  \"is_there_a_cake_and_is_a_cutting_motion_visible_toward_it\": \"no_cake\"\n}",
+        "parsed": {
+          "how_many_dominant_people_are_in_the_frame": 2,
+          "are_two_dominant_people_spatially_close_and_facing_or_holding_each_other": true,
+          "does_their_movement_appear_coordinated_with_each_other": true,
+          "is_there_a_cake_and_is_a_cutting_motion_visible_toward_it": "no_cake"
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.96
+      }
+    }
+  },
+  {
+    "case_id": "genuine_first_dance_C7252",
+    "path": "/tmp/p53_shadow_frames/037.jpg",
+    "event": "first_dance",
+    "human_verdict": "TP",
+    "episode": "C7252",
+    "prompt_results": {
+      "v1_atomic_checklist": {
+        "raw": "{\n  \"primary_person_count\": 2,\n  \"two_people_interacting\": true,\n  \"dance_like_movement_visible\": true,\n  \"solo_performer_pattern\": false,\n  \"cake_visible\": false,\n  \"cake_cutting_action_visible\": false,\n  \"confidence_in_this_read\": 0.95\n}",
+        "parsed": {
+          "primary_person_count": 2,
+          "two_people_interacting": true,
+          "dance_like_movement_visible": true,
+          "solo_performer_pattern": false,
+          "cake_visible": false,
+          "cake_cutting_action_visible": false,
+          "confidence_in_this_read": 0.95
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.27
+      },
+      "v2_describe_then_structure": {
+        "raw": "{\n  \"literal_description\": \"A man and a woman in formal attire are embracing and looking at each other while standing outdoors at night.\",\n  \"number_of_people_clearly_in_focus\": 2,\n  \"are_two_of_them_moving_or_interacting_as_a_pair\": true,\n  \"does_the_scene_show_dance_like_motion\": false,\n  \"is_a_cake_present\": false,\n  \"is_someone_actively_cutting_the_cake\": false\n}",
+        "parsed": {
+          "literal_description": "A man and a woman in formal attire are embracing and looking at each other while standing outdoors at night.",
+          "number_of_people_clearly_in_focus": 2,
+          "are_two_of_them_moving_or_interacting_as_a_pair": true,
+          "does_the_scene_show_dance_like_motion": false,
+          "is_a_cake_present": false,
+          "is_someone_actively_cutting_the_cake": false
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 9.29
+      },
+      "v3_contradiction_first": {
+        "raw": "{\n  \"is_only_one_person_clearly_the_dominant_focus\": false,\n  \"is_there_clearly_no_second_person_interacting_with_the_main_subject\": false,\n  \"is_the_cake_merely_visible_in_frame_without_anyone_cutting_it\": false,\n  \"is_movement_or_posture_dance_like\": true,\n  \"primary_subject_count_estimate\": 2\n}",
+        "parsed": {
+          "is_only_one_person_clearly_the_dominant_focus": false,
+          "is_there_clearly_no_second_person_interacting_with_the_main_subject": false,
+          "is_the_cake_merely_visible_in_frame_without_anyone_cutting_it": false,
+          "is_movement_or_posture_dance_like": true,
+          "primary_subject_count_estimate": 2
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.9
+      },
+      "v4_relationship_geometry": {
+        "raw": "{\n  \"how_many_dominant_people_are_in_the_frame\": 2,\n  \"are_two_dominant_people_spatially_close_and_facing_or_holding_each_other\": true,\n  \"does_their_movement_appear_coordinated_with_each_other\": true,\n  \"is_there_a_cake_and_is_a_cutting_motion_visible_toward_it\": \"no_cake\"\n}",
+        "parsed": {
+          "how_many_dominant_people_are_in_the_frame": 2,
+          "are_two_dominant_people_spatially_close_and_facing_or_holding_each_other": true,
+          "does_their_movement_appear_coordinated_with_each_other": true,
+          "is_there_a_cake_and_is_a_cutting_motion_visible_toward_it": "no_cake"
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.79
+      }
+    }
+  },
+  {
+    "case_id": "genuine_first_dance_C7261",
+    "path": "/tmp/p54_stress_frames/052.jpg",
+    "event": "first_dance",
+    "human_verdict": "TP",
+    "episode": "C7261",
+    "prompt_results": {
+      "v1_atomic_checklist": {
+        "raw": "{\n  \"primary_person_count\": 2,\n  \"two_people_interacting\": true,\n  \"dance_like_movement_visible\": true,\n  \"solo_performer_pattern\": true,\n  \"cake_visible\": false,\n  \"cake_cutting_action_visible\": false,\n  \"confidence_in_this_read\": 0.95\n}",
+        "parsed": {
+          "primary_person_count": 2,
+          "two_people_interacting": true,
+          "dance_like_movement_visible": true,
+          "solo_performer_pattern": true,
+          "cake_visible": false,
+          "cake_cutting_action_visible": false,
+          "confidence_in_this_read": 0.95
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.27
+      },
+      "v2_describe_then_structure": {
+        "raw": "{\n  \"literal_description\": \"A bride and groom are dancing together with arms outstretched in an outdoor setting at night, surrounded by guests and string lights.\",\n  \"number_of_people_clearly_in_focus\": 2,\n  \"are_two_of_them_moving_or_interacting_as_a_pair\": true,\n  \"does_the_scene_show_dance_like_motion\": true,\n  \"is_a_cake_present\": false,\n  \"is_someone_actively_cutting_the_cake\": false\n}",
+        "parsed": {
+          "literal_description": "A bride and groom are dancing together with arms outstretched in an outdoor setting at night, surrounded by guests and string lights.",
+          "number_of_people_clearly_in_focus": 2,
+          "are_two_of_them_moving_or_interacting_as_a_pair": true,
+          "does_the_scene_show_dance_like_motion": true,
+          "is_a_cake_present": false,
+          "is_someone_actively_cutting_the_cake": false
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 9.69
+      },
+      "v3_contradiction_first": {
+        "raw": "{\n  \"is_only_one_person_clearly_the_dominant_focus\": false,\n  \"is_there_clearly_no_second_person_interacting_with_the_main_subject\": false,\n  \"is_the_cake_merely_visible_in_frame_without_anyone_cutting_it\": true,\n  \"is_movement_or_posture_dance_like\": true,\n  \"primary_subject_count_estimate\": 2\n}",
+        "parsed": {
+          "is_only_one_person_clearly_the_dominant_focus": false,
+          "is_there_clearly_no_second_person_interacting_with_the_main_subject": false,
+          "is_the_cake_merely_visible_in_frame_without_anyone_cutting_it": true,
+          "is_movement_or_posture_dance_like": true,
+          "primary_subject_count_estimate": 2
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.86
+      },
+      "v4_relationship_geometry": {
+        "raw": "{\n  \"how_many_dominant_people_are_in_the_frame\": 2,\n  \"are_two_dominant_people_spatially_close_and_facing_or_holding_each_other\": true,\n  \"does_their_movement_appear_coordinated_with_each_other\": true,\n  \"is_there_a_cake_and_is_a_cutting_motion_visible_toward_it\": \"no_cake\"\n}",
+        "parsed": {
+          "how_many_dominant_people_are_in_the_frame": 2,
+          "are_two_dominant_people_spatially_close_and_facing_or_holding_each_other": true,
+          "does_their_movement_appear_coordinated_with_each_other": true,
+          "is_there_a_cake_and_is_a_cutting_motion_visible_toward_it": "no_cake"
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.8
+      }
+    }
+  },
+  {
+    "case_id": "genuine_cake_cutting_C7309",
+    "path": "/tmp/p54_stress_frames/066.jpg",
+    "event": "cake_cutting",
+    "human_verdict": "TP",
+    "episode": "C7309",
+    "prompt_results": {
+      "v1_atomic_checklist": {
+        "raw": "{\n  \"primary_person_count\": 2,\n  \"two_people_interacting\": true,\n  \"dance_like_movement_visible\": false,\n  \"solo_performer_pattern\": false,\n  \"cake_visible\": true,\n  \"cake_cutting_action_visible\": true,\n  \"confidence_in_this_read\": 0.95\n}",
+        "parsed": {
+          "primary_person_count": 2,
+          "two_people_interacting": true,
+          "dance_like_movement_visible": false,
+          "solo_performer_pattern": false,
+          "cake_visible": true,
+          "cake_cutting_action_visible": true,
+          "confidence_in_this_read": 0.95
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.28
+      },
+      "v2_describe_then_structure": {
+        "raw": "{\n  \"literal_description\": \"A man and a woman are standing next to a large multi-tiered white cake, with the man holding a knife and the woman assisting him as they cut into the cake.\",\n  \"number_of_people_clearly_in_focus\": 2,\n  \"are_two_of_them_moving_or_interacting_as_a_pair\": true,\n  \"does_the_scene_show_dance_like_motion\": false,\n  \"is_a_cake_present\": true,\n  \"is_someone_actively_cutting_the_cake\": true\n}",
+        "parsed": {
+          "literal_description": "A man and a woman are standing next to a large multi-tiered white cake, with the man holding a knife and the woman assisting him as they cut into the cake.",
+          "number_of_people_clearly_in_focus": 2,
+          "are_two_of_them_moving_or_interacting_as_a_pair": true,
+          "does_the_scene_show_dance_like_motion": false,
+          "is_a_cake_present": true,
+          "is_someone_actively_cutting_the_cake": true
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 10.44
+      },
+      "v3_contradiction_first": {
+        "raw": "{\n  \"is_only_one_person_clearly_the_dominant_focus\": false,\n  \"is_there_clearly_no_second_person_interacting_with_the_main_subject\": false,\n  \"is_the_cake_merely_visible_in_frame_without_anyone_cutting_it\": false,\n  \"is_movement_or_posture_dance_like\": false,\n  \"primary_subject_count_estimate\": 2\n}",
+        "parsed": {
+          "is_only_one_person_clearly_the_dominant_focus": false,
+          "is_there_clearly_no_second_person_interacting_with_the_main_subject": false,
+          "is_the_cake_merely_visible_in_frame_without_anyone_cutting_it": false,
+          "is_movement_or_posture_dance_like": false,
+          "primary_subject_count_estimate": 2
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.85
+      },
+      "v4_relationship_geometry": {
+        "raw": "{\n  \"how_many_dominant_people_are_in_the_frame\": 2,\n  \"are_two_dominant_people_spatially_close_and_facing_or_holding_each_other\": true,\n  \"does_their_movement_appear_coordinated_with_each_other\": true,\n  \"is_there_a_cake_and_is_a_cutting_motion_visible_toward_it\": \"cutting_visible\"\n}",
+        "parsed": {
+          "how_many_dominant_people_are_in_the_frame": 2,
+          "are_two_dominant_people_spatially_close_and_facing_or_holding_each_other": true,
+          "does_their_movement_appear_coordinated_with_each_other": true,
+          "is_there_a_cake_and_is_a_cutting_motion_visible_toward_it": "cutting_visible"
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.8
+      }
+    }
+  },
+  {
+    "case_id": "HARMFUL_solo_performer_C7349",
+    "path": "/tmp/p54_stress_frames/083.jpg",
+    "event": "first_dance",
+    "human_verdict": "FP",
+    "episode": "C7349",
+    "prompt_results": {
+      "v1_atomic_checklist": {
+        "raw": "{\n  \"primary_person_count\": 2,\n  \"two_people_interacting\": true,\n  \"dance_like_movement_visible\": true,\n  \"solo_performer_pattern\": true,\n  \"cake_visible\": false,\n  \"cake_cutting_action_visible\": false,\n  \"confidence_in_this_read\": 0.95\n}",
+        "parsed": {
+          "primary_person_count": 2,
+          "two_people_interacting": true,
+          "dance_like_movement_visible": true,
+          "solo_performer_pattern": true,
+          "cake_visible": false,
+          "cake_cutting_action_visible": false,
+          "confidence_in_this_read": 0.95
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.27
+      },
+      "v2_describe_then_structure": {
+        "raw": "{\n  \"literal_description\": \"A woman in a long dark blue gown with white floral embellishments and a light blue cape is dancing with a man in a green shirt, with string lights and seated guests in the background.\",\n  \"number_of_people_clearly_in_focus\": 2,\n  \"are_two_of_them_moving_or_interacting_as_a_pair\": true,\n  \"does_the_scene_show_dance_like_motion\": true,\n  \"is_a_cake_present\": false,\n  \"is_someone_actively_cutting_the_cake\": false\n}",
+        "parsed": {
+          "literal_description": "A woman in a long dark blue gown with white floral embellishments and a light blue cape is dancing with a man in a green shirt, with string lights and seated guests in the background.",
+          "number_of_people_clearly_in_focus": 2,
+          "are_two_of_them_moving_or_interacting_as_a_pair": true,
+          "does_the_scene_show_dance_like_motion": true,
+          "is_a_cake_present": false,
+          "is_someone_actively_cutting_the_cake": false
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 10.69
+      },
+      "v3_contradiction_first": {
+        "raw": "{\n  \"is_only_one_person_clearly_the_dominant_focus\": true,\n  \"is_there_clearly_no_second_person_interacting_with_the_main_subject\": false,\n  \"is_the_cake_merely_visible_in_frame_without_anyone_cutting_it\": false,\n  \"is_movement_or_posture_dance_like\": true,\n  \"primary_subject_count_estimate\": 2\n}",
+        "parsed": {
+          "is_only_one_person_clearly_the_dominant_focus": true,
+          "is_there_clearly_no_second_person_interacting_with_the_main_subject": false,
+          "is_the_cake_merely_visible_in_frame_without_anyone_cutting_it": false,
+          "is_movement_or_posture_dance_like": true,
+          "primary_subject_count_estimate": 2
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 8.03
+      },
+      "v4_relationship_geometry": {
+        "raw": "{\n  \"how_many_dominant_people_are_in_the_frame\": 2,\n  \"are_two_dominant_people_spatially_close_and_facing_or_holding_each_other\": true,\n  \"does_their_movement_appear_coordinated_with_each_other\": true,\n  \"is_there_a_cake_and_is_a_cutting_motion_visible_toward_it\": \"no_cake\"\n}",
+        "parsed": {
+          "how_many_dominant_people_are_in_the_frame": 2,
+          "are_two_dominant_people_spatially_close_and_facing_or_holding_each_other": true,
+          "does_their_movement_appear_coordinated_with_each_other": true,
+          "is_there_a_cake_and_is_a_cutting_motion_visible_toward_it": "no_cake"
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.79
+      }
+    }
+  },
+  {
+    "case_id": "ceremony_halluc_C7343",
+    "path": "/tmp/p53_shadow_frames/061.jpg",
+    "event": "ceremony_action",
+    "human_verdict": "FP",
+    "episode": "C7343",
+    "prompt_results": {
+      "v1_atomic_checklist": {
+        "raw": "{\n  \"primary_person_count\": 4,\n  \"two_people_interacting\": true,\n  \"dance_like_movement_visible\": false,\n  \"solo_performer_pattern\": false,\n  \"cake_visible\": false,\n  \"cake_cutting_action_visible\": false,\n  \"confidence_in_this_read\": 0.8\n}",
+        "parsed": {
+          "primary_person_count": 4,
+          "two_people_interacting": true,
+          "dance_like_movement_visible": false,
+          "solo_performer_pattern": false,
+          "cake_visible": false,
+          "cake_cutting_action_visible": false,
+          "confidence_in_this_read": 0.8
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.2
+      },
+      "v2_describe_then_structure": {
+        "raw": "{\n  \"literal_description\": \"A person in a veil sits while another person leans over to place a bracelet on their wrist, with others standing nearby in a dimly lit outdoor setting.\",\n  \"number_of_people_clearly_in_focus\": 3,\n  \"are_two_of_them_moving_or_interacting_as_a_pair\": true,\n  \"does_the_scene_show_dance_like_motion\": false,\n  \"is_a_cake_present\": false,\n  \"is_someone_actively_cutting_the_cake\": false\n}",
+        "parsed": {
+          "literal_description": "A person in a veil sits while another person leans over to place a bracelet on their wrist, with others standing nearby in a dimly lit outdoor setting.",
+          "number_of_people_clearly_in_focus": 3,
+          "are_two_of_them_moving_or_interacting_as_a_pair": true,
+          "does_the_scene_show_dance_like_motion": false,
+          "is_a_cake_present": false,
+          "is_someone_actively_cutting_the_cake": false
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 10.14
+      },
+      "v3_contradiction_first": {
+        "raw": "{\n  \"is_only_one_person_clearly_the_dominant_focus\": false,\n  \"is_there_clearly_no_second_person_interacting_with_the_main_subject\": false,\n  \"is_the_cake_merely_visible_in_frame_without_anyone_cutting_it\": true,\n  \"is_movement_or_posture_dance_like\": false,\n  \"primary_subject_count_estimate\": 3\n}",
+        "parsed": {
+          "is_only_one_person_clearly_the_dominant_focus": false,
+          "is_there_clearly_no_second_person_interacting_with_the_main_subject": false,
+          "is_the_cake_merely_visible_in_frame_without_anyone_cutting_it": true,
+          "is_movement_or_posture_dance_like": false,
+          "primary_subject_count_estimate": 3
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.86
+      },
+      "v4_relationship_geometry": {
+        "raw": "{\n  \"how_many_dominant_people_are_in_the_frame\": 2,\n  \"are_two_dominant_people_spatially_close_and_facing_or_holding_each_other\": true,\n  \"does_their_movement_appear_coordinated_with_each_other\": true,\n  \"is_there_a_cake_and_is_a_cutting_motion_visible_toward_it\": \"no_cake\"\n}",
+        "parsed": {
+          "how_many_dominant_people_are_in_the_frame": 2,
+          "are_two_dominant_people_spatially_close_and_facing_or_holding_each_other": true,
+          "does_their_movement_appear_coordinated_with_each_other": true,
+          "is_there_a_cake_and_is_a_cutting_motion_visible_toward_it": "no_cake"
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.8
+      }
+    }
+  },
+  {
+    "case_id": "ceremony_halluc_C7344",
+    "path": "/tmp/p53_shadow_frames/062.jpg",
+    "event": "ceremony_action",
+    "human_verdict": "FP",
+    "episode": "C7344",
+    "prompt_results": {
+      "v1_atomic_checklist": {
+        "raw": "{\n  \"primary_person_count\": 4,\n  \"two_people_interacting\": true,\n  \"dance_like_movement_visible\": false,\n  \"solo_performer_pattern\": false,\n  \"cake_visible\": true,\n  \"cake_cutting_action_visible\": true,\n  \"confidence_in_this_read\": 0.9\n}",
+        "parsed": {
+          "primary_person_count": 4,
+          "two_people_interacting": true,
+          "dance_like_movement_visible": false,
+          "solo_performer_pattern": false,
+          "cake_visible": true,
+          "cake_cutting_action_visible": true,
+          "confidence_in_this_read": 0.9
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.19
+      },
+      "v2_describe_then_structure": {
+        "raw": "{\n  \"literal_description\": \"A person in a striped shirt and headscarf is holding a knife and cutting a small rectangular cake while another person in a tuxedo with a green shawl watches closely.\",\n  \"number_of_people_clearly_in_focus\": 2,\n  \"are_two_of_them_moving_or_interacting_as_a_pair\": true,\n  \"does_the_scene_show_dance_like_motion\": false,\n  \"is_a_cake_present\": true,\n  \"is_someone_actively_cutting_the_cake\": true\n}",
+        "parsed": {
+          "literal_description": "A person in a striped shirt and headscarf is holding a knife and cutting a small rectangular cake while another person in a tuxedo with a green shawl watches closely.",
+          "number_of_people_clearly_in_focus": 2,
+          "are_two_of_them_moving_or_interacting_as_a_pair": true,
+          "does_the_scene_show_dance_like_motion": false,
+          "is_a_cake_present": true,
+          "is_someone_actively_cutting_the_cake": true
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 10.59
+      },
+      "v3_contradiction_first": {
+        "raw": "{\n  \"is_only_one_person_clearly_the_dominant_focus\": false,\n  \"is_there_clearly_no_second_person_interacting_with_the_main_subject\": false,\n  \"is_the_cake_merely_visible_in_frame_without_anyone_cutting_it\": true,\n  \"is_movement_or_posture_dance_like\": false,\n  \"primary_subject_count_estimate\": 2\n}",
+        "parsed": {
+          "is_only_one_person_clearly_the_dominant_focus": false,
+          "is_there_clearly_no_second_person_interacting_with_the_main_subject": false,
+          "is_the_cake_merely_visible_in_frame_without_anyone_cutting_it": true,
+          "is_movement_or_posture_dance_like": false,
+          "primary_subject_count_estimate": 2
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 8.02
+      },
+      "v4_relationship_geometry": {
+        "raw": "{\n  \"how_many_dominant_people_are_in_the_frame\": 2,\n  \"are_two_dominant_people_spatially_close_and_facing_or_holding_each_other\": true,\n  \"does_their_movement_appear_coordinated_with_each_other\": true,\n  \"is_there_a_cake_and_is_a_cutting_motion_visible_toward_it\": \"cake_visible_no_cutting\"\n}",
+        "parsed": {
+          "how_many_dominant_people_are_in_the_frame": 2,
+          "are_two_dominant_people_spatially_close_and_facing_or_holding_each_other": true,
+          "does_their_movement_appear_coordinated_with_each_other": true,
+          "is_there_a_cake_and_is_a_cutting_motion_visible_toward_it": "cake_visible_no_cutting"
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.96
+      }
+    }
+  },
+  {
+    "case_id": "ceremony_borderline_C7342",
+    "path": "/tmp/p54_stress_frames/078.jpg",
+    "event": "ceremony_action",
+    "human_verdict": "FP",
+    "episode": "C7342",
+    "prompt_results": {
+      "v1_atomic_checklist": {
+        "raw": "{\n  \"primary_person_count\": 3,\n  \"two_people_interacting\": true,\n  \"dance_like_movement_visible\": false,\n  \"solo_performer_pattern\": false,\n  \"cake_visible\": false,\n  \"cake_cutting_action_visible\": false,\n  \"confidence_in_this_read\": 0.8\n}",
+        "parsed": {
+          "primary_person_count": 3,
+          "two_people_interacting": true,
+          "dance_like_movement_visible": false,
+          "solo_performer_pattern": false,
+          "cake_visible": false,
+          "cake_cutting_action_visible": false,
+          "confidence_in_this_read": 0.8
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.21
+      },
+      "v2_describe_then_structure": {
+        "raw": "{\n  \"literal_description\": \"A woman in a red veil and ornate dress is seated while another woman in a striped shirt and headscarf leans over her, holding a knife and cutting a red cake on a table, with other people seated around them in a dimly lit outdoor setting.\",\n  \"number_of_people_clearly_in_focus\": 4,\n  \"are_two_of_them_moving_or_interacting_as_a_pair\": true,\n  \"does_the_scene_show_dance_like_motion\": false,\n  \"is_a_cake_present\": true,\n  \"is_someone_actively_cutting_the_cake\": true\n}",
+        "parsed": {
+          "literal_description": "A woman in a red veil and ornate dress is seated while another woman in a striped shirt and headscarf leans over her, holding a knife and cutting a red cake on a table, with other people seated around them in a dimly lit outdoor setting.",
+          "number_of_people_clearly_in_focus": 4,
+          "are_two_of_them_moving_or_interacting_as_a_pair": true,
+          "does_the_scene_show_dance_like_motion": false,
+          "is_a_cake_present": true,
+          "is_someone_actively_cutting_the_cake": true
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 11.93
+      },
+      "v3_contradiction_first": {
+        "raw": "{\n  \"is_only_one_person_clearly_the_dominant_focus\": false,\n  \"is_there_clearly_no_second_person_interacting_with_the_main_subject\": false,\n  \"is_the_cake_merely_visible_in_frame_without_anyone_cutting_it\": true,\n  \"is_movement_or_posture_dance_like\": false,\n  \"primary_subject_count_estimate\": 3\n}",
+        "parsed": {
+          "is_only_one_person_clearly_the_dominant_focus": false,
+          "is_there_clearly_no_second_person_interacting_with_the_main_subject": false,
+          "is_the_cake_merely_visible_in_frame_without_anyone_cutting_it": true,
+          "is_movement_or_posture_dance_like": false,
+          "primary_subject_count_estimate": 3
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.85
+      },
+      "v4_relationship_geometry": {
+        "raw": "{\n  \"how_many_dominant_people_are_in_the_frame\": 2,\n  \"are_two_dominant_people_spatially_close_and_facing_or_holding_each_other\": true,\n  \"does_their_movement_appear_coordinated_with_each_other\": true,\n  \"is_there_a_cake_and_is_a_cutting_motion_visible_toward_it\": \"cutting_visible\"\n}",
+        "parsed": {
+          "how_many_dominant_people_are_in_the_frame": 2,
+          "are_two_dominant_people_spatially_close_and_facing_or_holding_each_other": true,
+          "does_their_movement_appear_coordinated_with_each_other": true,
+          "is_there_a_cake_and_is_a_cutting_motion_visible_toward_it": "cutting_visible"
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.8
+      }
+    }
+  },
+  {
+    "case_id": "ordinary_dance_crowd_076",
+    "path": "/tmp/p53_shadow_frames/076.jpg",
+    "event": "none",
+    "human_verdict": "TN",
+    "episode": "shot_076",
+    "prompt_results": {
+      "v1_atomic_checklist": {
+        "raw": "{\n  \"primary_person_count\": 2,\n  \"two_people_interacting\": true,\n  \"dance_like_movement_visible\": true,\n  \"solo_performer_pattern\": true,\n  \"cake_visible\": false,\n  \"cake_cutting_action_visible\": false,\n  \"confidence_in_this_read\": 0.95\n}",
+        "parsed": {
+          "primary_person_count": 2,
+          "two_people_interacting": true,
+          "dance_like_movement_visible": true,
+          "solo_performer_pattern": true,
+          "cake_visible": false,
+          "cake_cutting_action_visible": false,
+          "confidence_in_this_read": 0.95
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.31
+      },
+      "v2_describe_then_structure": {
+        "raw": "{\n  \"literal_description\": \"A man and a woman are dancing together in a crowded outdoor setting at night, with other people standing around them.\",\n  \"number_of_people_clearly_in_focus\": 2,\n  \"are_two_of_them_moving_or_interacting_as_a_pair\": true,\n  \"does_the_scene_show_dance_like_motion\": true,\n  \"is_a_cake_present\": false,\n  \"is_someone_actively_cutting_the_cake\": false\n}",
+        "parsed": {
+          "literal_description": "A man and a woman are dancing together in a crowded outdoor setting at night, with other people standing around them.",
+          "number_of_people_clearly_in_focus": 2,
+          "are_two_of_them_moving_or_interacting_as_a_pair": true,
+          "does_the_scene_show_dance_like_motion": true,
+          "is_a_cake_present": false,
+          "is_someone_actively_cutting_the_cake": false
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 9.53
+      },
+      "v3_contradiction_first": {
+        "raw": "{\n  \"is_only_one_person_clearly_the_dominant_focus\": false,\n  \"is_there_clearly_no_second_person_interacting_with_the_main_subject\": false,\n  \"is_the_cake_merely_visible_in_frame_without_anyone_cutting_it\": false,\n  \"is_movement_or_posture_dance_like\": true,\n  \"primary_subject_count_estimate\": 2\n}",
+        "parsed": {
+          "is_only_one_person_clearly_the_dominant_focus": false,
+          "is_there_clearly_no_second_person_interacting_with_the_main_subject": false,
+          "is_the_cake_merely_visible_in_frame_without_anyone_cutting_it": false,
+          "is_movement_or_posture_dance_like": true,
+          "primary_subject_count_estimate": 2
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 8.07
+      },
+      "v4_relationship_geometry": {
+        "raw": "{\n  \"how_many_dominant_people_are_in_the_frame\": 2,\n  \"are_two_dominant_people_spatially_close_and_facing_or_holding_each_other\": true,\n  \"does_their_movement_appear_coordinated_with_each_other\": true,\n  \"is_there_a_cake_and_is_a_cutting_motion_visible_toward_it\": \"no_cake\"\n}",
+        "parsed": {
+          "how_many_dominant_people_are_in_the_frame": 2,
+          "are_two_dominant_people_spatially_close_and_facing_or_holding_each_other": true,
+          "does_their_movement_appear_coordinated_with_each_other": true,
+          "is_there_a_cake_and_is_a_cutting_motion_visible_toward_it": "no_cake"
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.81
+      }
+    }
+  },
+  {
+    "case_id": "ordinary_dance_couple_in_crowd_079",
+    "path": "/tmp/p53_shadow_frames/079.jpg",
+    "event": "none",
+    "human_verdict": "TN",
+    "episode": "shot_079",
+    "prompt_results": {
+      "v1_atomic_checklist": {
+        "raw": "{\n  \"primary_person_count\": 2,\n  \"two_people_interacting\": true,\n  \"dance_like_movement_visible\": true,\n  \"solo_performer_pattern\": true,\n  \"cake_visible\": false,\n  \"cake_cutting_action_visible\": false,\n  \"confidence_in_this_read\": 0.95\n}",
+        "parsed": {
+          "primary_person_count": 2,
+          "two_people_interacting": true,
+          "dance_like_movement_visible": true,
+          "solo_performer_pattern": true,
+          "cake_visible": false,
+          "cake_cutting_action_visible": false,
+          "confidence_in_this_read": 0.95
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.24
+      },
+      "v2_describe_then_structure": {
+        "raw": "{\n  \"literal_description\": \"A man and a woman are dancing together in an outdoor setting with other people in the background.\",\n  \"number_of_people_clearly_in_focus\": 2,\n  \"are_two_of_them_moving_or_interacting_as_a_pair\": true,\n  \"does_the_scene_show_dance_like_motion\": true,\n  \"is_a_cake_present\": false,\n  \"is_someone_actively_cutting_the_cake\": false\n}",
+        "parsed": {
+          "literal_description": "A man and a woman are dancing together in an outdoor setting with other people in the background.",
+          "number_of_people_clearly_in_focus": 2,
+          "are_two_of_them_moving_or_interacting_as_a_pair": true,
+          "does_the_scene_show_dance_like_motion": true,
+          "is_a_cake_present": false,
+          "is_someone_actively_cutting_the_cake": false
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 9.17
+      },
+      "v3_contradiction_first": {
+        "raw": "{\n  \"is_only_one_person_clearly_the_dominant_focus\": false,\n  \"is_there_clearly_no_second_person_interacting_with_the_main_subject\": false,\n  \"is_the_cake_merely_visible_in_frame_without_anyone_cutting_it\": true,\n  \"is_movement_or_posture_dance_like\": true,\n  \"primary_subject_count_estimate\": 2\n}",
+        "parsed": {
+          "is_only_one_person_clearly_the_dominant_focus": false,
+          "is_there_clearly_no_second_person_interacting_with_the_main_subject": false,
+          "is_the_cake_merely_visible_in_frame_without_anyone_cutting_it": true,
+          "is_movement_or_posture_dance_like": true,
+          "primary_subject_count_estimate": 2
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.88
+      },
+      "v4_relationship_geometry": {
+        "raw": "{\n  \"how_many_dominant_people_are_in_the_frame\": 2,\n  \"are_two_dominant_people_spatially_close_and_facing_or_holding_each_other\": true,\n  \"does_their_movement_appear_coordinated_with_each_other\": true,\n  \"is_there_a_cake_and_is_a_cutting_motion_visible_toward_it\": \"no_cake\"\n}",
+        "parsed": {
+          "how_many_dominant_people_are_in_the_frame": 2,
+          "are_two_dominant_people_spatially_close_and_facing_or_holding_each_other": true,
+          "does_their_movement_appear_coordinated_with_each_other": true,
+          "is_there_a_cake_and_is_a_cutting_motion_visible_toward_it": "no_cake"
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.81
+      }
+    }
+  },
+  {
+    "case_id": "cake_visible_only_050",
+    "path": "/tmp/p53_shadow_frames/050.jpg",
+    "event": "none",
+    "human_verdict": "TN",
+    "episode": "shot_050",
+    "prompt_results": {
+      "v1_atomic_checklist": {
+        "raw": "{\n  \"primary_person_count\": 2,\n  \"two_people_interacting\": false,\n  \"dance_like_movement_visible\": false,\n  \"solo_performer_pattern\": false,\n  \"cake_visible\": true,\n  \"cake_cutting_action_visible\": false,\n  \"confidence_in_this_read\": 0.95\n}",
+        "parsed": {
+          "primary_person_count": 2,
+          "two_people_interacting": false,
+          "dance_like_movement_visible": false,
+          "solo_performer_pattern": false,
+          "cake_visible": true,
+          "cake_cutting_action_visible": false,
+          "confidence_in_this_read": 0.95
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.31
+      },
+      "v2_describe_then_structure": {
+        "raw": "{\n  \"literal_description\": \"A couple stands with their backs to the camera, facing a multi-tiered cake under string lights at an outdoor event with guests seated at tables in the background.\",\n  \"number_of_people_clearly_in_focus\": 2,\n  \"are_two_of_them_moving_or_interacting_as_a_pair\": true,\n  \"does_the_scene_show_dance_like_motion\": false,\n  \"is_a_cake_present\": true,\n  \"is_someone_actively_cutting_the_cake\": false\n}",
+        "parsed": {
+          "literal_description": "A couple stands with their backs to the camera, facing a multi-tiered cake under string lights at an outdoor event with guests seated at tables in the background.",
+          "number_of_people_clearly_in_focus": 2,
+          "are_two_of_them_moving_or_interacting_as_a_pair": true,
+          "does_the_scene_show_dance_like_motion": false,
+          "is_a_cake_present": true,
+          "is_someone_actively_cutting_the_cake": false
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 10.41
+      },
+      "v3_contradiction_first": {
+        "raw": "{\n  \"is_only_one_person_clearly_the_dominant_focus\": false,\n  \"is_there_clearly_no_second_person_interacting_with_the_main_subject\": true,\n  \"is_the_cake_merely_visible_in_frame_without_anyone_cutting_it\": true,\n  \"is_movement_or_posture_dance_like\": false,\n  \"primary_subject_count_estimate\": 2\n}",
+        "parsed": {
+          "is_only_one_person_clearly_the_dominant_focus": false,
+          "is_there_clearly_no_second_person_interacting_with_the_main_subject": true,
+          "is_the_cake_merely_visible_in_frame_without_anyone_cutting_it": true,
+          "is_movement_or_posture_dance_like": false,
+          "primary_subject_count_estimate": 2
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.88
+      },
+      "v4_relationship_geometry": {
+        "raw": "{\n  \"how_many_dominant_people_are_in_the_frame\": 2,\n  \"are_two_dominant_people_spatially_close_and_facing_or_holding_each_other\": false,\n  \"does_their_movement_appear_coordinated_with_each_other\": false,\n  \"is_there_a_cake_and_is_a_cutting_motion_visible_toward_it\": \"cake_visible_no_cutting\"\n}",
+        "parsed": {
+          "how_many_dominant_people_are_in_the_frame": 2,
+          "are_two_dominant_people_spatially_close_and_facing_or_holding_each_other": false,
+          "does_their_movement_appear_coordinated_with_each_other": false,
+          "is_there_a_cake_and_is_a_cutting_motion_visible_toward_it": "cake_visible_no_cutting"
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.98
+      }
+    }
+  },
+  {
+    "case_id": "ambiguous_napkin_090",
+    "path": "/tmp/p53_shadow_frames/090.jpg",
+    "event": "none",
+    "human_verdict": "TN",
+    "episode": "shot_090",
+    "prompt_results": {
+      "v1_atomic_checklist": {
+        "raw": "{\n  \"primary_person_count\": 2,\n  \"two_people_interacting\": true,\n  \"dance_like_movement_visible\": false,\n  \"solo_performer_pattern\": false,\n  \"cake_visible\": false,\n  \"cake_cutting_action_visible\": false,\n  \"confidence_in_this_read\": 0.9\n}",
+        "parsed": {
+          "primary_person_count": 2,
+          "two_people_interacting": true,
+          "dance_like_movement_visible": false,
+          "solo_performer_pattern": false,
+          "cake_visible": false,
+          "cake_cutting_action_visible": false,
+          "confidence_in_this_read": 0.9
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.18
+      },
+      "v2_describe_then_structure": {
+        "raw": "{\n  \"literal_description\": \"A man in a white shirt holds a white object above his head while facing a woman in a white dress who is looking up at him, with a table and chairs visible in the background under artificial lighting.\",\n  \"number_of_people_clearly_in_focus\": 2,\n  \"are_two_of_them_moving_or_interacting_as_a_pair\": true,\n  \"does_the_scene_show_dance_like_motion\": false,\n  \"is_a_cake_present\": false,\n  \"is_someone_actively_cutting_the_cake\": false\n}",
+        "parsed": {
+          "literal_description": "A man in a white shirt holds a white object above his head while facing a woman in a white dress who is looking up at him, with a table and chairs visible in the background under artificial lighting.",
+          "number_of_people_clearly_in_focus": 2,
+          "are_two_of_them_moving_or_interacting_as_a_pair": true,
+          "does_the_scene_show_dance_like_motion": false,
+          "is_a_cake_present": false,
+          "is_someone_actively_cutting_the_cake": false
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 10.98
+      },
+      "v3_contradiction_first": {
+        "raw": "{\n  \"is_only_one_person_clearly_the_dominant_focus\": false,\n  \"is_there_clearly_no_second_person_interacting_with_the_main_subject\": false,\n  \"is_the_cake_merely_visible_in_frame_without_anyone_cutting_it\": true,\n  \"is_movement_or_posture_dance_like\": false,\n  \"primary_subject_count_estimate\": 2\n}",
+        "parsed": {
+          "is_only_one_person_clearly_the_dominant_focus": false,
+          "is_there_clearly_no_second_person_interacting_with_the_main_subject": false,
+          "is_the_cake_merely_visible_in_frame_without_anyone_cutting_it": true,
+          "is_movement_or_posture_dance_like": false,
+          "primary_subject_count_estimate": 2
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 8.09
+      },
+      "v4_relationship_geometry": {
+        "raw": "{\n  \"how_many_dominant_people_are_in_the_frame\": 2,\n  \"are_two_dominant_people_spatially_close_and_facing_or_holding_each_other\": true,\n  \"does_their_movement_appear_coordinated_with_each_other\": true,\n  \"is_there_a_cake_and_is_a_cutting_motion_visible_toward_it\": \"no_cake\"\n}",
+        "parsed": {
+          "how_many_dominant_people_are_in_the_frame": 2,
+          "are_two_dominant_people_spatially_close_and_facing_or_holding_each_other": true,
+          "does_their_movement_appear_coordinated_with_each_other": true,
+          "is_there_a_cake_and_is_a_cutting_motion_visible_toward_it": "no_cake"
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.81
+      }
+    }
+  },
+  {
+    "case_id": "gift_table_detail_012",
+    "path": "/tmp/p53_shadow_frames/012.jpg",
+    "event": "none",
+    "human_verdict": "TN",
+    "episode": "shot_012",
+    "prompt_results": {
+      "v1_atomic_checklist": {
+        "raw": "{\n  \"primary_person_count\": 0,\n  \"two_people_interacting\": false,\n  \"dance_like_movement_visible\": false,\n  \"solo_performer_pattern\": false,\n  \"cake_visible\": false,\n  \"cake_cutting_action_visible\": false,\n  \"confidence_in_this_read\": 0.95\n}",
+        "parsed": {
+          "primary_person_count": 0,
+          "two_people_interacting": false,
+          "dance_like_movement_visible": false,
+          "solo_performer_pattern": false,
+          "cake_visible": false,
+          "cake_cutting_action_visible": false,
+          "confidence_in_this_read": 0.95
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.27
+      },
+      "v2_describe_then_structure": {
+        "raw": "{\n  \"literal_description\": \"A table displays various small decorative items including white ceramic vases, silver-wrapped boxes, and a blue patterned handkerchief with floral designs.\",\n  \"number_of_people_clearly_in_focus\": 0,\n  \"are_two_of them_moving_or_interacting_as_a_pair\": false,\n  \"does_the_scene_show_dance_like_motion\": false,\n  \"is_a_cake_present\": false,\n  \"is_someone_actively_cutting_the_cake\": false\n}",
+        "parsed": {
+          "literal_description": "A table displays various small decorative items including white ceramic vases, silver-wrapped boxes, and a blue patterned handkerchief with floral designs.",
+          "number_of_people_clearly_in_focus": 0,
+          "are_two_of them_moving_or_interacting_as_a_pair": false,
+          "does_the_scene_show_dance_like_motion": false,
+          "is_a_cake_present": false,
+          "is_someone_actively_cutting_the_cake": false
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 9.98
+      },
+      "v3_contradiction_first": {
+        "raw": "{\n  \"is_only_one_person_clearly_the_dominant_focus\": false,\n  \"is_there_clearly_no_second_person_interacting_with_the_main_subject\": true,\n  \"is_the_cake_merely_visible_in_frame_without_anyone_cutting_it\": true,\n  \"is_movement_or_posture_dance_like\": false,\n  \"primary_subject_count_estimate\": 0\n}",
+        "parsed": {
+          "is_only_one_person_clearly_the_dominant_focus": false,
+          "is_there_clearly_no_second_person_interacting_with_the_main_subject": true,
+          "is_the_cake_merely_visible_in_frame_without_anyone_cutting_it": true,
+          "is_movement_or_posture_dance_like": false,
+          "primary_subject_count_estimate": 0
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.89
+      },
+      "v4_relationship_geometry": {
+        "raw": "{\n  \"how_many_dominant_people_are_in_the_frame\": 0,\n  \"are_two_dominant_people_spatially_close_and_facing_or_holding_each_other\": false,\n  \"does_their_movement_appear_coordinated_with_each_other\": false,\n  \"is_there_a_cake_and_is_a_cutting_motion_visible_toward_it\": \"no_cake\"\n}",
+        "parsed": {
+          "how_many_dominant_people_are_in_the_frame": 0,
+          "are_two_dominant_people_spatially_close_and_facing_or_holding_each_other": false,
+          "does_their_movement_appear_coordinated_with_each_other": false,
+          "is_there_a_cake_and_is_a_cutting_motion_visible_toward_it": "no_cake"
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.81
+      }
+    }
+  },
+  {
+    "case_id": "bride_mirror_019",
+    "path": "/tmp/p53_shadow_frames/019.jpg",
+    "event": "none",
+    "human_verdict": "TN",
+    "episode": "shot_019",
+    "prompt_results": {
+      "v1_atomic_checklist": {
+        "raw": "{\n  \"primary_person_count\": 1,\n  \"two_people_interacting\": false,\n  \"dance_like_movement_visible\": false,\n  \"solo_performer_pattern\": true,\n  \"cake_visible\": false,\n  \"cake_cutting_action_visible\": false,\n  \"confidence_in_this_read\": 0.95\n}",
+        "parsed": {
+          "primary_person_count": 1,
+          "two_people_interacting": false,
+          "dance_like_movement_visible": false,
+          "solo_performer_pattern": true,
+          "cake_visible": false,
+          "cake_cutting_action_visible": false,
+          "confidence_in_this_read": 0.95
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.27
+      },
+      "v2_describe_then_structure": {
+        "raw": "{\n  \"literal_description\": \"A person in a white gown stands beside a large ornate mirror and framed pictures on a wall, holding a bouquet of flowers, while a decorative golden object is in the foreground.\",\n  \"number_of_people_clearly_in_focus\": 1,\n  \"are_two_of_them_moving_or_interacting_as_a_pair\": false,\n  \"does_the_scene_show_dance_like_motion\": false,\n  \"is_a_cake_present\": false,\n  \"is_someone_actively_cutting_the_cake\": false\n}",
+        "parsed": {
+          "literal_description": "A person in a white gown stands beside a large ornate mirror and framed pictures on a wall, holding a bouquet of flowers, while a decorative golden object is in the foreground.",
+          "number_of_people_clearly_in_focus": 1,
+          "are_two_of_them_moving_or_interacting_as_a_pair": false,
+          "does_the_scene_show_dance_like_motion": false,
+          "is_a_cake_present": false,
+          "is_someone_actively_cutting_the_cake": false
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 10.53
+      },
+      "v3_contradiction_first": {
+        "raw": "{\n  \"is_only_one_person_clearly_the_dominant_focus\": true,\n  \"is_there_clearly_no_second_person_interacting_with_the_main_subject\": true,\n  \"is_the_cake_merely_visible_in_frame_without_anyone_cutting_it\": false,\n  \"is_movement_or_posture_dance_like\": false,\n  \"primary_subject_count_estimate\": 1\n}",
+        "parsed": {
+          "is_only_one_person_clearly_the_dominant_focus": true,
+          "is_there_clearly_no_second_person_interacting_with_the_main_subject": true,
+          "is_the_cake_merely_visible_in_frame_without_anyone_cutting_it": false,
+          "is_movement_or_posture_dance_like": false,
+          "primary_subject_count_estimate": 1
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 8.09
+      },
+      "v4_relationship_geometry": {
+        "raw": "{\n  \"how_many_dominant_people_are_in_the_frame\": 1,\n  \"are_two_dominant_people_spatially_close_and_facing_or_holding_each_other\": false,\n  \"does_their_movement_appear_coordinated_with_each_other\": false,\n  \"is_there_a_cake_and_is_a_cutting_motion_visible_toward_it\": \"no_cake\"\n}",
+        "parsed": {
+          "how_many_dominant_people_are_in_the_frame": 1,
+          "are_two_dominant_people_spatially_close_and_facing_or_holding_each_other": false,
+          "does_their_movement_appear_coordinated_with_each_other": false,
+          "is_there_a_cake_and_is_a_cutting_motion_visible_toward_it": "no_cake"
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 8.0
+      }
+    }
+  },
+  {
+    "case_id": "wide_reception_dancing_155",
+    "path": "/tmp/p53_shadow_frames/155.jpg",
+    "event": "none",
+    "human_verdict": "TN",
+    "episode": "shot_155",
+    "prompt_results": {
+      "v1_atomic_checklist": {
+        "raw": "{\n  \"primary_person_count\": 0,\n  \"two_people_interacting\": false,\n  \"dance_like_movement_visible\": false,\n  \"solo_performer_pattern\": false,\n  \"cake_visible\": false,\n  \"cake_cutting_action_visible\": false,\n  \"confidence_in_this_read\": 0.7\n}",
+        "parsed": {
+          "primary_person_count": 0,
+          "two_people_interacting": false,
+          "dance_like_movement_visible": false,
+          "solo_performer_pattern": false,
+          "cake_visible": false,
+          "cake_cutting_action_visible": false,
+          "confidence_in_this_read": 0.7
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 7.25
+      },
+      "v2_describe_then_structure": {
+        "raw": "{\n  \"literal_description\": \"A nighttime outdoor gathering with people seated at tables under string lights, some standing near a decorated stage area with a large illuminated figure, and a few individuals walking or interacting in the space.\",\n  \"number_of_people_clearly_in_focus\": 12,\n  \"are_two_of_them_moving_or_interacting_as_a_pair\": false,\n  \"does_the_scene_show_dance_like_motion\": false,\n  \"is_a_cake_present\": false,\n  \"is_someone_actively_cutting_the_cake\": false\n}",
+        "parsed": {
+          "literal_description": "A nighttime outdoor gathering with people seated at tables under string lights, some standing near a decorated stage area with a large illuminated figure, and a few individuals walking or interacting in the space.",
+          "number_of_people_clearly_in_focus": 12,
+          "are_two_of_them_moving_or_interacting_as_a_pair": false,
+          "does_the_scene_show_dance_like_motion": false,
+          "is_a_cake_present": false,
+          "is_someone_actively_cutting_the_cake": false
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 10.76
+      },
+      "v3_contradiction_first": {
+        "raw": "{\n  \"is_only_one_person_clearly_the_dominant_focus\": false,\n  \"is_there_clearly_no_second_person_interacting_with_the_main_subject\": true,\n  \"is_the_cake_merely_visible_in_frame_without_anyone_cutting_it\": true,\n  \"is_movement_or_posture_dance_like\": false,\n  \"primary_subject_count_estimate\": 0\n}",
+        "parsed": {
+          "is_only_one_person_clearly_the_dominant_focus": false,
+          "is_there_clearly_no_second_person_interacting_with_the_main_subject": true,
+          "is_the_cake_merely_visible_in_frame_without_anyone_cutting_it": true,
+          "is_movement_or_posture_dance_like": false,
+          "primary_subject_count_estimate": 0
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 8.23
+      },
+      "v4_relationship_geometry": {
+        "raw": "{\n  \"how_many_dominant_people_are_in_the_frame\": 0,\n  \"are_two_dominant_people_spatially_close_and_facing_or_holding_each_other\": false,\n  \"does_their_movement_appear_coordinated_with_each_other\": false,\n  \"is_there_a_cake_and_is_a_cutting_motion_visible_toward_it\": \"no_cake\"\n}",
+        "parsed": {
+          "how_many_dominant_people_are_in_the_frame": 0,
+          "are_two_dominant_people_spatially_close_and_facing_or_holding_each_other": false,
+          "does_their_movement_appear_coordinated_with_each_other": false,
+          "is_there_a_cake_and_is_a_cutting_motion_visible_toward_it": "no_cake"
+        },
+        "parse_failed": false,
+        "exception": null,
+        "latency_s": 8.11
+      }
+    }
+  }
+]
