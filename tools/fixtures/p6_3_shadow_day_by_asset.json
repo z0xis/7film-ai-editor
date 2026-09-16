@@ -1,0 +1,1829 @@
+{
+  "total_assets": 362,
+  "with_timecode": 352,
+  "without_timecode": 10,
+  "unmapped_names": [
+    "DJI_0522.MOV",
+    "DJI_0523.MOV",
+    "DJI_0524.MOV",
+    "DJI_0525.MOV",
+    "DJI_0526.MOV",
+    "DJI_0527.MOV",
+    "DJI_0528.MOV",
+    "DJI_0529.MOV",
+    "DJI_0530.MOV",
+    "DJI_0531.MOV"
+  ],
+  "day_by_asset": {
+    "9c55734d-9524-59c0-a889-47076b52b4c6": {
+      "name": "C7101.MP4",
+      "raw_timecode": "19:33:35:48",
+      "day_position": 0.0
+    },
+    "6fe63c06-9937-5cc3-b8c4-14111c231ed7": {
+      "name": "C7102.MP4",
+      "raw_timecode": "19:33:52:14",
+      "day_position": 0.003686036426712923
+    },
+    "5a8da8a4-0963-514a-970f-090f2fb97a92": {
+      "name": "C7103.MP4",
+      "raw_timecode": "19:34:10:02",
+      "day_position": 0.0075888985255854295
+    },
+    "dcaaafe2-ff3e-5326-b909-97c25cbb439f": {
+      "name": "C7104.MP4",
+      "raw_timecode": "19:34:26:42",
+      "day_position": 0.011058109280138768
+    },
+    "d2287a09-202f-5260-bf72-88fcdee23587": {
+      "name": "C7105.MP4",
+      "raw_timecode": "19:34:40:14",
+      "day_position": 0.01409366869037294
+    },
+    "63f69ee5-5ce2-5a27-9765-4108cec04c2c": {
+      "name": "C7106.MP4",
+      "raw_timecode": "19:34:48:46",
+      "day_position": 0.01582827406764961
+    },
+    "1822f2f3-5329-5a17-875d-856369a2ca09": {
+      "name": "C7107.MP4",
+      "raw_timecode": "19:35:04:38",
+      "day_position": 0.019297484822202948
+    },
+    "28fa69f8-1b38-5de4-9618-8fb598d1d143": {
+      "name": "C7108.MP4",
+      "raw_timecode": "19:35:13:20",
+      "day_position": 0.021248915871639202
+    },
+    "471394c2-f3a2-595c-9407-3d6930f2f3ab": {
+      "name": "C7109.MP4",
+      "raw_timecode": "19:35:36:22",
+      "day_position": 0.026235906331309625
+    },
+    "c0f64e1e-23a4-5b55-9a03-e1ad64a25531": {
+      "name": "C7110.MP4",
+      "raw_timecode": "19:35:42:34",
+      "day_position": 0.02753686036426713
+    },
+    "9b502119-2664-53fd-8242-a32a956b83e0": {
+      "name": "C7111.MP4",
+      "raw_timecode": "19:36:10:02",
+      "day_position": 0.03360797918473547
+    },
+    "a2fe4177-4a40-54ff-9d88-0c34b259b501": {
+      "name": "C7112.MP4",
+      "raw_timecode": "19:36:14:18",
+      "day_position": 0.03447528187337381
+    },
+    "13af14bc-3b13-5fe5-8b79-0ac1c2f5ab35": {
+      "name": "C7113.MP4",
+      "raw_timecode": "19:36:24:22",
+      "day_position": 0.036643538594969646
+    },
+    "fad12012-6884-5e94-a049-2915a2f4df1a": {
+      "name": "C7114.MP4",
+      "raw_timecode": "19:36:38:18",
+      "day_position": 0.03967909800520382
+    },
+    "ee54e643-90eb-5905-9c46-500cf0b3c1fa": {
+      "name": "C7115.MP4",
+      "raw_timecode": "19:36:50:42",
+      "day_position": 0.04228100607111882
+    },
+    "3604a5eb-1622-5e28-89ec-e0f76aff3792": {
+      "name": "C7116.MP4",
+      "raw_timecode": "19:37:08:06",
+      "day_position": 0.04618386816999133
+    },
+    "88ae85db-6152-5429-800d-813f2a7000eb": {
+      "name": "C7117.MP4",
+      "raw_timecode": "19:37:16:14",
+      "day_position": 0.047918473547268
+    },
+    "b63fafab-df4b-55cb-a1e3-bdd08d62e421": {
+      "name": "C7118.MP4",
+      "raw_timecode": "19:37:46:02",
+      "day_position": 0.05442324371205551
+    },
+    "a6400119-e538-5cb9-90bb-56263c2791fa": {
+      "name": "C7119.MP4",
+      "raw_timecode": "19:37:56:30",
+      "day_position": 0.05659150043365135
+    },
+    "826c8899-0def-52df-aeb1-6f9583ad1152": {
+      "name": "C7120.MP4",
+      "raw_timecode": "19:37:58:26",
+      "day_position": 0.05702515177797051
+    },
+    "6ace6ef4-e392-5a22-95c3-cac6b325ef89": {
+      "name": "C7121.MP4",
+      "raw_timecode": "19:38:32:06",
+      "day_position": 0.06439722463139635
+    },
+    "3ee512c1-d650-5c9d-99ad-0c45ebe9b8be": {
+      "name": "C7122.MP4",
+      "raw_timecode": "19:38:51:40",
+      "day_position": 0.06851691240242845
+    },
+    "9c5ae4f1-0701-586f-82f6-ff0da25018ba": {
+      "name": "C7123.MP4",
+      "raw_timecode": "19:39:29:12",
+      "day_position": 0.07675628794449263
+    },
+    "5873f0ec-c20c-55e0-9769-b593399cb049": {
+      "name": "C7124.MP4",
+      "raw_timecode": "19:39:51:16",
+      "day_position": 0.08152645273200347
+    },
+    "d4781402-6a7d-5921-8327-7fd4be7ca37d": {
+      "name": "C7125.MP4",
+      "raw_timecode": "19:40:00:22",
+      "day_position": 0.08347788378143972
+    },
+    "3dcb8f98-00d2-5335-bdd4-000b40fc8cea": {
+      "name": "C7126.MP4",
+      "raw_timecode": "19:40:11:48",
+      "day_position": 0.08586296617519515
+    },
+    "bcfc08e9-0e73-5799-a017-592b044f3acb": {
+      "name": "C7127.MP4",
+      "raw_timecode": "19:40:23:24",
+      "day_position": 0.08846487424111014
+    },
+    "881ff70f-4f63-51df-aa32-f7625f4f8f59": {
+      "name": "C7128.MP4",
+      "raw_timecode": "19:40:33:04",
+      "day_position": 0.09063313096270599
+    },
+    "4510cc1c-ca1a-56cb-a96a-26a1ebfad910": {
+      "name": "C7129.MP4",
+      "raw_timecode": "19:40:45:04",
+      "day_position": 0.09323503902862099
+    },
+    "ce6defa5-a104-5920-9da3-10c7a15181bf": {
+      "name": "C7130.MP4",
+      "raw_timecode": "19:41:02:42",
+      "day_position": 0.0969210754553339
+    },
+    "3ef5ddde-3043-5a23-a6cf-feaf6eb62102": {
+      "name": "C7131.MP4",
+      "raw_timecode": "19:41:11:24",
+      "day_position": 0.09887250650477017
+    },
+    "a9a2b998-1375-534e-9006-6c10b1f15e59": {
+      "name": "C7132.MP4",
+      "raw_timecode": "19:41:16:14",
+      "day_position": 0.09995663486556808
+    },
+    "7afc3125-bac9-51d8-9aaa-c486fa8fa988": {
+      "name": "C7133.MP4",
+      "raw_timecode": "19:41:23:48",
+      "day_position": 0.10147441457068516
+    },
+    "1d0c908c-4c57-5e35-988f-4ddaeb7a927f": {
+      "name": "C7134.MP4",
+      "raw_timecode": "19:41:39:16",
+      "day_position": 0.1049436253252385
+    },
+    "9b870ebd-4ca2-52a2-acb4-2ccff0a14e93": {
+      "name": "C7135.MP4",
+      "raw_timecode": "19:41:52:14",
+      "day_position": 0.10776235906331309
+    },
+    "a176c4c7-1579-5b96-b40c-838ad5880307": {
+      "name": "C7136.MP4",
+      "raw_timecode": "19:41:57:04",
+      "day_position": 0.10884648742411102
+    },
+    "7364a9fe-c8a9-561d-8e5f-4442f80d3c77": {
+      "name": "C7137.MP4",
+      "raw_timecode": "19:42:01:44",
+      "day_position": 0.10971379011274934
+    },
+    "840562e4-3734-5bfe-a657-8073aba43e58": {
+      "name": "C7138.MP4",
+      "raw_timecode": "19:42:16:38",
+      "day_position": 0.1129661751951431
+    },
+    "6ffb07d6-d3f6-5f06-a885-43841ae7634b": {
+      "name": "C7139.MP4",
+      "raw_timecode": "19:43:47:00",
+      "day_position": 0.1326973113616652
+    },
+    "c90a2f05-246a-568e-99c5-a416c3f0dd6e": {
+      "name": "C7140.MP4",
+      "raw_timecode": "19:44:07:08",
+      "day_position": 0.1370338248048569
+    },
+    "285e2034-5cf4-55d7-920e-680af1149cbf": {
+      "name": "C7141.MP4",
+      "raw_timecode": "19:44:23:24",
+      "day_position": 0.14050303555941024
+    },
+    "3bad4d2d-a82c-576e-990a-f6b1ddba7f39": {
+      "name": "C7142.MP4",
+      "raw_timecode": "19:44:28:38",
+      "day_position": 0.14158716392020815
+    },
+    "09fc4ed3-45f7-5236-95dd-68524f63ded5": {
+      "name": "C7143.MP4",
+      "raw_timecode": "19:44:36:22",
+      "day_position": 0.14332176929748483
+    },
+    "3be564a8-d09e-53e6-a9d8-8358365a18de": {
+      "name": "C7144.MP4",
+      "raw_timecode": "19:44:58:02",
+      "day_position": 0.14809193408499566
+    },
+    "8ba41f48-8969-55e3-b305-aef824dbd361": {
+      "name": "C7145.MP4",
+      "raw_timecode": "19:45:03:40",
+      "day_position": 0.1491760624457936
+    },
+    "8d2df36b-fd50-5aee-aa36-6c3522a2461d": {
+      "name": "C7146.MP4",
+      "raw_timecode": "19:45:13:20",
+      "day_position": 0.1513443191673894
+    },
+    "d0cfc460-3407-5ea9-8695-d0d2b2b89c9e": {
+      "name": "C7147.MP4",
+      "raw_timecode": "19:45:22:02",
+      "day_position": 0.15329575021682568
+    },
+    "20f0fe0c-f5b3-5aab-8824-72a6ff1cc6fc": {
+      "name": "C7148.MP4",
+      "raw_timecode": "19:45:26:42",
+      "day_position": 0.154163052905464
+    },
+    "92ad7c04-a777-5308-bd36-e149bc2430cd": {
+      "name": "C7149.MP4",
+      "raw_timecode": "19:45:31:08",
+      "day_position": 0.1552471812662619
+    },
+    "3c0e6d42-1eac-5070-801d-b3868fca8744": {
+      "name": "C7150.MP4",
+      "raw_timecode": "19:45:37:44",
+      "day_position": 0.15654813529921943
+    },
+    "32cec493-f9c2-5b79-86ae-1e3a9563971a": {
+      "name": "C7151.MP4",
+      "raw_timecode": "19:45:53:12",
+      "day_position": 0.16001734605377277
+    },
+    "db42a2f0-fe41-5bec-a951-3db70a9d2e9a": {
+      "name": "C7152.MP4",
+      "raw_timecode": "19:46:15:40",
+      "day_position": 0.1647875108412836
+    },
+    "3f38c4bd-99a5-5e89-b776-cb125a160e54": {
+      "name": "C7153.MP4",
+      "raw_timecode": "19:47:28:38",
+      "day_position": 0.1806157849089332
+    },
+    "e9de61d3-f40f-54b3-9ce1-ca249ca6c126": {
+      "name": "C7154.MP4",
+      "raw_timecode": "19:47:35:24",
+      "day_position": 0.1821335646140503
+    },
+    "c4e10301-2e7b-5fb1-bd50-e93dd2afc079": {
+      "name": "C7155.MP4",
+      "raw_timecode": "19:47:40:14",
+      "day_position": 0.18321769297484822
+    },
+    "8f485b24-a488-55c3-b014-065546b1f3e2": {
+      "name": "C7156.MP4",
+      "raw_timecode": "19:47:50:42",
+      "day_position": 0.18538594969644406
+    },
+    "c1ba8640-690f-541c-a97f-a7a1813fd075": {
+      "name": "C7157.MP4",
+      "raw_timecode": "19:48:04:38",
+      "day_position": 0.18842150910667824
+    },
+    "3caaf58e-a6d8-5d35-90ab-9e1ec42b07c9": {
+      "name": "C7158.MP4",
+      "raw_timecode": "19:48:11:24",
+      "day_position": 0.1899392888117953
+    },
+    "b65ef26f-b8ac-582a-90a0-16a74cbb389a": {
+      "name": "C7159.MP4",
+      "raw_timecode": "19:48:23:48",
+      "day_position": 0.19254119687771032
+    },
+    "98fbf2e1-b886-5556-8cef-506f5029630e": {
+      "name": "C7160.MP4",
+      "raw_timecode": "19:48:27:16",
+      "day_position": 0.19340849956634865
+    },
+    "16302d8e-2b34-5d0a-8da1-8eb912a79160": {
+      "name": "C7161.MP4",
+      "raw_timecode": "19:48:33:28",
+      "day_position": 0.19470945359930616
+    },
+    "d1f3625e-a9ec-54d9-aba7-ff463181ee12": {
+      "name": "C7162.MP4",
+      "raw_timecode": "19:49:14:42",
+      "day_position": 0.2035993061578491
+    },
+    "b7d29e44-3ba9-50e4-bc10-cd3687c8bd29": {
+      "name": "C7163.MP4",
+      "raw_timecode": "19:49:23:00",
+      "day_position": 0.20555073720728534
+    },
+    "c0bd28e8-d7c0-5c2e-9980-4d5d160e1d0e": {
+      "name": "C7164.MP4",
+      "raw_timecode": "19:49:34:26",
+      "day_position": 0.20793581960104077
+    },
+    "58d117be-4fbc-5aee-b1d8-01305f255f6f": {
+      "name": "C7165.MP4",
+      "raw_timecode": "19:49:48:22",
+      "day_position": 0.21097137901127494
+    },
+    "8f1c40be-6ed6-5d67-bd6f-e98228aa87d0": {
+      "name": "C7166.MP4",
+      "raw_timecode": "19:49:56:06",
+      "day_position": 0.2127059843885516
+    },
+    "0b98aa7d-a9d3-5796-8842-eaf06b99ca60": {
+      "name": "C7167.MP4",
+      "raw_timecode": "19:50:11:48",
+      "day_position": 0.21595836947094535
+    },
+    "c8f3f829-c1df-5eff-a6fa-3d09d12f181c": {
+      "name": "C7168.MP4",
+      "raw_timecode": "19:50:19:08",
+      "day_position": 0.21769297484822203
+    },
+    "8462dba9-c64a-58a9-b7af-754825f317f7": {
+      "name": "C7169.MP4",
+      "raw_timecode": "19:50:30:10",
+      "day_position": 0.22007805724197746
+    },
+    "6fd538cc-40d2-57a3-9fd2-1eca7c1d95cc": {
+      "name": "C7170.MP4",
+      "raw_timecode": "19:50:37:20",
+      "day_position": 0.22159583694709453
+    },
+    "a1cbd104-ef93-555d-a7d8-ecbb905d91e7": {
+      "name": "C7171.MP4",
+      "raw_timecode": "19:50:47:48",
+      "day_position": 0.22376409366869038
+    },
+    "7c70f03f-e18c-51dd-900c-d4cc38ef1db3": {
+      "name": "C7172.MP4",
+      "raw_timecode": "19:50:51:40",
+      "day_position": 0.2246313963573287
+    },
+    "fe827c08-f788-5f98-9775-4f3f323e00a2": {
+      "name": "C7173.MP4",
+      "raw_timecode": "19:50:59:24",
+      "day_position": 0.2263660017346054
+    },
+    "3ebf9f47-fd4b-5236-8a1d-e396ba824ed9": {
+      "name": "C7174.MP4",
+      "raw_timecode": "19:51:41:36",
+      "day_position": 0.23547267996530788
+    },
+    "43ffec39-4a61-51b2-8574-8ef9473016a3": {
+      "name": "C7175.MP4",
+      "raw_timecode": "19:52:01:20",
+      "day_position": 0.23980919340849957
+    },
+    "46a24dfe-f7b6-541d-9a87-5cdaac923474": {
+      "name": "C7176.MP4",
+      "raw_timecode": "19:52:10:02",
+      "day_position": 0.2417606244579358
+    },
+    "e824a342-a4b2-54b8-9d69-e6508a4d89ad": {
+      "name": "C7177.MP4",
+      "raw_timecode": "19:52:23:48",
+      "day_position": 0.2445793581960104
+    },
+    "1076700d-2539-55b2-a67c-61b1afd0c8c8": {
+      "name": "C7178.MP4",
+      "raw_timecode": "19:52:38:18",
+      "day_position": 0.24783174327840415
+    },
+    "9876eb69-b323-59ba-84d7-61029dabf4f2": {
+      "name": "C7179.MP4",
+      "raw_timecode": "19:52:52:14",
+      "day_position": 0.2508673026886383
+    },
+    "1315f145-72c2-50d5-b65a-1983201432d9": {
+      "name": "C7180.MP4",
+      "raw_timecode": "19:53:02:42",
+      "day_position": 0.25303555941023415
+    },
+    "1864ba09-ebe4-576c-931c-9005dab5f60b": {
+      "name": "C7181.MP4",
+      "raw_timecode": "19:53:12:46",
+      "day_position": 0.25520381613183
+    },
+    "938d014f-184c-505e-924e-dd9889fbe399": {
+      "name": "C7182.MP4",
+      "raw_timecode": "19:53:24:46",
+      "day_position": 0.257805724197745
+    },
+    "1d307f87-ab25-50b9-91e0-65e2188efca1": {
+      "name": "C7183.MP4",
+      "raw_timecode": "19:53:35:48",
+      "day_position": 0.26019080659150046
+    },
+    "9e02b661-7192-5d55-bdb0-c3a361e92319": {
+      "name": "C7184.MP4",
+      "raw_timecode": "19:53:46:02",
+      "day_position": 0.26257588898525586
+    },
+    "400698b7-5fe9-53b5-8cb4-5cca2c26a614": {
+      "name": "C7185.MP4",
+      "raw_timecode": "19:53:56:06",
+      "day_position": 0.2647441457068517
+    },
+    "a87c09a9-5cd2-524c-befd-e2203e797de8": {
+      "name": "C7186.MP4",
+      "raw_timecode": "19:54:13:20",
+      "day_position": 0.2684301821335646
+    },
+    "7167f0ce-533f-5f5c-b1f1-9dca8f4687a4": {
+      "name": "C7187.MP4",
+      "raw_timecode": "19:54:19:32",
+      "day_position": 0.2697311361665221
+    },
+    "08158a86-45cb-5b27-85ae-64383b4ec6d3": {
+      "name": "C7188.MP4",
+      "raw_timecode": "19:54:38:18",
+      "day_position": 0.2738508239375542
+    },
+    "324e5485-0bde-557c-b3fb-0a02398f5a97": {
+      "name": "C7189.MP4",
+      "raw_timecode": "19:54:49:20",
+      "day_position": 0.2762359063313096
+    },
+    "41b81fa7-2684-5833-99fa-3494bb21a0d0": {
+      "name": "C7190.MP4",
+      "raw_timecode": "19:55:03:16",
+      "day_position": 0.2792714657415438
+    },
+    "a95d053e-0329-55da-a6c3-5a5285fa6b7d": {
+      "name": "C7191.MP4",
+      "raw_timecode": "19:55:12:22",
+      "day_position": 0.28122289679098006
+    },
+    "a6f5caa8-61e3-510f-b3af-c202484ef848": {
+      "name": "C7192.MP4",
+      "raw_timecode": "19:55:32:06",
+      "day_position": 0.28555941023417175
+    },
+    "5acffef7-b223-57a9-b0f7-4ffe47f36ce1": {
+      "name": "C7193.MP4",
+      "raw_timecode": "19:55:45:28",
+      "day_position": 0.2883781439722463
+    },
+    "07a5d10f-a89e-523f-87a2-31d7bfed1fe2": {
+      "name": "C7194.MP4",
+      "raw_timecode": "19:56:35:24",
+      "day_position": 0.2992194275802255
+    },
+    "e85cd1b8-ce31-548b-b91e-661b7c4ceebe": {
+      "name": "C7195.MP4",
+      "raw_timecode": "19:56:49:20",
+      "day_position": 0.30225498699045966
+    },
+    "e7353db6-93b3-57f4-9fb1-4f41b557eeb5": {
+      "name": "C7196.MP4",
+      "raw_timecode": "19:57:06:34",
+      "day_position": 0.3059410234171726
+    },
+    "16d19864-cc60-563a-bfc0-d35ff055ed30": {
+      "name": "C7197.MP4",
+      "raw_timecode": "19:57:27:16",
+      "day_position": 0.3104943625325238
+    },
+    "e9eefa38-a28e-5109-abdc-19c2112e4f5b": {
+      "name": "C7198.MP4",
+      "raw_timecode": "19:57:39:40",
+      "day_position": 0.31309627059843886
+    },
+    "1384ca2c-9aaa-5e68-bf06-e78a3ecf7750": {
+      "name": "C7199.MP4",
+      "raw_timecode": "19:57:47:24",
+      "day_position": 0.3148308759757155
+    },
+    "bbbc1544-a892-543f-b030-55141b47a936": {
+      "name": "C7200.MP4",
+      "raw_timecode": "19:57:53:36",
+      "day_position": 0.316131830008673
+    },
+    "18862b28-6c7e-58cf-90dd-7c3d3ccee1bf": {
+      "name": "C7201.MP4",
+      "raw_timecode": "19:58:00:46",
+      "day_position": 0.31764960971379014
+    },
+    "a6414f2f-3d39-50f6-a0b9-8e74ea5dd471": {
+      "name": "C7202.MP4",
+      "raw_timecode": "19:58:04:38",
+      "day_position": 0.31851691240242846
+    },
+    "06cf86e1-b55e-5eac-a314-bec020adcba3": {
+      "name": "C7203.MP4",
+      "raw_timecode": "19:58:11:48",
+      "day_position": 0.32003469210754554
+    },
+    "97d31983-6a5f-5b97-a7dd-f0a8e09ce010": {
+      "name": "C7204.MP4",
+      "raw_timecode": "19:58:26:18",
+      "day_position": 0.32328707718993926
+    },
+    "1c2409e7-d2a7-5f79-bfe0-054a4c2fb24c": {
+      "name": "C7205.MP4",
+      "raw_timecode": "19:58:41:12",
+      "day_position": 0.32653946227233305
+    },
+    "0bf63991-9bb9-5cad-935a-3479539aac98": {
+      "name": "C7206.MP4",
+      "raw_timecode": "19:58:55:32",
+      "day_position": 0.3295750216825672
+    },
+    "02646254-b053-56b5-adba-b366cd45760f": {
+      "name": "C7207.MP4",
+      "raw_timecode": "19:59:06:34",
+      "day_position": 0.33196010407632265
+    },
+    "90e58867-c532-562e-af19-f0a2719b6c74": {
+      "name": "C7208.MP4",
+      "raw_timecode": "19:59:11:48",
+      "day_position": 0.33304423243712056
+    },
+    "3cf61660-fc40-5ad5-8740-0a2145c79af2": {
+      "name": "C7209.MP4",
+      "raw_timecode": "19:59:17:12",
+      "day_position": 0.33434518647007805
+    },
+    "fd83e0f7-97f8-5c8f-a287-eca8ee614418": {
+      "name": "C7210.MP4",
+      "raw_timecode": "19:59:23:48",
+      "day_position": 0.33564614050303554
+    },
+    "aa579cff-8d02-5ad9-b78b-1e49496f4b7e": {
+      "name": "C7211.MP4",
+      "raw_timecode": "19:59:32:30",
+      "day_position": 0.33759757155247183
+    },
+    "6f8739cd-dc72-5eeb-bade-084a4ff755d1": {
+      "name": "C7212.MP4",
+      "raw_timecode": "19:59:44:30",
+      "day_position": 0.3401994796183868
+    },
+    "75719bf7-591e-5a8d-b139-0759ceb05e49": {
+      "name": "C7213.MP4",
+      "raw_timecode": "19:59:50:18",
+      "day_position": 0.3415004336513443
+    },
+    "d59ae6ea-38ef-5ca3-be87-e53562354fe4": {
+      "name": "C7214.MP4",
+      "raw_timecode": "20:00:08:06",
+      "day_position": 0.34540329575021683
+    },
+    "1c1ee3cd-0efe-583a-b94f-bda86e0e9581": {
+      "name": "C7215.MP4",
+      "raw_timecode": "20:00:24:22",
+      "day_position": 0.34887250650477014
+    },
+    "0008751c-9764-5653-8f9e-87a201c079be": {
+      "name": "C7216.MP4",
+      "raw_timecode": "20:00:34:02",
+      "day_position": 0.351040763226366
+    },
+    "367c0201-f1e2-5825-9be7-e35a6bf72d2b": {
+      "name": "C7217.MP4",
+      "raw_timecode": "20:00:42:34",
+      "day_position": 0.35277536860364267
+    },
+    "c8b03160-8970-5614-8329-7a7d538002d9": {
+      "name": "C7218.MP4",
+      "raw_timecode": "20:00:57:04",
+      "day_position": 0.35602775368603645
+    },
+    "0b63f956-db9a-5fa2-920b-74919b5f712b": {
+      "name": "C7219.MP4",
+      "raw_timecode": "20:01:04:14",
+      "day_position": 0.3575455333911535
+    },
+    "1de42671-3e36-5da5-8e5e-c41a052a2be5": {
+      "name": "C7220.MP4",
+      "raw_timecode": "20:01:20:06",
+      "day_position": 0.36101474414570683
+    },
+    "43c57caa-cb35-5b34-89d6-604d148932f5": {
+      "name": "C7221.MP4",
+      "raw_timecode": "20:01:50:42",
+      "day_position": 0.36751951431049434
+    },
+    "1aac2913-75be-55d9-b593-292ce7d665eb": {
+      "name": "C7222.MP4",
+      "raw_timecode": "20:02:20:06",
+      "day_position": 0.37402428447528185
+    },
+    "6aef8bc8-a3dd-5012-be7d-f32a19da88f8": {
+      "name": "C7223.MP4",
+      "raw_timecode": "20:02:29:12",
+      "day_position": 0.37597571552471815
+    },
+    "3385de67-918f-51aa-9bcd-a75971f4a69e": {
+      "name": "C7224.MP4",
+      "raw_timecode": "20:02:41:36",
+      "day_position": 0.3785776235906331
+    },
+    "ed395e67-049a-598a-868e-6dc7467d2cf2": {
+      "name": "C7225.MP4",
+      "raw_timecode": "20:02:50:42",
+      "day_position": 0.38052905464006936
+    },
+    "611bb69d-3b71-5966-8fd8-9e7cb500b7a6": {
+      "name": "C7226.MP4",
+      "raw_timecode": "20:03:10:26",
+      "day_position": 0.38486556808326106
+    },
+    "8c0aa480-cbe2-5f6b-b44f-5ae0cd61607a": {
+      "name": "C7227.MP4",
+      "raw_timecode": "20:03:29:12",
+      "day_position": 0.38898525585429317
+    },
+    "9cbccce1-f2c2-5f76-82c9-3914b36252a7": {
+      "name": "C7228.MP4",
+      "raw_timecode": "20:03:34:02",
+      "day_position": 0.3900693842150911
+    },
+    "dac29e7d-8407-5d45-aa0d-3af39f290030": {
+      "name": "C7229.MP4",
+      "raw_timecode": "20:03:39:16",
+      "day_position": 0.391153512575889
+    },
+    "2597cd7b-1a8b-5f3e-ab9d-55e7b0c78582": {
+      "name": "C7230.MP4",
+      "raw_timecode": "20:04:03:16",
+      "day_position": 0.396357328707719
+    },
+    "e9485d1f-7e18-5618-a740-d6484ca7725f": {
+      "name": "C7231.MP4",
+      "raw_timecode": "20:04:10:26",
+      "day_position": 0.3978751084128361
+    },
+    "da28f50b-8217-5c84-809d-f65a77b1e783": {
+      "name": "C7232.MP4",
+      "raw_timecode": "20:04:37:44",
+      "day_position": 0.40372940156114484
+    },
+    "fca05cb0-8cef-5167-b9e2-4fab33e6da47": {
+      "name": "C7233.MP4",
+      "raw_timecode": "20:04:45:04",
+      "day_position": 0.4054640069384215
+    },
+    "4d0d3b85-71fd-5c09-a457-455e41a4adef": {
+      "name": "C7234.MP4",
+      "raw_timecode": "20:04:52:38",
+      "day_position": 0.40698178664353857
+    },
+    "cd918d98-77a6-50e5-b6df-34744ce2fe57": {
+      "name": "C7235.MP4",
+      "raw_timecode": "20:05:03:16",
+      "day_position": 0.409366869037294
+    },
+    "eb4f73c2-91a2-54ef-a397-235305ba12e4": {
+      "name": "C7236.MP4",
+      "raw_timecode": "20:05:23:48",
+      "day_position": 0.4137033824804857
+    },
+    "e045dc7f-5220-564f-bcec-50fca8e93ba7": {
+      "name": "C7237.MP4",
+      "raw_timecode": "20:05:34:02",
+      "day_position": 0.4160884648742411
+    },
+    "d134bb11-3d9b-5307-ad85-2d61d4423755": {
+      "name": "C7238.MP4",
+      "raw_timecode": "20:05:50:18",
+      "day_position": 0.4195576756287944
+    },
+    "4860ec17-62d1-56b9-9099-08a6aa884046": {
+      "name": "C7239.MP4",
+      "raw_timecode": "20:05:56:30",
+      "day_position": 0.42085862966175197
+    },
+    "4e3600a1-75bc-581e-be98-6fd17b16cc63": {
+      "name": "C7240.MP4",
+      "raw_timecode": "20:06:12:46",
+      "day_position": 0.4243278404163053
+    },
+    "f1e6ed58-4f05-5dd4-9102-6f480662cb0c": {
+      "name": "C7241.MP4",
+      "raw_timecode": "20:06:18:34",
+      "day_position": 0.42562879444926277
+    },
+    "14a49039-eef9-5dff-b3fe-0eb5e29e676f": {
+      "name": "C7242.MP4",
+      "raw_timecode": "20:06:24:46",
+      "day_position": 0.4269297484822203
+    },
+    "550d975b-c27f-5129-9b4e-03ead6eaed72": {
+      "name": "C7243.MP4",
+      "raw_timecode": "20:06:31:08",
+      "day_position": 0.4284475281873374
+    },
+    "c101b13c-4606-532d-adaa-da6b7985f01f": {
+      "name": "C7244.MP4",
+      "raw_timecode": "20:07:01:44",
+      "day_position": 0.4349522983521249
+    },
+    "473f87c0-3494-5ceb-8cae-4a370aef0ef5": {
+      "name": "C7245.MP4",
+      "raw_timecode": "20:07:25:20",
+      "day_position": 0.4401561144839549
+    },
+    "71e41636-74ba-5c20-a823-66ae1e7a4c52": {
+      "name": "C7246.MP4",
+      "raw_timecode": "20:07:40:38",
+      "day_position": 0.44340849956634865
+    },
+    "15fbbc11-7b44-54ef-8757-69e6e1b4083c": {
+      "name": "C7247.MP4",
+      "raw_timecode": "20:07:51:16",
+      "day_position": 0.4457935819601041
+    },
+    "0cc7cb3c-f74d-5d25-9187-75956cdfb099": {
+      "name": "C7248.MP4",
+      "raw_timecode": "20:07:56:06",
+      "day_position": 0.446877710320902
+    },
+    "96989f94-93c0-5599-acc3-ff63d835e29c": {
+      "name": "C7249.MP4",
+      "raw_timecode": "20:08:03:40",
+      "day_position": 0.4483954900260191
+    },
+    "3bf95b95-d8a8-56e7-b436-885883170d82": {
+      "name": "C7250.MP4",
+      "raw_timecode": "20:08:13:44",
+      "day_position": 0.4505637467476149
+    },
+    "09d0ca9d-6b0e-5c87-9112-c8798e831873": {
+      "name": "C7251.MP4",
+      "raw_timecode": "20:08:24:46",
+      "day_position": 0.45294882914137036
+    },
+    "a1b1c689-19fb-5bc1-b98e-9774f2f88ee3": {
+      "name": "C7252.MP4",
+      "raw_timecode": "20:08:41:12",
+      "day_position": 0.45663486556808325
+    },
+    "b1fe4785-38c9-558d-932a-74468628c2b8": {
+      "name": "C7253.MP4",
+      "raw_timecode": "20:08:56:06",
+      "day_position": 0.45988725065047703
+    },
+    "16cb0812-e913-52c4-9279-b2200b4ef6d9": {
+      "name": "C7254.MP4",
+      "raw_timecode": "20:09:05:12",
+      "day_position": 0.46183868169991327
+    },
+    "9cc54cde-0248-5681-9f26-04c6cc8af59f": {
+      "name": "C7255.MP4",
+      "raw_timecode": "20:09:26:18",
+      "day_position": 0.46639202081526454
+    },
+    "e19de021-65a1-55b2-bdbb-fa18e8be5e2d": {
+      "name": "C7256.MP4",
+      "raw_timecode": "20:09:35:24",
+      "day_position": 0.4683434518647008
+    },
+    "e5034cb3-2ce7-571f-a4b1-dee234cf843e": {
+      "name": "C7257.MP4",
+      "raw_timecode": "20:09:39:40",
+      "day_position": 0.4692107545533391
+    },
+    "82fd32c0-f77a-5bf6-91ba-d5c5ae159a02": {
+      "name": "C7258.MP4",
+      "raw_timecode": "20:09:59:48",
+      "day_position": 0.4735472679965308
+    },
+    "f1171f49-18d2-5c16-a065-ff9a4600f646": {
+      "name": "C7259.MP4",
+      "raw_timecode": "20:10:08:30",
+      "day_position": 0.47549869904596703
+    },
+    "48fa5bc0-89ca-5e24-a8bc-bb34a9cb9a0f": {
+      "name": "C7260.MP4",
+      "raw_timecode": "20:10:14:18",
+      "day_position": 0.4767996530789245
+    },
+    "2d61060d-8ced-5c5c-989b-a970daa7ab69": {
+      "name": "C7261.MP4",
+      "raw_timecode": "20:10:22:26",
+      "day_position": 0.47853425845620123
+    },
+    "f61908df-263a-5927-b914-f8f6107c601c": {
+      "name": "C7262.MP4",
+      "raw_timecode": "20:10:43:08",
+      "day_position": 0.48308759757155245
+    },
+    "7545838b-7b81-5c45-952e-4c66b1d87366": {
+      "name": "C7263.MP4",
+      "raw_timecode": "20:11:01:44",
+      "day_position": 0.486990459670425
+    },
+    "67ceb5fa-18f2-532d-9a02-8725c31760d9": {
+      "name": "C7264.MP4",
+      "raw_timecode": "20:11:11:00",
+      "day_position": 0.4891587163920208
+    },
+    "898f0521-5931-57e6-a16c-12e0f82abce5": {
+      "name": "C7265.MP4",
+      "raw_timecode": "20:11:18:10",
+      "day_position": 0.4906764960971379
+    },
+    "49524f4c-a335-5bdf-ad65-9df0001b841e": {
+      "name": "C7266.MP4",
+      "raw_timecode": "20:11:33:04",
+      "day_position": 0.49392888117953165
+    },
+    "f89cb687-66a9-5d3b-8e9f-e6b4e2828cea": {
+      "name": "C7267.MP4",
+      "raw_timecode": "20:11:39:40",
+      "day_position": 0.49522983521248914
+    },
+    "ea181da5-2c80-5c52-a3be-b55d594221f8": {
+      "name": "C7268.MP4",
+      "raw_timecode": "20:11:51:16",
+      "day_position": 0.4978317432784042
+    },
+    "7cd2a794-a37e-56aa-a995-d94b87e26b97": {
+      "name": "C7269.MP4",
+      "raw_timecode": "20:12:04:14",
+      "day_position": 0.5006504770164788
+    },
+    "d11fca4d-df92-589a-923e-33819f2f435b": {
+      "name": "C7270.MP4",
+      "raw_timecode": "20:12:16:38",
+      "day_position": 0.5032523850823938
+    },
+    "317e367a-5c6c-5136-92d0-2269dc08ba23": {
+      "name": "C7271.MP4",
+      "raw_timecode": "20:12:27:40",
+      "day_position": 0.5056374674761491
+    },
+    "cd5d4120-7bc7-5b97-af47-6aea73fb4e7e": {
+      "name": "C7272.MP4",
+      "raw_timecode": "20:12:31:08",
+      "day_position": 0.5065047701647876
+    },
+    "a21f88ce-1150-5520-8548-d7605bd41af9": {
+      "name": "C7273.MP4",
+      "raw_timecode": "20:12:45:04",
+      "day_position": 0.5095403295750217
+    },
+    "00269142-ff43-58b2-84d4-9a195f0ac065": {
+      "name": "C7274.MP4",
+      "raw_timecode": "20:12:48:22",
+      "day_position": 0.5101908065915004
+    },
+    "2335dd7b-3f55-55ac-8325-c0f81dcba563": {
+      "name": "C7275.MP4",
+      "raw_timecode": "20:12:50:18",
+      "day_position": 0.5106244579358196
+    },
+    "2cd3923c-3356-54f7-a3bf-fbbd35ed6ab3": {
+      "name": "C7276.MP4",
+      "raw_timecode": "20:12:51:40",
+      "day_position": 0.5108412836079792
+    },
+    "9fd0018b-893c-5677-8cd9-a736a7eff04d": {
+      "name": "C7277.MP4",
+      "raw_timecode": "20:12:59:48",
+      "day_position": 0.5125758889852559
+    },
+    "6f91a055-8e37-5f54-ab12-0bd8c7af4847": {
+      "name": "C7278.MP4",
+      "raw_timecode": "20:13:03:16",
+      "day_position": 0.5134431916738942
+    },
+    "2fca2fcb-42b3-5374-a926-250035f73d74": {
+      "name": "C7279.MP4",
+      "raw_timecode": "20:13:08:06",
+      "day_position": 0.5145273200346921
+    },
+    "a4e6d96e-2d60-535f-a4b5-2f0243cfc33a": {
+      "name": "C7280.MP4",
+      "raw_timecode": "20:13:16:38",
+      "day_position": 0.5162619254119688
+    },
+    "46fcb03b-7c1c-57d2-8fa8-3014b6ed0ba0": {
+      "name": "C7281.MP4",
+      "raw_timecode": "20:13:20:30",
+      "day_position": 0.5171292281006071
+    },
+    "abc6d564-fbe8-5a1b-ba80-d49fc502e25a": {
+      "name": "C7282.MP4",
+      "raw_timecode": "20:13:26:18",
+      "day_position": 0.5184301821335646
+    },
+    "07d45df1-c8bf-5f11-8446-2e75f4f5861a": {
+      "name": "C7283.MP4",
+      "raw_timecode": "20:13:30:10",
+      "day_position": 0.519297484822203
+    },
+    "1224b78f-7f50-5acf-8c3c-205274589833": {
+      "name": "C7284.MP4",
+      "raw_timecode": "20:13:38:18",
+      "day_position": 0.5210320901994796
+    },
+    "78e82d3e-f04f-5db8-ab75-6437e34d147e": {
+      "name": "C7285.MP4",
+      "raw_timecode": "20:13:46:26",
+      "day_position": 0.5227666955767563
+    },
+    "f9d91d6a-97ad-57d1-9fc4-65824b64f9c3": {
+      "name": "C7286.MP4",
+      "raw_timecode": "20:13:53:36",
+      "day_position": 0.5242844752818734
+    },
+    "9c394011-b233-58e2-ab00-3a35117f3826": {
+      "name": "C7287.MP4",
+      "raw_timecode": "20:14:01:44",
+      "day_position": 0.52601908065915
+    },
+    "768882b1-ec34-5b51-900d-5e07681f1606": {
+      "name": "C7288.MP4",
+      "raw_timecode": "20:14:15:40",
+      "day_position": 0.5290546400693842
+    },
+    "835e1686-dbdb-5755-a0cc-93011f22ae32": {
+      "name": "C7289.MP4",
+      "raw_timecode": "20:14:23:48",
+      "day_position": 0.5307892454466608
+    },
+    "2311eca5-2997-513d-947a-1b36b6cda3c5": {
+      "name": "C7290.MP4",
+      "raw_timecode": "20:14:33:04",
+      "day_position": 0.5329575021682568
+    },
+    "3b1feec2-c91c-5dea-890e-38701f0256f9": {
+      "name": "C7291.MP4",
+      "raw_timecode": "20:14:36:46",
+      "day_position": 0.5336079791847355
+    },
+    "e4882f81-6633-5f79-9748-9368bbefa08c": {
+      "name": "C7292.MP4",
+      "raw_timecode": "20:14:47:48",
+      "day_position": 0.5359930615784909
+    },
+    "77be14b0-8985-58f5-aa2b-b59b0bf70659": {
+      "name": "C7293.MP4",
+      "raw_timecode": "20:14:54:34",
+      "day_position": 0.5375108412836079
+    },
+    "9abada35-45d7-5b53-bc16-fc59f58b9183": {
+      "name": "C7294.MP4",
+      "raw_timecode": "20:15:01:20",
+      "day_position": 0.5390286209887251
+    },
+    "72d2aca7-c099-5530-b4c3-2b138fc6b223": {
+      "name": "C7295.MP4",
+      "raw_timecode": "20:15:15:40",
+      "day_position": 0.5420641803989592
+    },
+    "14ec54b3-d7e7-5509-a638-df7825d00a43": {
+      "name": "C7296.MP4",
+      "raw_timecode": "20:15:24:22",
+      "day_position": 0.5440156114483955
+    },
+    "41ce3b19-5ca5-5fb4-85a4-aad69ca9bbc0": {
+      "name": "C7297.MP4",
+      "raw_timecode": "20:15:37:20",
+      "day_position": 0.5468343451864701
+    },
+    "b8b2c54c-2fea-56af-8f63-2fde0e019af9": {
+      "name": "C7298.MP4",
+      "raw_timecode": "20:15:43:08",
+      "day_position": 0.5481352992194276
+    },
+    "8cd0b76e-7b36-510e-bada-ce88e3de1e23": {
+      "name": "C7299.MP4",
+      "raw_timecode": "20:15:52:14",
+      "day_position": 0.5500867302688638
+    },
+    "8836dce1-f057-59e8-beb8-f33dd47fc0ed": {
+      "name": "C7300.MP4",
+      "raw_timecode": "20:16:01:20",
+      "day_position": 0.5520381613183001
+    },
+    "31ce7a5b-7727-5385-971a-4c7f8cc472b7": {
+      "name": "C7301.MP4",
+      "raw_timecode": "20:16:10:02",
+      "day_position": 0.5539895923677364
+    },
+    "817e3cc3-dcad-58cf-a6bb-ba211eb620d7": {
+      "name": "C7302.MP4",
+      "raw_timecode": "20:16:14:42",
+      "day_position": 0.5548568950563747
+    },
+    "28d3a98f-022f-54db-9a80-bcdaed5ad188": {
+      "name": "C7303.MP4",
+      "raw_timecode": "20:16:22:26",
+      "day_position": 0.5565915004336514
+    },
+    "8e3e17c2-6bd3-5150-95fc-312eda596a93": {
+      "name": "C7304.MP4",
+      "raw_timecode": "20:16:25:44",
+      "day_position": 0.55724197745013
+    },
+    "f6e06f89-39f3-5391-a59a-6c2c03be0851": {
+      "name": "C7305.MP4",
+      "raw_timecode": "20:16:35:00",
+      "day_position": 0.559410234171726
+    },
+    "4e7a8b3c-411f-5bac-b8b1-7b4e08bd45af": {
+      "name": "C7306.MP4",
+      "raw_timecode": "20:16:39:16",
+      "day_position": 0.5602775368603643
+    },
+    "9831ba34-a19d-5a27-9365-d2b5503d079a": {
+      "name": "C7307.MP4",
+      "raw_timecode": "20:16:43:08",
+      "day_position": 0.5611448395490026
+    },
+    "7ff07aca-9c86-5031-8348-ae27f444a5fd": {
+      "name": "C7308.MP4",
+      "raw_timecode": "20:16:52:38",
+      "day_position": 0.5630962705984388
+    },
+    "a778e858-df7a-5aaa-802b-6637991a58ee": {
+      "name": "C7309.MP4",
+      "raw_timecode": "20:16:59:48",
+      "day_position": 0.5646140503035559
+    },
+    "9f656dbe-679b-5ac7-bd26-a68356b47a96": {
+      "name": "C7310.MP4",
+      "raw_timecode": "20:17:39:40",
+      "day_position": 0.5732870771899393
+    },
+    "071d65f2-538c-548e-ba81-afc91edbb00e": {
+      "name": "C7311.MP4",
+      "raw_timecode": "20:17:50:18",
+      "day_position": 0.5756721595836947
+    },
+    "d80bf13e-c775-5c19-9f74-11efa86bd869": {
+      "name": "C7312.MP4",
+      "raw_timecode": "20:17:58:02",
+      "day_position": 0.5774067649609714
+    },
+    "d7f8ac0f-413c-58cb-81b7-fac01a2130b5": {
+      "name": "C7313.MP4",
+      "raw_timecode": "20:18:02:18",
+      "day_position": 0.5782740676496098
+    },
+    "b8452277-6308-5f00-98f9-407c8f35b640": {
+      "name": "C7314.MP4",
+      "raw_timecode": "20:18:06:10",
+      "day_position": 0.5791413703382481
+    },
+    "d539275f-e982-57c4-93af-79a85728c5a6": {
+      "name": "C7315.MP4",
+      "raw_timecode": "20:18:16:14",
+      "day_position": 0.5813096270598439
+    },
+    "a127554f-6208-5467-8db2-724a39bc066e": {
+      "name": "C7316.MP4",
+      "raw_timecode": "20:18:28:14",
+      "day_position": 0.5839115351257589
+    },
+    "5cffd3fb-6627-5338-938e-1929e6bee7f1": {
+      "name": "C7317.MP4",
+      "raw_timecode": "20:18:40:38",
+      "day_position": 0.5865134431916739
+    },
+    "f01f3c29-1b43-59c1-a096-7fcc945adceb": {
+      "name": "C7318.MP4",
+      "raw_timecode": "20:18:49:20",
+      "day_position": 0.5884648742411102
+    },
+    "462c28d0-2d33-5444-ac52-9f5dd24df7aa": {
+      "name": "C7319.MP4",
+      "raw_timecode": "20:19:00:22",
+      "day_position": 0.5908499566348656
+    },
+    "c785aacc-e959-583b-aa5d-eaa493978ed9": {
+      "name": "C7320.MP4",
+      "raw_timecode": "20:19:10:26",
+      "day_position": 0.5930182133564614
+    },
+    "5cec6ab6-8f02-5bef-8501-5ecaac90aec5": {
+      "name": "C7321.MP4",
+      "raw_timecode": "20:19:17:36",
+      "day_position": 0.5945359930615784
+    },
+    "22ce0bc6-6f50-5b0d-aa7e-4c457ee17043": {
+      "name": "C7322.MP4",
+      "raw_timecode": "20:19:30:34",
+      "day_position": 0.5973547267996531
+    },
+    "147410a7-1fb2-58de-9ffe-284c3e425b7d": {
+      "name": "C7323.MP4",
+      "raw_timecode": "20:19:34:26",
+      "day_position": 0.5982220294882914
+    },
+    "ec7b1cae-538a-5c0b-a324-9caa598d707f": {
+      "name": "C7324.MP4",
+      "raw_timecode": "20:19:53:12",
+      "day_position": 0.6023417172593235
+    },
+    "899f1bbb-9b10-5179-835b-00020c332fac": {
+      "name": "C7325.MP4",
+      "raw_timecode": "20:20:04:14",
+      "day_position": 0.604726799653079
+    },
+    "1981bf5e-b3ce-52e2-8fbe-3902ba05a5f1": {
+      "name": "C7326.MP4",
+      "raw_timecode": "20:20:16:38",
+      "day_position": 0.6073287077189939
+    },
+    "45f36738-4d3c-54fe-bf05-5feebeb828cf": {
+      "name": "C7327.MP4",
+      "raw_timecode": "20:20:23:24",
+      "day_position": 0.608846487424111
+    },
+    "1a8b8fbd-89d6-5893-b0a6-c0a75fc069c8": {
+      "name": "C7328.MP4",
+      "raw_timecode": "20:20:34:26",
+      "day_position": 0.6112315698178664
+    },
+    "bde19951-6323-5c4d-a4ca-a68e60196f2f": {
+      "name": "C7329.MP4",
+      "raw_timecode": "20:20:41:12",
+      "day_position": 0.6127493495229835
+    },
+    "c0fe849a-f660-5c7c-8226-4c0b313f1940": {
+      "name": "C7330.MP4",
+      "raw_timecode": "20:20:55:32",
+      "day_position": 0.6157849089332177
+    },
+    "5082ffa9-1ac9-54f0-ae70-310955878721": {
+      "name": "C7331.MP4",
+      "raw_timecode": "20:21:05:12",
+      "day_position": 0.6179531656548135
+    },
+    "6fd3d0f5-c2be-5542-9d67-b7215f57eb49": {
+      "name": "C7332.MP4",
+      "raw_timecode": "20:21:12:46",
+      "day_position": 0.6194709453599306
+    },
+    "ef16e214-0aa2-5e48-8813-f11973ac6767": {
+      "name": "C7333.MP4",
+      "raw_timecode": "20:21:23:48",
+      "day_position": 0.6218560277536861
+    },
+    "ae4838d2-7d9c-5005-ae3b-f8da55adec59": {
+      "name": "C7334.MP4",
+      "raw_timecode": "20:21:33:04",
+      "day_position": 0.6240242844752819
+    },
+    "965251d0-db5f-53f2-9306-bf583accba4d": {
+      "name": "C7335.MP4",
+      "raw_timecode": "20:21:49:20",
+      "day_position": 0.6274934952298352
+    },
+    "b5421748-7d9b-5c7e-a2dc-56a7de2a386b": {
+      "name": "C7336.MP4",
+      "raw_timecode": "20:22:00:22",
+      "day_position": 0.6298785776235907
+    },
+    "7d9cc4f2-57e6-5146-80d8-e34d18ab6324": {
+      "name": "C7337.MP4",
+      "raw_timecode": "20:22:09:04",
+      "day_position": 0.6318300086730269
+    },
+    "cbbe4734-7007-5434-85fd-cfe660e6f602": {
+      "name": "C7338.MP4",
+      "raw_timecode": "20:22:19:32",
+      "day_position": 0.6339982653946227
+    },
+    "7c5d96bf-aef6-585a-b872-c29974f3396e": {
+      "name": "C7339.MP4",
+      "raw_timecode": "20:22:44:06",
+      "day_position": 0.6394189071986123
+    },
+    "1dd2784b-64d6-5b74-a745-bfd320a06a76": {
+      "name": "C7340.MP4",
+      "raw_timecode": "20:22:49:44",
+      "day_position": 0.6405030355594102
+    },
+    "3ce67c8d-d204-5689-8042-6098865a4725": {
+      "name": "C7341.MP4",
+      "raw_timecode": "20:23:12:46",
+      "day_position": 0.6454900260190807
+    },
+    "7c0a729a-290a-5b8b-baa5-ab6b0d73cdc9": {
+      "name": "C7342.MP4",
+      "raw_timecode": "20:23:24:46",
+      "day_position": 0.6480919340849957
+    },
+    "248096e6-2ae1-5d1f-9a6b-ded6ef988ac0": {
+      "name": "C7343.MP4",
+      "raw_timecode": "20:23:50:18",
+      "day_position": 0.6537294015611448
+    },
+    "c5be325d-401e-5c05-913b-59583bc98608": {
+      "name": "C7344.MP4",
+      "raw_timecode": "20:24:57:28",
+      "day_position": 0.6682567215958369
+    },
+    "bb55fa47-8be2-53f7-b8ae-b81222efedca": {
+      "name": "C7345.MP4",
+      "raw_timecode": "20:25:21:28",
+      "day_position": 0.673460537727667
+    },
+    "ea148ac4-a40e-55c3-8eb4-5e1c2b13eb82": {
+      "name": "C7346.MP4",
+      "raw_timecode": "20:25:41:36",
+      "day_position": 0.6777970511708586
+    },
+    "78591f78-425a-515b-bb1b-e73aa6472289": {
+      "name": "C7347.MP4",
+      "raw_timecode": "20:25:47:24",
+      "day_position": 0.6790980052038161
+    },
+    "3dc86431-9b4d-5238-bf6a-6758123d1701": {
+      "name": "C7348.MP4",
+      "raw_timecode": "20:25:51:40",
+      "day_position": 0.6799653078924545
+    },
+    "ca152fb9-5f1d-53bb-8053-c5488cdfdab8": {
+      "name": "C7349.MP4",
+      "raw_timecode": "20:26:08:30",
+      "day_position": 0.6836513443191674
+    },
+    "03c57bca-28a6-540f-8623-6dad47bc1a67": {
+      "name": "C7350.MP4",
+      "raw_timecode": "20:26:21:04",
+      "day_position": 0.686470078057242
+    },
+    "8155bcbe-2456-5bf2-824e-b3a6ea9c229f": {
+      "name": "C7351.MP4",
+      "raw_timecode": "20:26:30:10",
+      "day_position": 0.6884215091066782
+    },
+    "5d46fce1-362c-5ab0-a6f1-f53536009aad": {
+      "name": "C7352.MP4",
+      "raw_timecode": "20:27:46:02",
+      "day_position": 0.7049002601908065
+    },
+    "fbc00df9-fe81-517f-96c4-6d4044f89785": {
+      "name": "C7353.MP4",
+      "raw_timecode": "20:27:59:00",
+      "day_position": 0.7077189939288812
+    },
+    "44b33164-903a-56d3-a520-7b780ea1c9e2": {
+      "name": "C7354.MP4",
+      "raw_timecode": "20:28:08:06",
+      "day_position": 0.7096704249783174
+    },
+    "ebf068a2-b64f-53cf-83d5-8c9ffde92c73": {
+      "name": "C7355.MP4",
+      "raw_timecode": "20:28:19:08",
+      "day_position": 0.7120555073720729
+    },
+    "b5e92625-0600-5ba5-a5dc-da70785c80ed": {
+      "name": "C7356.MP4",
+      "raw_timecode": "20:28:32:06",
+      "day_position": 0.7148742411101474
+    },
+    "39a61573-8465-5d30-ab63-534a1d2802f5": {
+      "name": "C7357.MP4",
+      "raw_timecode": "20:28:46:02",
+      "day_position": 0.7179098005203816
+    },
+    "599a5255-789a-5890-b113-7271b964c8b3": {
+      "name": "C7358.MP4",
+      "raw_timecode": "20:28:54:34",
+      "day_position": 0.7196444058976583
+    },
+    "92c58021-ed5e-57dc-ac7e-fb6300f106d4": {
+      "name": "C7359.MP4",
+      "raw_timecode": "20:29:14:42",
+      "day_position": 0.72398091934085
+    },
+    "27351e1f-ca92-5d76-a3ba-ec3722d28d7c": {
+      "name": "C7360.MP4",
+      "raw_timecode": "20:29:21:04",
+      "day_position": 0.7254986990459671
+    },
+    "a25b2bb8-99c8-53b1-8ada-e3e26fc77547": {
+      "name": "C7361.MP4",
+      "raw_timecode": "20:29:28:38",
+      "day_position": 0.7270164787510841
+    },
+    "49e5ee47-a8b3-586a-a9ca-d9a38de5640b": {
+      "name": "C7362.MP4",
+      "raw_timecode": "20:29:42:10",
+      "day_position": 0.7300520381613183
+    },
+    "8981383f-9508-5e41-b2cc-0d69a3742825": {
+      "name": "C7363.MP4",
+      "raw_timecode": "20:29:50:18",
+      "day_position": 0.731786643538595
+    },
+    "1b048d58-9cd6-5441-bd55-1b1af43ffa76": {
+      "name": "C7364.MP4",
+      "raw_timecode": "20:29:54:34",
+      "day_position": 0.7326539462272333
+    },
+    "f18cbafb-f79c-5a0c-ab2d-c396457cee07": {
+      "name": "C7365.MP4",
+      "raw_timecode": "20:30:03:16",
+      "day_position": 0.7346053772766695
+    },
+    "3b7da0b7-78bf-5e80-9f5d-a41323ea5271": {
+      "name": "C7366.MP4",
+      "raw_timecode": "20:30:12:46",
+      "day_position": 0.7365568083261058
+    },
+    "60875d64-b066-541f-b6bf-a524a1ba4330": {
+      "name": "C7367.MP4",
+      "raw_timecode": "20:30:17:36",
+      "day_position": 0.7376409366869038
+    },
+    "49e295ec-2b60-5a2c-8da8-9e2fd2f27b10": {
+      "name": "C7368.MP4",
+      "raw_timecode": "20:30:49:20",
+      "day_position": 0.7445793581960104
+    },
+    "29754bb2-2efd-5c46-bd83-fb5fe45ebca3": {
+      "name": "C7369.MP4",
+      "raw_timecode": "20:30:57:28",
+      "day_position": 0.746313963573287
+    },
+    "8374d290-83d5-5c83-940c-50a3d977f486": {
+      "name": "C7370.MP4",
+      "raw_timecode": "20:31:02:42",
+      "day_position": 0.747398091934085
+    },
+    "300c9b46-155f-5373-87cd-fcd8686bb5a5": {
+      "name": "C7371.MP4",
+      "raw_timecode": "20:31:09:04",
+      "day_position": 0.748915871639202
+    },
+    "d544df67-e456-5f71-868f-78eef654fb85": {
+      "name": "C7372.MP4",
+      "raw_timecode": "20:31:17:12",
+      "day_position": 0.7506504770164788
+    },
+    "269872c4-1c29-57e0-a1cb-f9c57504ece9": {
+      "name": "C7373.MP4",
+      "raw_timecode": "20:31:47:00",
+      "day_position": 0.7571552471812663
+    },
+    "f59666c6-3070-5eb5-a18c-8b47d6b32416": {
+      "name": "C7374.MP4",
+      "raw_timecode": "20:31:52:38",
+      "day_position": 0.7582393755420642
+    },
+    "453aa07c-3488-5409-9171-948a287a6f32": {
+      "name": "C7375.MP4",
+      "raw_timecode": "20:31:59:24",
+      "day_position": 0.7597571552471812
+    },
+    "96c51dd5-bb29-5dad-a439-88ebed92e1ea": {
+      "name": "C7376.MP4",
+      "raw_timecode": "20:32:01:44",
+      "day_position": 0.7601908065915004
+    },
+    "49dc283f-eabd-5c74-9e5c-6517b03409a9": {
+      "name": "C7377.MP4",
+      "raw_timecode": "20:32:05:36",
+      "day_position": 0.7610581092801387
+    },
+    "40845941-461c-5251-a9a9-0aef91d2f052": {
+      "name": "C7378.MP4",
+      "raw_timecode": "20:32:22:02",
+      "day_position": 0.7647441457068517
+    },
+    "3d695112-15d5-5851-805a-58ef730455f5": {
+      "name": "C7379.MP4",
+      "raw_timecode": "20:32:27:16",
+      "day_position": 0.7658282740676496
+    },
+    "47141ad8-ab60-5972-abaa-16062ebfc914": {
+      "name": "C7380.MP4",
+      "raw_timecode": "20:32:35:24",
+      "day_position": 0.7675628794449263
+    },
+    "433a44e9-308b-59f1-a862-6d63032f8d37": {
+      "name": "C7381.MP4",
+      "raw_timecode": "20:32:45:04",
+      "day_position": 0.7697311361665221
+    },
+    "10c537bc-089b-5cf7-82f2-2a93ce399cd1": {
+      "name": "C7382.MP4",
+      "raw_timecode": "20:32:55:08",
+      "day_position": 0.7718993928881179
+    },
+    "0b2dda5a-b0c3-5420-971a-bacd0cbea911": {
+      "name": "C7383.MP4",
+      "raw_timecode": "20:33:07:32",
+      "day_position": 0.7745013009540329
+    },
+    "501e209b-1d19-5b0e-84ee-10e799173c0d": {
+      "name": "C7384.MP4",
+      "raw_timecode": "20:33:16:38",
+      "day_position": 0.7764527320034692
+    },
+    "fea798c7-534f-5949-8cb0-fe6b26af9500": {
+      "name": "C7385.MP4",
+      "raw_timecode": "20:33:35:24",
+      "day_position": 0.7805724197745013
+    },
+    "e6404bd5-ea48-526c-995b-d5ccdb36eaf9": {
+      "name": "C7386.MP4",
+      "raw_timecode": "20:33:42:10",
+      "day_position": 0.7820901994796184
+    },
+    "3f2181bf-15af-5e1d-9836-a9babff0149e": {
+      "name": "C7387.MP4",
+      "raw_timecode": "20:33:52:14",
+      "day_position": 0.7842584562012143
+    },
+    "32608eb7-03fc-56de-a542-5826b4d5a094": {
+      "name": "C7388.MP4",
+      "raw_timecode": "20:34:01:20",
+      "day_position": 0.7862098872506504
+    },
+    "dc4ef746-e16f-508a-8e68-1499cdc54e35": {
+      "name": "C7389.MP4",
+      "raw_timecode": "20:34:16:38",
+      "day_position": 0.7894622723330442
+    },
+    "6bd224ba-88b6-55ae-84a5-867e213702ef": {
+      "name": "C7390.MP4",
+      "raw_timecode": "20:34:19:08",
+      "day_position": 0.790112749349523
+    },
+    "3312e9c9-126b-5824-abf1-c95a2e42ede1": {
+      "name": "C7391.MP4",
+      "raw_timecode": "20:34:25:44",
+      "day_position": 0.7914137033824805
+    },
+    "c64dea0f-5eb3-5ac7-bfe0-0139c68e2f31": {
+      "name": "C7392.MP4",
+      "raw_timecode": "20:34:43:08",
+      "day_position": 0.795316565481353
+    },
+    "31344cfc-db39-58aa-8acf-9521bb9dcf9a": {
+      "name": "C7393.MP4",
+      "raw_timecode": "20:34:47:24",
+      "day_position": 0.7961838681699913
+    },
+    "16ddcc3c-93cc-5317-9ea4-7e932a234d08": {
+      "name": "C7394.MP4",
+      "raw_timecode": "20:35:03:16",
+      "day_position": 0.7996530789245446
+    },
+    "9c067d48-0eff-5b1b-b64b-8ecc6811f7ee": {
+      "name": "C7395.MP4",
+      "raw_timecode": "20:35:24:46",
+      "day_position": 0.8042064180398959
+    },
+    "64ba31d6-3459-5c3a-82cc-9fda15213aca": {
+      "name": "C7396.MP4",
+      "raw_timecode": "20:35:38:18",
+      "day_position": 0.80724197745013
+    },
+    "c9d21f29-97dd-59fd-8b00-ea2cb9082822": {
+      "name": "C7397.MP4",
+      "raw_timecode": "20:36:03:16",
+      "day_position": 0.8126626192541196
+    },
+    "bde85490-2bf4-55c4-950b-c2fbaceddf12": {
+      "name": "C7398.MP4",
+      "raw_timecode": "20:36:21:04",
+      "day_position": 0.8165654813529922
+    },
+    "ee6449ba-4d79-5482-a264-7fa3445353f7": {
+      "name": "C7399.MP4",
+      "raw_timecode": "20:36:33:28",
+      "day_position": 0.8191673894189072
+    },
+    "a750ed15-ac9f-51a7-b09a-c8f284ec6dff": {
+      "name": "C7400.MP4",
+      "raw_timecode": "20:36:53:36",
+      "day_position": 0.8235039028620988
+    },
+    "c179ca4b-a53e-5aaa-b787-decafd583434": {
+      "name": "C7401.MP4",
+      "raw_timecode": "20:37:03:40",
+      "day_position": 0.8256721595836947
+    },
+    "af39d31a-f13a-5005-9f6a-3b10273effda": {
+      "name": "C7402.MP4",
+      "raw_timecode": "20:37:18:10",
+      "day_position": 0.8289245446660884
+    },
+    "fa9d923a-7c1f-5865-9104-7087f88a8081": {
+      "name": "C7403.MP4",
+      "raw_timecode": "20:37:36:46",
+      "day_position": 0.8328274067649609
+    },
+    "1120a48b-f125-58fb-bfce-bff4ce280e3d": {
+      "name": "C7404.MP4",
+      "raw_timecode": "20:37:43:08",
+      "day_position": 0.834345186470078
+    },
+    "c487fd97-83b5-52c0-9d1e-6c9bd0023f39": {
+      "name": "C7405.MP4",
+      "raw_timecode": "20:38:59:00",
+      "day_position": 0.8508239375542064
+    },
+    "8551bcc9-f526-5c4f-a402-503dc072261c": {
+      "name": "C7406.MP4",
+      "raw_timecode": "20:39:03:40",
+      "day_position": 0.8516912402428447
+    },
+    "68ad3e20-d7c3-5bab-a37f-0faed56cf02a": {
+      "name": "C7407.MP4",
+      "raw_timecode": "20:39:09:04",
+      "day_position": 0.8529921942758023
+    },
+    "a0a531c6-36ea-50e9-913d-0839706c4347": {
+      "name": "C7408.MP4",
+      "raw_timecode": "20:39:20:30",
+      "day_position": 0.8553772766695577
+    },
+    "23cc1b84-5285-51b6-906b-5372f8531754": {
+      "name": "C7409.MP4",
+      "raw_timecode": "20:39:47:48",
+      "day_position": 0.8612315698178664
+    },
+    "6db32951-8d3c-56f1-8fbd-cc57d032a867": {
+      "name": "C7410.MP4",
+      "raw_timecode": "20:39:52:14",
+      "day_position": 0.8623156981786644
+    },
+    "7112cccd-a71b-57c6-a459-e7ba611c7df5": {
+      "name": "C7411.MP4",
+      "raw_timecode": "20:39:59:00",
+      "day_position": 0.8638334778837814
+    },
+    "6ddf1236-94bd-5722-8d4d-98b3f37f94a9": {
+      "name": "C7412.MP4",
+      "raw_timecode": "20:40:09:04",
+      "day_position": 0.8660017346053773
+    },
+    "0dfffaec-bcea-5e3a-88da-bbce3d56ef51": {
+      "name": "C7413.MP4",
+      "raw_timecode": "20:40:17:12",
+      "day_position": 0.867736339982654
+    },
+    "383e5a75-7aa5-54a2-bb6b-4e1ca8c54e10": {
+      "name": "C7414.MP4",
+      "raw_timecode": "20:40:34:02",
+      "day_position": 0.8714223764093668
+    },
+    "906bf731-c0d0-51f5-803c-e6cb93f535c3": {
+      "name": "C7415.MP4",
+      "raw_timecode": "20:40:47:48",
+      "day_position": 0.8742411101474414
+    },
+    "cc5066b8-2ce6-5ab1-b374-571f3b8f8487": {
+      "name": "C7416.MP4",
+      "raw_timecode": "20:41:06:10",
+      "day_position": 0.8783607979184735
+    },
+    "0b72a865-f8d0-5f64-8f0b-fbc2dc70618f": {
+      "name": "C7417.MP4",
+      "raw_timecode": "20:41:11:48",
+      "day_position": 0.8794449262792715
+    },
+    "7f9c4a3e-1b42-5bd8-90ae-27f9bcd398b0": {
+      "name": "C7418.MP4",
+      "raw_timecode": "20:41:32:06",
+      "day_position": 0.8839982653946227
+    },
+    "3f2e3e50-a8c0-523d-9e97-d197a61fb199": {
+      "name": "C7419.MP4",
+      "raw_timecode": "20:41:47:00",
+      "day_position": 0.8872506504770165
+    },
+    "05d28714-2cd5-5b43-970f-f97eacf26c7c": {
+      "name": "C7420.MP4",
+      "raw_timecode": "20:41:49:20",
+      "day_position": 0.8876843018213356
+    },
+    "a9a0aab4-433e-5880-b7be-dee2461953e9": {
+      "name": "C7421.MP4",
+      "raw_timecode": "20:42:14:18",
+      "day_position": 0.8931049436253252
+    },
+    "9192e469-2731-5b21-9f03-0c450714f756": {
+      "name": "C7422.MP4",
+      "raw_timecode": "20:42:37:44",
+      "day_position": 0.8980919340849957
+    },
+    "d104747b-19f7-5e5e-a70f-c306aa3a8efc": {
+      "name": "C7423.MP4",
+      "raw_timecode": "20:42:41:12",
+      "day_position": 0.898959236773634
+    },
+    "eeab038a-42a8-504d-b580-02397bdfe591": {
+      "name": "C7424.MP4",
+      "raw_timecode": "20:43:04:38",
+      "day_position": 0.9039462272333044
+    },
+    "8e14d518-eb1d-5ac0-a47b-28bdd345a8f1": {
+      "name": "C7425.MP4",
+      "raw_timecode": "20:43:06:10",
+      "day_position": 0.9043798785776236
+    },
+    "0723ce09-9469-5bba-98fc-3ec36aa6b38f": {
+      "name": "C7426.MP4",
+      "raw_timecode": "20:43:11:24",
+      "day_position": 0.9054640069384216
+    },
+    "f0163917-35ce-5775-83fb-3f6e48667026": {
+      "name": "C7427.MP4",
+      "raw_timecode": "20:43:17:36",
+      "day_position": 0.906764960971379
+    },
+    "da4296a9-4b03-5cb0-b0a8-43186cce3391": {
+      "name": "C7428.MP4",
+      "raw_timecode": "20:43:32:06",
+      "day_position": 0.9100173460537727
+    },
+    "52686b12-9a78-585f-bb8a-74919d5fcfae": {
+      "name": "C7429.MP4",
+      "raw_timecode": "20:43:41:12",
+      "day_position": 0.911968777103209
+    },
+    "82bbe065-c147-5a0a-a2fd-0b52a3e65cea": {
+      "name": "C7430.MP4",
+      "raw_timecode": "20:43:52:14",
+      "day_position": 0.9143538594969645
+    },
+    "f24b1329-ba45-599a-a06d-540b99afe8b0": {
+      "name": "C7431.MP4",
+      "raw_timecode": "20:44:01:44",
+      "day_position": 0.9163052905464006
+    },
+    "37d00b09-a2f0-5436-8167-0d71293d046d": {
+      "name": "C7432.MP4",
+      "raw_timecode": "20:44:10:02",
+      "day_position": 0.9182567215958369
+    },
+    "ccd232f4-27e8-503a-9ef0-28c0c37b3eed": {
+      "name": "C7433.MP4",
+      "raw_timecode": "20:44:21:28",
+      "day_position": 0.9206418039895924
+    },
+    "ed585be7-31bd-53ea-9fb5-7b16dcb83c7b": {
+      "name": "C7434.MP4",
+      "raw_timecode": "20:44:51:16",
+      "day_position": 0.9271465741543798
+    },
+    "f9239446-dbb0-58a3-85a7-ab9ebe750c2c": {
+      "name": "C7435.MP4",
+      "raw_timecode": "20:44:56:30",
+      "day_position": 0.9282307025151778
+    },
+    "a4aa3a74-a172-5139-be94-06ae229e13a1": {
+      "name": "C7436.MP4",
+      "raw_timecode": "20:45:02:18",
+      "day_position": 0.9295316565481353
+    },
+    "1ee6949e-c6cd-5565-a818-67fc42156038": {
+      "name": "C7437.MP4",
+      "raw_timecode": "20:45:24:22",
+      "day_position": 0.9343018213356461
+    },
+    "8233b97c-9a94-5181-8013-63d45ec353b1": {
+      "name": "C7438.MP4",
+      "raw_timecode": "20:45:36:22",
+      "day_position": 0.9369037294015612
+    },
+    "cd1a2b9c-92e1-5fd9-922d-8018345baf83": {
+      "name": "C7439.MP4",
+      "raw_timecode": "20:45:43:32",
+      "day_position": 0.9384215091066782
+    },
+    "96dbb139-2ad2-525d-baee-83ce46785db1": {
+      "name": "C7440.MP4",
+      "raw_timecode": "20:45:47:24",
+      "day_position": 0.9392888117953165
+    },
+    "8282ad07-7568-51d4-a57a-6d58b0905dc9": {
+      "name": "C7441.MP4",
+      "raw_timecode": "20:45:48:46",
+      "day_position": 0.9395056374674762
+    },
+    "20ef830d-8cb5-55bf-997f-4c74435db7c3": {
+      "name": "C7442.MP4",
+      "raw_timecode": "20:45:59:00",
+      "day_position": 0.9418907198612315
+    },
+    "f36603fa-e695-553e-8ec4-ebe09b92b9df": {
+      "name": "C7443.MP4",
+      "raw_timecode": "20:46:09:04",
+      "day_position": 0.9440589765828274
+    },
+    "e147167c-5b0b-5255-b69e-8c57e884ba4d": {
+      "name": "C7444.MP4",
+      "raw_timecode": "20:46:16:38",
+      "day_position": 0.9455767562879445
+    },
+    "6dea95c2-33c1-5309-81f8-4df269d825ae": {
+      "name": "C7445.MP4",
+      "raw_timecode": "20:46:19:08",
+      "day_position": 0.9462272333044233
+    },
+    "be12636c-6df3-53f1-887f-0dc5364659b0": {
+      "name": "C7446.MP4",
+      "raw_timecode": "20:46:28:14",
+      "day_position": 0.9481786643538594
+    },
+    "cda5fab5-db66-59e4-9a19-e13123e840f9": {
+      "name": "C7447.MP4",
+      "raw_timecode": "20:46:36:46",
+      "day_position": 0.9499132697311362
+    },
+    "4b57083d-2ffd-5841-b994-1175d534c646": {
+      "name": "C7448.MP4",
+      "raw_timecode": "20:46:42:10",
+      "day_position": 0.9512142237640937
+    },
+    "09488964-50a6-56dd-ac36-1de8f3d8f669": {
+      "name": "C7449.MP4",
+      "raw_timecode": "20:46:51:16",
+      "day_position": 0.9531656548135299
+    },
+    "0f630b48-1876-54da-a102-1d1ab6634364": {
+      "name": "C7450.MP4",
+      "raw_timecode": "20:46:59:48",
+      "day_position": 0.9549002601908065
+    },
+    "da281bdf-5158-59af-9e6c-bbf751de215d": {
+      "name": "C7451.MP4",
+      "raw_timecode": "20:47:24:22",
+      "day_position": 0.9603209019947961
+    },
+    "2e00bf21-5364-56bd-9285-a1522c5decfc": {
+      "name": "C7452.MP4",
+      "raw_timecode": "20:50:27:16",
+      "day_position": 1.0
+    },
+    "54184b99-7932-58c8-93a9-6507856ccdb5": {
+      "name": "DJI_0522.MOV",
+      "raw_timecode": null,
+      "day_position": null
+    },
+    "6466c55d-fee4-5f13-a228-8f5379fa824d": {
+      "name": "DJI_0523.MOV",
+      "raw_timecode": null,
+      "day_position": null
+    },
+    "09aa815e-4a22-54df-a696-0b6fe1fa0410": {
+      "name": "DJI_0524.MOV",
+      "raw_timecode": null,
+      "day_position": null
+    },
+    "72ef0dd7-0a8a-57da-99fa-d41f66dd5c76": {
+      "name": "DJI_0525.MOV",
+      "raw_timecode": null,
+      "day_position": null
+    },
+    "7b6ef646-0a34-5046-be09-679c3405a6fb": {
+      "name": "DJI_0526.MOV",
+      "raw_timecode": null,
+      "day_position": null
+    },
+    "53eed165-0f2c-520a-8bc7-fd72125a798a": {
+      "name": "DJI_0527.MOV",
+      "raw_timecode": null,
+      "day_position": null
+    },
+    "a5ba2e26-8e09-50bc-bc9d-f1b382ba95af": {
+      "name": "DJI_0528.MOV",
+      "raw_timecode": null,
+      "day_position": null
+    },
+    "dc5f4028-239f-5fad-9530-7f64af7a0760": {
+      "name": "DJI_0529.MOV",
+      "raw_timecode": null,
+      "day_position": null
+    },
+    "9171be37-e07f-5ed8-999a-e9e9ebf821c5": {
+      "name": "DJI_0530.MOV",
+      "raw_timecode": null,
+      "day_position": null
+    },
+    "b941b566-fc90-521d-bad7-79cd43b49991": {
+      "name": "DJI_0531.MOV",
+      "raw_timecode": null,
+      "day_position": null
+    }
+  }
+}

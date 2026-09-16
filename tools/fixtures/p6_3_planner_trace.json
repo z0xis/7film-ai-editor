@@ -1,0 +1,280 @@
+{
+  "moment_day": {
+    "entrance": 0.32328707718993926,
+    "ring": 0.19470945359930616,
+    "kiss": 0.446877710320902,
+    "cake": 0.5646140503035559,
+    "cake_feed": 0.5646140503035559,
+    "first_dance": 0.9206418039895924
+  },
+  "kept_counts": {
+    "entrance": 4,
+    "ring": 4,
+    "kiss": 4,
+    "cake": 8,
+    "cake_feed": 7,
+    "first_dance": 7
+  },
+  "due_now_at_start": {
+    "entrance": false,
+    "ring": true,
+    "kiss": false,
+    "cake": false,
+    "cake_feed": false,
+    "first_dance": false
+  },
+  "contributors": {
+    "entrance": [
+      {
+        "shot_id": "0237cda9-c1de-5ce9-af99-d346d78c9f7a",
+        "asset_id": "fca05cb0-8cef-5167-b9e2-4fab33e6da47",
+        "day_position": 0.4054640069384215
+      },
+      {
+        "shot_id": "7fd9e99b-aaee-531f-890b-4498711384b1",
+        "asset_id": "46a24dfe-f7b6-541d-9a87-5cdaac923474",
+        "day_position": 0.2417606244579358
+      },
+      {
+        "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+        "asset_id": "46a24dfe-f7b6-541d-9a87-5cdaac923474",
+        "day_position": 0.2417606244579358
+      },
+      {
+        "shot_id": "3972bb9b-a9bd-50c5-bdf6-7e4b9f30f006",
+        "asset_id": "97d31983-6a5f-5b97-a7dd-f0a8e09ce010",
+        "day_position": 0.32328707718993926
+      },
+      {
+        "shot_id": "9a4ed279-5ba9-5f80-be32-0d593d1bcd87",
+        "asset_id": "1c2409e7-d2a7-5f79-bfe0-054a4c2fb24c",
+        "day_position": 0.32653946227233305
+      },
+      {
+        "shot_id": "a04a606a-4a59-5715-b54e-2a75fcb2cb8d",
+        "asset_id": "06cf86e1-b55e-5eac-a314-bec020adcba3",
+        "day_position": 0.32003469210754554
+      },
+      {
+        "shot_id": "0e41f14f-740b-5530-beb8-cc2532f837c3",
+        "asset_id": "97d31983-6a5f-5b97-a7dd-f0a8e09ce010",
+        "day_position": 0.32328707718993926
+      },
+      {
+        "shot_id": "885d2795-b868-5b65-bf04-07f6679cccce",
+        "asset_id": "1d307f87-ab25-50b9-91e0-65e2188efca1",
+        "day_position": 0.26019080659150046
+      }
+    ],
+    "ring": [
+      {
+        "shot_id": "c83d488f-4372-5482-9369-5ecf951f537e",
+        "asset_id": "16302d8e-2b34-5d0a-8da1-8eb912a79160",
+        "day_position": 0.19470945359930616
+      },
+      {
+        "shot_id": "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+        "asset_id": "16302d8e-2b34-5d0a-8da1-8eb912a79160",
+        "day_position": 0.19470945359930616
+      },
+      {
+        "shot_id": "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+        "asset_id": "16302d8e-2b34-5d0a-8da1-8eb912a79160",
+        "day_position": 0.19470945359930616
+      },
+      {
+        "shot_id": "c00b2de1-234e-5c0d-b757-1871d667b012",
+        "asset_id": "43c57caa-cb35-5b34-89d6-604d148932f5",
+        "day_position": 0.36751951431049434
+      },
+      {
+        "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+        "asset_id": "16302d8e-2b34-5d0a-8da1-8eb912a79160",
+        "day_position": 0.19470945359930616
+      },
+      {
+        "shot_id": "9793d369-cfec-5a45-99e4-8f11b00b891e",
+        "asset_id": "cd918d98-77a6-50e5-b6df-34744ce2fe57",
+        "day_position": 0.409366869037294
+      },
+      {
+        "shot_id": "5476176d-4ade-50c4-b2a9-c4436b3e52b2",
+        "asset_id": "0bf63991-9bb9-5cad-935a-3479539aac98",
+        "day_position": 0.3295750216825672
+      },
+      {
+        "shot_id": "0ed9b29d-1326-5484-a95b-2f2a49bd8b15",
+        "asset_id": "285e2034-5cf4-55d7-920e-680af1149cbf",
+        "day_position": 0.14050303555941024
+      }
+    ],
+    "kiss": [
+      {
+        "shot_id": "bd091ada-671e-5211-8577-44e7e82a588d",
+        "asset_id": "9cbccce1-f2c2-5f76-82c9-3914b36252a7",
+        "day_position": 0.3900693842150911
+      },
+      {
+        "shot_id": "a0240fc9-552d-5a63-a6bb-d7f636eafe7f",
+        "asset_id": "0cc7cb3c-f74d-5d25-9187-75956cdfb099",
+        "day_position": 0.446877710320902
+      },
+      {
+        "shot_id": "47e9ee77-5167-5fbe-836b-88763b80b28b",
+        "asset_id": "3dc86431-9b4d-5238-bf6a-6758123d1701",
+        "day_position": 0.6799653078924545
+      },
+      {
+        "shot_id": "06ea0fb7-092c-5d96-85b4-5c816c46cc78",
+        "asset_id": "9cbccce1-f2c2-5f76-82c9-3914b36252a7",
+        "day_position": 0.3900693842150911
+      },
+      {
+        "shot_id": "48418013-133e-5e0f-bbf4-9ad1b1cf9071",
+        "asset_id": "3312e9c9-126b-5824-abf1-c95a2e42ede1",
+        "day_position": 0.7914137033824805
+      },
+      {
+        "shot_id": "706a148f-d249-5ee6-ba96-3add2e22fdde",
+        "asset_id": "d134bb11-3d9b-5307-ad85-2d61d4423755",
+        "day_position": 0.4195576756287944
+      },
+      {
+        "shot_id": "9793d369-cfec-5a45-99e4-8f11b00b891e",
+        "asset_id": "cd918d98-77a6-50e5-b6df-34744ce2fe57",
+        "day_position": 0.409366869037294
+      },
+      {
+        "shot_id": "642f3479-dfba-5b2a-9aba-6d7ffa7b8abe",
+        "asset_id": "e5034cb3-2ce7-571f-a4b1-dee234cf843e",
+        "day_position": 0.4692107545533391
+      }
+    ],
+    "cake": [
+      {
+        "shot_id": "b21ae921-9369-5413-b5a4-2c21c03ade3a",
+        "asset_id": "a778e858-df7a-5aaa-802b-6637991a58ee",
+        "day_position": 0.5646140503035559
+      },
+      {
+        "shot_id": "f98d80bc-82f8-5057-8547-41ed7b76a3e7",
+        "asset_id": "a778e858-df7a-5aaa-802b-6637991a58ee",
+        "day_position": 0.5646140503035559
+      },
+      {
+        "shot_id": "5b56bf52-97a0-52f8-85e9-2963e13319b7",
+        "asset_id": "a778e858-df7a-5aaa-802b-6637991a58ee",
+        "day_position": 0.5646140503035559
+      },
+      {
+        "shot_id": "6cc0df32-4c16-57b1-b241-2add39efaf59",
+        "asset_id": "a778e858-df7a-5aaa-802b-6637991a58ee",
+        "day_position": 0.5646140503035559
+      },
+      {
+        "shot_id": "46adc211-9dd2-57b2-b1a7-7cdf4bfc15a9",
+        "asset_id": "a778e858-df7a-5aaa-802b-6637991a58ee",
+        "day_position": 0.5646140503035559
+      },
+      {
+        "shot_id": "5b9b2d4b-4b7f-588f-80f1-3e38be2f7acb",
+        "asset_id": "a778e858-df7a-5aaa-802b-6637991a58ee",
+        "day_position": 0.5646140503035559
+      },
+      {
+        "shot_id": "15519b14-560c-52ae-8afa-53c951284f91",
+        "asset_id": "a778e858-df7a-5aaa-802b-6637991a58ee",
+        "day_position": 0.5646140503035559
+      },
+      {
+        "shot_id": "91099494-4a7a-543c-bcd9-39afa7de000c",
+        "asset_id": "a778e858-df7a-5aaa-802b-6637991a58ee",
+        "day_position": 0.5646140503035559
+      }
+    ],
+    "cake_feed": [
+      {
+        "shot_id": "b21ae921-9369-5413-b5a4-2c21c03ade3a",
+        "asset_id": "a778e858-df7a-5aaa-802b-6637991a58ee",
+        "day_position": 0.5646140503035559
+      },
+      {
+        "shot_id": "15519b14-560c-52ae-8afa-53c951284f91",
+        "asset_id": "a778e858-df7a-5aaa-802b-6637991a58ee",
+        "day_position": 0.5646140503035559
+      },
+      {
+        "shot_id": "5b56bf52-97a0-52f8-85e9-2963e13319b7",
+        "asset_id": "a778e858-df7a-5aaa-802b-6637991a58ee",
+        "day_position": 0.5646140503035559
+      },
+      {
+        "shot_id": "b835f0cc-fa95-54a8-96fc-3d5d13d1bae4",
+        "asset_id": "7112cccd-a71b-57c6-a459-e7ba611c7df5",
+        "day_position": 0.8638334778837814
+      },
+      {
+        "shot_id": "6cc0df32-4c16-57b1-b241-2add39efaf59",
+        "asset_id": "a778e858-df7a-5aaa-802b-6637991a58ee",
+        "day_position": 0.5646140503035559
+      },
+      {
+        "shot_id": "853fb6f0-2bbc-532b-b358-48631306051b",
+        "asset_id": "46fcb03b-7c1c-57d2-8fa8-3014b6ed0ba0",
+        "day_position": 0.5171292281006071
+      },
+      {
+        "shot_id": "a2b62fa5-3993-5018-aa51-ae4cfbf913b7",
+        "asset_id": "9f656dbe-679b-5ac7-bd26-a68356b47a96",
+        "day_position": 0.5732870771899393
+      },
+      {
+        "shot_id": "0cd8b821-737e-55b4-850f-3db3342993ec",
+        "asset_id": "9f656dbe-679b-5ac7-bd26-a68356b47a96",
+        "day_position": 0.5732870771899393
+      }
+    ],
+    "first_dance": [
+      {
+        "shot_id": "cd10866a-83c4-5878-a7cc-0adf2a701557",
+        "asset_id": "dc5f4028-239f-5fad-9530-7f64af7a0760",
+        "day_position": null
+      },
+      {
+        "shot_id": "6d804937-6ef8-50fa-aa2d-3f084dc049d7",
+        "asset_id": "dc5f4028-239f-5fad-9530-7f64af7a0760",
+        "day_position": null
+      },
+      {
+        "shot_id": "202d960b-697b-58bc-8eed-ea2cf8cd67c0",
+        "asset_id": "dc5f4028-239f-5fad-9530-7f64af7a0760",
+        "day_position": null
+      },
+      {
+        "shot_id": "3b04178c-a203-5ed9-967b-e19c0504af5f",
+        "asset_id": "dc5f4028-239f-5fad-9530-7f64af7a0760",
+        "day_position": null
+      },
+      {
+        "shot_id": "24bbfc53-f66f-5eed-a64a-ab150053fe0b",
+        "asset_id": "ccd232f4-27e8-503a-9ef0-28c0c37b3eed",
+        "day_position": 0.9206418039895924
+      },
+      {
+        "shot_id": "393b5d06-fdff-5676-b1b5-2f16b75de6f9",
+        "asset_id": "32608eb7-03fc-56de-a542-5826b4d5a094",
+        "day_position": 0.7862098872506504
+      },
+      {
+        "shot_id": "f5e4fa8a-7392-5efb-80b7-739e5693ec0a",
+        "asset_id": "a5ba2e26-8e09-50bc-bc9d-f1b382ba95af",
+        "day_position": null
+      },
+      {
+        "shot_id": "8081ef29-840e-58e7-a81b-69103e81a538",
+        "asset_id": "dc5f4028-239f-5fad-9530-7f64af7a0760",
+        "day_position": null
+      }
+    ]
+  }
+}
