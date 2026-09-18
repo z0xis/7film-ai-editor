@@ -1,0 +1,184 @@
+{
+  "clone": {
+    "initial_checksum": "738ce224467562482795a5cd2ffc6d9d2fe00c823fbe02d0d285f62921d3f6c2",
+    "matches_production_initially": true
+  },
+  "counts": {
+    "assets_processed": 6,
+    "assets_targeted": 6,
+    "failures": [],
+    "median_seconds_per_asset": 150.42,
+    "runtime_seconds": 902.5
+  },
+  "embeddings": {
+    "dims": [
+      512
+    ],
+    "populated": 459,
+    "shots_total": 459
+  },
+  "id_stability": {
+    "all_stable": true,
+    "assets_processed": 6,
+    "assets_stable": 6,
+    "unstable_assets": []
+  },
+  "mode": "sample",
+  "per_asset": {
+    "840562e4-3734-5bfe-a657-8073aba43e58": {
+      "after_shot_count": 19,
+      "after_tq_max": 0.443,
+      "after_tq_min": 0.243,
+      "after_tq_zero": 0,
+      "analysis_versions": [
+        "4"
+      ],
+      "before_shot_count": 19,
+      "before_tq_zero": 0,
+      "embeddings": {
+        "dims": [
+          512
+        ],
+        "norm_max": 1.0,
+        "norm_min": 1.0,
+        "populated": 19,
+        "total": 19
+      },
+      "label": "C7138.MP4 (regular cam; 19 shots; tq NON-zero; timeline-referenced)",
+      "shot_ids_stable": true
+    },
+    "a5ba2e26-8e09-50bc-bc9d-f1b382ba95af": {
+      "after_shot_count": 280,
+      "after_tq_max": 0.899,
+      "after_tq_min": 0.07,
+      "after_tq_zero": 0,
+      "analysis_versions": [
+        "4"
+      ],
+      "before_shot_count": 280,
+      "before_tq_zero": 280,
+      "embeddings": {
+        "dims": [
+          512
+        ],
+        "norm_max": 1.0,
+        "norm_min": 1.0,
+        "populated": 280,
+        "total": 280
+      },
+      "label": "DJI_0528.MOV (drone; 280 shots; all tq-zero)",
+      "shot_ids_stable": true
+    },
+    "a778e858-df7a-5aaa-802b-6637991a58ee": {
+      "after_shot_count": 16,
+      "after_tq_max": 0.438,
+      "after_tq_min": 0.378,
+      "after_tq_zero": 0,
+      "analysis_versions": [
+        "4"
+      ],
+      "before_shot_count": 16,
+      "before_tq_zero": 16,
+      "embeddings": {
+        "dims": [
+          512
+        ],
+        "norm_max": 1.0,
+        "norm_min": 1.0,
+        "populated": 16,
+        "total": 16
+      },
+      "label": "C7309.MP4 (cake source; 16 shots; all tq-zero)",
+      "shot_ids_stable": true
+    },
+    "da281bdf-5158-59af-9e6c-bbf751de215d": {
+      "after_shot_count": 73,
+      "after_tq_max": 0.373,
+      "after_tq_min": 0.311,
+      "after_tq_zero": 0,
+      "analysis_versions": [
+        "4"
+      ],
+      "before_shot_count": 73,
+      "before_tq_zero": 73,
+      "embeddings": {
+        "dims": [
+          512
+        ],
+        "norm_max": 1.0,
+        "norm_min": 1.0,
+        "populated": 73,
+        "total": 73
+      },
+      "label": "C7451.MP4 (venue; 73 shots; all tq-zero; multi-shot)",
+      "shot_ids_stable": true
+    },
+    "db42a2f0-fe41-5bec-a951-3db70a9d2e9a": {
+      "after_shot_count": 15,
+      "after_tq_max": 0.447,
+      "after_tq_min": 0.368,
+      "after_tq_zero": 0,
+      "analysis_versions": [
+        "4"
+      ],
+      "before_shot_count": 15,
+      "before_tq_zero": 0,
+      "embeddings": {
+        "dims": [
+          512
+        ],
+        "norm_max": 1.0,
+        "norm_min": 1.0,
+        "populated": 15,
+        "total": 15
+      },
+      "label": "C7152.MP4 (regular cam; 15 shots; tq NON-zero; timeline-referenced)",
+      "shot_ids_stable": true
+    },
+    "dc5f4028-239f-5fad-9530-7f64af7a0760": {
+      "after_shot_count": 56,
+      "after_tq_max": 0.765,
+      "after_tq_min": 0.549,
+      "after_tq_zero": 0,
+      "analysis_versions": [
+        "4"
+      ],
+      "before_shot_count": 56,
+      "before_tq_zero": 56,
+      "embeddings": {
+        "dims": [
+          512
+        ],
+        "norm_max": 1.0,
+        "norm_min": 1.0,
+        "populated": 56,
+        "total": 56
+      },
+      "label": "DJI_0529.MOV (drone; 56 shots; all tq-zero)",
+      "shot_ids_stable": true
+    }
+  },
+  "production_isolation": {
+    "prod_checksum_unchanged": true,
+    "prod_mtime_unchanged": true
+  },
+  "quality": {
+    "after_tq_zero": 0,
+    "before_tq_zero": 425,
+    "shots_total": 459
+  },
+  "segmentation": {
+    "scene_ranges_invocations": 0
+  },
+  "shot_feature_integrity": {
+    "features_without_shots": 0,
+    "shots_without_features": 0
+  },
+  "timeline": {
+    "items_after": 129,
+    "items_before": 129,
+    "new_dangling": 0,
+    "resolved_after": 129,
+    "resolved_before": 129
+  }
+}
