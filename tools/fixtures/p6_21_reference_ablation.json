@@ -1,0 +1,27 @@
+{
+  "A_normal": {
+    "hash": "d8440b23ca358968",
+    "n": 132
+  },
+  "A_vs_B": {
+    "count_delta": -55,
+    "duration_mismatches": null,
+    "identical": false,
+    "shot_position_mismatches": null
+  },
+  "A_vs_C": {
+    "count_delta": -59,
+    "duration_mismatches": null,
+    "identical": false,
+    "shot_position_mismatches": null
+  },
+  "B_no_reference": {
+    "hash": "426051dccaa461f4",
+    "n": 77
+  },
+  "C_neutral_arc": {
+    "hash": "fc485b615767f1ed",
+    "n": 73
+  },
+  "reference_count_in_profile": 18
+}
