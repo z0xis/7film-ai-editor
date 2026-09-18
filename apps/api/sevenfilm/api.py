@@ -136,6 +136,17 @@ class MusicRequest(BaseModel):
         return [self.path] if self.path else []
 
 
+class ShotAnalysisRequest(BaseModel):
+    """Options for a `shots` job.
+
+    `force_reencode` recomputes technical_quality and embeddings for assets that already have
+    `shot_features` (a degraded earlier run left them stale). Default false keeps the ordinary
+    reuse behaviour untouched -- an asset that already has features is not decoded again.
+    """
+
+    force_reencode: bool = False
+
+
 class TimelineRequest(BaseModel):
     target_duration_seconds: str | None = None
     seed: int = 1
@@ -246,7 +257,8 @@ def _run_job(job_id: str) -> None:
         elif job["kind"] == "derivatives":
             generate_derivatives(DATABASE, job["project_id"], _project_cache(job["project_id"]), job_id)
         elif job["kind"] == "shots":
-            analyze_shots(DATABASE, job["project_id"], job_id)
+            analyze_shots(DATABASE, job["project_id"], job_id,
+                          force_reencode=bool(checkpoint.get("force_reencode", False)))
         elif job["kind"] == "music":
             total_songs = len(checkpoint["paths"])
             for position, raw in enumerate(checkpoint["paths"]):
@@ -394,11 +406,18 @@ def start_derivatives(project_id: str, background_tasks: BackgroundTasks) -> dic
 
 
 @app.post("/api/projects/{project_id}/shots", status_code=202)
-def start_shot_analysis(project_id: str, background_tasks: BackgroundTasks) -> dict[str, str]:
+def start_shot_analysis(
+    project_id: str, background_tasks: BackgroundTasks,
+    request: ShotAnalysisRequest | None = None,
+) -> dict[str, str]:
     _project(project_id)
-    job_id = _create_job_or_409(project_id, "shots", {})
+    # Optional body: an empty POST keeps the historical behaviour (reuse existing features). The
+    # flag is recorded in the job checkpoint so `_run_job` -> `analyze_shots` can honour it, and so
+    # the job row itself is an audit record that this was a force-reencode.
+    force_reencode = bool(request.force_reencode) if request is not None else False
+    job_id = _create_job_or_409(project_id, "shots", {"force_reencode": force_reencode})
     background_tasks.add_task(_run_job, job_id)
-    return {"job_id": job_id, "status": "queued"}
+    return {"job_id": job_id, "status": "queued", "force_reencode": str(force_reencode).lower()}
 
 
 @app.post("/api/projects/{project_id}/music", status_code=202)

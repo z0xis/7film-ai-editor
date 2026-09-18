@@ -342,13 +342,24 @@ def _label_asset(database: Database, classifier: VisionClassifier, asset: MediaA
     database.replace_rows("shots", "asset_id", asset.id, new_rows)
 
 
-def analyze_shots(database: Database, project_id: str, job_id: str) -> list[Shot]:
+def analyze_shots(
+    database: Database, project_id: str, job_id: str, *, force_reencode: bool = False,
+) -> list[Shot]:
     """Measure and label every shot, in two passes over the project.
 
     Categories and shot scales are read against priors measured across the whole shoot, so
     nothing can be labelled until everything is encoded. The encoding is persisted as it goes, which keeps the
     job resumable across a crash and makes the second pass cheap enough to re-run whenever the
     priors move.
+
+    `force_reencode` is the one supported way to recompute an asset whose `shot_features` already
+    exist (stale technical_quality/embeddings from a degraded earlier run). It only decides whether
+    the encode pass runs for an already-encoded asset -- it changes nothing else. `_encode_asset`
+    still reads shot boundaries from the existing `shots` rows (no re-segmentation, same shot ids),
+    builds the fresh rows in memory, and hands them to `_store_features`, whose atomic
+    `replace_rows` is the only thing that touches `shot_features`. So the old rows stay intact until
+    a complete fresh set for that asset is ready; a failure anywhere before the atomic replace
+    leaves the asset's previous features exactly as they were. There is no pre-delete.
     """
     assets = project_assets(database, project_id)
     if not assets:
@@ -360,7 +371,7 @@ def analyze_shots(database: Database, project_id: str, job_id: str) -> list[Shot
         # being abandoned half done.
         raise_if_cancelled(database, job_id)
         database.touch_heartbeat(job_id)
-        if not _asset_features(database, asset.id):
+        if force_reencode or not _asset_features(database, asset.id):
             _encode_asset(database, classifier, asset)
         # `update_job_progress`, not the plain `update_job` this used to be: `processed`/`total`
         # here are the honest unit of work (assets encoded, out of all of them), not a fraction

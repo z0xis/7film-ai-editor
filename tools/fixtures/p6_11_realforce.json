@@ -1,0 +1,16 @@
+{
+  "asset": "C7309",
+  "embedding_dims": [
+    512
+  ],
+  "embeddings_after": 16,
+  "embeddings_before": 0,
+  "feature_deletes_before_store": 0,
+  "features_after": 16,
+  "features_present_before": 16,
+  "prod_checksum_unchanged": true,
+  "shot_ids_stable": true,
+  "tq_after_min": 0.378,
+  "tq_zero_after": 0,
+  "tq_zero_before": 16
+}
