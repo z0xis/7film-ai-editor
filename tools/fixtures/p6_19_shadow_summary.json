@@ -1,0 +1,41 @@
+{
+  "A_equals_baseline_shotforshot": true,
+  "A_reuse_fix": {
+    "checksum_unchanged": true,
+    "deterministic": true,
+    "dji0528": {
+      "distinct_phases": 4,
+      "max_same_shot": 3,
+      "uses": 6
+    },
+    "duration_s": 162.9,
+    "items": 132,
+    "song2_items": 60
+  },
+  "B_equals_baseline_shotforshot": true,
+  "B_reuse_fix_high": {
+    "checksum_unchanged": true,
+    "deterministic": true,
+    "dji0528": {
+      "distinct_phases": 4,
+      "max_same_shot": 3,
+      "uses": 6
+    },
+    "duration_s": 162.9,
+    "items": 132,
+    "song2_items": 60
+  },
+  "baseline": {
+    "checksum_unchanged": true,
+    "deterministic": true,
+    "dji0528": {
+      "distinct_phases": 4,
+      "max_same_shot": 3,
+      "uses": 6
+    },
+    "duration_s": 162.9,
+    "items": 132,
+    "song2_items": 60
+  },
+  "safety_no_write": true
+}

@@ -1,0 +1,2290 @@
+{
+  "all_items": [
+    {
+      "category": "couple",
+      "dur_s": 2.1,
+      "is_drone": false,
+      "moment": [
+        "entrance"
+      ],
+      "score": 0.414,
+      "segment": 0,
+      "shot_id": "debb7d97-432d-5c91-bda4-06025f0b8351",
+      "source": "C7219.MP4",
+      "tl_start_s": 0.0
+    },
+    {
+      "category": "detail",
+      "dur_s": 1.8,
+      "is_drone": true,
+      "moment": [],
+      "score": 0.515,
+      "segment": 0,
+      "shot_id": "48dc1e94-06df-5d50-a315-18b0be17df83",
+      "source": "DJI_0526.MOV",
+      "tl_start_s": 2.1
+    },
+    {
+      "category": "venue",
+      "dur_s": 1.6,
+      "is_drone": true,
+      "moment": [],
+      "score": 0.69,
+      "segment": 0,
+      "shot_id": "c865e1ef-92db-503f-a01b-a7b5a849b6ad",
+      "source": "DJI_0523.MOV",
+      "tl_start_s": 3.9
+    },
+    {
+      "category": "couple",
+      "dur_s": 1.04,
+      "is_drone": true,
+      "moment": [],
+      "score": 0.72,
+      "segment": 0,
+      "shot_id": "bd7bc591-d0b9-55ae-810d-4e51f22e122a",
+      "source": "DJI_0528.MOV",
+      "tl_start_s": 5.5
+    },
+    {
+      "category": "party",
+      "dur_s": 1.08,
+      "is_drone": true,
+      "moment": [],
+      "score": 0.622,
+      "segment": 0,
+      "shot_id": "5dce02ef-0355-54e5-846d-7958c71e1a53",
+      "source": "DJI_0528.MOV",
+      "tl_start_s": 6.54
+    },
+    {
+      "category": "couple",
+      "dur_s": 4.24,
+      "is_drone": true,
+      "moment": [],
+      "score": 0.687,
+      "segment": 0,
+      "shot_id": "f5e4fa8a-7392-5efb-80b7-739e5693ec0a",
+      "source": "DJI_0528.MOV",
+      "tl_start_s": 7.62
+    },
+    {
+      "category": "venue",
+      "dur_s": 2.12,
+      "is_drone": true,
+      "moment": [],
+      "score": 0.841,
+      "segment": 0,
+      "shot_id": "2ca6801b-ddba-5ab5-8ffd-54d43c7f4d4c",
+      "source": "DJI_0529.MOV",
+      "tl_start_s": 11.86
+    },
+    {
+      "category": "couple",
+      "dur_s": 2.12,
+      "is_drone": true,
+      "moment": [],
+      "score": 0.711,
+      "segment": 0,
+      "shot_id": "f07f2673-1735-51f1-bf50-d5aafda06676",
+      "source": "DJI_0530.MOV",
+      "tl_start_s": 13.98
+    },
+    {
+      "category": "venue",
+      "dur_s": 2.12,
+      "is_drone": true,
+      "moment": [],
+      "score": 0.798,
+      "segment": 0,
+      "shot_id": "64bfb230-2895-5ccb-8434-8d438ce22aac",
+      "source": "DJI_0527.MOV",
+      "tl_start_s": 16.1
+    },
+    {
+      "category": "bride_prep",
+      "dur_s": 3.88,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.727,
+      "segment": 0,
+      "shot_id": "316aea96-f6d8-50b4-bd6b-8abf84d76b4a",
+      "source": "C7151.MP4",
+      "tl_start_s": 18.22
+    },
+    {
+      "category": "bride_prep",
+      "dur_s": 2.16,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.681,
+      "segment": 0,
+      "shot_id": "bf05604b-3e69-54c0-9ea1-21449d80e650",
+      "source": "C7139.MP4",
+      "tl_start_s": 22.1
+    },
+    {
+      "category": "bride",
+      "dur_s": 2.1,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.656,
+      "segment": 0,
+      "shot_id": "6445392f-174c-5e44-b695-18eaaf5391ea",
+      "source": "C7156.MP4",
+      "tl_start_s": 24.26
+    },
+    {
+      "category": "couple",
+      "dur_s": 2.16,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.641,
+      "segment": 0,
+      "shot_id": "53e2c558-cd58-5178-80f6-63e6b777ac94",
+      "source": "C7174.MP4",
+      "tl_start_s": 26.36
+    },
+    {
+      "category": "venue",
+      "dur_s": 2.12,
+      "is_drone": true,
+      "moment": [],
+      "score": 0.654,
+      "segment": 0,
+      "shot_id": "a36a8fa9-cf04-5e0a-aff6-f1a2758554cd",
+      "source": "DJI_0531.MOV",
+      "tl_start_s": 28.52
+    },
+    {
+      "category": "groom",
+      "dur_s": 3.72,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.654,
+      "segment": 0,
+      "shot_id": "d0355824-165d-5e74-b92d-d58a4543153a",
+      "source": "C7193.MP4",
+      "tl_start_s": 30.64
+    },
+    {
+      "category": "bride",
+      "dur_s": 1.66,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.678,
+      "segment": 0,
+      "shot_id": "cf4915e8-4f3d-583c-9051-614d860a3c14",
+      "source": "C7194.MP4",
+      "tl_start_s": 34.36
+    },
+    {
+      "category": "couple",
+      "dur_s": 2.1,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.719,
+      "segment": 0,
+      "shot_id": "66cca36c-6cd0-5232-931a-c6c54b40e54b",
+      "source": "C7204.MP4",
+      "tl_start_s": 36.02
+    },
+    {
+      "category": "couple",
+      "dur_s": 1.64,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.744,
+      "segment": 0,
+      "shot_id": "6a89fdee-fa38-5321-ab46-45375919cec8",
+      "source": "C7203.MP4",
+      "tl_start_s": 38.12
+    },
+    {
+      "category": "couple",
+      "dur_s": 1.08,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.726,
+      "segment": 0,
+      "shot_id": "0e0216f3-8c82-5209-932d-ca02e47b51d1",
+      "source": "C7205.MP4",
+      "tl_start_s": 39.76
+    },
+    {
+      "category": "groom",
+      "dur_s": 1.08,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.665,
+      "segment": 0,
+      "shot_id": "4276c501-3c6b-548b-96df-c9e6d0ba3e2d",
+      "source": "C7202.MP4",
+      "tl_start_s": 40.84
+    },
+    {
+      "category": "groom",
+      "dur_s": 1.6,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.7,
+      "segment": 0,
+      "shot_id": "0a612c5c-b9a9-5b65-8fa5-7124d1ae678a",
+      "source": "C7200.MP4",
+      "tl_start_s": 41.92
+    },
+    {
+      "category": "couple",
+      "dur_s": 1.08,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.693,
+      "segment": 0,
+      "shot_id": "d61ee681-da94-5d3c-bcb5-bb0bf1daacc2",
+      "source": "C7192.MP4",
+      "tl_start_s": 43.52
+    },
+    {
+      "category": "groom",
+      "dur_s": 1.06,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.667,
+      "segment": 0,
+      "shot_id": "7b2548a4-4be7-5f3d-b3ec-e8e62a34cbc2",
+      "source": "C7209.MP4",
+      "tl_start_s": 44.6
+    },
+    {
+      "category": "bride",
+      "dur_s": 1.08,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.668,
+      "segment": 0,
+      "shot_id": "18175651-e1f4-5585-8c9e-5d5f2bf8e508",
+      "source": "C7207.MP4",
+      "tl_start_s": 45.66
+    },
+    {
+      "category": "couple",
+      "dur_s": 1.54,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.697,
+      "segment": 0,
+      "shot_id": "a979a3fd-b803-5a88-91bb-300a8d5e8641",
+      "source": "C7176.MP4",
+      "tl_start_s": 46.74
+    },
+    {
+      "category": "detail",
+      "dur_s": 1.08,
+      "is_drone": false,
+      "moment": [
+        "ring"
+      ],
+      "score": 0.672,
+      "segment": 0,
+      "shot_id": "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+      "source": "C7161.MP4",
+      "tl_start_s": 48.28
+    },
+    {
+      "category": "couple",
+      "dur_s": 1.14,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.683,
+      "segment": 0,
+      "shot_id": "e312fc65-8f2c-5505-b49e-36e9ee55dd28",
+      "source": "C7221.MP4",
+      "tl_start_s": 49.36
+    },
+    {
+      "category": "couple",
+      "dur_s": 1.02,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.67,
+      "segment": 0,
+      "shot_id": "98762574-9aa3-590f-902a-9421112929c9",
+      "source": "C7222.MP4",
+      "tl_start_s": 50.5
+    },
+    {
+      "category": "bride",
+      "dur_s": 1.1,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.667,
+      "segment": 0,
+      "shot_id": "feee189b-7ceb-55a8-bc90-227d5777f6b1",
+      "source": "C7217.MP4",
+      "tl_start_s": 51.52
+    },
+    {
+      "category": "bride",
+      "dur_s": 1.62,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.695,
+      "segment": 0,
+      "shot_id": "e0b2be3c-6b55-595b-b150-431425699a14",
+      "source": "C7212.MP4",
+      "tl_start_s": 52.62
+    },
+    {
+      "category": "detail",
+      "dur_s": 1.06,
+      "is_drone": false,
+      "moment": [
+        "ring"
+      ],
+      "score": 0.661,
+      "segment": 0,
+      "shot_id": "c00b2de1-234e-5c0d-b757-1871d667b012",
+      "source": "C7221.MP4",
+      "tl_start_s": 54.24
+    },
+    {
+      "category": "groom_prep",
+      "dur_s": 0.74,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.664,
+      "segment": 0,
+      "shot_id": "23c035c8-3c88-54cb-bd8a-ce4b3cec3122",
+      "source": "C7199.MP4",
+      "tl_start_s": 55.3
+    },
+    {
+      "category": "groom",
+      "dur_s": 0.68,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.676,
+      "segment": 0,
+      "shot_id": "fd1b93c6-a8c5-5a71-82bd-5d03cc6ff82f",
+      "source": "C7210.MP4",
+      "tl_start_s": 56.04
+    },
+    {
+      "category": "venue",
+      "dur_s": 1.8,
+      "is_drone": true,
+      "moment": [],
+      "score": 0.678,
+      "segment": 0,
+      "shot_id": "8a4edbab-b325-571b-bbf6-8b9ac499d6f5",
+      "source": "DJI_0529.MOV",
+      "tl_start_s": 56.72
+    },
+    {
+      "category": "couple",
+      "dur_s": 2.1,
+      "is_drone": false,
+      "moment": [
+        "cake_feed"
+      ],
+      "score": 0.49,
+      "segment": 0,
+      "shot_id": "5e6f3478-aad7-55fa-b661-a95077c25d1d",
+      "source": "C7309.MP4",
+      "tl_start_s": 58.52
+    },
+    {
+      "category": "venue",
+      "dur_s": 1.12,
+      "is_drone": true,
+      "moment": [],
+      "score": 0.667,
+      "segment": 0,
+      "shot_id": "f216b50c-b983-5696-913e-1c625e01543d",
+      "source": "DJI_0530.MOV",
+      "tl_start_s": 60.62
+    },
+    {
+      "category": "couple",
+      "dur_s": 1.06,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.663,
+      "segment": 0,
+      "shot_id": "993c19a2-d6a6-5856-995f-52faddb5f944",
+      "source": "C7249.MP4",
+      "tl_start_s": 61.74
+    },
+    {
+      "category": "couple",
+      "dur_s": 1.08,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.662,
+      "segment": 0,
+      "shot_id": "8b35c418-ca0a-5b33-9e1d-2d7432115326",
+      "source": "C7218.MP4",
+      "tl_start_s": 62.8
+    },
+    {
+      "category": "groom",
+      "dur_s": 1.58,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.671,
+      "segment": 0,
+      "shot_id": "a9e523e3-14e1-525c-917b-426d186995de",
+      "source": "C7208.MP4",
+      "tl_start_s": 63.88
+    },
+    {
+      "category": "groom",
+      "dur_s": 0.82,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.65,
+      "segment": 0,
+      "shot_id": "12ef891f-5993-5b4d-af28-dccc927f598d",
+      "source": "C7214.MP4",
+      "tl_start_s": 65.46
+    },
+    {
+      "category": "bride",
+      "dur_s": 1.34,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.664,
+      "segment": 0,
+      "shot_id": "ef661b7e-fdd6-5d61-a0c7-5bf64553ef39",
+      "source": "C7215.MP4",
+      "tl_start_s": 66.28
+    },
+    {
+      "category": "venue",
+      "dur_s": 1.08,
+      "is_drone": true,
+      "moment": [],
+      "score": 0.635,
+      "segment": 0,
+      "shot_id": "b954e55b-ee7a-5db8-b4a1-91bd573463da",
+      "source": "DJI_0527.MOV",
+      "tl_start_s": 67.62
+    },
+    {
+      "category": "couple",
+      "dur_s": 2.1,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.649,
+      "segment": 0,
+      "shot_id": "d121f21c-6015-578f-a819-c3c2bafc1ec5",
+      "source": "C7246.MP4",
+      "tl_start_s": 68.7
+    },
+    {
+      "category": "venue",
+      "dur_s": 1.92,
+      "is_drone": true,
+      "moment": [],
+      "score": 0.662,
+      "segment": 0,
+      "shot_id": "29da1969-44a3-5396-99de-67adb6ff7738",
+      "source": "DJI_0526.MOV",
+      "tl_start_s": 70.8
+    },
+    {
+      "category": "bride",
+      "dur_s": 2.4,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.684,
+      "segment": 0,
+      "shot_id": "2181341c-031d-5b50-b550-21e353184aec",
+      "source": "C7224.MP4",
+      "tl_start_s": 72.72
+    },
+    {
+      "category": "bride",
+      "dur_s": 2.1,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.691,
+      "segment": 0,
+      "shot_id": "396755b3-9122-55d4-aa03-e92680a41b36",
+      "source": "C7223.MP4",
+      "tl_start_s": 75.12
+    },
+    {
+      "category": "bride",
+      "dur_s": 3.8,
+      "is_drone": false,
+      "moment": [
+        "cake",
+        "cake_feed"
+      ],
+      "score": 0.55,
+      "segment": 0,
+      "shot_id": "5b9b2d4b-4b7f-588f-80f1-3e38be2f7acb",
+      "source": "C7309.MP4",
+      "tl_start_s": 77.22
+    },
+    {
+      "category": "venue",
+      "dur_s": 2.12,
+      "is_drone": true,
+      "moment": [],
+      "score": 0.638,
+      "segment": 0,
+      "shot_id": "8843655c-2a03-51b8-a861-cb862b729a13",
+      "source": "DJI_0531.MOV",
+      "tl_start_s": 81.02
+    },
+    {
+      "category": "bride",
+      "dur_s": 2.1,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.662,
+      "segment": 0,
+      "shot_id": "ecfc2abf-adf7-5b4f-80a4-7dd712b6875c",
+      "source": "C7258.MP4",
+      "tl_start_s": 83.14
+    },
+    {
+      "category": "party",
+      "dur_s": 1.1,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.632,
+      "segment": 0,
+      "shot_id": "c6275a95-5f91-5df7-9a2f-3e334e9613e2",
+      "source": "C7293.MP4",
+      "tl_start_s": 85.24
+    },
+    {
+      "category": "bride",
+      "dur_s": 1.1,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.628,
+      "segment": 0,
+      "shot_id": "0cd8b821-737e-55b4-850f-3db3342993ec",
+      "source": "C7310.MP4",
+      "tl_start_s": 86.34
+    },
+    {
+      "category": "couple",
+      "dur_s": 1.6,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.684,
+      "segment": 0,
+      "shot_id": "7b4ad33c-304d-5891-ae43-95ce21000941",
+      "source": "C7311.MP4",
+      "tl_start_s": 87.44
+    },
+    {
+      "category": "couple",
+      "dur_s": 1.08,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.684,
+      "segment": 0,
+      "shot_id": "a3a47f6f-7564-521b-ada6-6b667bc359fd",
+      "source": "C7311.MP4",
+      "tl_start_s": 89.04
+    },
+    {
+      "category": "bride",
+      "dur_s": 1.08,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.61,
+      "segment": 0,
+      "shot_id": "980169f9-ba43-5289-b488-b5e121c50fdb",
+      "source": "C7314.MP4",
+      "tl_start_s": 90.12
+    },
+    {
+      "category": "bride",
+      "dur_s": 1.06,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.609,
+      "segment": 0,
+      "shot_id": "f7e4e27d-6947-5c52-a100-a7eb966573da",
+      "source": "C7318.MP4",
+      "tl_start_s": 91.2
+    },
+    {
+      "category": "couple",
+      "dur_s": 1.08,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.625,
+      "segment": 0,
+      "shot_id": "a99235df-5198-5b25-a7ed-8aa2e4511fe8",
+      "source": "C7332.MP4",
+      "tl_start_s": 92.26
+    },
+    {
+      "category": "family",
+      "dur_s": 0.52,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.604,
+      "segment": 0,
+      "shot_id": "0ed47207-b361-5363-9da6-e2ab044c38d4",
+      "source": "C7336.MP4",
+      "tl_start_s": 93.34
+    },
+    {
+      "category": "couple",
+      "dur_s": 1.08,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.611,
+      "segment": 0,
+      "shot_id": "0e7ff1fe-2be0-542c-940d-422e649ca2e2",
+      "source": "C7329.MP4",
+      "tl_start_s": 93.86
+    },
+    {
+      "category": "groom",
+      "dur_s": 1.08,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.6,
+      "segment": 0,
+      "shot_id": "2df31bd0-928c-543a-a79b-984523d4aefb",
+      "source": "C7292.MP4",
+      "tl_start_s": 94.94
+    },
+    {
+      "category": "couple",
+      "dur_s": 0.28,
+      "is_drone": true,
+      "moment": [
+        "kiss"
+      ],
+      "score": 0.354,
+      "segment": 0,
+      "shot_id": "b2563ae4-7c20-5902-9b54-8eaf7f2aa54e",
+      "source": "DJI_0528.MOV",
+      "tl_start_s": 96.02
+    },
+    {
+      "category": "party",
+      "dur_s": 1.32,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.611,
+      "segment": 0,
+      "shot_id": "2a546df8-a909-5b47-8a1b-b86a606fc95b",
+      "source": "C7260.MP4",
+      "tl_start_s": 96.3
+    },
+    {
+      "category": "groom",
+      "dur_s": 1.08,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.593,
+      "segment": 0,
+      "shot_id": "583ce97b-e0be-576f-989c-4449027d0f83",
+      "source": "C7334.MP4",
+      "tl_start_s": 97.62
+    },
+    {
+      "category": "venue",
+      "dur_s": 0.96,
+      "is_drone": true,
+      "moment": [],
+      "score": 0.597,
+      "segment": 0,
+      "shot_id": "71eb01a1-9cf0-560c-ab3f-97c3834a85ce",
+      "source": "DJI_0530.MOV",
+      "tl_start_s": 98.7
+    },
+    {
+      "category": "bride",
+      "dur_s": 1.18,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.593,
+      "segment": 0,
+      "shot_id": "ef73d03b-caa9-570d-8fb2-fb79fc0f74e3",
+      "source": "C7343.MP4",
+      "tl_start_s": 99.66
+    },
+    {
+      "category": "party",
+      "dur_s": 1.6,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.617,
+      "segment": 0,
+      "shot_id": "e1ae2376-75f6-5455-a837-22fa27e831bd",
+      "source": "C7284.MP4",
+      "tl_start_s": 100.84
+    },
+    {
+      "category": "bride",
+      "dur_s": 0.54,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.594,
+      "segment": 0,
+      "shot_id": "f3aeadfa-edb0-59a5-a7ef-3074defa1ef4",
+      "source": "C7319.MP4",
+      "tl_start_s": 102.44
+    },
+    {
+      "category": "couple",
+      "dur_s": 1.08,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.624,
+      "segment": 0,
+      "shot_id": "8a9819d5-ab3c-5a03-89ad-a12f2c481bbc",
+      "source": "C7348.MP4",
+      "tl_start_s": 102.98
+    },
+    {
+      "category": "couple",
+      "dur_s": 1.04,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.604,
+      "segment": 0,
+      "shot_id": "6e921a8e-8736-54d1-bfa7-932f80733d5b",
+      "source": "C7349.MP4",
+      "tl_start_s": 104.06
+    },
+    {
+      "category": "couple",
+      "dur_s": 0.56,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.627,
+      "segment": 0,
+      "shot_id": "cce84ecc-dcad-5e1c-bb8e-2070ab76434b",
+      "source": "C7351.MP4",
+      "tl_start_s": 105.1
+    },
+    {
+      "category": "couple",
+      "dur_s": 1.08,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.603,
+      "segment": 0,
+      "shot_id": "d99c3924-f41d-5b25-9954-312d3fd6a133",
+      "source": "C7351.MP4",
+      "tl_start_s": 105.66
+    },
+    {
+      "category": "family",
+      "dur_s": 1.06,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.601,
+      "segment": 0,
+      "shot_id": "9ec6847d-363c-5307-8a78-4bf3bba224b1",
+      "source": "C7344.MP4",
+      "tl_start_s": 106.74
+    },
+    {
+      "category": "bride",
+      "dur_s": 0.8,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.604,
+      "segment": 0,
+      "shot_id": "ba412c4e-f7bd-594b-a240-06ae5750eac4",
+      "source": "C7355.MP4",
+      "tl_start_s": 107.8
+    },
+    {
+      "category": "couple",
+      "dur_s": 0.28,
+      "is_drone": true,
+      "moment": [
+        "kiss"
+      ],
+      "score": -0.594,
+      "segment": 1,
+      "shot_id": "b2563ae4-7c20-5902-9b54-8eaf7f2aa54e",
+      "source": "DJI_0528.MOV",
+      "tl_start_s": 108.6
+    },
+    {
+      "category": "party",
+      "dur_s": 0.68,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.624,
+      "segment": 1,
+      "shot_id": "cdf49b2e-b8c7-5121-a8d5-32c5d9547cdf",
+      "source": "C7295.MP4",
+      "tl_start_s": 108.88
+    },
+    {
+      "category": "couple",
+      "dur_s": 0.5,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.621,
+      "segment": 1,
+      "shot_id": "77babb0b-e837-5045-9c9b-c8a231562d5d",
+      "source": "C7345.MP4",
+      "tl_start_s": 109.56
+    },
+    {
+      "category": "party",
+      "dur_s": 0.5,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.612,
+      "segment": 1,
+      "shot_id": "f6e48c86-31a7-5ee4-8e23-0065d0223e4f",
+      "source": "C7367.MP4",
+      "tl_start_s": 110.06
+    },
+    {
+      "category": "couple",
+      "dur_s": 0.5,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.615,
+      "segment": 1,
+      "shot_id": "6cac15aa-b742-5db9-825d-f65be15a7da6",
+      "source": "C7332.MP4",
+      "tl_start_s": 110.56
+    },
+    {
+      "category": "party",
+      "dur_s": 0.48,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.568,
+      "segment": 1,
+      "shot_id": "ed6ce250-20a1-5d42-a467-f700b4e359d9",
+      "source": "C7294.MP4",
+      "tl_start_s": 111.06
+    },
+    {
+      "category": "couple",
+      "dur_s": 0.5,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.515,
+      "segment": 1,
+      "shot_id": "f054f95e-1853-5b41-97d8-07dd629acc2f",
+      "source": "C7296.MP4",
+      "tl_start_s": 111.54
+    },
+    {
+      "category": "couple",
+      "dur_s": 1.0,
+      "is_drone": true,
+      "moment": [],
+      "score": 0.616,
+      "segment": 1,
+      "shot_id": "b8eba166-d791-5e2a-b396-cc450a0f960d",
+      "source": "DJI_0529.MOV",
+      "tl_start_s": 112.04
+    },
+    {
+      "category": "party",
+      "dur_s": 0.46,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.61,
+      "segment": 1,
+      "shot_id": "2b9cd463-66a1-51e0-b46b-599a1eaa6a1f",
+      "source": "C7352.MP4",
+      "tl_start_s": 113.04
+    },
+    {
+      "category": "couple",
+      "dur_s": 0.5,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.578,
+      "segment": 1,
+      "shot_id": "e5cc6c3c-5104-5546-8c39-d756e09bd165",
+      "source": "C7329.MP4",
+      "tl_start_s": 113.5
+    },
+    {
+      "category": "party",
+      "dur_s": 0.48,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.597,
+      "segment": 1,
+      "shot_id": "2b949560-efdd-517f-be34-ab3110d88814",
+      "source": "C7372.MP4",
+      "tl_start_s": 114.0
+    },
+    {
+      "category": "family",
+      "dur_s": 0.5,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.56,
+      "segment": 1,
+      "shot_id": "5de5c668-8799-5907-83c4-d90a8a56a45c",
+      "source": "C7338.MP4",
+      "tl_start_s": 114.48
+    },
+    {
+      "category": "couple",
+      "dur_s": 0.5,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.534,
+      "segment": 1,
+      "shot_id": "e757fe09-16ec-58b7-b2a1-8ee8d4759daa",
+      "source": "C7343.MP4",
+      "tl_start_s": 114.98
+    },
+    {
+      "category": "family",
+      "dur_s": 0.5,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.478,
+      "segment": 1,
+      "shot_id": "8a460e0c-63ac-56b6-bcaf-84f9b91453bd",
+      "source": "C7341.MP4",
+      "tl_start_s": 115.48
+    },
+    {
+      "category": "groom",
+      "dur_s": 0.48,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.441,
+      "segment": 1,
+      "shot_id": "76178648-5efd-5f5d-8268-8a91a18798d8",
+      "source": "C7360.MP4",
+      "tl_start_s": 115.98
+    },
+    {
+      "category": "couple",
+      "dur_s": 0.98,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.611,
+      "segment": 1,
+      "shot_id": "b110568c-4378-5191-a45c-17b1a0bace37",
+      "source": "C7330.MP4",
+      "tl_start_s": 116.46
+    },
+    {
+      "category": "groom",
+      "dur_s": 0.98,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.598,
+      "segment": 1,
+      "shot_id": "804d4329-82d5-512c-80d2-c7853d6dc0f5",
+      "source": "C7365.MP4",
+      "tl_start_s": 117.44
+    },
+    {
+      "category": "couple",
+      "dur_s": 1.0,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.603,
+      "segment": 1,
+      "shot_id": "092e94fb-9508-52d4-bb42-25a968fce61c",
+      "source": "C7313.MP4",
+      "tl_start_s": 118.42
+    },
+    {
+      "category": "couple",
+      "dur_s": 0.5,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.567,
+      "segment": 1,
+      "shot_id": "be1192a9-3301-5194-a1a9-196eab15c247",
+      "source": "C7348.MP4",
+      "tl_start_s": 119.42
+    },
+    {
+      "category": "couple",
+      "dur_s": 0.96,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.612,
+      "segment": 1,
+      "shot_id": "d133f2f1-90c5-5ecd-85a0-4693998302c1",
+      "source": "C7350.MP4",
+      "tl_start_s": 119.92
+    },
+    {
+      "category": "bride",
+      "dur_s": 1.08,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.563,
+      "segment": 1,
+      "shot_id": "d67692c3-c3be-5fa1-9317-cde8b6e6507b",
+      "source": "C7357.MP4",
+      "tl_start_s": 120.88
+    },
+    {
+      "category": "couple",
+      "dur_s": 1.02,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.592,
+      "segment": 1,
+      "shot_id": "ac42c3f4-2045-5fe0-a182-b91f5123047f",
+      "source": "C7400.MP4",
+      "tl_start_s": 121.96
+    },
+    {
+      "category": "party",
+      "dur_s": 0.88,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.574,
+      "segment": 1,
+      "shot_id": "708a5979-d48f-5b46-9b24-59e58448c2d2",
+      "source": "C7388.MP4",
+      "tl_start_s": 122.98
+    },
+    {
+      "category": "couple",
+      "dur_s": 0.96,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.555,
+      "segment": 1,
+      "shot_id": "dc47bbcf-8aa0-51fc-b574-65ee6e277d8c",
+      "source": "C7396.MP4",
+      "tl_start_s": 123.86
+    },
+    {
+      "category": "couple",
+      "dur_s": 0.98,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.554,
+      "segment": 1,
+      "shot_id": "30a22fb8-b961-5715-a48a-0cd32bfb75ef",
+      "source": "C7408.MP4",
+      "tl_start_s": 124.82
+    },
+    {
+      "category": "venue",
+      "dur_s": 1.0,
+      "is_drone": true,
+      "moment": [],
+      "score": 0.557,
+      "segment": 1,
+      "shot_id": "cd6e6963-76ea-5332-a571-8c9f335cb51a",
+      "source": "DJI_0526.MOV",
+      "tl_start_s": 125.8
+    },
+    {
+      "category": "couple",
+      "dur_s": 0.28,
+      "is_drone": true,
+      "moment": [
+        "kiss"
+      ],
+      "score": -0.943,
+      "segment": 1,
+      "shot_id": "b2563ae4-7c20-5902-9b54-8eaf7f2aa54e",
+      "source": "DJI_0528.MOV",
+      "tl_start_s": 126.8
+    },
+    {
+      "category": "groom",
+      "dur_s": 0.7,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.63,
+      "segment": 1,
+      "shot_id": "8f984e74-c66b-542f-bc59-c37153ddc7b4",
+      "source": "C7366.MP4",
+      "tl_start_s": 127.08
+    },
+    {
+      "category": "groom",
+      "dur_s": 0.98,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.589,
+      "segment": 1,
+      "shot_id": "de1c0275-b723-500f-9695-36928afa0c9a",
+      "source": "C7358.MP4",
+      "tl_start_s": 127.78
+    },
+    {
+      "category": "groom",
+      "dur_s": 1.74,
+      "is_drone": false,
+      "moment": [
+        "first_dance"
+      ],
+      "score": 0.646,
+      "segment": 1,
+      "shot_id": "11cd9454-1041-5f9a-bb8a-dd2f5a5a5ae0",
+      "source": "C7389.MP4",
+      "tl_start_s": 128.76
+    },
+    {
+      "category": "party",
+      "dur_s": 1.7,
+      "is_drone": false,
+      "moment": [
+        "first_dance"
+      ],
+      "score": 0.598,
+      "segment": 1,
+      "shot_id": "393b5d06-fdff-5676-b1b5-2f16b75de6f9",
+      "source": "C7388.MP4",
+      "tl_start_s": 130.5
+    },
+    {
+      "category": "groom",
+      "dur_s": 1.96,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.675,
+      "segment": 1,
+      "shot_id": "874fb623-84c9-5d73-96bf-6a8662d6d36e",
+      "source": "C7398.MP4",
+      "tl_start_s": 132.2
+    },
+    {
+      "category": "groom",
+      "dur_s": 1.74,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.623,
+      "segment": 1,
+      "shot_id": "8ee2636d-52f8-55e4-95a5-d2be6bad44ae",
+      "source": "C7419.MP4",
+      "tl_start_s": 134.16
+    },
+    {
+      "category": "bride",
+      "dur_s": 1.58,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.633,
+      "segment": 1,
+      "shot_id": "1be3ffb1-a8be-52a4-bb23-8e4aa4cbb9e9",
+      "source": "C7405.MP4",
+      "tl_start_s": 135.9
+    },
+    {
+      "category": "couple",
+      "dur_s": 1.6,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.628,
+      "segment": 1,
+      "shot_id": "776381d4-3038-5945-9731-93fad9fea4ba",
+      "source": "C7433.MP4",
+      "tl_start_s": 137.48
+    },
+    {
+      "category": "groom",
+      "dur_s": 1.6,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.62,
+      "segment": 1,
+      "shot_id": "4165bba3-9174-5127-bf18-c0bc92346850",
+      "source": "C7372.MP4",
+      "tl_start_s": 139.08
+    },
+    {
+      "category": "party",
+      "dur_s": 1.72,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.615,
+      "segment": 1,
+      "shot_id": "b70a7a89-37f7-500f-b825-9dddb304e671",
+      "source": "C7384.MP4",
+      "tl_start_s": 140.68
+    },
+    {
+      "category": "couple",
+      "dur_s": 1.98,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.646,
+      "segment": 1,
+      "shot_id": "5acac84a-32c8-5b10-be40-a128c8f38815",
+      "source": "C7450.MP4",
+      "tl_start_s": 142.4
+    },
+    {
+      "category": "bride",
+      "dur_s": 1.46,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.606,
+      "segment": 1,
+      "shot_id": "6b8e2157-746f-5730-8d53-6bb3bc0f124c",
+      "source": "C7404.MP4",
+      "tl_start_s": 144.38
+    },
+    {
+      "category": "party",
+      "dur_s": 2.1,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.645,
+      "segment": 1,
+      "shot_id": "2ae0e93c-a40c-5bba-b6fc-819f4a23a21c",
+      "source": "C7432.MP4",
+      "tl_start_s": 145.84
+    },
+    {
+      "category": "groom",
+      "dur_s": 1.48,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.594,
+      "segment": 1,
+      "shot_id": "0db5038b-4cb9-508d-a1b1-638d0f882695",
+      "source": "C7426.MP4",
+      "tl_start_s": 147.94
+    },
+    {
+      "category": "party",
+      "dur_s": 0.96,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.617,
+      "segment": 1,
+      "shot_id": "f57154c0-97a2-5122-811c-a0b4e925c9a8",
+      "source": "C7407.MP4",
+      "tl_start_s": 149.42
+    },
+    {
+      "category": "bride",
+      "dur_s": 1.0,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.606,
+      "segment": 1,
+      "shot_id": "edcd65f8-2fa8-5876-962a-9aec8f6b733a",
+      "source": "C7410.MP4",
+      "tl_start_s": 150.38
+    },
+    {
+      "category": "groom",
+      "dur_s": 0.98,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.583,
+      "segment": 1,
+      "shot_id": "c89ca0da-24e4-5cc0-8ce7-79359434d5ac",
+      "source": "C7436.MP4",
+      "tl_start_s": 151.38
+    },
+    {
+      "category": "bride",
+      "dur_s": 0.98,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.577,
+      "segment": 1,
+      "shot_id": "5462f1b2-c722-5b42-b38c-1a846720b34d",
+      "source": "C7427.MP4",
+      "tl_start_s": 152.36
+    },
+    {
+      "category": "party",
+      "dur_s": 1.36,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.595,
+      "segment": 1,
+      "shot_id": "5bb0bf0b-0b81-558f-909d-2ed7c1fef1e3",
+      "source": "C7450.MP4",
+      "tl_start_s": 153.34
+    },
+    {
+      "category": "couple",
+      "dur_s": 0.86,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.563,
+      "segment": 1,
+      "shot_id": "c7451f92-bc10-53fe-92e8-2b8791cbad26",
+      "source": "C7450.MP4",
+      "tl_start_s": 154.7
+    },
+    {
+      "category": "couple",
+      "dur_s": 0.98,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.556,
+      "segment": 1,
+      "shot_id": "17e335d5-ab48-5334-9ce0-c7df87bc7a49",
+      "source": "C7406.MP4",
+      "tl_start_s": 155.56
+    },
+    {
+      "category": "party",
+      "dur_s": 0.5,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.654,
+      "segment": 1,
+      "shot_id": "b6e259cb-1f9b-5976-b962-10f36f27c13e",
+      "source": "C7451.MP4",
+      "tl_start_s": 156.54
+    },
+    {
+      "category": "groom",
+      "dur_s": 0.48,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.548,
+      "segment": 1,
+      "shot_id": "c330da9b-dfb3-52a8-95a3-64ca5eac7a1d",
+      "source": "C7378.MP4",
+      "tl_start_s": 157.04
+    },
+    {
+      "category": "party",
+      "dur_s": 0.5,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.542,
+      "segment": 1,
+      "shot_id": "38258953-0bbb-581d-8f04-77bc92891646",
+      "source": "C7396.MP4",
+      "tl_start_s": 157.52
+    },
+    {
+      "category": "couple",
+      "dur_s": 0.5,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.482,
+      "segment": 1,
+      "shot_id": "9bf31a47-1ee6-5231-94dd-aa5b84ebc40a",
+      "source": "C7415.MP4",
+      "tl_start_s": 158.02
+    },
+    {
+      "category": "party",
+      "dur_s": 0.48,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.447,
+      "segment": 1,
+      "shot_id": "1b843744-5347-5f64-8c16-75d9f1278680",
+      "source": "C7406.MP4",
+      "tl_start_s": 158.52
+    },
+    {
+      "category": "bride",
+      "dur_s": 0.5,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.452,
+      "segment": 1,
+      "shot_id": "f135dda0-c86a-50cb-b7fa-b1ea8eccf8fe",
+      "source": "C7423.MP4",
+      "tl_start_s": 159.0
+    },
+    {
+      "category": "bride",
+      "dur_s": 0.48,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.512,
+      "segment": 1,
+      "shot_id": "66c66135-c4d2-5e52-a32b-9142090bbd33",
+      "source": "C7404.MP4",
+      "tl_start_s": 159.5
+    },
+    {
+      "category": "party",
+      "dur_s": 1.0,
+      "is_drone": true,
+      "moment": [],
+      "score": 0.542,
+      "segment": 1,
+      "shot_id": "f8ca7860-672e-56cf-afd9-2f3a17c35bfa",
+      "source": "DJI_0529.MOV",
+      "tl_start_s": 159.98
+    },
+    {
+      "category": "groom",
+      "dur_s": 0.48,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.51,
+      "segment": 1,
+      "shot_id": "3f7f808e-da96-5bf7-8ff1-cfd17a2d25fd",
+      "source": "C7433.MP4",
+      "tl_start_s": 160.98
+    },
+    {
+      "category": "party",
+      "dur_s": 0.5,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.497,
+      "segment": 1,
+      "shot_id": "2c4a24fd-7162-518d-8f50-442e0d41fba6",
+      "source": "C7451.MP4",
+      "tl_start_s": 161.46
+    },
+    {
+      "category": "groom_prep",
+      "dur_s": 0.5,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.488,
+      "segment": 1,
+      "shot_id": "ac2e9c90-b323-5d44-98a7-614c42ccb1d6",
+      "source": "C7428.MP4",
+      "tl_start_s": 161.96
+    },
+    {
+      "category": "family",
+      "dur_s": 0.48,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.526,
+      "segment": 1,
+      "shot_id": "4c28599a-6cfc-5b98-8a95-c2d2d4088832",
+      "source": "C7452.MP4",
+      "tl_start_s": 162.46
+    }
+  ],
+  "drones": {
+    "by_asset": {
+      "DJI_0523.MOV": 1,
+      "DJI_0526.MOV": 3,
+      "DJI_0527.MOV": 2,
+      "DJI_0528.MOV": 6,
+      "DJI_0529.MOV": 4,
+      "DJI_0530.MOV": 3,
+      "DJI_0531.MOV": 2
+    },
+    "distinct_drone_assets_selected": 7,
+    "selected_items": 21
+  },
+  "grammar_by_segment": {
+    "0": {
+      "cats": {
+        "bride": 16,
+        "bride_prep": 2,
+        "couple": 25,
+        "detail": 3,
+        "family": 2,
+        "groom": 9,
+        "groom_prep": 1,
+        "party": 4,
+        "venue": 10
+      },
+      "items": 72,
+      "median_dur_s": 1.12
+    },
+    "1": {
+      "cats": {
+        "bride": 7,
+        "couple": 20,
+        "family": 3,
+        "groom": 12,
+        "groom_prep": 1,
+        "party": 16,
+        "venue": 1
+      },
+      "items": 60,
+      "median_dur_s": 0.96
+    }
+  },
+  "intro_items": [
+    {
+      "category": "couple",
+      "dur_s": 2.1,
+      "is_drone": false,
+      "moment": [
+        "entrance"
+      ],
+      "score": 0.414,
+      "segment": 0,
+      "shot_id": "debb7d97-432d-5c91-bda4-06025f0b8351",
+      "source": "C7219.MP4",
+      "tl_start_s": 0.0
+    },
+    {
+      "category": "detail",
+      "dur_s": 1.8,
+      "is_drone": true,
+      "moment": [],
+      "score": 0.515,
+      "segment": 0,
+      "shot_id": "48dc1e94-06df-5d50-a315-18b0be17df83",
+      "source": "DJI_0526.MOV",
+      "tl_start_s": 2.1
+    },
+    {
+      "category": "venue",
+      "dur_s": 1.6,
+      "is_drone": true,
+      "moment": [],
+      "score": 0.69,
+      "segment": 0,
+      "shot_id": "c865e1ef-92db-503f-a01b-a7b5a849b6ad",
+      "source": "DJI_0523.MOV",
+      "tl_start_s": 3.9
+    },
+    {
+      "category": "couple",
+      "dur_s": 1.04,
+      "is_drone": true,
+      "moment": [],
+      "score": 0.72,
+      "segment": 0,
+      "shot_id": "bd7bc591-d0b9-55ae-810d-4e51f22e122a",
+      "source": "DJI_0528.MOV",
+      "tl_start_s": 5.5
+    },
+    {
+      "category": "party",
+      "dur_s": 1.08,
+      "is_drone": true,
+      "moment": [],
+      "score": 0.622,
+      "segment": 0,
+      "shot_id": "5dce02ef-0355-54e5-846d-7958c71e1a53",
+      "source": "DJI_0528.MOV",
+      "tl_start_s": 6.54
+    },
+    {
+      "category": "couple",
+      "dur_s": 4.24,
+      "is_drone": true,
+      "moment": [],
+      "score": 0.687,
+      "segment": 0,
+      "shot_id": "f5e4fa8a-7392-5efb-80b7-739e5693ec0a",
+      "source": "DJI_0528.MOV",
+      "tl_start_s": 7.62
+    },
+    {
+      "category": "venue",
+      "dur_s": 2.12,
+      "is_drone": true,
+      "moment": [],
+      "score": 0.841,
+      "segment": 0,
+      "shot_id": "2ca6801b-ddba-5ab5-8ffd-54d43c7f4d4c",
+      "source": "DJI_0529.MOV",
+      "tl_start_s": 11.86
+    },
+    {
+      "category": "couple",
+      "dur_s": 2.12,
+      "is_drone": true,
+      "moment": [],
+      "score": 0.711,
+      "segment": 0,
+      "shot_id": "f07f2673-1735-51f1-bf50-d5aafda06676",
+      "source": "DJI_0530.MOV",
+      "tl_start_s": 13.98
+    },
+    {
+      "category": "venue",
+      "dur_s": 2.12,
+      "is_drone": true,
+      "moment": [],
+      "score": 0.798,
+      "segment": 0,
+      "shot_id": "64bfb230-2895-5ccb-8434-8d438ce22aac",
+      "source": "DJI_0527.MOV",
+      "tl_start_s": 16.1
+    },
+    {
+      "category": "bride_prep",
+      "dur_s": 3.88,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.727,
+      "segment": 0,
+      "shot_id": "316aea96-f6d8-50b4-bd6b-8abf84d76b4a",
+      "source": "C7151.MP4",
+      "tl_start_s": 18.22
+    },
+    {
+      "category": "bride_prep",
+      "dur_s": 2.16,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.681,
+      "segment": 0,
+      "shot_id": "bf05604b-3e69-54c0-9ea1-21449d80e650",
+      "source": "C7139.MP4",
+      "tl_start_s": 22.1
+    },
+    {
+      "category": "bride",
+      "dur_s": 2.1,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.656,
+      "segment": 0,
+      "shot_id": "6445392f-174c-5e44-b695-18eaaf5391ea",
+      "source": "C7156.MP4",
+      "tl_start_s": 24.26
+    }
+  ],
+  "moment_coverage": {
+    "cake": {
+      "member_sources": [
+        "C7309.MP4",
+        "C7309.MP4",
+        "C7309.MP4",
+        "C7309.MP4",
+        "C7309.MP4",
+        "C7309.MP4",
+        "C7309.MP4",
+        "C7309.MP4"
+      ],
+      "members": 8,
+      "scored": 8,
+      "selected": 1,
+      "selected_sources": [
+        "C7309.MP4"
+      ],
+      "usable": 8
+    },
+    "cake_feed": {
+      "member_sources": [
+        "C7309.MP4",
+        "C7309.MP4",
+        "C7310.MP4",
+        "C7309.MP4",
+        "C7309.MP4",
+        "C7309.MP4",
+        "C7309.MP4",
+        "C7309.MP4"
+      ],
+      "members": 8,
+      "scored": 8,
+      "selected": 2,
+      "selected_sources": [
+        "C7309.MP4",
+        "C7309.MP4"
+      ],
+      "usable": 8
+    },
+    "entrance": {
+      "member_sources": [
+        "C7234.MP4",
+        "C7219.MP4",
+        "C7184.MP4",
+        "C7234.MP4",
+        "C7208.MP4",
+        "C7210.MP4",
+        "C7233.MP4",
+        "C7203.MP4"
+      ],
+      "members": 8,
+      "scored": 7,
+      "selected": 1,
+      "selected_sources": [
+        "C7219.MP4"
+      ],
+      "usable": 8
+    },
+    "first_dance": {
+      "member_sources": [
+        "C7388.MP4",
+        "DJI_0528.MOV",
+        "DJI_0529.MOV",
+        "C7384.MP4",
+        "DJI_0528.MOV",
+        "DJI_0529.MOV",
+        "C7389.MP4",
+        "C7276.MP4"
+      ],
+      "members": 8,
+      "scored": 7,
+      "selected": 2,
+      "selected_sources": [
+        "C7388.MP4",
+        "C7389.MP4"
+      ],
+      "usable": 8
+    },
+    "kiss": {
+      "member_sources": [
+        "C7228.MP4",
+        "C7281.MP4",
+        "C7391.MP4",
+        "C7229.MP4",
+        "C7403.MP4",
+        "C7228.MP4",
+        "DJI_0528.MOV",
+        "C7252.MP4"
+      ],
+      "members": 8,
+      "scored": 1,
+      "selected": 1,
+      "selected_sources": [
+        "DJI_0528.MOV"
+      ],
+      "usable": 7
+    },
+    "ring": {
+      "member_sources": [
+        "C7161.MP4",
+        "C7161.MP4",
+        "C7161.MP4",
+        "C7221.MP4",
+        "C7206.MP4",
+        "C7161.MP4",
+        "C7206.MP4",
+        "C7235.MP4"
+      ],
+      "members": 8,
+      "scored": 5,
+      "selected": 2,
+      "selected_sources": [
+        "C7161.MP4",
+        "C7221.MP4"
+      ],
+      "usable": 8
+    }
+  },
+  "old_129": {
+    "categories": {
+      "bride": 41,
+      "couple": 40,
+      "family": 8,
+      "venue": 40
+    },
+    "drone": 0,
+    "items": 129
+  },
+  "outro_items": [
+    {
+      "category": "party",
+      "dur_s": 0.5,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.654,
+      "segment": 1,
+      "shot_id": "b6e259cb-1f9b-5976-b962-10f36f27c13e",
+      "source": "C7451.MP4",
+      "tl_start_s": 156.54
+    },
+    {
+      "category": "groom",
+      "dur_s": 0.48,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.548,
+      "segment": 1,
+      "shot_id": "c330da9b-dfb3-52a8-95a3-64ca5eac7a1d",
+      "source": "C7378.MP4",
+      "tl_start_s": 157.04
+    },
+    {
+      "category": "party",
+      "dur_s": 0.5,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.542,
+      "segment": 1,
+      "shot_id": "38258953-0bbb-581d-8f04-77bc92891646",
+      "source": "C7396.MP4",
+      "tl_start_s": 157.52
+    },
+    {
+      "category": "couple",
+      "dur_s": 0.5,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.482,
+      "segment": 1,
+      "shot_id": "9bf31a47-1ee6-5231-94dd-aa5b84ebc40a",
+      "source": "C7415.MP4",
+      "tl_start_s": 158.02
+    },
+    {
+      "category": "party",
+      "dur_s": 0.48,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.447,
+      "segment": 1,
+      "shot_id": "1b843744-5347-5f64-8c16-75d9f1278680",
+      "source": "C7406.MP4",
+      "tl_start_s": 158.52
+    },
+    {
+      "category": "bride",
+      "dur_s": 0.5,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.452,
+      "segment": 1,
+      "shot_id": "f135dda0-c86a-50cb-b7fa-b1ea8eccf8fe",
+      "source": "C7423.MP4",
+      "tl_start_s": 159.0
+    },
+    {
+      "category": "bride",
+      "dur_s": 0.48,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.512,
+      "segment": 1,
+      "shot_id": "66c66135-c4d2-5e52-a32b-9142090bbd33",
+      "source": "C7404.MP4",
+      "tl_start_s": 159.5
+    },
+    {
+      "category": "party",
+      "dur_s": 1.0,
+      "is_drone": true,
+      "moment": [],
+      "score": 0.542,
+      "segment": 1,
+      "shot_id": "f8ca7860-672e-56cf-afd9-2f3a17c35bfa",
+      "source": "DJI_0529.MOV",
+      "tl_start_s": 159.98
+    },
+    {
+      "category": "groom",
+      "dur_s": 0.48,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.51,
+      "segment": 1,
+      "shot_id": "3f7f808e-da96-5bf7-8ff1-cfd17a2d25fd",
+      "source": "C7433.MP4",
+      "tl_start_s": 160.98
+    },
+    {
+      "category": "party",
+      "dur_s": 0.5,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.497,
+      "segment": 1,
+      "shot_id": "2c4a24fd-7162-518d-8f50-442e0d41fba6",
+      "source": "C7451.MP4",
+      "tl_start_s": 161.46
+    },
+    {
+      "category": "groom_prep",
+      "dur_s": 0.5,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.488,
+      "segment": 1,
+      "shot_id": "ac2e9c90-b323-5d44-98a7-614c42ccb1d6",
+      "source": "C7428.MP4",
+      "tl_start_s": 161.96
+    },
+    {
+      "category": "family",
+      "dur_s": 0.48,
+      "is_drone": false,
+      "moment": [],
+      "score": 0.526,
+      "segment": 1,
+      "shot_id": "4c28599a-6cfc-5b98-8a95-c2d2d4088832",
+      "source": "C7452.MP4",
+      "tl_start_s": 162.46
+    }
+  ],
+  "plan": {
+    "category_counts": {
+      "bride": 23,
+      "bride_prep": 2,
+      "couple": 45,
+      "detail": 3,
+      "family": 5,
+      "groom": 21,
+      "groom_prep": 2,
+      "party": 20,
+      "venue": 11
+    },
+    "deterministic": true,
+    "distinct_sources": 101,
+    "duration_s": 162.9,
+    "items": 132,
+    "music_segments": 2,
+    "segment_bounds_s": [
+      [
+        0.0,
+        108.0
+      ],
+      [
+        108.0,
+        180.0
+      ]
+    ],
+    "target_s": 180.0,
+    "top_sources": [
+      [
+        "DJI_0528.MOV",
+        6
+      ],
+      [
+        "DJI_0529.MOV",
+        4
+      ],
+      [
+        "DJI_0526.MOV",
+        3
+      ],
+      [
+        "DJI_0530.MOV",
+        3
+      ],
+      [
+        "C7450.MP4",
+        3
+      ],
+      [
+        "DJI_0527.MOV",
+        2
+      ],
+      [
+        "DJI_0531.MOV",
+        2
+      ],
+      [
+        "C7221.MP4",
+        2
+      ],
+      [
+        "C7309.MP4",
+        2
+      ],
+      [
+        "C7311.MP4",
+        2
+      ],
+      [
+        "C7332.MP4",
+        2
+      ],
+      [
+        "C7329.MP4",
+        2
+      ]
+    ],
+    "warnings": [
+      "72 plan teknik kalite e\u015fi\u011finin alt\u0131nda kald\u0131\u011f\u0131 i\u00e7in (bulan\u0131k, patlam\u0131\u015f beyaz veya d\u00fcz kare) kurguya al\u0131nmad\u0131.",
+      "18 referanstan \u00e7\u0131kar\u0131lan 7Film ritim profili uyguland\u0131.",
+      "\u015eu anlar kurguya giremedi: \u00f6p\u00fcc\u00fck. Planlar\u0131 var ama ba\u015fka kesimler tercih edildi.",
+      "\u015eu anlar kurguya \u00e7ok k\u0131sa girdi: y\u00fcz\u00fck (1.06 sn). Bu an\u0131n elinizdeki g\u00f6r\u00fcnt\u00fcs\u00fc \u00e7ekimin alt yar\u0131s\u0131nda kald\u0131\u011f\u0131 i\u00e7in uzun kesim verilemedi.",
+      "Kurgu 162.9 saniyede bitti; hedef 180.0 saniyeydi. Kalan g\u00f6r\u00fcnt\u00fcde bu kesim i\u00e7in kullan\u0131labilir bir yer kalmad\u0131.",
+      "Son plan kare s\u0131n\u0131r\u0131na yuvarland\u0131; s\u00fcre hedefe en yak\u0131n frame-accurate de\u011ferdedir.",
+      "Kesimlerin %92'\u0131 beat'e 120 ms i\u00e7inde hizaland\u0131 (referans kurgular: %61).",
+      "Hik\u00e2ye ak\u0131\u015f\u0131n\u0131n \u015fu b\u00f6l\u00fcmleri i\u00e7in g\u00f6r\u00fcnt\u00fc neredeyse yok: detail (%1), ceremony (%1). O b\u00f6l\u00fcmler eldeki di\u011fer kategorilerden dolduruldu.",
+      "Kesimlerin %51'\u0131 bulundu\u011fu b\u00f6l\u00fcm i\u00e7in tercih edilen kategoriden."
+    ]
+  },
+  "safety": {
+    "checksum_after": "e8798470c51891f6ba90d1e4e62d904d3421ec31d17b156fa4d56ce04ffc5095",
+    "checksum_before": "e8798470c51891f6ba90d1e4e62d904d3421ec31d17b156fa4d56ce04ffc5095",
+    "mtime_after": 1789754856.9210906,
+    "mtime_before": 1789754856.9210906,
+    "post_manifest": {
+      "active_shots_jobs": 0,
+      "assets": 362,
+      "boundary_hash": "392ab3356f4e04621f4540a40f03bb81c2ceba29b7a35fb1a091cdc4b22b5f6c",
+      "elenora_embeddings": 1405,
+      "elenora_shots": 1405,
+      "embeddings_populated": 2638,
+      "features": 2638,
+      "features_without_shots": 0,
+      "project_exists": true,
+      "project_id": "29cd1e06-0af1-40c4-95bf-77f2add1159f",
+      "shot_id_set_hash": "c00b7fa1259b8d6efdef7f3991e687ffdcff5be80fcf12008502482d99d7d6eb",
+      "shots": 2638,
+      "shots_without_features": 0,
+      "timeline_items": 129,
+      "timeline_manifest_hash": "78d13b0bd642311eb44ce9d9b62bb76550e680a6066430c0aa64a35dd734f36a",
+      "timeline_resolved": 129,
+      "tq_zero": 0
+    },
+    "pre_manifest": {
+      "active_shots_jobs": 0,
+      "assets": 362,
+      "boundary_hash": "392ab3356f4e04621f4540a40f03bb81c2ceba29b7a35fb1a091cdc4b22b5f6c",
+      "elenora_embeddings": 1405,
+      "elenora_shots": 1405,
+      "embeddings_populated": 2638,
+      "features": 2638,
+      "features_without_shots": 0,
+      "project_exists": true,
+      "project_id": "29cd1e06-0af1-40c4-95bf-77f2add1159f",
+      "shot_id_set_hash": "c00b7fa1259b8d6efdef7f3991e687ffdcff5be80fcf12008502482d99d7d6eb",
+      "shots": 2638,
+      "shots_without_features": 0,
+      "timeline_items": 129,
+      "timeline_manifest_hash": "78d13b0bd642311eb44ce9d9b62bb76550e680a6066430c0aa64a35dd734f36a",
+      "timeline_resolved": 129,
+      "tq_zero": 0
+    }
+  },
+  "transition": {
+    "exists": true,
+    "items": [
+      {
+        "category": "venue",
+        "dur_s": 0.96,
+        "segment": 0,
+        "source": "DJI_0530.MOV",
+        "tl_start_s": 98.7
+      },
+      {
+        "category": "bride",
+        "dur_s": 1.18,
+        "segment": 0,
+        "source": "C7343.MP4",
+        "tl_start_s": 99.66
+      },
+      {
+        "category": "party",
+        "dur_s": 1.6,
+        "segment": 0,
+        "source": "C7284.MP4",
+        "tl_start_s": 100.84
+      },
+      {
+        "category": "bride",
+        "dur_s": 0.54,
+        "segment": 0,
+        "source": "C7319.MP4",
+        "tl_start_s": 102.44
+      },
+      {
+        "category": "couple",
+        "dur_s": 1.08,
+        "segment": 0,
+        "source": "C7348.MP4",
+        "tl_start_s": 102.98
+      },
+      {
+        "category": "couple",
+        "dur_s": 1.04,
+        "segment": 0,
+        "source": "C7349.MP4",
+        "tl_start_s": 104.06
+      },
+      {
+        "category": "couple",
+        "dur_s": 0.56,
+        "segment": 0,
+        "source": "C7351.MP4",
+        "tl_start_s": 105.1
+      },
+      {
+        "category": "couple",
+        "dur_s": 1.08,
+        "segment": 0,
+        "source": "C7351.MP4",
+        "tl_start_s": 105.66
+      },
+      {
+        "category": "family",
+        "dur_s": 1.06,
+        "segment": 0,
+        "source": "C7344.MP4",
+        "tl_start_s": 106.74
+      },
+      {
+        "category": "bride",
+        "dur_s": 0.8,
+        "segment": 0,
+        "source": "C7355.MP4",
+        "tl_start_s": 107.8
+      },
+      {
+        "category": "couple",
+        "dur_s": 0.28,
+        "segment": 1,
+        "source": "DJI_0528.MOV",
+        "tl_start_s": 108.6
+      },
+      {
+        "category": "party",
+        "dur_s": 0.68,
+        "segment": 1,
+        "source": "C7295.MP4",
+        "tl_start_s": 108.88
+      },
+      {
+        "category": "couple",
+        "dur_s": 0.5,
+        "segment": 1,
+        "source": "C7345.MP4",
+        "tl_start_s": 109.56
+      },
+      {
+        "category": "party",
+        "dur_s": 0.5,
+        "segment": 1,
+        "source": "C7367.MP4",
+        "tl_start_s": 110.06
+      },
+      {
+        "category": "couple",
+        "dur_s": 0.5,
+        "segment": 1,
+        "source": "C7332.MP4",
+        "tl_start_s": 110.56
+      },
+      {
+        "category": "party",
+        "dur_s": 0.48,
+        "segment": 1,
+        "source": "C7294.MP4",
+        "tl_start_s": 111.06
+      },
+      {
+        "category": "couple",
+        "dur_s": 0.5,
+        "segment": 1,
+        "source": "C7296.MP4",
+        "tl_start_s": 111.54
+      },
+      {
+        "category": "couple",
+        "dur_s": 1.0,
+        "segment": 1,
+        "source": "DJI_0529.MOV",
+        "tl_start_s": 112.04
+      },
+      {
+        "category": "party",
+        "dur_s": 0.46,
+        "segment": 1,
+        "source": "C7352.MP4",
+        "tl_start_s": 113.04
+      },
+      {
+        "category": "couple",
+        "dur_s": 0.5,
+        "segment": 1,
+        "source": "C7329.MP4",
+        "tl_start_s": 113.5
+      },
+      {
+        "category": "party",
+        "dur_s": 0.48,
+        "segment": 1,
+        "source": "C7372.MP4",
+        "tl_start_s": 114.0
+      },
+      {
+        "category": "family",
+        "dur_s": 0.5,
+        "segment": 1,
+        "source": "C7338.MP4",
+        "tl_start_s": 114.48
+      },
+      {
+        "category": "couple",
+        "dur_s": 0.5,
+        "segment": 1,
+        "source": "C7343.MP4",
+        "tl_start_s": 114.98
+      },
+      {
+        "category": "family",
+        "dur_s": 0.5,
+        "segment": 1,
+        "source": "C7341.MP4",
+        "tl_start_s": 115.48
+      },
+      {
+        "category": "groom",
+        "dur_s": 0.48,
+        "segment": 1,
+        "source": "C7360.MP4",
+        "tl_start_s": 115.98
+      },
+      {
+        "category": "couple",
+        "dur_s": 0.98,
+        "segment": 1,
+        "source": "C7330.MP4",
+        "tl_start_s": 116.46
+      },
+      {
+        "category": "groom",
+        "dur_s": 0.98,
+        "segment": 1,
+        "source": "C7365.MP4",
+        "tl_start_s": 117.44
+      },
+      {
+        "category": "couple",
+        "dur_s": 1.0,
+        "segment": 1,
+        "source": "C7313.MP4",
+        "tl_start_s": 118.42
+      },
+      {
+        "category": "couple",
+        "dur_s": 0.5,
+        "segment": 1,
+        "source": "C7348.MP4",
+        "tl_start_s": 119.42
+      },
+      {
+        "category": "couple",
+        "dur_s": 0.96,
+        "segment": 1,
+        "source": "C7350.MP4",
+        "tl_start_s": 119.92
+      },
+      {
+        "category": "bride",
+        "dur_s": 1.08,
+        "segment": 1,
+        "source": "C7357.MP4",
+        "tl_start_s": 120.88
+      },
+      {
+        "category": "couple",
+        "dur_s": 1.02,
+        "segment": 1,
+        "source": "C7400.MP4",
+        "tl_start_s": 121.96
+      },
+      {
+        "category": "party",
+        "dur_s": 0.88,
+        "segment": 1,
+        "source": "C7388.MP4",
+        "tl_start_s": 122.98
+      }
+    ],
+    "transition_s": 108.0
+  }
+}

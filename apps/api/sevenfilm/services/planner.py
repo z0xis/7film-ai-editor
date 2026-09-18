@@ -2077,6 +2077,11 @@ def build_timeline(
     consumed_source_frames = {shot.id: 0 for shot in candidates}
     usage_count = {shot.id: 0 for shot in candidates}
     asset_usage: dict[str, int] = {shot.asset_id: 0 for shot in candidates}
+    # Distinct source phases (shot ids) drawn from each asset. Shots are non-overlapping
+    # source segments, so a distinct shot id is a distinct, non-overlapping phase of the asset.
+    # The asset-reuse penalty counts these -- not raw uses -- so over-playing ONE phase does not
+    # suppress a genuinely distinct angle of the same asset (that repeat is charged per-shot below).
+    asset_phases: dict[str, set[str]] = {shot.asset_id: set() for shot in candidates}
     category_uses: dict[str, int] = {}
     scale_uses: dict[str, int] = {}
     scale_uses: dict[str, int] = {}
@@ -2433,7 +2438,7 @@ def build_timeline(
                 # Without that ceiling a clip the edit never leaves is never charged at all,
                 # and one long take took every cut of a test edit.
                 asset_reuse_count=(
-                    asset_usage[shot.asset_id]
+                    len(asset_phases.get(shot.asset_id, ()))
                     - min(_trailing_asset_run(plan.items, shot.asset_id),
                           SEQUENCE_TARGET_RUN)),
                 used_hashes=used_hashes,
@@ -2633,6 +2638,7 @@ def build_timeline(
         )
         usage_count[selected_shot.id] += 1
         asset_usage[selected_shot.asset_id] = asset_usage.get(selected_shot.asset_id, 0) + 1
+        asset_phases.setdefault(selected_shot.asset_id, set()).add(selected_shot.id)
         category_uses[selected_shot.category] = category_uses.get(selected_shot.category, 0) + 1
         scale_uses[selected_shot.shot_scale] = scale_uses.get(selected_shot.shot_scale, 0) + 1
         if selected_shot.id in faceless:
