@@ -1,0 +1,342 @@
+{
+  "chronology": {
+    "assets_with_timecode": 352,
+    "assets_without_tc_names": [
+      "DJI_0522.MOV",
+      "DJI_0523.MOV",
+      "DJI_0524.MOV",
+      "DJI_0525.MOV",
+      "DJI_0526.MOV",
+      "DJI_0527.MOV",
+      "DJI_0528.MOV",
+      "DJI_0529.MOV",
+      "DJI_0530.MOV",
+      "DJI_0531.MOV"
+    ],
+    "assets_without_timecode": 10
+  },
+  "db_checksum": "e8798470c51891f6ba90d1e4e62d904d3421ec31d17b156fa4d56ce04ffc5095",
+  "drones": {
+    "DJI_0522.MOV": {
+      "categories": {
+        "family": 1,
+        "venue": 13
+      },
+      "moment_member_of": [],
+      "shots": 14,
+      "timecode": false,
+      "usable": 14
+    },
+    "DJI_0523.MOV": {
+      "categories": {
+        "venue": 10
+      },
+      "moment_member_of": [],
+      "shots": 10,
+      "timecode": false,
+      "usable": 10
+    },
+    "DJI_0524.MOV": {
+      "categories": {
+        "venue": 21
+      },
+      "moment_member_of": [],
+      "shots": 21,
+      "timecode": false,
+      "usable": 15
+    },
+    "DJI_0525.MOV": {
+      "categories": {
+        "ceremony": 1,
+        "venue": 13
+      },
+      "moment_member_of": [],
+      "shots": 14,
+      "timecode": false,
+      "usable": 13
+    },
+    "DJI_0526.MOV": {
+      "categories": {
+        "ceremony": 2,
+        "detail": 3,
+        "party": 3,
+        "venue": 11
+      },
+      "moment_member_of": [],
+      "shots": 19,
+      "timecode": false,
+      "usable": 19
+    },
+    "DJI_0527.MOV": {
+      "categories": {
+        "venue": 11
+      },
+      "moment_member_of": [],
+      "shots": 11,
+      "timecode": false,
+      "usable": 11
+    },
+    "DJI_0528.MOV": {
+      "categories": {
+        "ceremony": 2,
+        "couple": 20,
+        "family": 2,
+        "party": 131,
+        "venue": 125
+      },
+      "moment_member_of": [
+        "kiss",
+        "first_dance"
+      ],
+      "shots": 280,
+      "timecode": false,
+      "usable": 278
+    },
+    "DJI_0529.MOV": {
+      "categories": {
+        "ceremony": 2,
+        "couple": 6,
+        "groom_prep": 1,
+        "party": 32,
+        "venue": 15
+      },
+      "moment_member_of": [
+        "first_dance"
+      ],
+      "shots": 56,
+      "timecode": false,
+      "usable": 56
+    },
+    "DJI_0530.MOV": {
+      "categories": {
+        "ceremony": 5,
+        "couple": 17,
+        "family": 23,
+        "party": 324,
+        "venue": 132
+      },
+      "moment_member_of": [],
+      "shots": 501,
+      "timecode": false,
+      "usable": 492
+    },
+    "DJI_0531.MOV": {
+      "categories": {
+        "party": 9,
+        "venue": 6
+      },
+      "moment_member_of": [],
+      "shots": 15,
+      "timecode": false,
+      "usable": 15
+    }
+  },
+  "eligibility": {
+    "blocked_clipping": 0,
+    "blocked_quality": 18,
+    "max_clipping": 0.25,
+    "min_quality": 0.15,
+    "total": 2638,
+    "usable": 2620
+  },
+  "helpers": {
+    "distractions": 500,
+    "obstructions": 264,
+    "opening_signs": 27
+  },
+  "moments": {
+    "cake": {
+      "best": 0.3572,
+      "chronology_known": 8,
+      "chronology_unknown": 0,
+      "count": 8,
+      "known_recovered": {
+        "C7309": true
+      },
+      "shot_ids": [
+        "b21ae921-9369-5413-b5a4-2c21c03ade3a",
+        "46adc211-9dd2-57b2-b1a7-7cdf4bfc15a9",
+        "5b9b2d4b-4b7f-588f-80f1-3e38be2f7acb",
+        "5b56bf52-97a0-52f8-85e9-2963e13319b7",
+        "6cc0df32-4c16-57b1-b241-2add39efaf59",
+        "15519b14-560c-52ae-8afa-53c951284f91",
+        "f98d80bc-82f8-5057-8547-41ed7b76a3e7",
+        "91099494-4a7a-543c-bcd9-39afa7de000c"
+      ],
+      "sources": [
+        "C7309.MP4",
+        "C7309.MP4",
+        "C7309.MP4",
+        "C7309.MP4",
+        "C7309.MP4",
+        "C7309.MP4",
+        "C7309.MP4",
+        "C7309.MP4"
+      ],
+      "uncertain": false,
+      "usable_members": 8
+    },
+    "cake_feed": {
+      "best": 0.3337,
+      "chronology_known": 8,
+      "chronology_unknown": 0,
+      "count": 8,
+      "known_recovered": {},
+      "shot_ids": [
+        "b21ae921-9369-5413-b5a4-2c21c03ade3a",
+        "5b56bf52-97a0-52f8-85e9-2963e13319b7",
+        "a2b62fa5-3993-5018-aa51-ae4cfbf913b7",
+        "15519b14-560c-52ae-8afa-53c951284f91",
+        "6cc0df32-4c16-57b1-b241-2add39efaf59",
+        "46adc211-9dd2-57b2-b1a7-7cdf4bfc15a9",
+        "5b9b2d4b-4b7f-588f-80f1-3e38be2f7acb",
+        "5e6f3478-aad7-55fa-b661-a95077c25d1d"
+      ],
+      "sources": [
+        "C7309.MP4",
+        "C7309.MP4",
+        "C7310.MP4",
+        "C7309.MP4",
+        "C7309.MP4",
+        "C7309.MP4",
+        "C7309.MP4",
+        "C7309.MP4"
+      ],
+      "uncertain": false,
+      "usable_members": 8
+    },
+    "entrance": {
+      "best": 0.3294,
+      "chronology_known": 8,
+      "chronology_unknown": 0,
+      "count": 8,
+      "known_recovered": {},
+      "shot_ids": [
+        "7beffabf-87cb-59a5-8cc8-f4604af9eee9",
+        "debb7d97-432d-5c91-bda4-06025f0b8351",
+        "a3439320-65bf-5ffe-9cfe-10de5e192354",
+        "fdbddffa-b79f-5eaf-b901-730e530a4912",
+        "61eb78ff-d3ee-5aa5-aaaf-9f7dc13ff433",
+        "62fc70a5-cf47-5e9a-a0c0-8f5942724058",
+        "0237cda9-c1de-5ce9-af99-d346d78c9f7a",
+        "62e22c34-215e-544a-8168-d8fc91d492d4"
+      ],
+      "sources": [
+        "C7234.MP4",
+        "C7219.MP4",
+        "C7184.MP4",
+        "C7234.MP4",
+        "C7208.MP4",
+        "C7210.MP4",
+        "C7233.MP4",
+        "C7203.MP4"
+      ],
+      "uncertain": false,
+      "usable_members": 8
+    },
+    "first_dance": {
+      "best": 0.3402,
+      "chronology_known": 4,
+      "chronology_unknown": 4,
+      "count": 8,
+      "known_recovered": {
+        "DJI_0528": true,
+        "DJI_0529": true
+      },
+      "shot_ids": [
+        "393b5d06-fdff-5676-b1b5-2f16b75de6f9",
+        "df3a49bf-2fad-5013-88a4-1ad91aebd605",
+        "44a0e83c-872b-59b6-93ad-2a5d6441d20e",
+        "f32cb1d3-a66b-50eb-a757-247d0c423993",
+        "6e25c69d-b0aa-53de-8202-2a29347e8364",
+        "6d804937-6ef8-50fa-aa2d-3f084dc049d7",
+        "11cd9454-1041-5f9a-bb8a-dd2f5a5a5ae0",
+        "38a48548-3838-5e51-a650-24ac5a88b7b4"
+      ],
+      "sources": [
+        "C7388.MP4",
+        "DJI_0528.MOV",
+        "DJI_0529.MOV",
+        "C7384.MP4",
+        "DJI_0528.MOV",
+        "DJI_0529.MOV",
+        "C7389.MP4",
+        "C7276.MP4"
+      ],
+      "uncertain": false,
+      "usable_members": 8
+    },
+    "kiss": {
+      "best": 0.3196,
+      "chronology_known": 7,
+      "chronology_unknown": 1,
+      "count": 8,
+      "known_recovered": {},
+      "shot_ids": [
+        "bd091ada-671e-5211-8577-44e7e82a588d",
+        "452d6cef-6487-5678-8b9c-12e81b53eded",
+        "48418013-133e-5e0f-bbf4-9ad1b1cf9071",
+        "c6b35f4f-bc0b-553b-8052-b56666645667",
+        "ddf533fc-97ab-519a-b5e1-eb5031a4be88",
+        "06ea0fb7-092c-5d96-85b4-5c816c46cc78",
+        "b2563ae4-7c20-5902-9b54-8eaf7f2aa54e",
+        "71a76885-3e23-5491-9e87-5c213807d1eb"
+      ],
+      "sources": [
+        "C7228.MP4",
+        "C7281.MP4",
+        "C7391.MP4",
+        "C7229.MP4",
+        "C7403.MP4",
+        "C7228.MP4",
+        "DJI_0528.MOV",
+        "C7252.MP4"
+      ],
+      "uncertain": false,
+      "usable_members": 8
+    },
+    "ring": {
+      "best": 0.3259,
+      "chronology_known": 8,
+      "chronology_unknown": 0,
+      "count": 8,
+      "known_recovered": {},
+      "shot_ids": [
+        "c83d488f-4372-5482-9369-5ecf951f537e",
+        "f14671d7-8e31-5e6a-91bc-fb36dec3d27f",
+        "5835af5d-84e4-5c45-bcb5-7fb508e041d6",
+        "c00b2de1-234e-5c0d-b757-1871d667b012",
+        "5476176d-4ade-50c4-b2a9-c4436b3e52b2",
+        "5958f251-161d-51d4-a68d-b7e2c3b1c2b3",
+        "2518bc7c-6e7c-5be2-a999-f56a70813095",
+        "1a2a05b2-7b94-5d67-9604-aca6a6a9bf87"
+      ],
+      "sources": [
+        "C7161.MP4",
+        "C7161.MP4",
+        "C7161.MP4",
+        "C7221.MP4",
+        "C7206.MP4",
+        "C7161.MP4",
+        "C7206.MP4",
+        "C7235.MP4"
+      ],
+      "uncertain": false,
+      "usable_members": 8
+    }
+  },
+  "production": {
+    "assets": 362,
+    "clip_labels": 2638,
+    "elenora_embeddings": 1405,
+    "embeddings": 2638,
+    "shots": 2638,
+    "tq_zero": 0
+  },
+  "shot_windows": {
+    "distinct_shots_with_windows_15a": 2638,
+    "for_15a": 14157,
+    "orphan_windows": 0,
+    "total_all_projects": 23531
+  }
+}
