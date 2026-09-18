@@ -1,0 +1,58 @@
+{
+  "before_after_shots": {
+    "after_count": 2638,
+    "after_shot_manifest_hash_full": "71a7aa3526f105c35a67bc2a3e24f26bd61004c4272dc6b79cf0ba9b11bfa46c",
+    "assets_differ": [],
+    "assets_stable": 362,
+    "assets_total": 362,
+    "before_count": 2638,
+    "before_shot_manifest_hash_full": "71a7aa3526f105c35a67bc2a3e24f26bd61004c4272dc6b79cf0ba9b11bfa46c",
+    "boundary_equal": true,
+    "classification": "A",
+    "full_row_identical": true,
+    "shot_id_set_equal": true
+  },
+  "clone": {
+    "initial_checksum": "738ce224467562482795a5cd2ffc6d9d2fe00c823fbe02d0d285f62921d3f6c2",
+    "matches_production_initially": true,
+    "path": "/tmp/p68_tempdb/clone.sqlite3"
+  },
+  "forced_failure_rollback": {
+    "other_asset_untouched": true,
+    "raised": true,
+    "target_asset": "0008751c-9764-5653-8f9e-87a201c079be",
+    "target_old_ids_preserved": true,
+    "target_shot_count": 4
+  },
+  "production_baseline": {
+    "assets": 362,
+    "features": 2638,
+    "prod_checksum_before": "738ce224467562482795a5cd2ffc6d9d2fe00c823fbe02d0d285f62921d3f6c2",
+    "shots_before": 2638,
+    "timeline_items": 129
+  },
+  "production_isolation": {
+    "prod_checksum_after": "738ce224467562482795a5cd2ffc6d9d2fe00c823fbe02d0d285f62921d3f6c2",
+    "prod_checksum_unchanged": true,
+    "prod_mtime_unchanged": true
+  },
+  "shot_feature_relationship": {
+    "features_without_shots": 0,
+    "shots_with_features": 2638,
+    "shots_without_features": 0
+  },
+  "supported_path": {
+    "clip_encode_invocations": 0,
+    "encode_asset_invocations": 0,
+    "scene_ranges_invocations": 0,
+    "windows_pass_stubbed_invocations": 1
+  },
+  "timeline": {
+    "item_manifest_equal": true,
+    "items_after": 129,
+    "items_before": 129,
+    "new_dangling_references": 0,
+    "resolved_after": 129,
+    "resolved_before": 129
+  }
+}
