@@ -1,0 +1,56 @@
+{
+  "v7": {
+    "timeline_name": "IS EDIT - AI CUT V7",
+    "resolve_index": 10,
+    "duplicate_suspected": "Timeline 11 (identical 108 video / 22 audio structure)",
+    "fps": 50.0,
+    "duration_s": 122.76,
+    "video_items_total": 108,
+    "audio_items_total": 22,
+    "songs": [
+      {"track": "MUSIC 1 - Ordinary", "file": "Alex Warren - Ordinary (Lyrics).mp3", "tl_start_s": 3.5, "tl_end_s": 80.26, "used_s": 76.76},
+      {"track": "MUSIC 2 - Wella Kole", "file": "Garnic, Wildness Rose, Anuolu & Afro Queen - Wella Kole.mp3", "tl_start_s": 77.92, "tl_end_s": 123.78, "used_s": 45.86}
+    ],
+    "song_transition": {"type": "crossfade", "overlap_s": [77.92, 80.26], "marked_by": "SFX_ENTRANCE_v2.wav at 80.04s + long DJI_0525 drone hold 73.84-79.04"},
+    "sfx": ["SFX_OPENING_rural_crickets_city (0-6.36)", "SFX_ENTRANCE_v2 (80.04)", "SFX_BOUQUET_flowerscatch (119.58)"],
+    "drone_assets_used": ["DJI_0524", "DJI_0525", "DJI_0528", "DJI_0530", "DJI_0531"],
+    "drone_placements": 7,
+    "drone_roles": {"DJI_0524": "intro establishing + outro pull-out", "DJI_0525": "song-transition hold (5.2s)", "DJI_0528": "first-dance aerial (x2, src 1202 & 10500)", "DJI_0530": "party aerials (x3)", "DJI_0531": "party aerial"},
+    "cake": {"present": true, "sources": ["C7308", "C7309", "C7310"], "window_s": [91.04, 94.06], "style": "fast ~1s montage"},
+    "first_dance": {"present": true, "sources": ["DJI_0528", "DJI_0528"], "song": 2, "note": "genuine drone first-dance material, reused forward (src 1202 -> 10500)"},
+    "same_source_reuse_forward": {"DJI_0528": [1202, 10500], "DJI_0530": [2370, 10480, 35144], "C7196": [510, 1684], "C7351": [1944, 3354], "C7404": [1102, 2352], "C7450": [461, 878], "C7451": [82, 8976]},
+    "grammar": {"song1_median_cut_s": 1.54, "song2_median_cut_s": 0.75, "note": "cuts get shorter as energy rises in song 2 (matches manual grammar)"},
+    "intro": {"first_item": "DJI_0524 drone establishing + Text title", "logic": "aerial establishing over opening crickets SFX before music enters at 3.5s"},
+    "outro": {"final_items": ["C7452", "DJI_0524 (3.26s pull-out)"], "beat": "bouquet-catch SFX + drone pull-back ending", "classification": "COHERENT"},
+    "story_structure": "song1 (3.5-80s) = day/prep/couple/portraits at ~1.5s cuts; transition at ~78-80s; song2 (80-123s) = entrance -> reception -> cake -> first dance -> party/night at ~0.5-1s cuts; outro = bouquet + drone."
+  },
+  "shadow_p6_14": {
+    "items": 59,
+    "duration_s": 96.0,
+    "nominal_target_s": 180.0,
+    "distinct_source_assets": 49,
+    "source_reuse_count": 10,
+    "source_range_none_exhaustions": 0,
+    "second_song_items": 0,
+    "drone_distinct_assets_selected": 7,
+    "cake_selected": true,
+    "first_dance_selected": 0,
+    "kiss_scored": 0
+  },
+  "early_stop_diagnosis": {
+    "is_96s_erroneous_vs_v7": true,
+    "mechanism": "planner.py:2329-2345 -- the _cut_run_score window gate (UNUSABLE_RUN_SCORE=0.25) empties the acceptable pool for the desired cut length, and because current_frame >= target_duration * MINIMUM_DELIVERABLE_SHARE (0.5 * 180s = 90s) the loop DELIBERATELY breaks ('enough film to hand over').",
+    "not_caused_by": ["source exhaustion (0 _source_range None returns)", "empty candidate pool", "missing semantics", "missing embeddings"],
+    "evidence_it_is_wrong": "V7 (human-acceptable) contains ~27s more coherent story (reception/cake/first-dance/party/second song 80-123s) that the planner never builds; V7 reuses sources forward and transitions to song 2, the planner does neither and stops in the day episode.",
+    "primary_class": "SCORING_WEIGHT / CANDIDATE_ELIGIBILITY (cut-run window gate + 50%-deliverable early-exit terminates before the reception story)",
+    "secondary_classes": ["MUSIC_SECTION_SELECTION (never transitions to song 2)", "CHRONOLOGY (drone timecode; ring duration)", "TARGET_FILL policy (180s target is miscalibrated -- V7 is 123s)"]
+  },
+  "duration_conclusion": {
+    "hard_180_requirement": false,
+    "v7_duration_s": 122.76,
+    "shadow_duration_s": 96.0,
+    "principle": "V7 (~123s) is the real reference, not 180s. But fixing the target alone does not help: the 96s stop is the cut-run/50%-share early-exit, which would still fire (96 > 0.5*123 = 61.5). The early-stop gate, not the target number, is the blocker."
+  },
+  "fix_implemented": false,
+  "fix_reason": "Root cause proven but a change to the cut-run / deliverable-share early-exit is a real planner behaviour change that must be designed and shadow-validated in its own bounded package (P6.16), not rushed here. This package is diagnosis."
+}
