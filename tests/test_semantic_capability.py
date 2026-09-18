@@ -312,7 +312,12 @@ class ProductionRegressionTests(unittest.TestCase):
     because of, from the real (untouched) production database, read-only. No mutation, no
     rough cut generated."""
 
-    def test_the_real_15_agustos_project_is_not_ready_for_a_wedding_rough_cut(self):
+    def test_the_real_15_agustos_project_is_now_semantically_full_after_p6_12(self):
+        """Was `..._is_not_ready...`: before P6.12 this project was 2638/2638 DEGRADED
+        (opencv_fallback, no embeddings) and NOT_READY_FOR_ROUGH_CUT. The authorized P6.12
+        controlled force-reencode remediated it -- every shot now carries a real CLIP embedding,
+        so `semantic_readiness` reports FULL. This still reads the real production DB read-only;
+        it now guards that the remediation stays in place rather than the old degraded state."""
         import sqlite3
 
         db_path = Path(__file__).parent.parent / "data" / "sevenfilm.sqlite3"
@@ -333,7 +338,7 @@ class ProductionRegressionTests(unittest.TestCase):
 
         database = _ReadOnlyDatabase(db_path)
         result = semantic_readiness(database, "29cd1e06-0af1-40c4-95bf-77f2add1159f")
-        self.assertEqual(result["status"], NOT_READY_FOR_ROUGH_CUT)
+        self.assertEqual(result["status"], READY_FOR_ROUGH_CUT)
         self.assertEqual(result["total"], 2638)
-        self.assertEqual(result["degraded"], 2638)
-        self.assertEqual(result["full"], 0)
+        self.assertEqual(result["degraded"], 0)
+        self.assertEqual(result["full"], 2638)
