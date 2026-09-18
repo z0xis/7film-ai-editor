@@ -1,0 +1,40 @@
+{
+  "actual_audio_items": 2,
+  "actual_video_items": 132,
+  "chronology_overlay": "none (plain production path)",
+  "db_checksum": "e8798470c518",
+  "db_unchanged": true,
+  "deterministic": true,
+  "duration_s": 162.94,
+  "fps": 50.0,
+  "manifest_match": {
+    "source_name_mismatches": 0,
+    "tl_dur_mismatches": 0,
+    "tl_start_mismatches": 0
+  },
+  "matches_p6_19_baseline_shotforshot": true,
+  "music": [
+    {
+      "name": "Alex Warren - Ordinary (Lyrics).mp3",
+      "tl_start_s": 0.0
+    },
+    {
+      "name": "Garnic, Wildness Rose, Anuolu & Afro Queen - Wella Kole.mp3",
+      "tl_start_s": 108.0
+    }
+  ],
+  "plan_hash": "49991347e0d406ea",
+  "planned_items": 132,
+  "project": "15 Ağustos",
+  "protected_unchanged": {
+    "AI Rough Cut": "056645bd0f954826",
+    "IS EDIT - AI CUT V7": "689d0c574319a091",
+    "is edit": "efe59c58e9236478"
+  },
+  "resolution": "3840x2160",
+  "retimed_items": 26,
+  "song2_transition_s": 108.0,
+  "timeline_count_after": 12,
+  "timeline_count_before": 11,
+  "timeline_name": "AI CUT V2 - P6.20 CANDIDATE"
+}
