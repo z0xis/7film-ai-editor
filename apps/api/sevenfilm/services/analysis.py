@@ -268,12 +268,14 @@ def _label_asset(database: Database, classifier: VisionClassifier, asset: MediaA
         encoded, [metrics[index] for index in positions], priors
     )
     features_by_position = dict(zip(positions, classifications))
-    database.execute("DELETE FROM shots WHERE asset_id = ?", (asset.id,))
+    # Built fully in memory before anything is deleted: a failure while preparing a row (a bad
+    # classification, a malformed metrics_json) must leave the old shots untouched, not a table
+    # already emptied by a DELETE with nothing yet written to replace it.
+    new_rows = []
     for ordinal, row in enumerate(rows):
         measured = metrics[ordinal]
         features = features_by_position.get(ordinal) or classifier._fallback(measured)
-        database.insert(
-            "shots",
+        new_rows.append(
             {
                 "id": row["shot_id"],
                 "asset_id": asset.id,
@@ -295,8 +297,13 @@ def _label_asset(database: Database, classifier: VisionClassifier, asset: MediaA
                 "face_ratio": measured.face_ratio,
                 "face_edge": measured.face_edge,
                 "created_at": now(),
-            },
+            }
         )
+    # One transaction for the delete and every insert together -- see `replace_rows`'s own
+    # docstring for the gap this closes: a crash or cancellation partway through a delete-then-
+    # insert-loop used to leave some of an asset's shots written and the rest not, which is
+    # exactly the window that can leave a shot a timeline still references missing.
+    database.replace_rows("shots", "asset_id", asset.id, new_rows)
 
 
 def analyze_shots(database: Database, project_id: str, job_id: str) -> list[Shot]:

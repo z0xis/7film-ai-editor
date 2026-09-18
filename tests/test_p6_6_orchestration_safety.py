@@ -36,17 +36,21 @@ def test_probe_confirms_job_uniqueness_enforced():
     assert result["job_uniqueness_enforced"] is True
 
 
-def test_label_asset_uses_non_atomic_delete_then_insert_loop():
-    """Locks the exact code shape the finding depends on -- if _label_asset() is ever changed
-    to use an atomic replace_rows() call like _store_features() does, this test should be
-    revisited (not silently left green on stale assumptions)."""
+def test_label_asset_no_longer_uses_non_atomic_delete_then_insert_loop():
+    """P6.6 found and locked the pre-fix shape (a bare DELETE followed by a loop of
+    individually-committed inserts). P6.7 replaced it with the atomic replace_rows() path --
+    this test now asserts the fixed shape is gone, as the historical test said it should be
+    revisited for."""
     source = (ROOT / "apps/api/sevenfilm/services/analysis.py").read_text()
-    assert 'database.execute("DELETE FROM shots WHERE asset_id = ?"' in source
-    assert 'database.insert(\n            "shots"' in source or 'database.insert(\n        "shots"' in source
+    label_asset_start = source.index("def _label_asset(")
+    label_asset_end = source.index("def analyze_shots(")
+    label_asset_body = source[label_asset_start:label_asset_end]
+    assert 'database.execute("DELETE FROM shots WHERE asset_id = ?"' not in label_asset_body
+    assert 'database.replace_rows("shots", "asset_id", asset.id, new_rows)' in label_asset_body
 
 
 def test_store_features_still_uses_atomic_replace_rows():
-    """Contrast case: shot_features IS atomic via replace_rows(), unlike shots."""
+    """Contrast case: shot_features IS atomic via replace_rows(), unlike shots used to be."""
     source = (ROOT / "apps/api/sevenfilm/services/analysis.py").read_text()
     assert 'database.replace_rows("shot_features", "asset_id", asset.id, rows)' in source
 
@@ -78,15 +82,16 @@ def test_cancellation_checked_at_asset_boundaries_not_inside_label_asset():
     assert "raise_if_cancelled" not in label_asset_body
 
 
-def test_replace_rows_helper_exists_and_is_unused_by_label_asset():
-    """The atomic helper that would fix _label_asset()'s gap already exists (proven by
-    _store_features() using it for shot_features) but _label_asset() does not call it for
-    shots -- this is what makes the finding a straightforward future fix, not a redesign."""
+def test_replace_rows_helper_exists_and_is_now_used_by_label_asset():
+    """The atomic helper that fixed _label_asset()'s gap already existed (proven by
+    _store_features() using it for shot_features) and P6.7 wired _label_asset() to use it too
+    for shots -- historically this test asserted the helper was unused there; it now asserts
+    the fix landed."""
     source = (ROOT / "apps/api/sevenfilm/services/analysis.py").read_text()
     label_asset_start = source.index("def _label_asset(")
     label_asset_end = source.index("def analyze_shots(")
     label_asset_body = source[label_asset_start:label_asset_end]
-    assert "replace_rows" not in label_asset_body
+    assert "replace_rows" in label_asset_body
     db_source = (ROOT / "apps/api/sevenfilm/db.py").read_text()
     assert "def replace_rows(" in db_source
 
