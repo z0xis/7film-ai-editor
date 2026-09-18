@@ -1,0 +1,46 @@
+{
+  "note": "P6.17 diagnosis. A bounded fix was attempted and REJECTED by the hard gates; no planner code was shipped. Chronology (drone missing timecode) identified as the true blocker.",
+  "p6_16_baseline": {"items": 132, "duration_s": 162.9, "song2_items": 60,
+    "first_dance_selected_sources": ["C7388.MP4", "C7389.MP4"],
+    "note": "reception reached; first_dance represented by camera crowd-dance, not the isolated drone; one DJI_0528 shot reused 3x"},
+  "first_dance_members": {
+    "C7388.MP4": {"timecode": true, "day_position": 0.786, "role": "timecoded crowd/party dance"},
+    "C7384.MP4": {"timecode": true, "day_position": 0.776},
+    "C7389.MP4": {"timecode": true, "day_position": 0.789},
+    "C7276.MP4": {"timecode": true},
+    "DJI_0528.MOV": {"timecode": false, "day_position": null, "role": "isolated first dance (couple alone, guests watching)"},
+    "DJI_0529.MOV": {"timecode": false, "day_position": null, "role": "couple on floor (aerial)"}
+  },
+  "score_component_evidence": {
+    "isolated_first_dance_drone_DJI_0528_df3a49bf": {"total": 0.508, "story_relevance": 0.928,
+      "technical_quality": 0.556, "reuse_penalty": 0.247,
+      "note": "its own use count is 0; the whole 0.247 is ASSET_REUSE_PENALTY(0.06) x asset_reuse_count(~4) because ANOTHER DJI_0528 shot (a kiss angle) was over-used 3x -- one over-used shot suppresses the asset's distinct sibling shots"},
+    "camera_C7388_393b5d06": {"chronology_penalty_at_matching_slot": 0.0,
+      "note": "timecoded, anchors to the reception progress -> wins the first_dance slot on base quality/chronology; the chronology-less drone cannot anchor to the reception"}
+  },
+  "primary_failure_class": "CHRONOLOGY_DOMINATES_TRUE_EVENT (drone missing timecode) -- secondary REDUNDANCY_GUARD_TOO_WEAK (one shot reused 3x inflates the asset penalty on distinct siblings)",
+  "attempted_fix": {
+    "mechanism": "waive/reduce the ASSET_REUSE_PENALTY for moment shots (a distinct angle of an owed moment competes on its own merit; per-shot reuse charge kept)",
+    "full_waiver": {"first_dance": "selects isolated drones DJI_0528/DJI_0529", "redundancy": "max same-shot reuse 1 (fixed)",
+      "reception": "COLLAPSED to 94.4s / 0 song2 -- moment shots front-loaded the day and the deliverable-share stop fired early", "verdict": "REJECTED by section-26 reception regression gate"},
+    "half_waiver": {"reception": "preserved (163.4s / 59 song2)", "first_dance": "DJI_0529 enters as a member",
+      "problem": "DJI_0529 (a reception dance drone) placed at 26.4s in the DAY/prep section -- chronologically misplaced because it has no day_position to anchor it to the reception; DJI_0528 kiss shot still reused 3x",
+      "verdict": "REJECTED -- not a clean improvement; introduces a misplaced drone and does not fix redundancy"},
+    "shipped": false,
+    "reason": "Both variants fail a hard gate. The true blocker is that the genuine first-dance drone footage has no timecode, so it cannot be chronologically anchored to the reception: it either floats to the wrong section (half waiver) or loses to timecoded generic footage (baseline). A bounded scoring tweak cannot place chronology-less event footage correctly."
+  },
+  "cross_event_note": "The same chronology gap affects any drone-covered event (drones DJI_0522-0531 all lack timecode). Camera events (cake C7309, bouquet C7451) are timecoded and place correctly, so the sequence gap is concentrated on the chronology-less drone reception material.",
+  "grammar_gap_after_p6_17": {
+    "false_early_stop": "SOLVED (P6.16)",
+    "forward_source_reuse": "PARTIAL",
+    "source_moment_choice": "OPEN",
+    "event_sequence_continuity": "OPEN",
+    "redundancy": "OPEN (one shot x3 persists)",
+    "causal_order": "OPEN",
+    "action_phase": "OPEN",
+    "chronology": "OPEN -- now the PRIMARY blocker for drone-covered events (first dance)",
+    "music_transition": "PARTIAL",
+    "beat_rigidity": "OPEN"
+  },
+  "safety": {"planner_changed": false, "resolve_writes": 0, "db_writes": 0, "timeline_changes": 0, "frames_committed": false}
+}
