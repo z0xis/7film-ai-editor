@@ -1,0 +1,38 @@
+{
+  "HIGH": {
+    "deterministic": true,
+    "drones_before_70s": 12,
+    "duration_s": 162.9,
+    "first_dance_selected": [
+      "C7388.MP4",
+      "C7389.MP4"
+    ],
+    "items": 132,
+    "safety_no_write": true,
+    "song2_items": 60
+  },
+  "HIGH+MEDIUM": {
+    "deterministic": true,
+    "drones_before_70s": 10,
+    "duration_s": 163.4,
+    "first_dance_selected": [
+      "C7388.MP4",
+      "C7389.MP4"
+    ],
+    "items": 131,
+    "safety_no_write": true,
+    "song2_items": 59
+  },
+  "baseline": {
+    "deterministic": true,
+    "drones_before_70s": 12,
+    "duration_s": 162.9,
+    "first_dance_selected": [
+      "C7388.MP4",
+      "C7389.MP4"
+    ],
+    "items": 132,
+    "safety_no_write": true,
+    "song2_items": 60
+  }
+}

@@ -1,0 +1,7563 @@
+{
+  "asset_creation_order": [
+    "DJI_0522.MOV",
+    "DJI_0523.MOV",
+    "DJI_0524.MOV",
+    "DJI_0525.MOV",
+    "DJI_0526.MOV",
+    "DJI_0527.MOV",
+    "DJI_0528.MOV",
+    "DJI_0529.MOV",
+    "DJI_0530.MOV",
+    "DJI_0531.MOV"
+  ],
+  "asset_median_day": {
+    "DJI_0522.MOV": 0.509,
+    "DJI_0523.MOV": 0.491,
+    "DJI_0524.MOV": 0.509,
+    "DJI_0525.MOV": 0.515,
+    "DJI_0526.MOV": 0.509,
+    "DJI_0527.MOV": 0.684,
+    "DJI_0528.MOV": 0.536,
+    "DJI_0529.MOV": 0.546,
+    "DJI_0530.MOV": 0.539,
+    "DJI_0531.MOV": 0.688
+  },
+  "asset_monotonic_fraction": 0.889,
+  "estimates": {
+    "00beaecb-44cf-5301-a615-20fbb4dd02d8": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.0856,
+      "est": 0.5065,
+      "start_frame": 14994,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "00c42a7b-4503-58f5-ba52-6d97aef3beea": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 5229,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "00d7e428-3b33-51df-b092-a5994b96657e": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2116,
+      "est": 0.6884,
+      "start_frame": 12159,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "00e7949b-d1cb-5355-8ae9-d00a31163f68": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2374,
+      "est": 0.539,
+      "start_frame": 15687,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "013c83be-fd3a-5c3f-b30d-5539c408a68d": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1045,
+      "est": 0.6405,
+      "start_frame": 12411,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "01e23fb1-1149-5e37-80ae-62cc0d41d1e9": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2585,
+      "est": 0.5134,
+      "start_frame": 24507,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "023b527b-a3ea-5a88-a228-da9ab28d7533": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1691,
+      "est": 0.6073,
+      "start_frame": 504,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "024679df-03a5-5284-908e-4dc40f1e817f": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2563,
+      "est": 0.539,
+      "start_frame": 8001,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "026b50f8-7146-56e3-bbfc-f091100d40b0": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2624,
+      "est": 0.5095,
+      "start_frame": 12096,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "026c0849-36f7-52e5-b3e9-be70de1acadf": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1474,
+      "est": 0.6865,
+      "start_frame": 1008,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "02fc6750-09d3-5e09-9a89-550f17fd32f7": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2142,
+      "est": 0.4768,
+      "start_frame": 11025,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "03ab9faa-777a-5331-a3a8-cff436ef29d2": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1837,
+      "est": 0.5774,
+      "start_frame": 17073,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "04124870-341c-5d2f-a3ee-5a7626f2c04f": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2611,
+      "est": 0.5108,
+      "start_frame": 20412,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "048c35d7-d2d5-587f-862a-01aee8e7d815": {
+      "asset": "DJI_0524.MOV",
+      "dispersion": 0.1971,
+      "est": 0.5126,
+      "start_frame": 252,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "049eae43-3ddb-5dd3-ba20-74646af84f08": {
+      "asset": "DJI_0526.MOV",
+      "dispersion": 0.235,
+      "est": 0.4284,
+      "start_frame": 441,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "04def42a-c81e-5aad-9a94-42019723b2bb": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2216,
+      "est": 0.5549,
+      "start_frame": 12033,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "04ecc0ca-6319-5c0c-8d67-56ff825f92fa": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.2131,
+      "est": 0.435,
+      "start_frame": 819,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "04f54fb7-ffaa-52d8-918b-c5d6bef6be7d": {
+      "asset": "DJI_0526.MOV",
+      "dispersion": 0.0887,
+      "est": 0.5095,
+      "start_frame": 0,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "05155322-b8ab-5d91-83ec-119950d98440": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.3571,
+      "est": 0.536,
+      "start_frame": 2961,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "052075dd-adbc-58c9-a173-47522eac2690": {
+      "asset": "DJI_0523.MOV",
+      "dispersion": 0.3777,
+      "est": 0.4907,
+      "start_frame": 567,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "057566c1-ab9b-5c76-bfbe-e07ed8773b18": {
+      "asset": "DJI_0527.MOV",
+      "dispersion": 0.1999,
+      "est": 0.6073,
+      "start_frame": 378,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "05a82c6e-b31d-55b5-95be-cec1b16e84d8": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.0423,
+      "est": 0.5126,
+      "start_frame": 14805,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "05b00f17-77b4-5c62-a2e4-93ac2b4e8b67": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.0954,
+      "est": 0.521,
+      "start_frame": 9954,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "05c8f94c-4fa8-548c-ab49-37787b93ac17": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2162,
+      "est": 0.4243,
+      "start_frame": 12411,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "05d3bd71-12f8-533f-9602-53e4be2b5a1a": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.219,
+      "est": 0.539,
+      "start_frame": 17010,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "05e5663c-dd5c-5434-8226-63292e4cc223": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2042,
+      "est": 0.7376,
+      "start_frame": 17577,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "0674375d-e9ef-53e6-a27a-6c3fde12cef5": {
+      "asset": "DJI_0522.MOV",
+      "dispersion": 0.3638,
+      "est": 0.4768,
+      "start_frame": 189,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "0746121d-19c7-57f1-99c7-eed9cd2de484": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1787,
+      "est": 0.4618,
+      "start_frame": 10836,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "0798d560-1c9f-56df-8eee-73c88209a1df": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.126,
+      "est": 0.5145,
+      "start_frame": 9072,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "086b6cb4-41dc-56ce-9959-4235c3ae286c": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2619,
+      "est": 0.5145,
+      "start_frame": 23247,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "0891e25e-e480-58bd-95f1-f2ffdc087cb9": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.0644,
+      "est": 0.6405,
+      "start_frame": 11151,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "0896b20d-f1ed-5ae1-a234-f959ca12433b": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2953,
+      "est": 0.5945,
+      "start_frame": 7938,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "08d3cf44-192c-5cf5-9081-b55298db3ee3": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2832,
+      "est": 0.5095,
+      "start_frame": 12600,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "09991bbd-4253-54c1-be48-f5b3e21cfc9d": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.1748,
+      "est": 0.435,
+      "start_frame": 1071,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "09dd5a02-73d8-5802-b186-74d65fb69ac4": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 4473,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "0a57921e-cd38-5e90-81fb-e50b9b9249dc": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 189,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "0a7a9baf-d724-5cf2-80a5-6f02689285c3": {
+      "asset": "DJI_0522.MOV",
+      "dispersion": 0.0935,
+      "est": 0.5095,
+      "start_frame": 693,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "0ad03774-40a4-5e9c-becb-df7b6fb92cba": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1262,
+      "est": 0.3023,
+      "start_frame": 3969,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "0ad76543-8fcf-58e5-b83e-18080625d4a2": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.3877,
+      "est": 0.4907,
+      "start_frame": 25263,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "0beb0c07-b21a-53c8-bfad-3c914deb474d": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2593,
+      "est": 0.5126,
+      "start_frame": 9765,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "0c3f359c-404c-59ff-a350-2584511f10dd": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1195,
+      "est": 0.6405,
+      "start_frame": 26460,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "0c68dee0-a00b-57ed-9a61-afda56ea5d77": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2626,
+      "est": 0.5134,
+      "start_frame": 21672,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "0cc369a3-5666-58dc-b095-ff2741df4f0c": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2218,
+      "est": 0.6837,
+      "start_frame": 441,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "0e055afb-97ea-5198-bae1-ff928bfb93c8": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2411,
+      "est": 0.5308,
+      "start_frame": 20664,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "0e2164a1-ada8-5504-90fd-25b00c2cadaf": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2548,
+      "est": 0.5056,
+      "start_frame": 21420,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "0e630ce4-a9a6-50d6-a277-c24ce0085c20": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2099,
+      "est": 0.7196,
+      "start_frame": 7686,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "0e9d2e4f-a544-5dfb-ae0f-fde7692cf7e5": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.16,
+      "est": 0.5885,
+      "start_frame": 26082,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "0ea0f83a-6081-522b-b182-9a96d6cb7ab7": {
+      "asset": "DJI_0527.MOV",
+      "dispersion": 0.2218,
+      "est": 0.6837,
+      "start_frame": 567,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "0eddba89-65aa-5525-b65f-d4d45b6e55d6": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1724,
+      "est": 0.5885,
+      "start_frame": 28665,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "0fb16cde-888d-53f8-af03-8f3a5b1f9215": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2329,
+      "est": 0.539,
+      "start_frame": 19593,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "0fcf4ae1-16fe-5719-9e29-07d5851376ec": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1715,
+      "est": 0.5982,
+      "start_frame": 8001,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "0ff33080-1458-52d5-8cae-ca4dd1755e51": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1715,
+      "est": 0.7697,
+      "start_frame": 819,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "101285e8-aa55-5b67-9183-67c70b02694e": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.3846,
+      "est": 0.9206,
+      "start_frame": 7056,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "105f9b72-dea7-5863-8aa4-5a3f82ce9d3b": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2001,
+      "est": 0.7376,
+      "start_frame": 2520,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "10dec3be-639a-540a-beb1-2b4a58d8eac7": {
+      "asset": "DJI_0524.MOV",
+      "dispersion": 0.2322,
+      "est": 0.4831,
+      "start_frame": 945,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "10fed697-66cd-5f1b-8524-9b44256c7510": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 504,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "114d616a-e941-5990-9869-86acf30dd292": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1724,
+      "est": 0.4161,
+      "start_frame": 25452,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "117cf0a8-03f5-5a4a-ac1e-50efb9905f4f": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.235,
+      "est": 0.4284,
+      "start_frame": 25767,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "121eeb9f-6ac0-584b-9066-bdbb29ecf969": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1841,
+      "est": 0.7914,
+      "start_frame": 2268,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "12b2adef-e6e6-533d-b1dd-93367ea4bf61": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2643,
+      "est": 0.4907,
+      "start_frame": 19341,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "131bfe3f-5054-56d6-9072-0b3f1047bcca": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.1726,
+      "est": 0.5885,
+      "start_frame": 2772,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "1353f18f-3a93-528e-b7d8-3f8b04965309": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 15183,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "1368ee93-f0cf-5ef6-b0dd-b7967570ac47": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2504,
+      "est": 0.4768,
+      "start_frame": 10710,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "1375ddd3-c36a-5f94-aeaa-956d6244f160": {
+      "asset": "DJI_0524.MOV",
+      "dispersion": 0.0423,
+      "est": 0.5126,
+      "start_frame": 1197,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "1386135e-9b1e-59aa-a644-0442f7c524d5": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.26,
+      "est": 0.5108,
+      "start_frame": 22365,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "139edbf6-eb39-54e8-b246-fa7014099dce": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1919,
+      "est": 0.7376,
+      "start_frame": 15435,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "13a02340-f336-5412-ba93-837fb55984dc": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2563,
+      "est": 0.5134,
+      "start_frame": 12915,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "14032aa4-9233-565e-8771-c169d875020b": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2654,
+      "est": 0.5065,
+      "start_frame": 10773,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "14909e82-1f15-5f06-a254-221bedc763ff": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.263,
+      "est": 0.5134,
+      "start_frame": 16506,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "14f9b9ad-13f1-5350-b387-9166bd2bb1c3": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.26,
+      "est": 0.5108,
+      "start_frame": 10080,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "1529cc84-5be0-5286-816b-dfb86a30f644": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1969,
+      "est": 0.7196,
+      "start_frame": 14868,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "158485ba-b6a9-595f-905b-7431f8459703": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1659,
+      "est": 0.539,
+      "start_frame": 11277,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "15fca1b5-de0e-51f6-a1db-3a2e82c8bb67": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.217,
+      "est": 0.6884,
+      "start_frame": 2331,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "1606b407-1b67-548e-8ddf-51ae36f88e6b": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1271,
+      "est": 0.6481,
+      "start_frame": 20853,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "160ec397-1923-535c-a351-0a166299852a": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2016,
+      "est": 0.536,
+      "start_frame": 14364,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "16290a4b-7693-543b-9e1a-d72676ae1d9a": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2166,
+      "est": 0.521,
+      "start_frame": 12852,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "16aa5ef2-d522-57ae-81f2-c63d088227c9": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.3649,
+      "est": 0.5134,
+      "start_frame": 23373,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "16e7c27c-b666-5bce-ac61-227a366ac1ea": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2548,
+      "est": 0.5056,
+      "start_frame": 12537,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "16e9d149-a798-53ee-ba2e-8881440d438e": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1659,
+      "est": 0.539,
+      "start_frame": 8505,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "170c6c11-a167-5e32-bfd6-03b8a4758ec9": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2322,
+      "est": 0.7697,
+      "start_frame": 31374,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "176b4c8d-1588-5d7a-8f23-4b1876fd273f": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2428,
+      "est": 0.5291,
+      "start_frame": 10332,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "17e8f185-15d7-5f5c-a23f-b12c1255fc6f": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2329,
+      "est": 0.539,
+      "start_frame": 18585,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "187aec66-6dcb-5158-be1b-47db069d2ffa": {
+      "asset": "DJI_0522.MOV",
+      "dispersion": 0.0395,
+      "est": 0.5126,
+      "start_frame": 756,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "18926d6e-0d90-5fee-b038-2edc40eef75b": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2242,
+      "est": 0.5134,
+      "start_frame": 22869,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "18cbb4b5-ae53-5147-b902-5325022c63e2": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1663,
+      "est": 0.407,
+      "start_frame": 27720,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "18d5e16d-cd40-554a-9900-5bc4db887189": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.0935,
+      "est": 0.5095,
+      "start_frame": 12159,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "1939acf0-c8a4-5119-8ad0-e15726aefd64": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1919,
+      "est": 0.7376,
+      "start_frame": 945,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "19765ed9-b37f-550d-bce8-6a00858fdc6f": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1797,
+      "est": 0.435,
+      "start_frame": 11781,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "19fb4a48-7974-507f-aba4-7f2f9cec190a": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1574,
+      "est": 0.6481,
+      "start_frame": 819,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "1a2a737b-8c3a-5c24-800b-c94974b6ab34": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1841,
+      "est": 0.6073,
+      "start_frame": 3213,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "1a4884bc-89c5-5237-84ff-f7a72e92f0a4": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1713,
+      "est": 0.5945,
+      "start_frame": 9513,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "1a73f515-f7bc-5652-8e47-a3bb2537d284": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2801,
+      "est": 0.5065,
+      "start_frame": 6678,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "1ae42648-3aed-5995-8586-8973e8ff96ba": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1652,
+      "est": 0.5813,
+      "start_frame": 945,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "1b7455be-2d55-555e-ada0-e8d64934e0d5": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1626,
+      "est": 0.6394,
+      "start_frame": 378,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "1bcff17a-441d-582b-b341-763b541f2ced": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1624,
+      "est": 0.6073,
+      "start_frame": 693,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "1bf366fd-9735-56d7-97af-785061d5f0bc": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1459,
+      "est": 0.6884,
+      "start_frame": 13797,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "1c8c6b72-af35-5724-95af-88779c675706": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1691,
+      "est": 0.6073,
+      "start_frame": 252,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "1d02216c-4610-52ad-88ba-63ca9b422e74": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.2552,
+      "est": 0.5291,
+      "start_frame": 1701,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "1d147df0-404d-5583-8fd7-1272ea9228bb": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2042,
+      "est": 0.7376,
+      "start_frame": 8127,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "1d792ddf-79fd-5f9c-88fc-ed749d96fef0": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.3352,
+      "est": 0.539,
+      "start_frame": 19530,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "1d9ef93b-6029-5a67-b1f5-095a33183615": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2361,
+      "est": 0.7697,
+      "start_frame": 31311,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "1dac9940-07ec-5287-adc6-8fe85e30e16a": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.227,
+      "est": 0.7327,
+      "start_frame": 1449,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "1de6fd88-eab5-5b18-8e97-6087680b65a4": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2016,
+      "est": 0.536,
+      "start_frame": 13860,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "1de9a08c-21df-5be8-8cd5-62bc9124353a": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2361,
+      "est": 0.7697,
+      "start_frame": 15246,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "1dea5514-f960-5977-9829-2827331ac899": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2702,
+      "est": 0.521,
+      "start_frame": 21357,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "1df3438e-dd3c-5f6b-8c5b-627d78201b34": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2398,
+      "est": 0.539,
+      "start_frame": 29421,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "1df3823d-a895-5906-bf1a-9e3fee3daf96": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.131,
+      "est": 0.5095,
+      "start_frame": 16821,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "1ec003da-9252-5cae-9a10-df458e419446": {
+      "asset": "DJI_0526.MOV",
+      "dispersion": 0.2812,
+      "est": 0.4907,
+      "start_frame": 630,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "1f6bd435-000b-594f-a8a5-b6343801d49a": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1474,
+      "est": 0.6865,
+      "start_frame": 12348,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "1fa00793-db02-5978-9c5a-19c2c526d5e9": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2116,
+      "est": 0.4768,
+      "start_frame": 10458,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "1fbd0010-bab6-5668-9292-773a0aa40bb9": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2259,
+      "est": 0.4768,
+      "start_frame": 18270,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "2017fef9-9317-55a4-a0d1-c1550f3076ac": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2218,
+      "est": 0.521,
+      "start_frame": 10332,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "202c644a-a87e-54fc-9242-38c74694dd17": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2056,
+      "est": 0.435,
+      "start_frame": 6426,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "202d960b-697b-58bc-8eed-ea2cf8cd67c0": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.2281,
+      "est": 0.4907,
+      "start_frame": 1134,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "2188583b-184a-596a-b5f1-13f23a5b3a22": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2832,
+      "est": 0.5095,
+      "start_frame": 10899,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "228be3eb-f29b-5bb1-92bc-4fe8a84acfcf": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2474,
+      "est": 0.5291,
+      "start_frame": 13482,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "230ab999-54ab-50f1-b1cb-01496f9b4e47": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1732,
+      "est": 0.634,
+      "start_frame": 17514,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "231d26d5-6801-5318-9225-5a2cbb2aacf4": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.0891,
+      "est": 0.6837,
+      "start_frame": 8253,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "2375d0c3-fe21-594f-bc9b-36667376b76e": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2227,
+      "est": 0.4161,
+      "start_frame": 12663,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "24aae2e5-de5c-51a3-870e-d7b4d12381eb": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2745,
+      "est": 0.5945,
+      "start_frame": 16758,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "24e2b503-0860-51fe-ac06-97c49fd0d6a9": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1999,
+      "est": 0.6073,
+      "start_frame": 3402,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "256de230-aa82-5a75-9763-4540ae334003": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2548,
+      "est": 0.5056,
+      "start_frame": 16569,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "2617cf0e-dbc4-5241-92e6-1900073148b2": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1234,
+      "est": 0.5171,
+      "start_frame": 16947,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "265ca41c-6b87-5dba-a4c2-14eb968d5f76": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2398,
+      "est": 0.4907,
+      "start_frame": 14679,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "2699a593-a8d7-5207-b1b7-5d16b9f3896f": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2218,
+      "est": 0.6837,
+      "start_frame": 3150,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "26a62563-c970-577c-8ff3-580d9f4e6e57": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2624,
+      "est": 0.5095,
+      "start_frame": 22806,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "26de862b-a63b-5b28-b540-43fe2af906c5": {
+      "asset": "DJI_0526.MOV",
+      "dispersion": 0.2515,
+      "est": 0.4831,
+      "start_frame": 756,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "2708a3cd-7141-592a-a38c-82238ce8dbb0": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2121,
+      "est": 0.6405,
+      "start_frame": 14049,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "2708d622-f2ea-54d4-8037-a33875d84254": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2016,
+      "est": 0.536,
+      "start_frame": 6111,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "27177e87-d342-5055-9856-96319c306e40": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.235,
+      "est": 0.4284,
+      "start_frame": 1890,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "2780cf83-11a2-5a75-8f43-a12b0943079a": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2136,
+      "est": 0.521,
+      "start_frame": 11340,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "27becbb6-1120-5a5f-bd1b-7a0a98e8bd67": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.1572,
+      "est": 0.634,
+      "start_frame": 252,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "288ce39d-c149-589a-8952-f984a7279473": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.2251,
+      "est": 0.5243,
+      "start_frame": 2583,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "29837774-bda0-52f4-8189-d9e117733fd4": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1572,
+      "est": 0.634,
+      "start_frame": 1890,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "2988a1b2-f042-5b14-ba44-c5a2252ec101": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1691,
+      "est": 0.6073,
+      "start_frame": 15939,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "29da1969-44a3-5396-99de-67adb6ff7738": {
+      "asset": "DJI_0526.MOV",
+      "dispersion": 0.1678,
+      "est": 0.6394,
+      "start_frame": 1134,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "2a892d6e-8d52-5fcf-b1e6-41d81fbba5c3": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1897,
+      "est": 0.4161,
+      "start_frame": 12978,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "2b099e75-01f5-57c0-bcb8-e7c6b4338ec7": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.263,
+      "est": 0.5134,
+      "start_frame": 10143,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "2b2382ed-a0f3-5a0b-a62e-d5899010931f": {
+      "asset": "DJI_0525.MOV",
+      "dispersion": 0.2016,
+      "est": 0.7376,
+      "start_frame": 315,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "2b5ab7d3-f82f-5925-a698-21792aebd1cc": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2218,
+      "est": 0.6837,
+      "start_frame": 11403,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "2bcadfb1-8870-51f4-b651-1aac1062139d": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.204,
+      "est": 0.7376,
+      "start_frame": 315,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "2bd23794-7ca9-51d4-974d-47797e28ba79": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 7497,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "2bef0d4b-caa0-5297-8470-13274b533773": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.3382,
+      "est": 0.536,
+      "start_frame": 7623,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "2bff22d0-8a25-5cab-a730-8e3928bbda8f": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2144,
+      "est": 0.5126,
+      "start_frame": 14679,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "2c44fc08-e255-5396-8100-f667cd28bc9f": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1735,
+      "est": 0.4243,
+      "start_frame": 19152,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "2c6bbed8-b1d7-5b6f-a0ea-973131eca53a": {
+      "asset": "DJI_0527.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 63,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "2ca6801b-ddba-5ab5-8ffd-54d43c7f4d4c": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.2591,
+      "est": 0.7376,
+      "start_frame": 3402,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "2ca8430f-6ceb-5bad-a72a-badd921469cd": {
+      "asset": "DJI_0522.MOV",
+      "dispersion": 0.0887,
+      "est": 0.5095,
+      "start_frame": 567,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "2d563dfa-f514-514d-9087-fa0042e2415a": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2699,
+      "est": 0.5065,
+      "start_frame": 21105,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "2db78fd2-f441-59ff-ab62-25c4a82c8d9a": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2699,
+      "est": 0.5065,
+      "start_frame": 4662,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "2dc4e872-f320-5764-a9e4-36038b8002c2": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 3843,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "2dfb6a33-7bc8-58f3-b2d6-808f8636402a": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2053,
+      "est": 0.6884,
+      "start_frame": 14238,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "2e0ed482-b417-578b-8e10-9cd64f940f1b": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2329,
+      "est": 0.539,
+      "start_frame": 21042,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "2e75c95a-4d13-5570-a83c-dd4fb199e0f1": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.2509,
+      "est": 0.521,
+      "start_frame": 2142,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "2efe21d9-87d7-5654-8d31-3b0cc40f44e3": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.1459,
+      "est": 0.6884,
+      "start_frame": 2961,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "2f1261b7-4e69-5844-84ae-6ce542c5017c": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1236,
+      "est": 0.5813,
+      "start_frame": 8064,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "2f4cfdf4-e92f-5e17-9ba9-2093b6f24adf": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2281,
+      "est": 0.7049,
+      "start_frame": 11592,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "2f4e7dcb-e5c7-5112-8415-98273fa7ed28": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 1449,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "3004008e-2ffb-5f5e-a587-121eaeca75c1": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1839,
+      "est": 0.521,
+      "start_frame": 9702,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "30aecb7d-3238-56d9-87d9-dc17de33a92a": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2116,
+      "est": 0.4768,
+      "start_frame": 10269,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "31cf149c-e741-5e66-a842-df81848427e6": {
+      "asset": "DJI_0526.MOV",
+      "dispersion": 0.2001,
+      "est": 0.5095,
+      "start_frame": 252,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "31f92371-005c-5f92-8618-865a968c79dd": {
+      "asset": "DJI_0523.MOV",
+      "dispersion": 0.4222,
+      "est": 0.4907,
+      "start_frame": 504,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "32725b24-4658-554d-8b10-e087718d8449": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2361,
+      "est": 0.7697,
+      "start_frame": 15624,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "32875d98-4b33-59fa-94ea-f97c22f25fc0": {
+      "asset": "DJI_0522.MOV",
+      "dispersion": 0.3638,
+      "est": 0.4768,
+      "start_frame": 0,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "337f1461-1285-5863-a871-8e6aed2c2b9a": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2372,
+      "est": 0.4256,
+      "start_frame": 13797,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "33bf4e0a-eb44-515d-8034-372faf719759": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.3634,
+      "est": 0.5243,
+      "start_frame": 7497,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "33f850c3-f744-5c08-8753-1f12468bf0ed": {
+      "asset": "DJI_0531.MOV",
+      "dispersion": 0.1177,
+      "est": 0.5945,
+      "start_frame": 441,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "34264d7b-d297-510b-9fd3-db6036b26dbf": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2042,
+      "est": 0.7376,
+      "start_frame": 7875,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "34358775-cf98-594c-a8c3-37b7ce4ccfc1": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2734,
+      "est": 0.536,
+      "start_frame": 8883,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "343d28db-a71e-5a9b-9ad2-710453a88e91": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.214,
+      "est": 0.4692,
+      "start_frame": 6993,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "343fef8e-cd15-5865-8a50-e0485a7b3df2": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2398,
+      "est": 0.539,
+      "start_frame": 13482,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "346b190a-3e3f-5ded-a7a4-c8ff39115a59": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2275,
+      "est": 0.4209,
+      "start_frame": 13734,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "34b4279f-128e-508f-bba0-8de40012b5bc": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.1936,
+      "est": 0.7376,
+      "start_frame": 3087,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "34f36a72-fcb3-5daf-83c6-d689e2f5556e": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.0544,
+      "est": 0.6884,
+      "start_frame": 2268,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "351e3521-7893-5e4c-8e7d-b57f66b9e1c9": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.217,
+      "est": 0.6884,
+      "start_frame": 30870,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "35c54631-38ec-5d9b-bac3-51f8bda2b548": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1691,
+      "est": 0.6073,
+      "start_frame": 2835,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "36035f06-6a62-5c1e-a339-e32f2b816c4c": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2587,
+      "est": 0.5095,
+      "start_frame": 10395,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "36283de4-74c6-5487-bb60-292e42aef568": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.144,
+      "est": 0.389,
+      "start_frame": 4221,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "37434c23-9d81-525a-bbf2-37b7d4916959": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2637,
+      "est": 0.5145,
+      "start_frame": 5418,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "374fb7ef-3221-5e08-92ac-7e2a99040d8e": {
+      "asset": "DJI_0524.MOV",
+      "dispersion": 0.0423,
+      "est": 0.5126,
+      "start_frame": 1260,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "378708e2-a74c-534c-b080-d45dfbc3d751": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.1919,
+      "est": 0.7376,
+      "start_frame": 126,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "379d1541-1a9d-59bb-8ce6-2c43ce7a85fc": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2947,
+      "est": 0.521,
+      "start_frame": 20349,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "37a2c9ce-f976-5ac9-b8b4-2e95806cc806": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1774,
+      "est": 0.5733,
+      "start_frame": 8694,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "37bbe4a4-b122-5920-9b96-0458a3df3ef5": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.175,
+      "est": 0.6884,
+      "start_frame": 13671,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "391f3314-bbca-502a-aa18-f831df569148": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1446,
+      "est": 0.6318,
+      "start_frame": 31185,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "395ae212-89e6-59ed-a8d4-e6a6d4912658": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1349,
+      "est": 0.6405,
+      "start_frame": 19782,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "396ddbcf-f11a-5f9c-9605-20562f07ea93": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1542,
+      "est": 0.3805,
+      "start_frame": 13860,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "39752fbb-8068-5e03-8e1e-453a509de92f": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.3393,
+      "est": 0.539,
+      "start_frame": 19656,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "399e23b2-8322-5009-9b9b-1963ee1adac4": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1359,
+      "est": 0.6405,
+      "start_frame": 20097,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "3a185f00-01a7-5f01-95f0-a91eb4a6d91a": {
+      "asset": "DJI_0531.MOV",
+      "dispersion": 0.204,
+      "est": 0.7376,
+      "start_frame": 189,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "3a5bb76b-34ab-5ad2-98fa-5211d34c0c71": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1513,
+      "est": 0.6405,
+      "start_frame": 6174,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "3ae47c72-6c74-5d2d-981e-7b428a113a84": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1995,
+      "est": 0.526,
+      "start_frame": 14616,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "3af4b671-432a-5a40-b236-3a7ca5a490c3": {
+      "asset": "DJI_0526.MOV",
+      "dispersion": 0.2407,
+      "est": 0.5291,
+      "start_frame": 819,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "3b04178c-a203-5ed9-967b-e19c0504af5f": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.2251,
+      "est": 0.5095,
+      "start_frame": 1827,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "3b3b388e-0cd5-5732-9a20-b7eaf02f5631": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 4725,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "3b3be853-bc09-584b-87ff-256bcdc3afb2": {
+      "asset": "DJI_0525.MOV",
+      "dispersion": 0.2398,
+      "est": 0.4907,
+      "start_frame": 630,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "3b521144-6bd7-53fe-9d1e-4294ded63b59": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2218,
+      "est": 0.521,
+      "start_frame": 19089,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "3b6ee24c-79b9-56a1-a630-1ad8ed57d2b5": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 0,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "3bb97b46-8ff6-5b38-94fe-dd98d1933a7f": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 2772,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "3bc58a09-8a40-589c-8569-abcf0fc89cfb": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.181,
+      "est": 0.5566,
+      "start_frame": 30996,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "3bdd0d53-dd41-54e9-a50d-4869de799fcf": {
+      "asset": "DJI_0522.MOV",
+      "dispersion": null,
+      "est": null,
+      "start_frame": 378,
+      "support": 0,
+      "tier": "UNRESOLVED"
+    },
+    "3bf0aa4f-9067-553b-bd2e-b32ef005075e": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.1999,
+      "est": 0.6073,
+      "start_frame": 3465,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "3c2e0ba1-75c8-5320-90fa-d017f510427c": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1652,
+      "est": 0.5813,
+      "start_frame": 27909,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "3c3464a8-b062-545b-a668-cc5bee0a504b": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.4046,
+      "est": 0.5095,
+      "start_frame": 25956,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "3c41b1c5-699e-5e2c-8041-fc53d23ddbd2": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1869,
+      "est": 0.5228,
+      "start_frame": 14301,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "3c5e1c35-fa1d-519b-8960-59028024801e": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1425,
+      "est": 0.6481,
+      "start_frame": 9387,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "3c983f2e-0ec0-5e40-a2ff-12c08045516f": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.222,
+      "est": 0.5126,
+      "start_frame": 11907,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "3ce362b0-9ccc-585f-83ba-779eced83b18": {
+      "asset": "DJI_0522.MOV",
+      "dispersion": 0.065,
+      "est": 0.5108,
+      "start_frame": 819,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "3d6c66e2-882b-59e6-9891-35f1afd839d0": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2509,
+      "est": 0.521,
+      "start_frame": 20538,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "3e2a64e9-35da-5f72-8947-0874ec122b6a": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1999,
+      "est": 0.6073,
+      "start_frame": 378,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "3e2d5314-95ff-5d5e-b569-34d88b6738f3": {
+      "asset": "DJI_0531.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 756,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "3e5d5056-04ad-5892-a9ca-440487dcf98a": {
+      "asset": "DJI_0523.MOV",
+      "dispersion": 0.4083,
+      "est": 0.4768,
+      "start_frame": 252,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "3efc8847-8d49-5d9b-9a0b-222a638302a3": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2504,
+      "est": 0.4768,
+      "start_frame": 17640,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "3f687281-3bf2-5f29-ba09-99d2dd0a2383": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1691,
+      "est": 0.6073,
+      "start_frame": 30303,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "400a847e-1418-54af-83dd-2f4be99bb9ee": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.0869,
+      "est": 0.5126,
+      "start_frame": 14364,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "40349358-894e-5fd4-9eb0-350bed8ae242": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2578,
+      "est": 0.4768,
+      "start_frame": 29547,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "4099d0c4-858f-52bc-ba7e-e258a1b615af": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2947,
+      "est": 0.521,
+      "start_frame": 23940,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "40c08bff-e41f-5778-b5f7-72b8bb75cc17": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2574,
+      "est": 0.5774,
+      "start_frame": 13356,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "40f6b361-3085-5f19-8339-5ef733b15d2a": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2888,
+      "est": 0.4161,
+      "start_frame": 4347,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "414c5d59-8ff5-5a78-91d2-15ae6c65cc80": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2281,
+      "est": 0.5065,
+      "start_frame": 6552,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "414e02de-ed59-5062-8c92-9257efe306b0": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.235,
+      "est": 0.4284,
+      "start_frame": 4536,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "41663f74-c610-51ab-87ad-5c21a92463e9": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2162,
+      "est": 0.5108,
+      "start_frame": 4851,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "418fea0c-6295-55d8-84df-e071d63398c2": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2166,
+      "est": 0.521,
+      "start_frame": 12726,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "41a0f734-a4e8-5d1c-abf4-47071a1a8ba1": {
+      "asset": "DJI_0524.MOV",
+      "dispersion": 0.0895,
+      "est": 0.5056,
+      "start_frame": 504,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "41bdede9-2659-5bfb-9cfa-c70aec6dcf89": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1962,
+      "est": 0.5134,
+      "start_frame": 13041,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "42044bc3-d0ff-5ae0-b07b-0b5a013ced0d": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1045,
+      "est": 0.6405,
+      "start_frame": 26838,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "42165015-da4b-5511-af0b-29be6ecb62a7": {
+      "asset": "DJI_0524.MOV",
+      "dispersion": 0.2832,
+      "est": 0.5095,
+      "start_frame": 189,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "42504a34-e447-5e07-8e1d-9246e124ba6a": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1999,
+      "est": 0.6073,
+      "start_frame": 189,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "4250cb83-5117-52ab-aad4-a76ddedc584c": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2116,
+      "est": 0.6884,
+      "start_frame": 14175,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "42c5cf2a-29b9-57d3-b1f9-a191e5d081a8": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2149,
+      "est": 0.6405,
+      "start_frame": 27594,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "42dd5101-1855-5312-99c9-24e334673358": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1954,
+      "est": 0.4506,
+      "start_frame": 2898,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "437d7fa7-a581-5ad7-83b3-57023c3c3548": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2053,
+      "est": 0.5095,
+      "start_frame": 12474,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "4422cdb7-8acd-5c7a-8189-26f07ad744af": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1713,
+      "est": 0.6481,
+      "start_frame": 13419,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "44a0e83c-872b-59b6-93ad-2a5d6441d20e": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.1574,
+      "est": 0.4566,
+      "start_frame": 630,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "44bf0b1a-ccfd-5a09-93c3-870a42ba73d3": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1945,
+      "est": 0.6837,
+      "start_frame": 14427,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "44ed8516-6d2d-5510-a802-0d154e358c5d": {
+      "asset": "DJI_0525.MOV",
+      "dispersion": 0.2149,
+      "est": 0.5228,
+      "start_frame": 63,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "4516cbf3-2892-5a49-9339-3d73994877d4": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2398,
+      "est": 0.4907,
+      "start_frame": 12663,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "45269951-960e-565c-9958-13dfbd30bc50": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1164,
+      "est": 0.5885,
+      "start_frame": 1449,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "454b69a6-4e5a-5f76-a729-9819cf61f8fc": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2359,
+      "est": 0.536,
+      "start_frame": 16443,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "455faddf-c8af-5c20-aee6-28ea7a66aa80": {
+      "asset": "DJI_0523.MOV",
+      "dispersion": 0.4081,
+      "est": 0.5126,
+      "start_frame": 0,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "45b4514e-3386-572f-95e0-059f8b1c22c2": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2882,
+      "est": 0.5145,
+      "start_frame": 11466,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "46b9473e-c67c-50f1-8d34-f0e22319784f": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2303,
+      "est": 0.5095,
+      "start_frame": 26523,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "46e7f21e-1375-53ad-912d-c7a84160c65a": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1841,
+      "est": 0.435,
+      "start_frame": 13104,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "470acc20-a04d-58a7-9979-43e1fdacc309": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1429,
+      "est": 0.4055,
+      "start_frame": 3024,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "472d1549-f32d-5294-a835-0be9b3556ca6": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.157,
+      "est": 0.4196,
+      "start_frame": 756,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "473ed104-5db5-5cb4-ae68-fd3b32752de4": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2071,
+      "est": 0.7611,
+      "start_frame": 15687,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "478d2fb1-8605-5279-b0bd-e9c9928309d1": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2216,
+      "est": 0.5549,
+      "start_frame": 5670,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "47e30c8d-be63-5cb5-90fc-549c6878b754": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2585,
+      "est": 0.5134,
+      "start_frame": 11844,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "47f2c85c-93e3-5c21-b0a3-fd1ca8d94ed7": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2006,
+      "est": 0.389,
+      "start_frame": 4410,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "4808e3be-8977-5bc1-bab1-d1ea37fc9c59": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2801,
+      "est": 0.5065,
+      "start_frame": 23184,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "488a26a1-2a56-50ee-b0dd-4840de0828bf": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1863,
+      "est": 0.2992,
+      "start_frame": 6867,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "48dc1e94-06df-5d50-a315-18b0be17df83": {
+      "asset": "DJI_0526.MOV",
+      "dispersion": 0.2329,
+      "est": 0.4768,
+      "start_frame": 378,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "48f655d8-702b-5900-bb7d-8b8dfa153d8d": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2337,
+      "est": 0.6405,
+      "start_frame": 29043,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "49025ec1-7bae-5af2-87cd-b2e9f65785d0": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1416,
+      "est": 0.5065,
+      "start_frame": 15309,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "491b908f-e743-5015-87c4-f180d986cc88": {
+      "asset": "DJI_0524.MOV",
+      "dispersion": 0.0841,
+      "est": 0.5126,
+      "start_frame": 693,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "49360e1b-ffe7-5c67-8e6e-6d46d5b1270f": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2073,
+      "est": 0.5065,
+      "start_frame": 6300,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "493d7bd2-de67-5105-9a2a-6666816e05ba": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1054,
+      "est": 0.435,
+      "start_frame": 11718,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "49457916-f505-54bb-aec3-4c7377ed85a5": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.204,
+      "est": 0.7376,
+      "start_frame": 4914,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "497b6511-7b01-58d8-b9b1-16046a93ebd6": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.3996,
+      "est": 0.5126,
+      "start_frame": 17136,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "4a1f97f0-cb68-54ff-8cc0-9e8543523177": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.2585,
+      "est": 0.521,
+      "start_frame": 1512,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "4a45c23a-a878-5032-b0c9-79f80f7a7acc": {
+      "asset": "DJI_0524.MOV",
+      "dispersion": 0.198,
+      "est": 0.5291,
+      "start_frame": 756,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "4a5eade5-1e25-5e54-8500-b42d0e404c52": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1513,
+      "est": 0.4506,
+      "start_frame": 2709,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "4a870bca-f426-5825-9f88-665b6061ff80": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.3836,
+      "est": 0.4907,
+      "start_frame": 2268,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "4b1e9724-3357-56a6-a56f-6765737c16c2": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.1774,
+      "est": 0.5885,
+      "start_frame": 2646,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "4b766030-c4e7-5619-a6dc-e6e4cf9eeee9": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2509,
+      "est": 0.521,
+      "start_frame": 11529,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "4b82c8f8-60d0-5714-a184-8182676e481d": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2556,
+      "est": 0.5065,
+      "start_frame": 4977,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "4ba589b0-79ea-502f-aa39-ba98abb5a269": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 16506,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "4ba880c0-9bf6-5cd2-bbab-eaf6141b8db8": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2643,
+      "est": 0.4907,
+      "start_frame": 6804,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "4bcf5e3d-e8c3-5865-9a10-f2ff13c66b71": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.26,
+      "est": 0.5108,
+      "start_frame": 13419,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "4c0f5fc9-c4b2-5b69-b24e-08ff4e93dde8": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1722,
+      "est": 0.7697,
+      "start_frame": 2457,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "4c2e2266-516a-5606-9c74-fbca28b29a25": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2548,
+      "est": 0.5056,
+      "start_frame": 21231,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "4caec0c9-3746-5ad3-920a-0ecfa7181feb": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2797,
+      "est": 0.5945,
+      "start_frame": 7812,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "4d597b06-df3d-5080-8f84-66760466787c": {
+      "asset": "DJI_0523.MOV",
+      "dispersion": 0.4081,
+      "est": 0.5126,
+      "start_frame": 126,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "4e3a9643-6cc8-560d-abd4-315c0ccb3dfd": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.24,
+      "est": 0.4284,
+      "start_frame": 21168,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "4e3cedf7-a8dd-51d6-927d-cd439c2ebd0e": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.3107,
+      "est": 0.5733,
+      "start_frame": 6867,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "4e6787b5-cbc3-5de6-8bca-56e386cc3af0": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1715,
+      "est": 0.5774,
+      "start_frame": 2142,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "4e6c7ce0-fa55-5a79-acc4-c37c98993d5a": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1234,
+      "est": 0.4529,
+      "start_frame": 3465,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "4eb6db82-fa24-5624-a17f-22c70e6751d6": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1841,
+      "est": 0.6073,
+      "start_frame": 4095,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "4efb34fa-40db-5bcb-b1cd-280bb3db04d0": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2166,
+      "est": 0.7376,
+      "start_frame": 16695,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "4f542cc0-f7ff-51aa-bf1e-5eb4547a7bef": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1735,
+      "est": 0.4243,
+      "start_frame": 11025,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "4ff29e81-0905-5ea4-96db-dc015e7fef82": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2053,
+      "est": 0.5095,
+      "start_frame": 22239,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "50108a7b-afef-511a-ba80-ea0a8b952072": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.1039,
+      "est": 0.356,
+      "start_frame": 693,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "502f1d2d-2829-587a-b963-ef44e1f7554c": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1758,
+      "est": 0.5291,
+      "start_frame": 24129,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "50cbc3d2-b12b-5033-8af1-312091c977b9": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1784,
+      "est": 0.727,
+      "start_frame": 2520,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "50f229e2-2432-59e5-a774-ff4077e43771": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1546,
+      "est": 0.6837,
+      "start_frame": 4851,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "518c002a-5afb-5d6d-bc1f-efc39aaa08b1": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1572,
+      "est": 0.634,
+      "start_frame": 4536,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "51f16d3e-9ae3-53d8-ab8d-ef109cd9dd00": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1637,
+      "est": 0.6405,
+      "start_frame": 9513,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "5208106d-83ca-56e5-96fa-22c47a8bbb3d": {
+      "asset": "DJI_0531.MOV",
+      "dispersion": 0.2016,
+      "est": 0.7376,
+      "start_frame": 252,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "52105a72-a984-5f99-a2c4-86d20a331ce4": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2801,
+      "est": 0.5065,
+      "start_frame": 7434,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "52769a52-a87c-5226-9ab9-825ab1185c6d": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1524,
+      "est": 0.624,
+      "start_frame": 14553,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "52cd1caf-24de-55c2-912c-2102bb346cfe": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1999,
+      "est": 0.6073,
+      "start_frame": 30933,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "52fd723c-eeed-521c-b7a3-5aa698cd37ff": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1999,
+      "est": 0.6073,
+      "start_frame": 5607,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "53426996-ff85-52d9-998a-7f774ea3f586": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.1743,
+      "est": 0.7697,
+      "start_frame": 3339,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "5359bed5-e2bd-5d31-b3ca-085fd6be75b0": {
+      "asset": "DJI_0531.MOV",
+      "dispersion": 0.2398,
+      "est": 0.539,
+      "start_frame": 567,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "5366c5ac-cb4a-5c64-9add-34b6e3fbda32": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1657,
+      "est": 0.6884,
+      "start_frame": 6237,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "53884e2e-f757-5fb4-8f01-25b7f8c4e46d": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1,
+      "est": 0.6884,
+      "start_frame": 28980,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "5459c1e2-aefe-5c50-87d8-5dc15a183076": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.0523,
+      "est": 0.5291,
+      "start_frame": 8631,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "5488f145-4eb4-55d6-b005-8a0232fc75d9": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2882,
+      "est": 0.539,
+      "start_frame": 18144,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "54f8b9fa-3309-5963-945a-4d71f52e3449": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.3638,
+      "est": 0.5145,
+      "start_frame": 24318,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "555c6d00-43df-5f72-9990-e4c3576467e5": {
+      "asset": "DJI_0525.MOV",
+      "dispersion": 0.2192,
+      "est": 0.5572,
+      "start_frame": 0,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "555ffcda-a7ce-5682-a3a2-1e440c1cd36c": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2502,
+      "est": 0.4768,
+      "start_frame": 29295,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "558230de-42a9-5e29-af5e-375f8e62c0e6": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2259,
+      "est": 0.4768,
+      "start_frame": 8379,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "568a112c-c578-5134-86ea-d6524ce10f03": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2782,
+      "est": 0.5774,
+      "start_frame": 9639,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "57020c2d-6f23-514a-9add-33ab4540b4db": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2936,
+      "est": 0.4161,
+      "start_frame": 29862,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "57896bc8-bdc0-5cda-9b97-1ac05fba07ba": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1206,
+      "est": 0.6405,
+      "start_frame": 9198,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "57b0f943-4977-5389-b722-1489b7a136ff": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.3658,
+      "est": 0.5126,
+      "start_frame": 23562,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "57ede12a-c1c7-5192-97fe-5a5396168652": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1923,
+      "est": 0.7997,
+      "start_frame": 2331,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "57f41579-4e94-5b35-9b5c-56a6c9e191c1": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1195,
+      "est": 0.521,
+      "start_frame": 24759,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "5802ac6c-e8e6-5240-89dd-4a9fcb6b4880": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2162,
+      "est": 0.4243,
+      "start_frame": 13041,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "5897e334-d8b1-5fcc-82d7-53b348ec1a5b": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.15,
+      "est": 0.5549,
+      "start_frame": 6048,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "589daa07-4610-54c9-8a5e-296435956ab2": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2611,
+      "est": 0.5108,
+      "start_frame": 24381,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "58bebf7e-36b2-574d-8d50-58dc0d57e027": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2086,
+      "est": 0.5291,
+      "start_frame": 14301,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "596aa739-5b84-59a8-b264-568910d5b62a": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.263,
+      "est": 0.5134,
+      "start_frame": 28413,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "5b2dd8f2-9d4d-5495-af8f-002d28e93a81": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1492,
+      "est": 0.5885,
+      "start_frame": 26271,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "5b78211e-769d-569b-9c0f-3d334b99afdd": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1659,
+      "est": 0.539,
+      "start_frame": 8379,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "5b78856a-081a-5483-b3e7-1ace68be1755": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2374,
+      "est": 0.539,
+      "start_frame": 27531,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "5bc30195-1976-52c0-a5d8-e9f9c759c62c": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2398,
+      "est": 0.539,
+      "start_frame": 2079,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "5bf02738-674d-5844-9297-cfdce9da8e15": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1084,
+      "est": 0.32,
+      "start_frame": 3591,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "5bfeedaf-1a77-536a-8639-62925f7049fc": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.2196,
+      "est": 0.6481,
+      "start_frame": 1638,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "5c344b76-2cbf-59c6-ab8f-7dac8106ef58": {
+      "asset": "DJI_0526.MOV",
+      "dispersion": 0.2556,
+      "est": 0.5065,
+      "start_frame": 315,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "5c41d5ae-9997-500e-bcac-b30d7f9eb2b5": {
+      "asset": "DJI_0527.MOV",
+      "dispersion": 0.1999,
+      "est": 0.6073,
+      "start_frame": 315,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "5c7ffa11-f7b4-5847-9292-acbbfbbde511": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 15813,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "5d2b14c2-3fb8-5af1-9ec4-d71e907a2a4c": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2665,
+      "est": 0.6884,
+      "start_frame": 7119,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "5d2b98a6-4306-534d-a1c0-a1342e997c90": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.2944,
+      "est": 0.5733,
+      "start_frame": 882,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "5dce02ef-0355-54e5-846d-7958c71e1a53": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2559,
+      "est": 0.5184,
+      "start_frame": 7182,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "5e630ec2-9db1-583d-afb7-4ad125ae908c": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2125,
+      "est": 0.5572,
+      "start_frame": 5166,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "5e886392-2ad4-55f0-8944-1b86af8456c0": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2125,
+      "est": 0.539,
+      "start_frame": 8253,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "5f12eb3b-4b35-5883-be45-cea3440db4d1": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1659,
+      "est": 0.539,
+      "start_frame": 1764,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "602b9817-4491-513a-a714-c4d48e61742e": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2175,
+      "est": 0.5095,
+      "start_frame": 14616,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "607e4ee9-c4fd-5010-bcd1-48dbf5ff0f07": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1533,
+      "est": 0.5813,
+      "start_frame": 9891,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "60af5bd6-3f31-5d60-afcb-135837ab9ad0": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2611,
+      "est": 0.5108,
+      "start_frame": 7245,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "60bff9fc-651b-5abf-b1c6-4c93d90c247b": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1524,
+      "est": 0.5982,
+      "start_frame": 5103,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "60fc3cf6-50fe-5246-a178-4d4b153dc8ca": {
+      "asset": "DJI_0523.MOV",
+      "dispersion": 0.4213,
+      "est": 0.4907,
+      "start_frame": 189,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "6117a06f-066a-5331-928f-da00ef433b5c": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2845,
+      "est": 0.5108,
+      "start_frame": 24948,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "6134341c-e223-518a-9f14-b83424443767": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2871,
+      "est": 0.5134,
+      "start_frame": 11907,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "61936fb1-a02b-5ba8-8765-c3fa64872e0b": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.4016,
+      "est": 0.5145,
+      "start_frame": 23436,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "62130072-a581-5c12-9caf-75ab482400db": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.1652,
+      "est": 0.4161,
+      "start_frame": 1197,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "623da29a-cbb3-56e6-abc7-19d395bdf768": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1637,
+      "est": 0.6405,
+      "start_frame": 13608,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "627330a7-33c5-5bfc-83fb-b71caf4080c6": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1704,
+      "est": 0.5774,
+      "start_frame": 11277,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "62a9a1e9-85fd-506f-82c8-15e0ed653eb2": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1722,
+      "est": 0.7697,
+      "start_frame": 2142,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "62c45852-49d7-516f-b890-2defabe36bd6": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2556,
+      "est": 0.5065,
+      "start_frame": 13230,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "63304227-fc05-5bf6-9e3e-c9834452899a": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2162,
+      "est": 0.4243,
+      "start_frame": 27468,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "6347255e-167b-5f85-8be4-07cd9c75463d": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1654,
+      "est": 0.6865,
+      "start_frame": 10080,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "637bd005-a9bc-5283-b728-7bf26a1e7284": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1871,
+      "est": 0.3805,
+      "start_frame": 13545,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "6383d204-21ef-5e89-b073-1b04187bc9b2": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1609,
+      "est": 0.5228,
+      "start_frame": 14049,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "63e87776-d75a-5219-8e42-ac82337b6adc": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2556,
+      "est": 0.5065,
+      "start_frame": 22050,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "63ea1691-9dc2-5404-89ff-4a59d26be97c": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1999,
+      "est": 0.6073,
+      "start_frame": 3276,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "6409362b-cc30-553a-ad6a-d06cb80b2e07": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1678,
+      "est": 0.6394,
+      "start_frame": 4347,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "6416f564-a480-50d2-a2b9-d6a1baa2264e": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1375,
+      "est": 0.5774,
+      "start_frame": 27972,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "64609094-cab6-5dda-96ba-1be8b261d2f5": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.3235,
+      "est": 0.5108,
+      "start_frame": 20979,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "64bfb230-2895-5ccb-8434-8d438ce22aac": {
+      "asset": "DJI_0527.MOV",
+      "dispersion": 0.1999,
+      "est": 0.6073,
+      "start_frame": 189,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "657b3be0-c908-5fd6-9733-9a57e4eda8ef": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2504,
+      "est": 0.4768,
+      "start_frame": 29484,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "65cd3a2e-f869-5587-98f9-594d2fc105d5": {
+      "asset": "DJI_0522.MOV",
+      "dispersion": 0.1271,
+      "est": 0.521,
+      "start_frame": 630,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "65fca89a-319c-54e4-a285-3987e3b16e86": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2587,
+      "est": 0.5095,
+      "start_frame": 18963,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "66197996-fd8b-50c0-aa6a-eb8e8be683bc": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.3571,
+      "est": 0.4256,
+      "start_frame": 25578,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "666951f0-c2a6-5290-ac8c-f0713fc47bd0": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2192,
+      "est": 0.5572,
+      "start_frame": 29925,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "6673c7bd-7226-58e2-8882-61a3e1357f54": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 6363,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "66b70950-228d-5038-a37b-3bc936dfdea4": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1494,
+      "est": 0.6884,
+      "start_frame": 1071,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "66dfcb8f-0e76-5313-a1dd-7721569392f8": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2322,
+      "est": 0.4831,
+      "start_frame": 13608,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "67bda993-61e1-522d-b788-fbb67c73ce04": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1969,
+      "est": 0.552,
+      "start_frame": 21987,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "68072350-bb74-5bfe-badc-63050af30c87": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1637,
+      "est": 0.6405,
+      "start_frame": 9450,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "69425835-b578-52d1-9677-f022203a880b": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2504,
+      "est": 0.539,
+      "start_frame": 8820,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "69e639af-6d48-56f9-b649-3069f3951e97": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1776,
+      "est": 0.4284,
+      "start_frame": 27657,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "6a44ce82-4328-54e6-87fd-8ddbf88b483c": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1986,
+      "est": 0.539,
+      "start_frame": 8568,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "6a4bb4f6-95e0-5651-9bac-93ac7bde664b": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.165,
+      "est": 0.6481,
+      "start_frame": 28224,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "6a809b00-cad5-5faf-a95e-24e7ee8e81f4": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1344,
+      "est": 0.6884,
+      "start_frame": 5985,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "6aa917ce-de7c-5506-8121-b49a75c6ef1c": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1724,
+      "est": 0.5885,
+      "start_frame": 1575,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "6aaebbb1-7c54-5773-a9c3-4e1d774eb687": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.204,
+      "est": 0.7376,
+      "start_frame": 3024,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "6acd2929-a4b7-57d5-a554-f858e0d5c421": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.0919,
+      "est": 0.6865,
+      "start_frame": 1134,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "6adc7251-bb82-5221-a6fe-850640e63e8c": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2834,
+      "est": 0.4768,
+      "start_frame": 17388,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "6b1405a5-7317-53a1-bc2d-b8eefb1d6d8d": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2275,
+      "est": 0.4209,
+      "start_frame": 13167,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "6b21907a-3d78-5fa4-a019-4eec92791c98": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2272,
+      "est": 0.4209,
+      "start_frame": 6930,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "6bca53b6-0d5a-5698-96d2-2f3d1905136e": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1724,
+      "est": 0.5885,
+      "start_frame": 9576,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "6bd5be6e-9cda-5bf1-bb23-6319728906ec": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 2079,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "6c23fa31-3a40-5af1-bf1c-de4bd5660b3a": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 3024,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "6c71a730-cb4e-57bb-92b1-99d1bac2ab5e": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1624,
+      "est": 0.6073,
+      "start_frame": 7812,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "6c9c9837-4a6b-5c7c-a4db-f576afa6b2ba": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.17,
+      "est": 0.4692,
+      "start_frame": 11655,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "6ce4350c-f3ff-5e30-8015-d157a7e9544f": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1999,
+      "est": 0.6073,
+      "start_frame": 11592,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "6cf6d1ff-0e5a-5056-bb36-2f921d0da119": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2708,
+      "est": 0.5056,
+      "start_frame": 13545,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "6d804937-6ef8-50fa-aa2d-3f084dc049d7": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.1748,
+      "est": 0.435,
+      "start_frame": 1008,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "6dc59111-f43a-5f9d-ad48-cadfc369db15": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2125,
+      "est": 0.5572,
+      "start_frame": 17262,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "6e25c69d-b0aa-53de-8202-2a29347e8364": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2749,
+      "est": 0.5375,
+      "start_frame": 9639,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "6e58699b-102a-58f7-925b-746b3f0cdd8e": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2218,
+      "est": 0.6837,
+      "start_frame": 11466,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "70093b7a-5252-5443-82c7-e6255fcb3902": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1637,
+      "est": 0.6405,
+      "start_frame": 28161,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "700e7c79-bdf6-5d27-88e0-ce7feb449c93": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2548,
+      "est": 0.5056,
+      "start_frame": 14742,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "7062d644-a996-5e00-a08b-3d74507103cf": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2474,
+      "est": 0.5291,
+      "start_frame": 10206,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "708885d1-392b-5069-baa7-8e0e4368c1c2": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1112,
+      "est": 0.6884,
+      "start_frame": 756,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "70a10fdd-6b5d-5fcf-8a0f-df1ba7ec5174": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1,
+      "est": 0.6884,
+      "start_frame": 26775,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "71158096-beff-5c31-b7d7-b584e64604e8": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.204,
+      "est": 0.7376,
+      "start_frame": 8064,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "7165803e-c6a7-5d3c-b2a3-ac61d566c5a4": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1986,
+      "est": 0.5791,
+      "start_frame": 1701,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "716be034-8d04-5188-b5dd-f95206f9ebff": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1691,
+      "est": 0.6073,
+      "start_frame": 30051,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "71eb01a1-9cf0-560c-ab3f-97c3834a85ce": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1882,
+      "est": 0.634,
+      "start_frame": 31500,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "72061288-7103-5d62-9917-560d592e2595": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1336,
+      "est": 0.5813,
+      "start_frame": 1386,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "72afdf6d-c281-5bee-bea5-e371e1c87f93": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.26,
+      "est": 0.5108,
+      "start_frame": 22302,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "73022d45-3424-5551-85dc-9a2ced3a7b94": {
+      "asset": "DJI_0522.MOV",
+      "dispersion": 0.3328,
+      "est": 0.4458,
+      "start_frame": 126,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "731f8c20-8370-5252-9815-e7b2c14b61e3": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2136,
+      "est": 0.5134,
+      "start_frame": 11970,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "7321bee9-f1cb-58d9-b191-8100afce08a4": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1626,
+      "est": 0.6394,
+      "start_frame": 315,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "73b6409e-1948-5fd3-8bc4-573286c93bbc": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.0895,
+      "est": 0.6481,
+      "start_frame": 9261,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "73bfee65-f2b7-592f-841a-adc0b0d398fd": {
+      "asset": "DJI_0527.MOV",
+      "dispersion": 0.2042,
+      "est": 0.7376,
+      "start_frame": 504,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "73cbd05a-1eef-5fc4-b00f-13dc4ed57a04": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2218,
+      "est": 0.6837,
+      "start_frame": 16065,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "7410c0bd-c395-5119-998f-e5e8bcf9671e": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1195,
+      "est": 0.521,
+      "start_frame": 11214,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "7423d192-53e1-5a3e-875e-645072187400": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1865,
+      "est": 0.539,
+      "start_frame": 8442,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "7436e1a5-f572-53f5-9fb5-63553a1af5cc": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2212,
+      "est": 0.6481,
+      "start_frame": 26019,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "7464ae95-dc84-516b-9a09-b4f2e7c0bbb3": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2086,
+      "est": 0.7376,
+      "start_frame": 11529,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "7497ba91-fe39-5410-a29d-71368d376581": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.0841,
+      "est": 0.5126,
+      "start_frame": 15372,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "74cc19e7-7703-53d8-b17f-9a9a5047af6c": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 2583,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "74e902bc-ec9a-5a8e-9c69-e33c2943b1ec": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.263,
+      "est": 0.5134,
+      "start_frame": 22113,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "7510bb4e-c48c-5890-9c90-20d3561222f1": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 1386,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "753a87b8-204b-5d13-b2c9-2c2b24e875ad": {
+      "asset": "DJI_0531.MOV",
+      "dispersion": 0.1797,
+      "est": 0.5813,
+      "start_frame": 504,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "75c0f588-9a5c-5dc5-8e5c-1e3283ecf0c1": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2663,
+      "est": 0.5056,
+      "start_frame": 16380,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "7648e8d3-76d8-5e4a-a2d0-7e218703675b": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.26,
+      "est": 0.5108,
+      "start_frame": 22491,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "76c3caac-d216-504c-876f-4e7a6c429e4a": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1548,
+      "est": 0.6405,
+      "start_frame": 20286,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "76df6839-dd0b-5128-8aea-cc9c5d0b3530": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.3127,
+      "est": 0.539,
+      "start_frame": 23625,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "77bcfa00-f2c8-5734-8510-3d9407f5318b": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2149,
+      "est": 0.7376,
+      "start_frame": 3906,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "77c1011e-45f6-5b6d-b84d-751e313a01b9": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2092,
+      "est": 0.5056,
+      "start_frame": 2016,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "77c5fda9-38ec-564e-9ec4-6f29c1412f9e": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1841,
+      "est": 0.6073,
+      "start_frame": 16317,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "77f5d2de-173f-5d7b-a393-a1f73579ad99": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2116,
+      "est": 0.5108,
+      "start_frame": 18333,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "77fb4c2e-82b7-5db7-be69-ef13e6a48e84": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1837,
+      "est": 0.5774,
+      "start_frame": 12474,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "7813f6ab-24dd-54c5-943f-39bddf0121d6": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1637,
+      "est": 0.6405,
+      "start_frame": 8757,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "7844c35c-bed6-5170-b680-e315a06623ad": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.1715,
+      "est": 0.7697,
+      "start_frame": 3150,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "7853773e-9af5-5302-bc2d-3819473c83e3": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2587,
+      "est": 0.5095,
+      "start_frame": 10269,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "78ec0e70-e0c9-5c2a-9f77-f62103fbaed8": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2398,
+      "est": 0.4907,
+      "start_frame": 5166,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "78fcc123-68e8-5f3e-9511-4afa6c45c7f7": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1756,
+      "est": 0.6865,
+      "start_frame": 28854,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "78fe48e0-1d5b-505a-8939-26ec30f13b33": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2548,
+      "est": 0.5056,
+      "start_frame": 21798,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "79333bdb-9b61-530d-b827-96e31f78f148": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2259,
+      "est": 0.4768,
+      "start_frame": 8316,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "7a06a718-77ba-5307-aafa-8daecc2b598f": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 15309,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "7a2ea0fd-3967-5edc-ad4b-f8aaf6716ddc": {
+      "asset": "DJI_0524.MOV",
+      "dispersion": 0.2845,
+      "est": 0.5108,
+      "start_frame": 0,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "7a682dd1-2578-5429-a0b3-85f4bb99dc3e": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2307,
+      "est": 0.2992,
+      "start_frame": 28098,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "7aec8e74-2d8f-580e-9810-4f754c9eef8d": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 3213,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "7b340b60-1ae8-5baa-86e4-9fd3513c7ec0": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1359,
+      "est": 0.6405,
+      "start_frame": 13734,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "7b8900d2-5ebb-5091-896a-78af192f51fb": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 630,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "7bab5c70-2951-5637-adf1-3d48aa6b1b9b": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1722,
+      "est": 0.7697,
+      "start_frame": 756,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "7bc1de43-fc94-5d11-87eb-1ed73c16d96c": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1871,
+      "est": 0.3805,
+      "start_frame": 3150,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "7bd18e8c-1f9e-5c62-a46f-84877bdd6268": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2259,
+      "est": 0.4768,
+      "start_frame": 21483,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "7bfec9ba-a592-5c3d-a653-3fc05b62d8ac": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2225,
+      "est": 0.4256,
+      "start_frame": 25704,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "7ca277a8-cce2-5dc0-9a6b-84ecdaa64950": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1752,
+      "est": 0.5945,
+      "start_frame": 9261,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "7cabb102-8321-5e95-871a-973acb0d1e31": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2207,
+      "est": 0.6837,
+      "start_frame": 3969,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "7d458477-86fd-5a58-bc9b-f7ab8642c767": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.2465,
+      "est": 0.5193,
+      "start_frame": 1764,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "7e03454e-3fc9-5368-95cb-43f3bb014723": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2845,
+      "est": 0.5108,
+      "start_frame": 17073,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "7e2d2dbc-bba8-5046-98f8-27ad8bc80566": {
+      "asset": "DJI_0524.MOV",
+      "dispersion": 0.0887,
+      "est": 0.5095,
+      "start_frame": 1134,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "7e483a33-37fb-5ad6-90c2-ca40260f20e3": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.3127,
+      "est": 0.539,
+      "start_frame": 11403,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "7eab5ee0-a0a4-57c3-8821-6e031e45919e": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1425,
+      "est": 0.6481,
+      "start_frame": 6111,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "7ee5d6eb-af41-5892-8f92-1dfa928e13f3": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1132,
+      "est": 0.4692,
+      "start_frame": 9198,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "7f8e7ef7-f3fe-5a72-852b-5af18d78cd14": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.1919,
+      "est": 0.7376,
+      "start_frame": 63,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "7faf1239-0bfd-5844-8da3-a6f3bc4951e8": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1804,
+      "est": 0.5572,
+      "start_frame": 8946,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "7fb75304-b508-524f-893b-4b95c0fc6fce": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2832,
+      "est": 0.5095,
+      "start_frame": 6489,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "7fc04428-2d10-5975-95d4-bf78caa8a12f": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 252,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "80448328-df97-5681-bb28-c2a767f8e1dd": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 5040,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "807524d8-6825-5075-a289-3660a1fc4cd6": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1626,
+      "est": 0.6394,
+      "start_frame": 1953,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "8081ef29-840e-58e7-a81b-69103e81a538": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.2225,
+      "est": 0.4256,
+      "start_frame": 1953,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "811a9437-5d58-5d96-92ad-539dbe290807": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.26,
+      "est": 0.5108,
+      "start_frame": 17514,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "8199f294-31d8-58c0-a49e-ae2de87cd11d": {
+      "asset": "DJI_0531.MOV",
+      "dispersion": 0.1919,
+      "est": 0.7376,
+      "start_frame": 63,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "81d599c3-f5f3-57cc-b311-9720dd55846e": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.235,
+      "est": 0.4284,
+      "start_frame": 29358,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "820590bd-0136-5467-825e-99d0afdedd37": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1594,
+      "est": 0.5291,
+      "start_frame": 13986,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "822f51b6-3527-5c77-be0c-fa3705a7dd46": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2121,
+      "est": 0.4284,
+      "start_frame": 9702,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "8247d6e4-f17b-55ab-868e-91650028a3ae": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.111,
+      "est": 0.6884,
+      "start_frame": 882,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "827ead98-d006-57c4-a499-c4adf3a895b0": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2509,
+      "est": 0.521,
+      "start_frame": 19971,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "82c7f5d7-1e20-59e6-856e-fcf08ac0c756": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2259,
+      "est": 0.4768,
+      "start_frame": 5355,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "82e50245-0d5c-55bf-ab88-169976fd7856": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.0893,
+      "est": 0.4094,
+      "start_frame": 4032,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "832f1abc-7cd9-5e1b-a1b7-4b2119d4ea48": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.204,
+      "est": 0.7376,
+      "start_frame": 3654,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "836d9efd-7f5d-5ac4-994e-b112e2d014fb": {
+      "asset": "DJI_0525.MOV",
+      "dispersion": 0.0856,
+      "est": 0.5065,
+      "start_frame": 819,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "83e151fc-bc76-5739-b2c2-6edee61b621e": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.199,
+      "est": 0.5774,
+      "start_frame": 13986,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "8419fbc2-e4e9-5297-81e0-b8a51e2cdfdb": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2259,
+      "est": 0.4768,
+      "start_frame": 19404,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "8474e6e7-e04e-5028-87aa-dbf284ef84da": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 2205,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "84a3cbea-8ab1-5d64-a044-c02158c134f7": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2526,
+      "est": 0.5193,
+      "start_frame": 23310,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "8514a207-51f2-537e-94be-de4091e67604": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2244,
+      "est": 0.4161,
+      "start_frame": 12222,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "854d0677-75da-5739-8372-577651ccb208": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2086,
+      "est": 0.7376,
+      "start_frame": 2961,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "85f4a1db-8f4f-536a-b920-cc23b9fc736f": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2166,
+      "est": 0.521,
+      "start_frame": 9387,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "861fe4b6-2e5b-5e9c-bf5b-58ef829c2ec6": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1758,
+      "est": 0.539,
+      "start_frame": 26712,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "863d156c-0dcc-53c4-aa38-e588b73bb787": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1789,
+      "est": 0.5908,
+      "start_frame": 30618,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "86600e09-2466-5887-b7d0-0d88c540666f": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.0505,
+      "est": 0.5228,
+      "start_frame": 10017,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "8669d9bd-2d62-58ad-8822-f5395be2d96f": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2016,
+      "est": 0.7376,
+      "start_frame": 5544,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "86949ef4-1d58-5a95-8400-c8fe2a0b25c4": {
+      "asset": "DJI_0523.MOV",
+      "dispersion": 0.4213,
+      "est": 0.4907,
+      "start_frame": 378,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "86a548f6-f531-5e42-92a5-8cb3fec22ac3": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2554,
+      "est": 0.521,
+      "start_frame": 24255,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "86d3c3c9-dda7-5d7c-b60b-690390351e6c": {
+      "asset": "DJI_0525.MOV",
+      "dispersion": 0.2398,
+      "est": 0.4907,
+      "start_frame": 504,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "86efcfdb-ab0f-5aa8-bf32-718203986840": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.16,
+      "est": 0.5885,
+      "start_frame": 27846,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "872eece7-a6ce-597d-907b-36fb3593d388": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1919,
+      "est": 0.7376,
+      "start_frame": 1638,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "874889f3-3ddc-51bf-975a-1a4aa57ee4b5": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 15876,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "878b3403-2a1a-5f6e-83c1-7cc84ddb3a67": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.077,
+      "est": 0.5228,
+      "start_frame": 14175,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "87c5ef98-8f07-5949-9c92-0ea327f2ae99": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2426,
+      "est": 0.4055,
+      "start_frame": 10962,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "87db4719-bb1a-5ccf-8cb0-82103bc8e5d9": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2192,
+      "est": 0.5184,
+      "start_frame": 10899,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "8843655c-2a03-51b8-a861-cb862b729a13": {
+      "asset": "DJI_0531.MOV",
+      "dispersion": 0.1999,
+      "est": 0.6073,
+      "start_frame": 0,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "88a915a9-46b9-55c0-ab75-222f1cb08d58": {
+      "asset": "DJI_0522.MOV",
+      "dispersion": 0.4222,
+      "est": 0.4907,
+      "start_frame": 315,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "88cd481d-309f-52d7-86fa-5b49129f8a0f": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.204,
+      "est": 0.7376,
+      "start_frame": 5670,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "894537d5-e2b9-5c29-af7e-81dc79baa232": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2162,
+      "est": 0.4243,
+      "start_frame": 12915,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "896054cd-d708-5d54-a8e2-22ca0081d1a6": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2405,
+      "est": 0.536,
+      "start_frame": 8631,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "89b1b950-0da7-5577-8925-4eddf5509727": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2374,
+      "est": 0.539,
+      "start_frame": 29799,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "8a4edbab-b325-571b-bbf6-8b9ac499d6f5": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.1782,
+      "est": 0.5982,
+      "start_frame": 504,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "8b76d6fa-61db-5fdf-a637-062302d70a59": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1609,
+      "est": 0.6837,
+      "start_frame": 31248,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "8be88dc7-a0fd-53d1-ba37-4e9c4c2e162b": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2632,
+      "est": 0.533,
+      "start_frame": 29736,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "8c906f6c-d0c2-53e7-a3e5-61f5ccf79471": {
+      "asset": "DJI_0522.MOV",
+      "dispersion": 0.2997,
+      "est": 0.4768,
+      "start_frame": 63,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "8ca8d0d5-01aa-54a2-a12b-74350bb82c55": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1477,
+      "est": 0.5572,
+      "start_frame": 5796,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "8d60bcae-3425-54af-b262-87ceb0b57ad5": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2116,
+      "est": 0.6884,
+      "start_frame": 16632,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "8d756585-aaf9-50b1-97f8-598d40750830": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1078,
+      "est": 0.6884,
+      "start_frame": 28728,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "8df211fe-0242-5319-9da9-ebece6518695": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1264,
+      "est": 0.5885,
+      "start_frame": 1638,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "8df37a67-4f90-5301-ba60-b6900d2211a9": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2374,
+      "est": 0.539,
+      "start_frame": 25074,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "8e47b87e-6ab8-59c0-82af-5cd0e29ab973": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2118,
+      "est": 0.5228,
+      "start_frame": 15624,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "8efb87df-bfb1-57e2-b3e5-ab15b0e4c185": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1917,
+      "est": 0.5572,
+      "start_frame": 8190,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "8fe91a47-48cd-5b4b-ba8c-03c4d079d109": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1752,
+      "est": 0.7318,
+      "start_frame": 2583,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "9044b083-71ad-5511-9917-99daea487486": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1271,
+      "est": 0.521,
+      "start_frame": 15561,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "9059278c-15a1-5871-b0f7-37022a0fe387": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2381,
+      "est": 0.4768,
+      "start_frame": 22428,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "90eab2a5-756b-5517-9b99-719a3d89b1b4": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2322,
+      "est": 0.7697,
+      "start_frame": 0,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "9106efeb-06bd-5595-94e9-38f6a350e8d7": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2617,
+      "est": 0.5126,
+      "start_frame": 10584,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "91109d01-e085-5629-b503-9b8722155658": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2121,
+      "est": 0.4284,
+      "start_frame": 1953,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "915bf2a1-b9c5-5f0d-8898-1492c5e04e40": {
+      "asset": "DJI_0526.MOV",
+      "dispersion": 0.1678,
+      "est": 0.6394,
+      "start_frame": 945,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "916ee3d7-0f5d-5b10-b746-ce069b54e2fc": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1349,
+      "est": 0.6405,
+      "start_frame": 20475,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "91f0d2e0-bf92-5d17-aa38-a7fb7e416e1d": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2166,
+      "est": 0.521,
+      "start_frame": 10710,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "92195c31-a57b-510e-b9a2-b419c094b5a9": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2405,
+      "est": 0.7765,
+      "start_frame": 11655,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "926fc370-31b1-554d-b1d0-8f69f6f5bb0f": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2116,
+      "est": 0.5108,
+      "start_frame": 10773,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "92998f11-280a-5848-8951-e5bc5ab6c631": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1271,
+      "est": 0.5134,
+      "start_frame": 19026,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "92eab89e-8dac-5123-8358-e5b98eed4530": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.26,
+      "est": 0.5108,
+      "start_frame": 21735,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "93002d86-01fa-588f-9d54-55226bfa595e": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2272,
+      "est": 0.4209,
+      "start_frame": 26964,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "9312a047-afd1-574b-9130-d3c3e104cdfc": {
+      "asset": "DJI_0524.MOV",
+      "dispersion": 0.2669,
+      "est": 0.5095,
+      "start_frame": 126,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "9410820a-ce90-53c6-bd80-c387ba4f5273": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2799,
+      "est": 0.5791,
+      "start_frame": 10206,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "94592fa9-1684-520b-bf0d-f15b5d45b91e": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.204,
+      "est": 0.7376,
+      "start_frame": 63,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "94764083-f87c-5d7d-84ea-d88ef3d16e5b": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.0976,
+      "est": 0.6884,
+      "start_frame": 1323,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "94b65eab-be3f-51ee-b078-d26877ac828d": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1589,
+      "est": 0.6481,
+      "start_frame": 9009,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "94bb8f15-2826-5b7f-ab44-2252ef8e80ca": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1993,
+      "est": 0.7049,
+      "start_frame": 17262,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "94c70069-a8aa-59a0-9c2f-395ae01ef9e0": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 5733,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "94eb1536-1586-51ea-8d63-3c01ba7182b1": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2144,
+      "est": 0.5126,
+      "start_frame": 14553,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "94fc7135-ab53-5432-af90-eb6868765738": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 4599,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "9501f9b9-647a-5337-b7a4-ea9112fe1452": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.26,
+      "est": 0.5108,
+      "start_frame": 17703,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "95a131b8-05ee-5af3-94d9-9a30eebe1d84": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1195,
+      "est": 0.6405,
+      "start_frame": 8694,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "96178417-af41-5ef8-95bb-39912c8a1791": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.211,
+      "est": 0.7097,
+      "start_frame": 567,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "9778aa08-b09b-5cf1-8030-c936a2d30a8e": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1713,
+      "est": 0.6481,
+      "start_frame": 22743,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "97bf5b50-d477-5baa-aa58-7f0163a57afe": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2643,
+      "est": 0.4907,
+      "start_frame": 6174,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "97e907a4-c5b3-5987-9a7c-c1b3f3da7436": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2526,
+      "est": 0.5193,
+      "start_frame": 9009,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "97f0a7c1-678e-5ee0-ba2b-368b31606a03": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2056,
+      "est": 0.435,
+      "start_frame": 16254,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "98d1a34f-6393-5576-a18b-9f7db639845a": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2556,
+      "est": 0.5065,
+      "start_frame": 4914,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "999611b7-2dcf-5844-ab09-c074cb5832fe": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2121,
+      "est": 0.4284,
+      "start_frame": 27090,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "9a2de762-bbed-56ee-ad3e-3b640c926883": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.26,
+      "est": 0.5108,
+      "start_frame": 13356,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "9ab21519-69a6-560c-95d7-ab9fd0c80990": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1637,
+      "est": 0.6405,
+      "start_frame": 27279,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "9aeddd5c-c3fc-59b8-ad24-bfa2cf5d31b0": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2702,
+      "est": 0.521,
+      "start_frame": 28602,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "9b9472b0-a5f3-5fd4-af38-15b88489d50e": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 5292,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "9bd83522-5e91-5887-b7de-4b0f798c3fe7": {
+      "asset": "DJI_0531.MOV",
+      "dispersion": 0.1657,
+      "est": 0.6884,
+      "start_frame": 630,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "9be730a6-6426-5720-975d-be13895f31a8": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1936,
+      "est": 0.6394,
+      "start_frame": 315,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "9c6138dd-ce79-5122-8e09-476ffbc5ab7e": {
+      "asset": "DJI_0531.MOV",
+      "dispersion": 0.204,
+      "est": 0.7376,
+      "start_frame": 882,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "9c622551-9952-5749-9dc9-1c1d9d1c4348": {
+      "asset": "DJI_0524.MOV",
+      "dispersion": 0.09,
+      "est": 0.5108,
+      "start_frame": 315,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "9c80cf1a-e9a0-5feb-985f-e2fb6bda6588": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1956,
+      "est": 0.5421,
+      "start_frame": 11214,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "9cd5afd3-8bb3-5c6c-9acc-ed927393280e": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2355,
+      "est": 0.5134,
+      "start_frame": 21924,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "9d104370-7a51-5c61-8b4c-91acc840bdf3": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1748,
+      "est": 0.4256,
+      "start_frame": 17955,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "9d309a9d-4d8a-5843-b25e-1af55702cbc1": {
+      "asset": "DJI_0525.MOV",
+      "dispersion": 0.1563,
+      "est": 0.5813,
+      "start_frame": 252,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "9d6402fd-b685-52d1-a17d-b68cb8541797": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2079,
+      "est": 0.3805,
+      "start_frame": 29673,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "9d907aea-e337-5c8c-88a7-3339480857fc": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2476,
+      "est": 0.5243,
+      "start_frame": 24570,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "9dc3a8dd-d5c0-5df4-b3ab-d7c363a089d3": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2862,
+      "est": 0.5126,
+      "start_frame": 9828,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "9dd28766-0374-56a5-8e6d-228257aea3f5": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2038,
+      "est": 0.5308,
+      "start_frame": 20601,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "9e173a0a-a8c1-5ad8-9e1d-6caaa195bb69": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1732,
+      "est": 0.634,
+      "start_frame": 17388,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "9e3f1aa4-c1d0-517e-b723-37f81404037a": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1494,
+      "est": 0.5134,
+      "start_frame": 14742,
+      "support": 23,
+      "tier": "MEDIUM"
+    },
+    "9e73d9b7-d235-579b-b049-00030dc5a588": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2619,
+      "est": 0.5145,
+      "start_frame": 4788,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "9ea92165-e585-5f54-949c-f162197f8b7a": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2587,
+      "est": 0.5095,
+      "start_frame": 17892,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "9eb1fb11-6df0-5c63-bb9a-950db8da5b71": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2218,
+      "est": 0.521,
+      "start_frame": 11151,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "9ec6d5be-8b77-5082-9cae-6669908255dd": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.2064,
+      "est": 0.5056,
+      "start_frame": 2835,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "9eec4c56-92ac-558e-9c64-407241aa4ab8": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.219,
+      "est": 0.539,
+      "start_frame": 10836,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "9fac0a41-2a7d-5eb2-9e84-5fe0791eee0d": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1732,
+      "est": 0.634,
+      "start_frame": 441,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "9fbcdf5f-7353-5e08-9e34-0d219c6314ec": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2947,
+      "est": 0.521,
+      "start_frame": 24696,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "a068f834-e9c8-5bde-beaf-c05f8bbba52b": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2782,
+      "est": 0.5774,
+      "start_frame": 12789,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "a0cc44a4-80e2-5d52-8be0-568598202c6d": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2053,
+      "est": 0.6884,
+      "start_frame": 11340,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "a0d29ab2-d85e-506f-b762-207fb450d050": {
+      "asset": "DJI_0526.MOV",
+      "dispersion": 0.1678,
+      "est": 0.6394,
+      "start_frame": 1008,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "a0dfe2a1-b795-5c47-b86e-a9237362efd3": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1967,
+      "est": 0.6127,
+      "start_frame": 8820,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "a14e9d78-02b7-53f2-901e-07b4a503f593": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2259,
+      "est": 0.4768,
+      "start_frame": 10395,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "a14f7a81-43a2-526a-bfb1-488ac546a148": {
+      "asset": "DJI_0526.MOV",
+      "dispersion": 0.2658,
+      "est": 0.521,
+      "start_frame": 567,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "a1e9930f-3b0d-5f2e-ad27-b736f100e21b": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2882,
+      "est": 0.5145,
+      "start_frame": 23877,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "a23578f2-928f-51be-9a34-9b652cd801c6": {
+      "asset": "DJI_0526.MOV",
+      "dispersion": 0.2398,
+      "est": 0.4907,
+      "start_frame": 126,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "a26d1c2f-0bfa-5437-8b07-810ffce9b86e": {
+      "asset": "DJI_0531.MOV",
+      "dispersion": 0.1691,
+      "est": 0.7765,
+      "start_frame": 819,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "a2c2a7d7-7be5-59ec-8ad5-8de7184ad49f": {
+      "asset": "DJI_0522.MOV",
+      "dispersion": 0.2619,
+      "est": 0.5145,
+      "start_frame": 504,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "a303d61c-a3b2-556f-b3df-1d7b43c6407d": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2142,
+      "est": 0.4768,
+      "start_frame": 6615,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "a32aead1-d6a3-5921-92ad-bd46e4e0a3de": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1999,
+      "est": 0.6073,
+      "start_frame": 17325,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "a33387cf-cd7f-5b5f-b5a7-611139927b7d": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2587,
+      "est": 0.5095,
+      "start_frame": 18648,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "a36a8fa9-cf04-5e0a-aff6-f1a2758554cd": {
+      "asset": "DJI_0531.MOV",
+      "dispersion": 0.1548,
+      "est": 0.6884,
+      "start_frame": 315,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "a374c89e-01a7-552e-af6a-910149e982a3": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2626,
+      "est": 0.5134,
+      "start_frame": 15939,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "a3d03fe4-b1a8-5fe4-8696-fb56cb7c305d": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2001,
+      "est": 0.7376,
+      "start_frame": 5418,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "a44d837b-5d6a-5d18-ab20-45b026a7818e": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2322,
+      "est": 0.4831,
+      "start_frame": 27153,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "a4730f42-cca4-55e8-b90b-5d20c2d3abdf": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.204,
+      "est": 0.7376,
+      "start_frame": 16380,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "a559fb1f-d759-535c-9db6-4296307ebc70": {
+      "asset": "DJI_0527.MOV",
+      "dispersion": 0.2086,
+      "est": 0.7376,
+      "start_frame": 630,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "a57699a1-655d-5ae5-bb2b-245068cffb82": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1691,
+      "est": 0.6073,
+      "start_frame": 15057,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "a5a5ecf4-96d9-526e-8e70-92117fb983e7": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2593,
+      "est": 0.5126,
+      "start_frame": 11718,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "a5bf5fec-e85b-5cbb-ae54-559980a1a036": {
+      "asset": "DJI_0524.MOV",
+      "dispersion": 0.0965,
+      "est": 0.5126,
+      "start_frame": 567,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "a5ce45b7-f45a-5dc5-bd01-0c3c04c1f814": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.3127,
+      "est": 0.539,
+      "start_frame": 24885,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "a5dd8171-b261-5282-bb08-0f98cd58b405": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1945,
+      "est": 0.4209,
+      "start_frame": 12537,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "a5fd03f8-fa81-5866-9b0e-198719d74c6e": {
+      "asset": "DJI_0531.MOV",
+      "dispersion": 0.1693,
+      "est": 0.7049,
+      "start_frame": 378,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "a60ec063-ae1f-5243-9248-6806850e82f7": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2838,
+      "est": 0.539,
+      "start_frame": 6804,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "a619a860-2271-545e-adbd-b43a3ef5a36a": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.2428,
+      "est": 0.5291,
+      "start_frame": 1575,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "a62abce8-a0c3-5e06-9140-b7b242579514": {
+      "asset": "DJI_0525.MOV",
+      "dispersion": 0.2016,
+      "est": 0.536,
+      "start_frame": 189,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "a63967fc-cdb2-5234-adb0-7c21b297c35a": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2231,
+      "est": 0.5145,
+      "start_frame": 14238,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "a6726266-388e-5e24-ae10-4a4299213f82": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.198,
+      "est": 0.4243,
+      "start_frame": 6993,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "a6900cd5-9325-5fd8-9df0-637bdbba86a8": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2322,
+      "est": 0.7697,
+      "start_frame": 3591,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "a6933299-39c8-5108-8071-c2492e2fda3e": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2329,
+      "est": 0.539,
+      "start_frame": 16695,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "a7a8aa53-6177-53b4-8978-00818785964e": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2311,
+      "est": 0.5065,
+      "start_frame": 12789,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "a7f650f8-6c86-511f-be3d-2816368ef5e0": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2335,
+      "est": 0.407,
+      "start_frame": 13167,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "a813efae-b28b-5de4-b340-284dec082657": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2548,
+      "est": 0.5056,
+      "start_frame": 17829,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "a82ab6fd-15e8-5457-b88f-7f1d7e2585ca": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2329,
+      "est": 0.539,
+      "start_frame": 16821,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "a82f09b5-b47b-57a8-8ecb-bfc3bded3e7b": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.1923,
+      "est": 0.6073,
+      "start_frame": 378,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "a8718e24-8428-51ca-a0f9-8b5d99e39a41": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2415,
+      "est": 0.5791,
+      "start_frame": 26649,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "a8b86e52-1fc3-51b3-94fb-0d7bfbdcfc3e": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2259,
+      "est": 0.4768,
+      "start_frame": 6363,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "a934fef1-a2f6-573b-a0d5-91acce716203": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1652,
+      "est": 0.5813,
+      "start_frame": 1197,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "a9862570-8f11-5cca-80b6-88e78e2c367c": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 17136,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "a98e9037-4512-544e-a8b5-fd7eeb296217": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2611,
+      "est": 0.5108,
+      "start_frame": 21546,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "a995aff0-f55b-54e4-88cb-9e2733054443": {
+      "asset": "DJI_0526.MOV",
+      "dispersion": 0.1678,
+      "est": 0.6394,
+      "start_frame": 882,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "aa04be0e-e42e-58a0-a21a-f0001abe3653": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1945,
+      "est": 0.5774,
+      "start_frame": 6552,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "aa3d5b99-9de5-55ca-863f-76e672eca77c": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.3096,
+      "est": 0.536,
+      "start_frame": 7245,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "ab1eaf39-5599-59c0-bbc0-ac403444a790": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.17,
+      "est": 0.4209,
+      "start_frame": 25326,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "ab305002-dedb-5d03-a968-ef045297c375": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1015,
+      "est": 0.6405,
+      "start_frame": 9135,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "ab3b3804-738a-5a6d-8142-1695e5661305": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1841,
+      "est": 0.6073,
+      "start_frame": 4032,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "ab405fc8-887e-566c-b4b1-9378f7b4d18d": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1732,
+      "est": 0.634,
+      "start_frame": 5859,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "ab4ce7f9-bccd-5993-ab55-80326968ee4a": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.2147,
+      "est": 0.5572,
+      "start_frame": 2709,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "ab5be099-8f71-50c7-93e0-5f7cba528732": {
+      "asset": "DJI_0525.MOV",
+      "dispersion": 0.2136,
+      "est": 0.521,
+      "start_frame": 126,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "ab674cf9-3c0a-5b3c-a873-21676f5bd56d": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1498,
+      "est": 0.4907,
+      "start_frame": 18900,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "ab92c158-6c0c-51ed-b62a-ff33fe3055d6": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2398,
+      "est": 0.4907,
+      "start_frame": 15246,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "ab9c26e3-c5df-523b-9a06-2f480c70112c": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2016,
+      "est": 0.536,
+      "start_frame": 9135,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "abcffd65-1799-5340-a971-de63712376e9": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2359,
+      "est": 0.5056,
+      "start_frame": 28287,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "ac0c6c8c-205e-59fa-bd9b-c38edc468568": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1732,
+      "est": 0.634,
+      "start_frame": 5481,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "ac6c4238-455a-55c8-93a1-3e00b3256983": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2116,
+      "est": 0.6884,
+      "start_frame": 5985,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "ad18222b-e626-5947-9294-8a72c2b4ab90": {
+      "asset": "DJI_0526.MOV",
+      "dispersion": 0.2556,
+      "est": 0.5065,
+      "start_frame": 189,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "ad745af2-4497-5a9f-9ab2-5db7744a80da": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1735,
+      "est": 0.4243,
+      "start_frame": 16758,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "ad8480e5-7251-5708-bd7b-312a33326dad": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.0969,
+      "est": 0.356,
+      "start_frame": 3528,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "ad9935bd-b65f-5f0b-9fb9-74a98f524d00": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1945,
+      "est": 0.4209,
+      "start_frame": 4599,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "adf227d7-6692-570e-aed2-aced72be65ea": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2086,
+      "est": 0.435,
+      "start_frame": 7560,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "ae2401c5-0d4d-5810-9437-028bdeb2ba7c": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2912,
+      "est": 0.7697,
+      "start_frame": 5922,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "ae581052-82b2-52a5-9968-143098644e9d": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1986,
+      "est": 0.539,
+      "start_frame": 9324,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "ae6fb039-511d-5892-941a-ad60a0d9c875": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.0813,
+      "est": 0.3805,
+      "start_frame": 3843,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "aec98a4c-bcd2-5dbc-907b-19da943b3ac7": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2121,
+      "est": 0.6405,
+      "start_frame": 26397,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "aef32674-15b3-5061-b9a6-1d1888e632be": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2639,
+      "est": 0.5126,
+      "start_frame": 15435,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "af229a22-a396-52ac-b841-aa3ecbfa9552": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1999,
+      "est": 0.6073,
+      "start_frame": 16128,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "af273fac-f686-5357-9d2d-3ab3904670e4": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2383,
+      "est": 0.4892,
+      "start_frame": 13293,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "af3bf625-176f-57f5-8aa0-7ed9543ae6b5": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1678,
+      "est": 0.6394,
+      "start_frame": 4284,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "af7a3282-9685-5843-84cb-df944c31fad8": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.3211,
+      "est": 0.7997,
+      "start_frame": 1512,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "afbe14a9-ecfe-5918-addc-fb8371d3b751": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2201,
+      "est": 0.5145,
+      "start_frame": 15498,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "b030f02f-055f-5ed4-8ac4-c6d5d6777db7": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2593,
+      "est": 0.5126,
+      "start_frame": 11781,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "b0cc759a-0f8c-5c00-8f07-5f73d37e8ec9": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2259,
+      "est": 0.4768,
+      "start_frame": 22617,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "b0dc371e-1810-5d3b-83f2-953ce8864dd4": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2242,
+      "est": 0.5134,
+      "start_frame": 14490,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "b19756b9-17d7-53a8-a929-b8841b65dacf": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2398,
+      "est": 0.4907,
+      "start_frame": 5103,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "b1a166b3-7685-5c8f-8278-2518a4228824": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2782,
+      "est": 0.5774,
+      "start_frame": 14112,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "b1d1111d-c2b2-5588-b617-2fc897d9dbc4": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2177,
+      "est": 0.7697,
+      "start_frame": 1197,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "b21a557c-fad9-5090-84a8-14240a7ef668": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1201,
+      "est": 0.5193,
+      "start_frame": 16884,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "b222d3a9-59c7-5c13-9e6a-18011ea1ddbf": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2144,
+      "est": 0.5126,
+      "start_frame": 5544,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "b224fc27-c879-54ec-9013-3ab29c294420": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2127,
+      "est": 0.2697,
+      "start_frame": 3339,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "b2563ae4-7c20-5902-9b54-8eaf7f2aa54e": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1101,
+      "est": 0.4094,
+      "start_frame": 3654,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "b274ef0a-4404-5acd-8931-1496c4084022": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1494,
+      "est": 0.6884,
+      "start_frame": 19719,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "b29d135f-42c3-5129-9db1-333254e9b4ba": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2014,
+      "est": 0.5134,
+      "start_frame": 26901,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "b2c44ce5-8a8b-59ac-8593-c3b45a899f72": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1715,
+      "est": 0.7697,
+      "start_frame": 882,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "b2f3aeda-55e1-5339-a9a9-58769771c5a3": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1459,
+      "est": 0.6884,
+      "start_frame": 21294,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "b30c4ef6-8872-5e70-9167-902aa0bb23bd": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1735,
+      "est": 0.4243,
+      "start_frame": 6615,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "b37b00e9-3d0f-56c5-9d28-e95872cd79a9": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2398,
+      "est": 0.539,
+      "start_frame": 27216,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "b381f96f-6a27-550d-bfa8-8990a3f717f0": {
+      "asset": "DJI_0524.MOV",
+      "dispersion": 0.2329,
+      "est": 0.4768,
+      "start_frame": 1071,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "b47806c9-19f1-53e9-9812-d2d53bd74afa": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.0744,
+      "est": 0.4484,
+      "start_frame": 3276,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "b4cf8a05-96d4-5e10-a3b6-8544c8ccbda5": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.3127,
+      "est": 0.4256,
+      "start_frame": 29106,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "b4efd298-d6f0-5244-b699-7bbae9c83584": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1637,
+      "est": 0.6405,
+      "start_frame": 16632,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "b51c648b-c3a5-56a0-86bf-4e0472c4205c": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1691,
+      "est": 0.6073,
+      "start_frame": 16569,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "b53031cf-423c-53cb-8b14-ce0f110e3966": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1702,
+      "est": 0.6837,
+      "start_frame": 2205,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "b61a640a-f7de-5f1e-a205-a2581d1c33ad": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1986,
+      "est": 0.536,
+      "start_frame": 13923,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "b62a0d18-3249-575b-bca5-9433f22d3ee1": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.3584,
+      "est": 0.4269,
+      "start_frame": 25830,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "b637b881-2c53-574d-9bc4-58777fdc3c7b": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1678,
+      "est": 0.6394,
+      "start_frame": 567,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "b6645fba-5aa1-532f-a883-acd77a688d7d": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2663,
+      "est": 0.5056,
+      "start_frame": 16191,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "b67a7c40-c0fc-5404-a55e-3c89e5548a6f": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2259,
+      "est": 0.4768,
+      "start_frame": 18018,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "b6891770-355a-56db-b711-f76efc0a3e12": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2192,
+      "est": 0.5184,
+      "start_frame": 10521,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "b6930787-d331-5de9-a3b1-02c3937eba3f": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 126,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "b709c58d-a3c2-5652-91bc-3ad49306d7c5": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1828,
+      "est": 0.6884,
+      "start_frame": 5922,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "b737636d-1b73-5913-8eda-4349c814ae17": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2368,
+      "est": 0.4785,
+      "start_frame": 6426,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "b73b3bfb-a633-5f0c-b336-13fb98c7a1f6": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2591,
+      "est": 0.7376,
+      "start_frame": 693,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "b798e4f4-2298-5295-831c-cc4bc77879cf": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.198,
+      "est": 0.4243,
+      "start_frame": 10647,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "b7f6f87a-ba59-5fb0-b744-49abcc0733f2": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2196,
+      "est": 0.4209,
+      "start_frame": 12600,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "b8025323-746a-518b-ba83-88a56dcebac3": {
+      "asset": "DJI_0524.MOV",
+      "dispersion": 0.0904,
+      "est": 0.5065,
+      "start_frame": 882,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "b82887f7-4bdd-5aad-bc1b-b183d025600c": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.222,
+      "est": 0.5733,
+      "start_frame": 9828,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "b82f8562-db79-5cb6-b9e7-fa0bc36a7053": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2407,
+      "est": 0.7697,
+      "start_frame": 1827,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "b8633dc3-1662-5c75-8fb3-45f3a8357d5e": {
+      "asset": "DJI_0524.MOV",
+      "dispersion": 0.2639,
+      "est": 0.5126,
+      "start_frame": 63,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "b8eba166-d791-5e2a-b396-cc450a0f960d": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.2814,
+      "est": 0.5228,
+      "start_frame": 2520,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "b954e55b-ee7a-5db8-b4a1-91bd573463da": {
+      "asset": "DJI_0527.MOV",
+      "dispersion": 0.1999,
+      "est": 0.6073,
+      "start_frame": 252,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "b962b8be-10a9-50c7-8701-ffe5c8c9c5ae": {
+      "asset": "DJI_0525.MOV",
+      "dispersion": 0.0698,
+      "est": 0.4907,
+      "start_frame": 693,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "b9962419-8f49-5d92-9a13-bc51719db216": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1986,
+      "est": 0.539,
+      "start_frame": 16884,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "b9c70a08-405b-5d1e-9040-4d209ecdbd19": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2619,
+      "est": 0.5145,
+      "start_frame": 24066,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "b9d046f7-3ff1-543b-932c-e11a268297c5": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1659,
+      "est": 0.4284,
+      "start_frame": 3213,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "ba478d6b-b31a-5513-9a3a-d5a4c5933f00": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2001,
+      "est": 0.7376,
+      "start_frame": 7623,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "ba662b37-6feb-5431-8b34-2538794e2e29": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1574,
+      "est": 0.634,
+      "start_frame": 15750,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "ba82168b-8893-57a5-8a5a-84c91fae39e3": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 5355,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "bb3fbe38-104a-52ae-980a-cbb157675187": {
+      "asset": "DJI_0525.MOV",
+      "dispersion": 0.1631,
+      "est": 0.5566,
+      "start_frame": 378,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "bb41a1f5-fbb3-5095-8d63-86c730ed3bc3": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2361,
+      "est": 0.7697,
+      "start_frame": 1764,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "bb8d13be-06e0-5f3f-8318-01f0a0c5b07c": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1986,
+      "est": 0.539,
+      "start_frame": 27783,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "bc5051db-4125-5140-be65-92e059be9ede": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1713,
+      "est": 0.6481,
+      "start_frame": 19845,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "bcbeb34d-a25a-564d-817c-ddfec10f1752": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2042,
+      "est": 0.7376,
+      "start_frame": 1134,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "bd0c6b87-1a00-5fe5-a23e-119c0147364b": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2585,
+      "est": 0.5134,
+      "start_frame": 23688,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "bd23c2f8-3ce9-57d2-a971-5c7f02fde029": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1841,
+      "est": 0.435,
+      "start_frame": 22995,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "bd2dfcfc-ff15-5c0c-992a-ffca7bd268b8": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2476,
+      "est": 0.5243,
+      "start_frame": 5481,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "bd7bc591-d0b9-55ae-810d-4e51f22e122a": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1448,
+      "est": 0.4284,
+      "start_frame": 3906,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "bd8619ec-892e-5383-9c38-8f3d1b22163c": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2149,
+      "est": 0.7376,
+      "start_frame": 15372,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "bdafe963-bf3b-5e54-ac08-7af0b74c4b79": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1993,
+      "est": 0.7049,
+      "start_frame": 8505,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "bdd380fc-eef0-50a7-9ce2-538121b7e0f0": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2884,
+      "est": 0.4768,
+      "start_frame": 13923,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "bdf9dce5-1470-5137-8386-c9a05f27796d": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1882,
+      "est": 0.634,
+      "start_frame": 31437,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "be027f05-9bc8-52c7-a26d-a1e42e5ff66b": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2016,
+      "est": 0.536,
+      "start_frame": 6048,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "be1becf2-4257-5d6d-b473-0080bb084ef9": {
+      "asset": "DJI_0522.MOV",
+      "dispersion": 0.4213,
+      "est": 0.4907,
+      "start_frame": 252,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "be9581c6-d095-5c64-bf84-dd080c3ab574": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.193,
+      "est": 0.6837,
+      "start_frame": 7371,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "bee5fe32-20ae-54e0-a0eb-eb258e25487a": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1674,
+      "est": 0.6884,
+      "start_frame": 9954,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "bf0da387-8c39-518a-9fbd-d6cbe7df9d79": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2218,
+      "est": 0.6837,
+      "start_frame": 16254,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "bfa13775-b890-5391-b322-0c00099ccc6c": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1815,
+      "est": 0.407,
+      "start_frame": 11088,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "bfdfb9cd-eac5-5bc4-96ca-7ef8740d5b9e": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2585,
+      "est": 0.5134,
+      "start_frame": 24192,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "c020798f-20e5-5e88-a0d8-9a181fab177e": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2548,
+      "est": 0.5056,
+      "start_frame": 18711,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "c02a285d-7ac3-57db-8c34-eb35fa110fe0": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1904,
+      "est": 0.4529,
+      "start_frame": 2835,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "c040fec8-e7e9-518d-a0db-e124f67b61c4": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2548,
+      "est": 0.5056,
+      "start_frame": 22680,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "c04da026-81e0-5458-ab73-433c2a96f9b6": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2556,
+      "est": 0.5065,
+      "start_frame": 23121,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "c060066d-a1a7-570d-a20b-ba77f9d324e5": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.317,
+      "est": 0.5572,
+      "start_frame": 20034,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "c072bdb5-7f41-5ee1-addf-646b64af2d93": {
+      "asset": "DJI_0522.MOV",
+      "dispersion": 0.2882,
+      "est": 0.5145,
+      "start_frame": 441,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "c072de48-3a83-5a3d-b6d6-cda068438cca": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1494,
+      "est": 0.6884,
+      "start_frame": 16065,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "c0f3a57a-209b-5c12-9831-8bb377411410": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1624,
+      "est": 0.6073,
+      "start_frame": 30681,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "c1a1ee10-b54a-56f8-9374-e889078d381c": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2504,
+      "est": 0.4768,
+      "start_frame": 10143,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "c1aca67c-8389-5277-a0df-396b8e872587": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2125,
+      "est": 0.5572,
+      "start_frame": 30492,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "c1c1a05d-f4c6-540a-8e61-97a0bbcebd0a": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 2457,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "c1cdecc6-a0f7-5190-91a0-eaf09386ed2a": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2218,
+      "est": 0.6837,
+      "start_frame": 567,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "c1f7ee8c-eba3-5a84-908f-4806fcae2cfa": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2298,
+      "est": 0.5291,
+      "start_frame": 8127,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "c260a10b-320a-5253-a347-a07ffa65a598": {
+      "asset": "DJI_0525.MOV",
+      "dispersion": 0.0698,
+      "est": 0.4907,
+      "start_frame": 567,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "c32fda1a-8bfb-5dc3-a867-46a5c3547a9d": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1093,
+      "est": 0.6884,
+      "start_frame": 28917,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "c371f729-eef4-5c36-a536-496cd441696f": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1936,
+      "est": 0.6394,
+      "start_frame": 0,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "c396f4cd-2e19-5ef0-9cea-b07cf76fe7cb": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1626,
+      "est": 0.6394,
+      "start_frame": 4977,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "c41e8851-3256-5aed-99b5-5f758e0340a1": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2216,
+      "est": 0.4768,
+      "start_frame": 10962,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "c4a46428-3318-5f3f-b0d3-774d87945916": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1284,
+      "est": 0.6481,
+      "start_frame": 5733,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "c4a98663-0b6e-5b80-9949-af604db0666a": {
+      "asset": "DJI_0524.MOV",
+      "dispersion": 0.0856,
+      "est": 0.5065,
+      "start_frame": 378,
+      "support": 13,
+      "tier": "HIGH"
+    },
+    "c4c3ed69-58ce-5dff-938b-89a540fa8980": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2016,
+      "est": 0.7376,
+      "start_frame": 2394,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "c526841c-9403-52d3-a032-8babbfd9df1b": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2324,
+      "est": 0.4209,
+      "start_frame": 13671,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "c60b93be-f9b5-507f-9c91-fdd29b09b17b": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 3528,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "c60e2514-9af9-5a0f-96ed-439f55ec9206": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 12096,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "c61f9b38-a5c7-5245-8237-38a7f7a409f2": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2639,
+      "est": 0.5126,
+      "start_frame": 24444,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "c620b76c-cce8-5e29-a12c-9ba13411be83": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1841,
+      "est": 0.6073,
+      "start_frame": 16191,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "c6d588b0-097e-5efd-80a3-6ac5ed3119c2": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2079,
+      "est": 0.3805,
+      "start_frame": 4284,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "c741a43d-7099-5f49-b8ec-5c9e34d5eff2": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2359,
+      "est": 0.536,
+      "start_frame": 6237,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "c76540c0-04ae-5b9c-ab26-76d531a7a816": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2483,
+      "est": 0.5108,
+      "start_frame": 26586,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "c768c1e3-0421-594d-9044-4789c30df14b": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 5796,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "c7a4a87a-3759-5664-ab57-0e2c93be8e62": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1637,
+      "est": 0.6405,
+      "start_frame": 20727,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "c7d66057-c4f2-5140-acd0-fecc82654246": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1637,
+      "est": 0.6405,
+      "start_frame": 18459,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "c7efde07-f810-51e4-92a8-a6178a1f6f06": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.3014,
+      "est": 0.4256,
+      "start_frame": 7119,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "c7f09b82-dad1-542f-a6ce-ebb9dfddf307": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2398,
+      "est": 0.539,
+      "start_frame": 17451,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "c824c960-512e-5485-ad45-5e1681aa61b1": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1919,
+      "est": 0.7376,
+      "start_frame": 2709,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "c84fd40d-4ad0-508f-b942-ed074e3eb33a": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1923,
+      "est": 0.6073,
+      "start_frame": 126,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "c865e1ef-92db-503f-a01b-a7b5a849b6ad": {
+      "asset": "DJI_0523.MOV",
+      "dispersion": 0.3803,
+      "est": 0.4488,
+      "start_frame": 63,
+      "support": 12,
+      "tier": "LOW"
+    },
+    "c86d1c27-94bf-5e16-8eb3-d6c785104c14": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1839,
+      "est": 0.521,
+      "start_frame": 8568,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "c8d5f2b7-b8af-53a3-a5aa-ae704c89800e": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2548,
+      "est": 0.5056,
+      "start_frame": 1890,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "c971fb1b-be40-5cfd-acdb-41710eb1c17d": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2149,
+      "est": 0.5228,
+      "start_frame": 15183,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "c9bb8bc0-5bb0-5649-aad2-cb59e159f3d7": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1973,
+      "est": 0.4599,
+      "start_frame": 7371,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "ca56f54a-9988-5bcd-a634-595517dc0e65": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2281,
+      "est": 0.533,
+      "start_frame": 7182,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "ca80bb12-9d58-5c7a-91de-812f541e04b3": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.3974,
+      "est": 0.4768,
+      "start_frame": 25515,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "ca8b4c2e-d49e-5e9a-b90d-5d6d3262909f": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2801,
+      "est": 0.5065,
+      "start_frame": 16317,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "cac38fb3-a830-5a29-8cf5-643b401555f8": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1531,
+      "est": 0.7765,
+      "start_frame": 15561,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "cc15486c-4a59-5a29-a3b8-50aaa51a3008": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.1518,
+      "est": 0.407,
+      "start_frame": 1386,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "cc3313d9-c675-5a8a-9c13-7ec70c2c60e1": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1464,
+      "est": 0.4161,
+      "start_frame": 3087,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "cc74ba33-da4e-5059-9847-8481188a14d6": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1691,
+      "est": 0.6073,
+      "start_frame": 14931,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "cc7a0f78-abbf-5bc0-a62e-9253701b90b5": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1782,
+      "est": 0.5982,
+      "start_frame": 30744,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "ccaa8c60-3334-5b4f-9426-77a8c9bfd171": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1626,
+      "est": 0.6394,
+      "start_frame": 63,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "cd10866a-83c4-5878-a7cc-0adf2a701557": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.4046,
+      "est": 0.4484,
+      "start_frame": 945,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "cd1192b0-fde0-5d20-8604-45ca7d8ad6c1": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.3649,
+      "est": 0.5134,
+      "start_frame": 11970,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "cd1ca12c-7989-512b-9a87-920033fd47ec": {
+      "asset": "DJI_0526.MOV",
+      "dispersion": 0.2548,
+      "est": 0.5056,
+      "start_frame": 504,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "cd2e4e6a-2877-569c-bef4-4a1d367fb9e8": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1674,
+      "est": 0.6884,
+      "start_frame": 20160,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "cd699dbb-b6b9-5955-b9cb-3684cf4a45a4": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.235,
+      "est": 0.4284,
+      "start_frame": 29169,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "cd6e6963-76ea-5332-a571-8c9f335cb51a": {
+      "asset": "DJI_0526.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 1071,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "cdc22424-3c16-5097-93a1-58ad79e73d58": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2355,
+      "est": 0.5134,
+      "start_frame": 18774,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "cdf74d12-1861-5a67-ac11-a0eca425824a": {
+      "asset": "DJI_0527.MOV",
+      "dispersion": 0.2303,
+      "est": 0.5611,
+      "start_frame": 0,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "ce39863a-e7c3-5c72-acfb-15d0e22cd6de": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.263,
+      "est": 0.5134,
+      "start_frame": 22932,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "ce3ac868-f624-5473-87bd-169c4d1a88a3": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 2646,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "ce9658b2-f29c-5d2c-9163-5aa77d8d2dee": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1284,
+      "est": 0.6481,
+      "start_frame": 8883,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "cf1abc63-bcb6-5453-9877-e5d207a1c945": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 7749,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "cf2ef382-aea9-5568-9a64-2d86bb0f4314": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1986,
+      "est": 0.539,
+      "start_frame": 9576,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "cf7a3124-afc3-5051-9034-95b39ee2ba44": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2971,
+      "est": 0.6073,
+      "start_frame": 7560,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "d0009199-a239-575a-989e-30e24e8c819e": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2556,
+      "est": 0.5065,
+      "start_frame": 6741,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "d01ce23c-e6fd-5c4c-a4f0-cdb2155470fe": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.0423,
+      "est": 0.5126,
+      "start_frame": 14868,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "d027939d-5df9-5ba6-8d92-fd4834a10731": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2658,
+      "est": 0.521,
+      "start_frame": 7875,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "d1ccf5a6-17dd-54bb-840f-ec3ed724938d": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2522,
+      "est": 0.5243,
+      "start_frame": 18396,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "d1feed65-aaa7-534c-bd61-ce2d8ae15b80": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2587,
+      "est": 0.5095,
+      "start_frame": 5040,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "d211c8b4-ea42-5dd4-996e-37da64c6740f": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1297,
+      "est": 0.6837,
+      "start_frame": 12285,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "d21fb92c-7ad5-5e9b-98b4-8d1a1ceea813": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2398,
+      "est": 0.5774,
+      "start_frame": 7308,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "d26e3c69-edf5-5358-8b4f-8a43c4fe57bb": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2656,
+      "est": 0.5108,
+      "start_frame": 20916,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "d2d1ee51-08a0-574f-901c-7a787b579e59": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2329,
+      "est": 0.539,
+      "start_frame": 17325,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "d2fc5d48-70f2-551b-aaeb-5cbf7176135c": {
+      "asset": "DJI_0524.MOV",
+      "dispersion": 0.198,
+      "est": 0.4243,
+      "start_frame": 1008,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "d313559c-05df-5b23-b244-1c258a06fd0d": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 8190,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "d3322053-13d7-576d-a5be-8a0cfded8251": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1691,
+      "est": 0.6073,
+      "start_frame": 14490,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "d3af6033-5f2f-522b-8d98-91c4d62b659f": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1691,
+      "est": 0.7765,
+      "start_frame": 3717,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "d3f03bdc-6598-5236-8f99-dc82c5d9b0ea": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.1279,
+      "est": 0.5126,
+      "start_frame": 2394,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "d478e855-5f6b-523b-a923-e2b8a63c408b": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.0965,
+      "est": 0.5126,
+      "start_frame": 14931,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "d527febe-06fb-516f-bcf8-870931a7197e": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1756,
+      "est": 0.6865,
+      "start_frame": 19908,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "d54b4b70-47ea-5718-b3ab-01f5ee4aaad3": {
+      "asset": "DJI_0523.MOV",
+      "dispersion": 0.4213,
+      "est": 0.4907,
+      "start_frame": 315,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "d5cfa3c2-e845-56ec-a1d3-a4635a328642": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1637,
+      "est": 0.6405,
+      "start_frame": 7749,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "d5d59169-cfc7-5f6d-b07d-4a639c723de4": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.3027,
+      "est": 0.5291,
+      "start_frame": 16002,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "d5f67b65-60a9-5ccf-bd65-b31df26dd661": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1305,
+      "est": 0.4506,
+      "start_frame": 3402,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "d642e365-69e3-5dbd-935a-5843fe6af5ac": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2882,
+      "est": 0.5145,
+      "start_frame": 24003,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "d6d57154-6a76-5a84-adec-93aa636b44c7": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.204,
+      "est": 0.7376,
+      "start_frame": 2898,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "d6e03738-c2f4-5322-a82e-ddbb854bf917": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2162,
+      "est": 0.4243,
+      "start_frame": 12348,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "d7508a62-4cbe-59c5-a63d-5a18fae44b7b": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1945,
+      "est": 0.4209,
+      "start_frame": 10584,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "d7ba4e02-d042-5dce-9db7-b34b956a3d92": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.0904,
+      "est": 0.5065,
+      "start_frame": 11844,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "d7c38d76-9637-5916-8729-c41a0584e849": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1691,
+      "est": 0.6073,
+      "start_frame": 30114,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "d7cfd7d7-4343-58cc-bdb4-8263c8d548ab": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.204,
+      "est": 0.7376,
+      "start_frame": 16443,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "d8478729-655b-515f-abba-3a3e06e07f5c": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1431,
+      "est": 0.5945,
+      "start_frame": 18522,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "d86a1e1b-da53-574b-a09a-39b2074a2c77": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1732,
+      "est": 0.634,
+      "start_frame": 3465,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "d8ec9d00-b26f-53f0-b672-ce8ff5b01c61": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1674,
+      "est": 0.6884,
+      "start_frame": 20223,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "d916344e-3ed7-5844-a15f-984a707ed70f": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2587,
+      "est": 0.5095,
+      "start_frame": 22176,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "d970ae14-98e9-558b-9d31-dd3848cabebd": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2617,
+      "est": 0.5126,
+      "start_frame": 19467,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "d98c3d06-bcab-5296-90cb-202cb3da8517": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 1323,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "d9dae9d2-e009-520d-99bb-ffa2c6059183": {
+      "asset": "DJI_0527.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 441,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "d9ffc172-9dc5-5712-adc0-2251b767f3c6": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.1732,
+      "est": 0.4284,
+      "start_frame": 2079,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "da50149e-5ad2-56e4-aa74-36945bc8d1b2": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1713,
+      "est": 0.6481,
+      "start_frame": 17199,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "daaddcfc-9641-5821-b752-3780c3119c18": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2021,
+      "est": 0.4284,
+      "start_frame": 6741,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "db261880-ba8e-55d1-8665-0122be4bf4d8": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2051,
+      "est": 0.6837,
+      "start_frame": 630,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "db7a3823-fa05-5aae-a9ba-b765ce51b7c3": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1114,
+      "est": 0.5291,
+      "start_frame": 9891,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "db8a3981-6309-54af-9aeb-53250993ad73": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2398,
+      "est": 0.4907,
+      "start_frame": 18081,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "dc106d61-53ed-5b08-a529-dc537a52d0f8": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 30555,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "dc3cc233-0dbf-5eec-89dd-835347371c93": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2617,
+      "est": 0.5126,
+      "start_frame": 10458,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "dc9dd25d-9b84-5e74-b7e0-c83081b7b0c3": {
+      "asset": "DJI_0527.MOV",
+      "dispersion": 0.2218,
+      "est": 0.6837,
+      "start_frame": 126,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "dca88552-ef12-5365-bf7c-982cfd3728eb": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.3979,
+      "est": 0.5108,
+      "start_frame": 7308,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "dcee836a-373c-5403-bb03-c812e8e6e374": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1206,
+      "est": 0.6405,
+      "start_frame": 8946,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "dd3728e6-73db-5622-b323-be770f648a4a": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2619,
+      "est": 0.5145,
+      "start_frame": 23058,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "dd67e5d9-4e9d-5728-b95d-01397ea3aacd": {
+      "asset": "DJI_0524.MOV",
+      "dispersion": 0.0746,
+      "est": 0.4907,
+      "start_frame": 441,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "dd686a90-7a5e-573c-aaf3-c5d421ba0558": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1806,
+      "est": 0.407,
+      "start_frame": 31059,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "dd70164e-ad74-5f51-88c7-e5d16aede3ae": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1524,
+      "est": 0.6884,
+      "start_frame": 1260,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "dd7d8603-5f51-5069-af1a-70a6b9d9cd4b": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.2359,
+      "est": 0.536,
+      "start_frame": 2331,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "dd969f28-1d7f-5fd9-9a35-d66adcc30344": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1789,
+      "est": 0.5908,
+      "start_frame": 3339,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "ddbc4460-bf9b-592f-a7e6-c6a58540b64a": {
+      "asset": "DJI_0531.MOV",
+      "dispersion": 0.1574,
+      "est": 0.634,
+      "start_frame": 126,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "de27930a-f60a-5e88-928d-5e4036b9dac6": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1195,
+      "est": 0.6405,
+      "start_frame": 25200,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "de4dfaf2-3b1d-5ff4-abe0-619865204121": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2016,
+      "est": 0.7376,
+      "start_frame": 1575,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "dec11728-10ab-5eed-8c5c-5df56ba92616": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.3133,
+      "est": 0.521,
+      "start_frame": 2457,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "dee555ec-302c-503f-85b9-7f4636215641": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2862,
+      "est": 0.5126,
+      "start_frame": 25389,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "def5ce1b-0ac7-57f3-95e4-65123a849c9e": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2051,
+      "est": 0.6837,
+      "start_frame": 6300,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "df332928-984a-5c5c-ab66-e8b68cef9b22": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2415,
+      "est": 0.435,
+      "start_frame": 22554,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "df3a49bf-2fad-5013-88a4-1ad91aebd605": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1101,
+      "est": 0.4094,
+      "start_frame": 3780,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "df729f38-ef96-55cf-abd8-9fab3a8c6d5b": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2617,
+      "est": 0.5126,
+      "start_frame": 13104,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "df78af4d-b2c6-5dbe-9684-cf8577f3eab7": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2398,
+      "est": 0.4907,
+      "start_frame": 5292,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "df7ec1d4-0951-57f3-a3d3-b9768e82b51c": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2322,
+      "est": 0.5375,
+      "start_frame": 8316,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "df87f9af-29db-5c21-b350-2f8ba8d55e87": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1789,
+      "est": 0.5908,
+      "start_frame": 14994,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "e010631b-3460-59bd-a70e-107103507ba0": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1897,
+      "est": 0.4161,
+      "start_frame": 25641,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "e039d9f0-67ee-514b-afc8-093693265dee": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2218,
+      "est": 0.6837,
+      "start_frame": 4158,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "e061ada2-16f6-5637-971d-6613de3b1761": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1919,
+      "est": 0.7376,
+      "start_frame": 2394,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "e0644f92-5054-5e77-b7c5-54dac1bc6c25": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2042,
+      "est": 0.7376,
+      "start_frame": 1701,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "e0d9339b-7413-5dbe-bc8f-c5f5bd25b41f": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2504,
+      "est": 0.4768,
+      "start_frame": 27342,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "e1001b69-31fa-5d85-bab5-1be265414a36": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.204,
+      "est": 0.7376,
+      "start_frame": 17451,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "e113f488-0ff4-5636-af70-276e612f9c0e": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2585,
+      "est": 0.5134,
+      "start_frame": 10521,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "e1241ce1-095b-5880-894c-7ffcf4283d9f": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2307,
+      "est": 0.539,
+      "start_frame": 6489,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "e149aa19-38ab-52fd-8f50-0c3f9d452ac2": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1531,
+      "est": 0.5774,
+      "start_frame": 26145,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "e1f02143-13f9-5fc8-b0e4-1c18aace843c": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2892,
+      "est": 0.4484,
+      "start_frame": 6678,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "e2095d92-f5e4-5b2d-896a-9ada587e72f0": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1858,
+      "est": 0.6884,
+      "start_frame": 28539,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "e2bf3cba-ce78-5b39-b32c-ec5feb664000": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.232,
+      "est": 0.4161,
+      "start_frame": 29610,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "e3011f62-a57c-5977-aaec-1049e3cafcca": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2368,
+      "est": 0.536,
+      "start_frame": 16947,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "e34024eb-7289-5201-822d-30bcdc3dc2a3": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.1624,
+      "est": 0.6073,
+      "start_frame": 3276,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "e3521c40-8ea4-5174-bcd4-e2ae8641f31d": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1704,
+      "est": 0.407,
+      "start_frame": 4095,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "e38505d6-3188-5840-8060-0a22189061ec": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1969,
+      "est": 0.3805,
+      "start_frame": 13230,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "e3b5928e-6b59-57d9-bec7-a2203bcbc644": {
+      "asset": "DJI_0525.MOV",
+      "dispersion": 0.0655,
+      "est": 0.4939,
+      "start_frame": 756,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "e48840e9-d944-543a-9582-3ce33ff26d82": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2522,
+      "est": 0.5243,
+      "start_frame": 24633,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "e496a721-5249-5ede-8cb8-7e33ccf68c49": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1572,
+      "est": 0.634,
+      "start_frame": 15498,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "e4cdf9ab-4b7d-51d8-b866-95b87a55fa3e": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2398,
+      "est": 0.4907,
+      "start_frame": 5229,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "e4e1cc46-166b-5d3f-8b06-5d52437cefa1": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1715,
+      "est": 0.5982,
+      "start_frame": 2016,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "e512607e-8bb0-519e-8b01-7e95378bb81e": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1425,
+      "est": 0.6481,
+      "start_frame": 9072,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "e532c43c-ec7d-5193-a661-e86df9111287": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1494,
+      "est": 0.6884,
+      "start_frame": 28035,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "e55e7ee9-e1b5-5524-a3bc-cd8693d6bc9a": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2522,
+      "est": 0.5243,
+      "start_frame": 25011,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "e5c34cd7-3ec0-5a25-9353-7c7f5b693c50": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.175,
+      "est": 0.6884,
+      "start_frame": 17199,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "e5d70d19-ddd9-557d-8a8a-024a85cfb582": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2637,
+      "est": 0.5145,
+      "start_frame": 31122,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "e64cf1d8-5442-528b-a09c-d2ff525a99fa": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2626,
+      "est": 0.5134,
+      "start_frame": 21861,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "e67c4925-49bc-502a-ab53-1f01079a1b70": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 16002,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "e68bc5a0-f16e-5cdb-9863-d31ad1bf8eb8": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1279,
+      "est": 0.5126,
+      "start_frame": 10647,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "e6ac03e4-4909-5810-b836-ab0535ce6b2d": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.2177,
+      "est": 0.552,
+      "start_frame": 2898,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "e6f0a175-2bc0-5675-a4de-946f6e9880aa": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.232,
+      "est": 0.5056,
+      "start_frame": 15876,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "e70900ab-e238-52f6-ac5a-c16e53b817ed": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1919,
+      "est": 0.7376,
+      "start_frame": 3780,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "e7c644ec-b702-5981-a1df-9dae7c0e85a1": {
+      "asset": "DJI_0531.MOV",
+      "dispersion": 0.1626,
+      "est": 0.6394,
+      "start_frame": 693,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "e853c420-80e7-5ece-b113-e1e3d8a5dbd0": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.235,
+      "est": 0.4284,
+      "start_frame": 4473,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "e9b93774-faec-5a54-9278-71212a59fc5a": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2632,
+      "est": 0.533,
+      "start_frame": 28350,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "e9c69a82-def6-5246-a586-5998e150bcaa": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2131,
+      "est": 0.435,
+      "start_frame": 12285,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "e9ecd127-3ef6-5763-9588-f2c570b11df6": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.235,
+      "est": 0.4284,
+      "start_frame": 7056,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "ea01123c-cb75-5a5d-97bf-3434dcd0b076": {
+      "asset": "DJI_0526.MOV",
+      "dispersion": 0.0887,
+      "est": 0.5095,
+      "start_frame": 63,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "ea466bf9-779e-58d8-9e12-6941e30afd36": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.3437,
+      "est": 0.4907,
+      "start_frame": 25893,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "eaa08c1a-2187-5397-b309-76a010e94851": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.199,
+      "est": 0.5774,
+      "start_frame": 9450,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "eac9e2f4-b906-5f92-ac5e-1b69b6d68382": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2259,
+      "est": 0.4768,
+      "start_frame": 15813,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "eb1d027c-97f5-5648-822b-d1e0078e19fd": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1271,
+      "est": 0.6405,
+      "start_frame": 8757,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "eb5bd13c-b02d-513a-ae45-170106f27558": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1386,
+      "est": 0.5095,
+      "start_frame": 19278,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "eb8977a9-4014-5cd1-8da1-a9a907721a9e": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 7938,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "ec2981b8-01ee-5442-83e1-b0dd5958b43f": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.0774,
+      "est": 0.6481,
+      "start_frame": 9324,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "ec3c2778-00b3-5b52-911d-eba839883e3a": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 29988,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "ec73de6a-fc05-51af-8069-736960b6e568": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2619,
+      "est": 0.5145,
+      "start_frame": 4725,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "ecabcd8a-f993-57ac-bde4-12b6f4e11738": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.2554,
+      "est": 0.521,
+      "start_frame": 2016,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "ecdf3fe9-36ed-5eac-88b3-6c0d5033e8e8": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1691,
+      "est": 0.6073,
+      "start_frame": 30366,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "ed7211b8-cd66-56f0-97d1-5716da5cc4b0": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2379,
+      "est": 0.6405,
+      "start_frame": 23814,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "ed891041-37ce-502d-9089-8edb5313d8e9": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1841,
+      "est": 0.6073,
+      "start_frame": 4410,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "edb59412-5a8c-500b-bb17-be25296b97f3": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2259,
+      "est": 0.4768,
+      "start_frame": 19215,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "ee543d36-1c0d-5561-8fbc-0685944af589": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.3382,
+      "est": 0.536,
+      "start_frame": 23499,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "ee7789b7-da21-547b-ad46-9a830471f84d": {
+      "asset": "DJI_0524.MOV",
+      "dispersion": 0.0809,
+      "est": 0.5065,
+      "start_frame": 630,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "eeb161cf-b89c-5a6c-9eaa-126e9d544136": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 3087,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "eecf5c0e-b52a-5aa6-8da0-509b3e82955c": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.2244,
+      "est": 0.552,
+      "start_frame": 2205,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "eefbd45a-24fe-58d7-92c7-97a67120fb70": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1789,
+      "est": 0.536,
+      "start_frame": 25137,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "ef2a42f3-60e9-58a9-9fa6-c7f732a80cf9": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1841,
+      "est": 0.435,
+      "start_frame": 18207,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "ef56b543-1bef-52f5-8c94-71e721bf9db6": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1346,
+      "est": 0.6481,
+      "start_frame": 5859,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "ef8e19c3-d220-5c54-b995-ce7a42a8ff2f": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2259,
+      "est": 0.4768,
+      "start_frame": 26208,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "eff46654-7807-5528-aade-16c27325ffaf": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.0895,
+      "est": 0.5056,
+      "start_frame": 15057,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "f03cc57f-bf18-5095-b180-d2a28a842c72": {
+      "asset": "DJI_0526.MOV",
+      "dispersion": 0.2812,
+      "est": 0.4907,
+      "start_frame": 693,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "f04415fe-d746-55ca-89da-e7c570163848": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.0423,
+      "est": 0.5126,
+      "start_frame": 14427,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "f060342c-1575-543a-855e-81b5b846b288": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1674,
+      "est": 0.6884,
+      "start_frame": 20790,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "f07e962b-8cab-5a89-868c-0fb63a03dc22": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2593,
+      "est": 0.5145,
+      "start_frame": 12033,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "f07f2673-1735-51f1-bf50-d5aafda06676": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2793,
+      "est": 0.5885,
+      "start_frame": 13293,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "f095685f-48e0-5404-b53e-c616e929cbd5": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1691,
+      "est": 0.6073,
+      "start_frame": 30240,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "f0aa4154-de63-5e23-85d9-ff4e444f361d": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2121,
+      "est": 0.4284,
+      "start_frame": 18837,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "f0fcfbd1-9c3a-5461-bbe0-9a9d2bd10b2d": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1702,
+      "est": 0.6837,
+      "start_frame": 4788,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "f15a6381-261f-5913-980c-e54d7db34bf5": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2439,
+      "est": 0.4831,
+      "start_frame": 14805,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "f1654f84-ff7f-5ad8-8ec6-e2cb1a7f287f": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2572,
+      "est": 0.5193,
+      "start_frame": 24822,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "f173f93d-7929-597a-a125-86435e85a98a": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.1956,
+      "est": 0.539,
+      "start_frame": 1323,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "f1cfa1e0-d4ef-5690-b343-56b1383e971a": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2259,
+      "est": 0.4768,
+      "start_frame": 9765,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "f216b50c-b983-5696-913e-1c625e01543d": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1745,
+      "est": 0.5631,
+      "start_frame": 7434,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "f3002f00-a0a4-5985-91ad-14510b4617a2": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1691,
+      "est": 0.6073,
+      "start_frame": 2646,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "f30e3b9f-33f2-5d49-a3ac-a3e356d00714": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2086,
+      "est": 0.7376,
+      "start_frame": 30177,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "f33d5b80-5a10-5418-9427-a45cf77e4576": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 4221,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "f3ebb953-5a53-55b8-bb3e-2e6acef5bac6": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.273,
+      "est": 0.4907,
+      "start_frame": 7686,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "f3fdd228-6469-5167-ab0e-8d0e8e2bd37a": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2086,
+      "est": 0.7376,
+      "start_frame": 30807,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "f4b24da8-fc7d-54d9-a8cd-9b65a1a9211a": {
+      "asset": "DJI_0524.MOV",
+      "dispersion": 0.0423,
+      "est": 0.5126,
+      "start_frame": 819,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "f4bb2edc-f80d-5d6e-b47e-65755aa8974e": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.3532,
+      "est": 0.521,
+      "start_frame": 28476,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "f4ce8156-23d1-5582-8206-2506d92f4122": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1494,
+      "est": 0.6884,
+      "start_frame": 10017,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "f4db0c33-1f7f-54f0-8369-aa6d0b5da628": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 4662,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "f4e70001-0b82-5749-b3a8-00fa4b4dab43": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1841,
+      "est": 0.6073,
+      "start_frame": 30429,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "f4fe5aa4-794d-5a18-b7fa-224b018f8d15": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2548,
+      "est": 0.5056,
+      "start_frame": 21609,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "f59c2caa-0bb1-5e36-8f33-abac1b6b8a2c": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2069,
+      "est": 0.6837,
+      "start_frame": 1260,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "f5a786e2-f4e9-54b3-b623-f4858eb68cfe": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2767,
+      "est": 0.6837,
+      "start_frame": 6930,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "f5c604dc-a142-5b40-a449-d8bcd05a561e": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2548,
+      "est": 0.5056,
+      "start_frame": 27405,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "f5e1bfcc-f484-5b18-96f3-6ebff5217741": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2086,
+      "est": 0.7376,
+      "start_frame": 15120,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "f5e4fa8a-7392-5efb-80b7-739e5693ec0a": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1357,
+      "est": 0.435,
+      "start_frame": 3717,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "f6502b46-48a7-5af2-822b-6d84e8cf7e8b": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2149,
+      "est": 0.7376,
+      "start_frame": 1008,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "f6fe34a8-ad70-5cc4-ba82-af49058b5249": {
+      "asset": "DJI_0523.MOV",
+      "dispersion": 0.3777,
+      "est": 0.4907,
+      "start_frame": 441,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "f7223d6b-121d-5c41-974f-6803c7bcb629": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1659,
+      "est": 0.539,
+      "start_frame": 17010,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "f74e42a5-eb8c-5a9e-b75b-4518ac479afb": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2593,
+      "est": 0.5126,
+      "start_frame": 5607,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "f77a31ad-f229-5ca0-beac-0a44b5c74202": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.0668,
+      "est": 0.5126,
+      "start_frame": 15120,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "f8c3cc03-7649-526b-bd67-12008ddad8c7": {
+      "asset": "DJI_0525.MOV",
+      "dispersion": 0.0887,
+      "est": 0.5095,
+      "start_frame": 441,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "f8ca7860-672e-56cf-afd9-2f3a17c35bfa": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.2121,
+      "est": 0.6405,
+      "start_frame": 1260,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "f9391a6f-ef79-5912-9b34-8d88b275da74": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2574,
+      "est": 0.5774,
+      "start_frame": 12726,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "f9a13f2d-d891-54a6-a17d-7aeb3b19c7b6": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2556,
+      "est": 0.5065,
+      "start_frame": 26334,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "f9b3cfe8-3283-5e87-88a0-34f4e094e176": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2556,
+      "est": 0.5065,
+      "start_frame": 17577,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "fa5e5776-005f-5191-98b0-d777fb48b963": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2136,
+      "est": 0.521,
+      "start_frame": 16128,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "fa79870f-ab5d-56d9-8bd0-b2f0c7a5fd6a": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1609,
+      "est": 0.6837,
+      "start_frame": 12222,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "faeb325f-a8be-57e1-a530-dadd20ef5443": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1704,
+      "est": 0.5865,
+      "start_frame": 1512,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "fb8b6403-7c82-567e-8017-ddec923272ca": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.1693,
+      "est": 0.7049,
+      "start_frame": 441,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "fc7a1e58-27f2-5307-8f45-ccea4a31177c": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2279,
+      "est": 0.521,
+      "start_frame": 17766,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "fc909f67-5801-5e68-940d-6e5fac77b316": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1065,
+      "est": 0.4196,
+      "start_frame": 2772,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "fc9ce137-4e09-5eab-af3e-e095552484f9": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1689,
+      "est": 0.536,
+      "start_frame": 8442,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "fd28bf81-5479-56c1-8760-597e6318ac6a": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2556,
+      "est": 0.5065,
+      "start_frame": 12978,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "fd3bebc9-d46f-5240-81f5-a193654f7552": {
+      "asset": "DJI_0529.MOV",
+      "dispersion": 0.1806,
+      "est": 0.7489,
+      "start_frame": 189,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "fdf8cb4e-3270-5efb-93d6-1a8cad91bd27": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2129,
+      "est": 0.536,
+      "start_frame": 23751,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "fecadaae-0f57-5d1c-9ac7-b46c2ff18030": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2092,
+      "est": 0.5056,
+      "start_frame": 1827,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "fef74e98-5ebd-58de-b22c-277720c082ad": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2218,
+      "est": 0.6837,
+      "start_frame": 1071,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "fef83396-99b8-5ab4-8091-9bc31a299301": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.1206,
+      "est": 0.5974,
+      "start_frame": 29232,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "ff09a648-4150-5d0c-825d-d5cf74928336": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2121,
+      "est": 0.4284,
+      "start_frame": 12852,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "ff412d5c-e3ad-59e6-8a34-db6c8e76abd3": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2147,
+      "est": 0.5572,
+      "start_frame": 14112,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "ff7bf445-734b-5eba-b6b1-4eb8251fde74": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2509,
+      "est": 0.521,
+      "start_frame": 15750,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "ff919eca-3165-59e1-ab80-8c9bf2da0ed5": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.1841,
+      "est": 0.435,
+      "start_frame": 4158,
+      "support": 25,
+      "tier": "MEDIUM"
+    },
+    "ff9ce871-a564-5af0-8a24-acc418b507f0": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.0644,
+      "est": 0.6405,
+      "start_frame": 28791,
+      "support": 25,
+      "tier": "HIGH"
+    },
+    "ffd65a6d-26d9-5993-acf5-a7cd2ab2aa03": {
+      "asset": "DJI_0530.MOV",
+      "dispersion": 0.2242,
+      "est": 0.5134,
+      "start_frame": 27027,
+      "support": 25,
+      "tier": "LOW"
+    },
+    "fff2cf46-6f27-5b8d-9425-3e9988f8b765": {
+      "asset": "DJI_0528.MOV",
+      "dispersion": 0.2838,
+      "est": 0.539,
+      "start_frame": 11088,
+      "support": 25,
+      "tier": "LOW"
+    }
+  },
+  "tier_counts": {
+    "HIGH": 74,
+    "LOW": 554,
+    "MEDIUM": 312,
+    "UNRESOLVED": 1
+  }
+}

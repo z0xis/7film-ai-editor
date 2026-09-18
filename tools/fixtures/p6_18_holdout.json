@@ -1,0 +1,7 @@
+{
+  "event_region_accuracy": 0.767,
+  "mean_err": 0.0618,
+  "median_err": 0.0273,
+  "n": 300,
+  "p90_err": 0.154
+}
