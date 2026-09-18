@@ -1,0 +1,67 @@
+{
+  "note": "Text-only visual-audit results. Frames were extracted from proxies read-only and inspected, then deleted. No personal media committed.",
+  "v7_timeline": "IS EDIT - AI CUT V7",
+  "intro": {
+    "shots_inspected": ["DJI_0524 (night aerial establishing)", "C7242", "C7203"],
+    "result": "COHERENT",
+    "evidence": "Opens on a night drone aerial establishing the illuminated forest wedding venue (location/event/night), over opening crickets SFX before music enters at 3.5s."
+  },
+  "cake": {
+    "shots": ["C7308", "C7309 (src 3332)", "C7310"],
+    "result": "COHERENT / TRUE_MATCH",
+    "evidence": "C7309 at src 3332 shows the couple at the multi-tier cake mid-cut (action moment), not a static pose -- the editor picks the action."
+  },
+  "first_dance": {
+    "sources": ["DJI_0528 src 1202", "DJI_0528 src 10500"],
+    "reuse": "GOOD_FORWARD_REUSE",
+    "result": "COHERENT (real sequence)",
+    "evidence": "src 1202 = wide aerial of the ISOLATED first dance (couple alone on floor, guests seated watching); src 10500 = later, guests have joined the dance floor. Same drone source advanced forward to show event progression -- a genuine first-dance sequence, visually confirmed (not metadata)."
+  },
+  "party_kina_night": {
+    "shots": ["C7325 (bride in ornate kina outfit dancing)", "DJI_0530 aerials"],
+    "visual_energy": "HIGH",
+    "result": "coherent, matches energetic song 2",
+    "evidence": "Reception/party with a costume-change (traditional kina dress), energetic dancing, night atmosphere, drone party cutaways."
+  },
+  "bouquet_outro": {
+    "sequence": ["C7451 src 82 (bride holds bouquet, guests cheering -- SETUP)", "C7451 src 8976 (bride throws, guests reach up -- THROW)", "C7452", "DJI_0524 src 547 (drone pull-out)"],
+    "causal_order": "CORRECT (setup -> throw, not recipient-before-throw)",
+    "sfx": "SFX_BOUQUET_flowerscatch at 119.58s aligns with the throw",
+    "result": "COHERENT",
+    "evidence": "Bouquet uses forward reuse of C7451 (src 82 setup -> src 8976 throw) in causal order; the film closes on a DJI_0524 drone pull-out that BOOKENDS the DJI_0524 intro establishing."
+  },
+  "drone_bookend": {
+    "intro": "DJI_0524 src 356 (establish-in)",
+    "outro": "DJI_0524 src 547 (pull-out)",
+    "role": "symmetric drone bookend; drone also punctuates first dance and party"
+  },
+  "same_source_reuse": {"examples": ["DJI_0528 (1202->10500)", "C7451 (82->8976)"], "classification": "GOOD_FORWARD_REUSE"},
+  "continuity_causal_order": {"bouquet": "COHERENT", "outro": "COHERENT", "overall": "no recipient-before-throw or result-before-action errors observed in the audited sequences"},
+  "why_v7_acceptable": [
+    "real reception coverage over an energetic second song (80-123s)",
+    "a genuine first-dance sequence built from forward drone reuse",
+    "cake action, party/kina energy, causal bouquet sequence",
+    "symmetric drone bookend intro/outro",
+    "smooth song crossfade transition marked by an entrance SFX"
+  ],
+  "v7_weaknesses": [
+    "very fast (~0.5s) cuts in the party montage border on frenetic in places",
+    "ceremony coverage is thin (consistent with sparse ceremony footage)",
+    "some overlay film-burn transitions are stylistic, not content"
+  ],
+  "early_stop_reinterpretation": {
+    "useful_coherent_story_after_planner_stop": "YES",
+    "material": ["isolated first dance (DJI_0528)", "guests-join dancing", "cake cutting action", "kina/party reception", "causal bouquet throw", "drone outro bookend"],
+    "conclusion": "V7's most important beats (first dance, cake climax, reception/party, bouquet, outro) all live AFTER the ~80s song-2 transition -- exactly the region the planner never builds (stops at ~96s in the day story). This visually strengthens the P6.15 FALSE-EARLY-STOP diagnosis."
+  },
+  "p6_16_design_requirements": [
+    "do not stop before the reception if coherent later episodes exist (relax the cut-run / 50%-deliverable early-exit)",
+    "transition from the calmer day section to the energetic second song / reception",
+    "allow forward same-source reuse to build event sequences (first dance, bouquet)",
+    "treat first dance as a sequence (establishing -> progression), not an isolated candidate",
+    "preserve event causality (setup before action)",
+    "resolve the film on an ending beat (e.g. drone pull-out / bouquet), bookending the intro",
+    "reframe duration around a coherent-story endpoint (~123s like V7), not a fixed 180s"
+  ],
+  "safety": {"resolve_writes": 0, "db_writes": 0, "timeline_changes": 0, "frames_committed": false}
+}
