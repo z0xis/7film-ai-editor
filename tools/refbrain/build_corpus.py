@@ -101,22 +101,31 @@ def _ingest_rich(trace: dict, by_name) -> tuple[ReferenceEdit, list[ReferenceSho
     return edit, shots
 
 
-def _ingest_tier2(profile: dict) -> tuple[list[ReferenceEdit], list[ReferenceShot]]:
-    edits, shots = [], []
-    for ref in sorted(profile.get("references", []), key=lambda r: r["id"]):
-        rid = f"ref:{ref['id']}"
-        durs = ref.get("shot_durations_seconds") or []
-        for i, d in enumerate(durs):
+TIER2 = ROOT / "data" / "reference_editor" / "tier2"
+
+
+def _ingest_tier2_enriched() -> tuple[list[ReferenceEdit], dict[str, list[ReferenceShot]]]:
+    """Load P6.23 semantic enrichment: per-shot category / scale / motion / story position."""
+    edits, by_ref = [], {}
+    for f in sorted(TIER2.glob("*.json")):
+        d = json.loads(f.read_text())
+        rid = d["reference_id"]
+        shots = []
+        for s in d["shots"]:
+            cat = s.get("category")
             shots.append(ReferenceShot(
-                reference_id=rid, shot_index=i, timeline_in=-1, timeline_out=-1,
-                duration_s=round(float(d), 3)))
+                reference_id=rid, shot_index=s["shot_index"],
+                timeline_in=round(s["start_s"] * 50), timeline_out=round(s["end_s"] * 50),
+                duration_s=s["duration_s"], category=cat, shot_scale=s.get("shot_scale"),
+                event=CATEGORY_EVENT.get(cat or "", "OTHER"),
+                music_energy=s.get("motion_band")))
+        by_ref[rid] = shots
         edits.append(ReferenceEdit(
-            reference_id=rid, source=ref.get("url", "render_only"), tier=2, kind="render_only",
-            project=ref.get("title", rid), duration_s=round(float(ref.get("duration_seconds", 0)), 2),
-            fps=0.0, n_shots=len(durs),
-            music_tracks=[], available_evidence=["shot_durations", "bpm", "section_medians",
-                                                 "story_position"]))
-    return edits, shots
+            reference_id=rid, source=d["video"], tier=2, kind="render_only",
+            project=rid, duration_s=d["duration_s"], fps=d["fps"], n_shots=d["n_shots"],
+            music_tracks=[], available_evidence=["shot_boundaries", "duration", "category(model)",
+                                                 "shot_scale(model)", "motion", "story_position"]))
+    return edits, by_ref
 
 
 def _segment_events(shots: list[ReferenceShot]) -> list[ReferenceEventEpisode]:
@@ -210,42 +219,77 @@ def _transitions(shots: list[ReferenceShot]) -> list[ReferenceTransition]:
     return trans
 
 
+def _music_sections(trace: dict) -> tuple[list[dict], list[dict]]:
+    """Parse a narrative edit's full audio manifest into music sections + a music transition."""
+    audio = trace.get("audio_full") or []
+    songs = sorted([a for a in audio
+                    if not a["name"].startswith("SFX_") and a["name"].lower().endswith(".mp3")],
+                   key=lambda a: a["start_s"])
+    sfx = [a for a in audio if a["name"].startswith("SFX_")]
+    sections = [{"reference_id": trace["name"], "track": s["name"], "index": i,
+                 "start_s": s["start_s"], "end_s": round(s["start_s"] + s["dur_s"], 3),
+                 "energy": "low" if i == 0 else "high"} for i, s in enumerate(songs)]
+    from itertools import pairwise
+    transitions = []
+    for a, b in pairwise(songs):
+        seam = b["start_s"]
+        a_end = a["start_s"] + a["dur_s"]
+        overlap = round(a_end - b["start_s"], 3)
+        entrance_sfx = [x for x in sfx if abs(x["start_s"] - seam) < 3.0]
+        transitions.append({
+            "reference_id": trace["name"], "at_s": round(seam, 3),
+            "song_before": a["name"], "song_after": b["name"],
+            "crossfade_s": round(max(0.0, overlap), 3), "song_seam": True,
+            "entrance_sfx": [x["name"] for x in entrance_sfx],
+            "energy_delta": "up"})
+    return sections, transitions
+
+
 def build() -> dict:
     by_name = _shot_lookup()
     edits, shots, seqs, episodes, transitions = [], [], [], [], []
+    music_sections, music_transitions = [], []
 
     for fname in sorted(RAW.glob("*_trace.json")):
         trace = json.loads(fname.read_text())
         edit, es = _ingest_rich(trace, by_name)
+        edit.music_tracks = sorted({a["name"] for a in (trace.get("audio_full") or [])
+                                    if a["name"].lower().endswith(".mp3")})
         edits.append(edit)
         shots += es
         seqs += _sequences(es, tier=1)
         episodes += _segment_events(es)
         transitions += _transitions(es)
+        ms, mt = _music_sections(trace)
+        music_sections += ms
+        music_transitions += mt
 
-    profile = json.loads(PROFILE.read_text())
-    t2_edits, t2_shots = _ingest_tier2(profile)
+    t2_edits, t2_by_ref = _ingest_tier2_enriched()
     edits += t2_edits
-    by_ref: dict[str, list] = {}
-    for s in t2_shots:
-        by_ref.setdefault(s.reference_id, []).append(s)
-    for rid in sorted(by_ref):
-        seqs += _sequences(by_ref[rid], tier=2)
-    shots += t2_shots
+    for rid in sorted(t2_by_ref):
+        es = t2_by_ref[rid]
+        shots += es
+        seqs += _sequences(es, tier=2)
+        episodes += _segment_events(es)
+        transitions += _transitions(es)
 
     corpus = {
         "schema_version": SCHEMA_VERSION,
-        "build_version": 1,
+        "build_version": 2,
         "source_fingerprint": {"db": _fingerprint(DB)[:12], "style_profile": _fingerprint(PROFILE)},
-        "created_from": ["Resolve:IS EDIT - AI CUT V7", "Resolve:is edit",
-                         "data/references/7film-style-profile.json (18 refs)"],
+        "created_from": ["Resolve:IS EDIT - AI CUT V7 (all audio tracks)", "Resolve:is edit",
+                         "data/reference_editor/tier2/*.json (18 refs, CLIP-enriched)"],
         "counts": {"edits": len(edits), "shots": len(shots), "sequences": len(seqs),
                    "episodes": len(episodes), "transitions": len(transitions),
+                   "music_sections": len(music_sections), "music_transitions": len(music_transitions),
                    "tier1_edits": sum(1 for e in edits if e.tier == 1),
-                   "tier2_edits": sum(1 for e in edits if e.tier == 2)},
+                   "tier2_edits": sum(1 for e in edits if e.tier == 2),
+                   "semantic_shots": sum(1 for s in shots if s.category)},
         "edits": [e.to_dict() for e in edits],
         "episodes": [e.to_dict() for e in episodes],
         "transitions": [t.to_dict() for t in transitions],
+        "music_sections": music_sections,
+        "music_transitions": music_transitions,
         "sequences": [s.to_dict() for s in seqs],
         "shots": [s.to_dict() for s in shots],
     }

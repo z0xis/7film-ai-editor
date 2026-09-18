@@ -1,0 +1,39 @@
+{
+  "audio_tracks": 4,
+  "fix": "read all audio tracks; classify music vs SFX vs visual-transition; detect crossfade + entrance SFX",
+  "music_sections": [
+    {
+      "end_s": 80.26,
+      "energy": "low",
+      "index": 0,
+      "reference_id": "IS EDIT - AI CUT V7",
+      "start_s": 3.5,
+      "track": "Alex Warren - Ordinary (Lyrics).mp3"
+    },
+    {
+      "end_s": 123.78,
+      "energy": "high",
+      "index": 1,
+      "reference_id": "IS EDIT - AI CUT V7",
+      "start_s": 77.92,
+      "track": "Garnic, Wildness Rose, Anuolu & Afro Queen - Wella Kole.mp3"
+    }
+  ],
+  "music_transitions": [
+    {
+      "at_s": 77.92,
+      "crossfade_s": 2.34,
+      "energy_delta": "up",
+      "entrance_sfx": [
+        "SFX_ENTRANCE_v2.wav"
+      ],
+      "reference_id": "IS EDIT - AI CUT V7",
+      "song_after": "Garnic, Wildness Rose, Anuolu & Afro Queen - Wella Kole.mp3",
+      "song_before": "Alex Warren - Ordinary (Lyrics).mp3",
+      "song_seam": true
+    }
+  ],
+  "p622_extracted": "one song (only audio track 1 read)",
+  "reference": "IS EDIT - AI CUT V7",
+  "root_cause": "EXTRACTION_BUG: single audio-track read"
+}

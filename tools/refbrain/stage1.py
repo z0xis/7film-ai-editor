@@ -13,6 +13,7 @@ Modes (for the ablation):
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
+from typing import ClassVar
 
 from tools.refbrain.retrieval import Retriever
 from tools.refbrain.schema import STORY_ROLES
@@ -67,13 +68,20 @@ class Stage1Planner:
         self.section_medians = section_medians or {}
 
     def plan(self, ctx: TargetContext) -> dict:
-        roles = [r for r in STORY_ROLES
-                 if ROLE_EVENT[r][0] in ctx.available_events or ROLE_EVENT[r][0] == "OTHER"]
-        n = len(roles)
+        n = len(STORY_ROLES)
+        # In retrieval mode the ROLE->EVENT binding at each story position is LEARNED from the
+        # references (the dominant event they place there); off/aggregate keep the fixed canonical arc.
+        learned_events = self._learned_event_arc(ctx, n) if self.mode == "retrieval" else None
         seqs = []
-        for i, role in enumerate(roles):
-            event, energy = ROLE_EVENT[role]
+        for i, role in enumerate(STORY_ROLES):
+            canonical_event, energy = ROLE_EVENT[role]
             position = (i + 0.5) / n
+            if learned_events is not None:
+                event = learned_events[i]          # reference-learned; already target-filtered
+            else:
+                event = canonical_event
+                if event not in ctx.available_events and event != "OTHER":
+                    event = "OTHER"
             retrieved = []
             if self.mode == "retrieval" and self.retriever is not None:
                 retrieved = self.retriever.retrieve(
@@ -101,6 +109,35 @@ class Stage1Planner:
             "energy_curve": [s.music_energy for s in seqs],
             "transitions": transitions,
         }
+
+    # what a render-only reference can actually teach is the dominant SHOT CATEGORY at each story
+    # position; map that to a coarse event where the category names one, else keep it as the role.
+    CATEGORY_EVENT_LEARN: ClassVar[dict] = {"party": "PARTY_KINA", "ceremony": "CEREMONY",
+                                            "bride_prep": "PREPARATION", "groom_prep": "PREPARATION"}
+
+    def _learned_event_arc(self, ctx, n):
+        """The arc LEARNED from the references: per story-position bin, the dominant reference shot
+        CATEGORY (what render-only refs can teach), mapped to an event where one exists. This is what
+        makes ORDER reference-driven rather than a fixed canonical skeleton."""
+        if self.retriever is None:
+            return None
+        bins = [{} for _ in range(n)]
+        for s in self.retriever.sequences:
+            b = min(n - 1, int(s["story_position"] * n))
+            mid = s["category_pattern"][len(s["category_pattern"]) // 2] if s.get("category_pattern") else "?"
+            if mid and mid != "?":
+                bins[b][mid] = bins[b].get(mid, 0) + 1
+        arc = []
+        for b in range(n):
+            counts = bins[b]
+            cat = min(counts.items(), key=lambda kv: (-kv[1], kv[0]))[0] if counts else "?"
+            ev = self.CATEGORY_EVENT_LEARN.get(cat, cat.upper() if cat != "?" else "OTHER")
+            if ev not in ctx.available_events and ev not in (
+                    "PREPARATION", "PARTY_KINA", "CEREMONY", "COUPLE", "BRIDE", "GROOM", "VENUE",
+                    "DETAIL", "FAMILY"):
+                ev = "OTHER"
+            arc.append(ev)
+        return arc
 
     def _pacing(self, role, energy, position, retrieved):
         scales_default = {"low": ["wide", "medium", "detail"], "medium": ["medium", "wide"],

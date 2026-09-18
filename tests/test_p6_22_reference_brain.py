@@ -72,19 +72,20 @@ def test_stage1_plan_is_abstract_no_shot_ids():
         assert "shot_id" not in json.dumps(seq)          # abstract only
 
 
-def test_retrieval_changes_pacing_but_not_yet_sequence_order():
-    """Honest finding: with render-only Tier-2 evidence, retrieval conditions PACING (durations differ
-    from the off/aggregate modes) but the role/event ORDER is still a canonical arc across modes."""
+def test_retrieval_now_changes_sequence_order_not_only_pacing():
+    """P6.23: after Tier-2 semantic enrichment the retrieval-learned arc drives the event ORDER, which
+    now differs from the off/aggregate canonical arc (P6.22's gap is closed)."""
     h = _j("p6_22_holdout.json")
     abl = h["ablation"]
-    assert abl["retrieval_durations"] != abl["off_durations"]        # retrieval does change pacing
-    assert abl["retrieval_role_order"] == abl["off_role_order"]      # ...but not the ordering (gap)
+    assert abl["retrieval_durations"] != abl["off_durations"]                 # pacing still changes
+    assert abl["retrieval_event_order_differs_from_off"] is True              # ...and now ORDER too
+    assert abl["retrieval_event_order_differs_from_aggregate"] is True
 
 
 def test_v7_used_only_after_generation():
     h = _j("p6_22_holdout.json")
     # V7 appears only in the post-hoc comparison + ground-truth structure, never in retrieval
-    assert h["v7_structure"]["song_count"] == 1
+    assert h["v7_structure"]["song_count"] == 2          # P6.23: two songs (fixed extraction)
     assert "holdout_vs_v7" in h["comparison"]
 
 

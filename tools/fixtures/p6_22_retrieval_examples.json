@@ -1,226 +1,157 @@
 {
-  "FIRST_DANCE": [
-    {
-      "duration_s": 9.04,
-      "event_type": "OTHER",
-      "n_shots": 5,
-      "reference_id": "ref:_sjJtpPP36E",
-      "scale_pattern": [
-        "?",
-        "?",
-        "?",
-        "?",
-        "?"
-      ],
-      "sequence_id": "ref:_sjJtpPP36E#w5i29",
-      "similarity": 1.0402,
-      "story_role": "FIRST_DANCE",
-      "tier": 2,
-      "why": "role=FIRST_DANCE event=OTHER pos=0.6176 tier2"
-    },
-    {
-      "duration_s": 8.48,
-      "event_type": "OTHER",
-      "n_shots": 5,
-      "reference_id": "ref:b-Rqq_B2nKY",
-      "scale_pattern": [
-        "?",
-        "?",
-        "?",
-        "?",
-        "?"
-      ],
-      "sequence_id": "ref:b-Rqq_B2nKY#w5i25",
-      "similarity": 1.04,
-      "story_role": "FIRST_DANCE",
-      "tier": 2,
-      "why": "role=FIRST_DANCE event=OTHER pos=0.6111 tier2"
-    },
-    {
-      "duration_s": 8.52,
-      "event_type": "OTHER",
-      "n_shots": 5,
-      "reference_id": "ref:VHpqYteMbTg",
-      "scale_pattern": [
-        "?",
-        "?",
-        "?",
-        "?",
-        "?"
-      ],
-      "sequence_id": "ref:VHpqYteMbTg#w5i31",
-      "similarity": 1.04,
-      "story_role": "FIRST_DANCE",
-      "tier": 2,
-      "why": "role=FIRST_DANCE event=OTHER pos=0.6091 tier2"
-    }
-  ],
   "INTRO_ESTABLISH": [
     {
-      "duration_s": 12.721,
+      "duration_s": 5.0,
       "event_type": "OTHER",
-      "n_shots": 5,
-      "reference_id": "ref:p1vkOMWvN7U",
+      "n_shots": 3,
+      "reference_id": "ref:50edMEI-3Fw",
       "scale_pattern": [
-        "?",
-        "?",
-        "?",
-        "?",
-        "?"
+        "wide",
+        "wide",
+        "detail"
       ],
-      "sequence_id": "ref:p1vkOMWvN7U#w5i2",
-      "similarity": 1.1705,
+      "sequence_id": "ref:50edMEI-3Fw#w3i1",
+      "similarity": 1.1444,
       "story_role": "INTRO_ESTABLISH",
       "tier": 2,
-      "why": "role=INTRO_ESTABLISH event=OTHER pos=0.0957 tier2"
+      "why": "role=INTRO_ESTABLISH event=OTHER pos=0.097 tier2"
     },
     {
-      "duration_s": 13.96,
+      "duration_s": 9.12,
       "event_type": "OTHER",
-      "n_shots": 5,
-      "reference_id": "ref:1117083593",
+      "n_shots": 4,
+      "reference_id": "ref:50edMEI-3Fw",
       "scale_pattern": [
-        "?",
-        "?",
-        "?",
-        "?",
-        "?"
+        "wide",
+        "wide",
+        "wide",
+        "detail"
       ],
-      "sequence_id": "ref:1117083593#w5i0",
-      "similarity": 1.17,
+      "sequence_id": "ref:50edMEI-3Fw#w4i0",
+      "similarity": 1.1421,
       "story_role": "INTRO_ESTABLISH",
       "tier": 2,
-      "why": "role=INTRO_ESTABLISH event=OTHER pos=0.0329 tier2"
+      "why": "role=INTRO_ESTABLISH event=OTHER pos=0.0668 tier2"
     },
     {
-      "duration_s": 12.08,
+      "duration_s": 3.4,
       "event_type": "OTHER",
-      "n_shots": 5,
-      "reference_id": "ref:Fbq4SM_Qpgg",
+      "n_shots": 2,
+      "reference_id": "ref:MgWLLzMnHR8",
       "scale_pattern": [
-        "?",
-        "?",
-        "?",
-        "?",
-        "?"
+        "close_up",
+        "wide"
       ],
-      "sequence_id": "ref:Fbq4SM_Qpgg#w5i0",
-      "similarity": 1.1699,
+      "sequence_id": "ref:MgWLLzMnHR8#w2i4",
+      "similarity": 1.1342,
       "story_role": "INTRO_ESTABLISH",
       "tier": 2,
-      "why": "role=INTRO_ESTABLISH event=OTHER pos=0.0962 tier2"
+      "why": "role=INTRO_ESTABLISH event=OTHER pos=0.0601 tier2"
     }
   ],
   "PARTY_BUILD": [
     {
-      "duration_s": 5.16,
-      "event_type": "OTHER",
-      "n_shots": 5,
-      "reference_id": "ref:MgWLLzMnHR8",
+      "duration_s": 3.68,
+      "event_type": "PARTY_KINA",
+      "n_shots": 3,
+      "reference_id": "ref:1074649838",
       "scale_pattern": [
-        "?",
-        "?",
-        "?",
-        "?",
-        "?"
+        "medium",
+        "detail",
+        "medium"
       ],
-      "sequence_id": "ref:MgWLLzMnHR8#w5i46",
-      "similarity": 1.0078,
+      "sequence_id": "ref:1074649838#w3i46",
+      "similarity": 1.1344,
       "story_role": "PARTY_BUILD",
       "tier": 2,
-      "why": "role=PARTY_BUILD event=OTHER pos=0.7462 tier2"
+      "why": "role=PARTY_BUILD event=PARTY_KINA pos=0.7102 tier2"
     },
     {
-      "duration_s": 5.08,
-      "event_type": "OTHER",
-      "n_shots": 5,
-      "reference_id": "ref:1199148509",
+      "duration_s": 4.44,
+      "event_type": "PARTY_KINA",
+      "n_shots": 4,
+      "reference_id": "ref:1074649838",
       "scale_pattern": [
-        "?",
-        "?",
-        "?",
-        "?",
-        "?"
+        "medium",
+        "detail",
+        "medium",
+        "wide"
       ],
-      "sequence_id": "ref:1199148509#w5i44",
-      "similarity": 1.0072,
+      "sequence_id": "ref:1074649838#w4i46",
+      "similarity": 1.1261,
       "story_role": "PARTY_BUILD",
       "tier": 2,
-      "why": "role=PARTY_BUILD event=OTHER pos=0.7381 tier2"
+      "why": "role=PARTY_BUILD event=PARTY_KINA pos=0.7144 tier2"
     },
     {
-      "duration_s": 5.56,
-      "event_type": "OTHER",
-      "n_shots": 5,
-      "reference_id": "ref:U8MbInvJ9xs",
+      "duration_s": 4.24,
+      "event_type": "PARTY_KINA",
+      "n_shots": 4,
+      "reference_id": "ref:1074649838",
       "scale_pattern": [
-        "?",
-        "?",
-        "?",
-        "?",
-        "?"
+        "wide",
+        "medium",
+        "detail",
+        "medium"
       ],
-      "sequence_id": "ref:U8MbInvJ9xs#w5i54",
-      "similarity": 1.0068,
+      "sequence_id": "ref:1074649838#w4i45",
+      "similarity": 1.126,
       "story_role": "PARTY_BUILD",
       "tier": 2,
-      "why": "role=PARTY_BUILD event=OTHER pos=0.7434 tier2"
+      "why": "role=PARTY_BUILD event=PARTY_KINA pos=0.7071 tier2"
     }
   ],
   "RESOLUTION_OUTRO": [
     {
-      "duration_s": 10.877,
-      "event_type": "OTHER",
-      "n_shots": 5,
-      "reference_id": "ref:1050693600",
+      "duration_s": 9.673,
+      "event_type": "CEREMONY",
+      "n_shots": 4,
+      "reference_id": "ref:xmSZxH5kfBs",
       "scale_pattern": [
-        "?",
-        "?",
-        "?",
-        "?",
-        "?"
+        "medium",
+        "medium",
+        "detail",
+        "medium"
       ],
-      "sequence_id": "ref:1050693600#w5i95",
-      "similarity": 1.0706,
+      "sequence_id": "ref:xmSZxH5kfBs#w4i38",
+      "similarity": 1.0855,
       "story_role": "RESOLUTION_OUTRO",
       "tier": 2,
-      "why": "role=RESOLUTION_OUTRO event=OTHER pos=0.975 tier2"
+      "why": "role=RESOLUTION_OUTRO event=CEREMONY pos=0.9446 tier2"
     },
     {
-      "duration_s": 10.797,
-      "event_type": "OTHER",
+      "duration_s": 10.273,
+      "event_type": "PARTY_KINA",
       "n_shots": 5,
-      "reference_id": "ref:1143362002",
+      "reference_id": "ref:xmSZxH5kfBs",
       "scale_pattern": [
-        "?",
-        "?",
-        "?",
-        "?",
-        "?"
+        "medium",
+        "medium",
+        "medium",
+        "detail",
+        "medium"
       ],
-      "sequence_id": "ref:1143362002#w5i68",
-      "similarity": 1.0701,
+      "sequence_id": "ref:xmSZxH5kfBs#w5i37",
+      "similarity": 1.0832,
       "story_role": "RESOLUTION_OUTRO",
       "tier": 2,
-      "why": "role=RESOLUTION_OUTRO event=OTHER pos=0.9658 tier2"
+      "why": "role=RESOLUTION_OUTRO event=PARTY_KINA pos=0.9412 tier2"
     },
     {
-      "duration_s": 11.353,
-      "event_type": "OTHER",
-      "n_shots": 5,
-      "reference_id": "ref:U8MbInvJ9xs",
+      "duration_s": 7.873,
+      "event_type": "CEREMONY",
+      "n_shots": 3,
+      "reference_id": "ref:xmSZxH5kfBs",
       "scale_pattern": [
-        "?",
-        "?",
-        "?",
-        "?",
-        "?"
+        "medium",
+        "detail",
+        "medium"
       ],
-      "sequence_id": "ref:U8MbInvJ9xs#w5i71",
-      "similarity": 1.0701,
+      "sequence_id": "ref:xmSZxH5kfBs#w3i39",
+      "similarity": 1.0815,
       "story_role": "RESOLUTION_OUTRO",
       "tier": 2,
-      "why": "role=RESOLUTION_OUTRO event=OTHER pos=0.9671 tier2"
+      "why": "role=RESOLUTION_OUTRO event=CEREMONY pos=0.9549 tier2"
     }
   ]
 }

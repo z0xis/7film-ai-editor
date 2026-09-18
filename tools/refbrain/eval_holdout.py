@@ -80,7 +80,23 @@ def _v7_structure() -> dict:
         seq.append(ev)
     dedup = [e for i, e in enumerate(seq) if i == 0 or e != seq[i - 1]]
     ordered = [e for e in dedup if e != "OTHER"]
-    return {"n_shots": n, "song_count": 1, "event_order_raw": dedup, "event_order": ordered}
+    # category arc (what render-only refs can teach): dominant CATEGORY per position bin, mapped the
+    # same way the learned arc maps categories -> events.
+    cmap = {"party": "PARTY_KINA", "ceremony": "CEREMONY", "bride_prep": "PREPARATION",
+            "groom_prep": "PREPARATION"}
+    nb = 8
+    cbins = [{} for _ in range(nb)]
+    for i, s in enumerate(v7):
+        b = min(nb - 1, int(i / n * nb))
+        cat = s["category"] or "?"
+        cbins[b][cat] = cbins[b].get(cat, 0) + 1
+    cat_arc = []
+    for b in range(nb):
+        c = min(cbins[b].items(), key=lambda kv: (-kv[1], kv[0]))[0] if cbins[b] else "?"
+        cat_arc.append(cmap.get(c, c.upper()))
+    return {"n_shots": n, "song_count": 2, "song_transition_s": 77.92, "crossfade_s": 2.34,
+            "entrance_sfx": True, "event_order_raw": dedup, "event_order": ordered,
+            "category_arc": cat_arc}
 
 
 def _lcs(a, b):
@@ -118,6 +134,14 @@ def run() -> dict:
     cmp_off = _compare(plan_off["event_order"], v7["event_order"])
     cmp_agg = _compare(plan_agg["event_order"], v7["event_order"])
 
+    # position-wise agreement of the plan's arc vs V7's category arc (both length 8)
+    def arc_agree(plan):
+        pe, va = plan["event_order"], v7["category_arc"]
+        m = min(len(pe), len(va))
+        return round(sum(1 for i in range(m) if pe[i] == va[i]) / max(1, m), 3)
+    cat_arc_agreement = {"retrieval": arc_agree(plan_holdout), "off": arc_agree(plan_off),
+                         "aggregate": arc_agree(plan_agg)}
+
     # leakage guard: no held-out reference appears in the holdout retrieval
     active = set(plan_holdout["active_references"])
     leak = [r for r in HELDOUT_15A if r in active]
@@ -130,11 +154,15 @@ def run() -> dict:
         "active_reference_count_holdout": len(active),
         "v7_structure": v7,
         "plan_holdout": plan_holdout,
-        "comparison": {"holdout_vs_v7": cmp_holdout, "off_vs_v7": cmp_off, "aggregate_vs_v7": cmp_agg},
+        "comparison": {"holdout_vs_v7": cmp_holdout, "off_vs_v7": cmp_off, "aggregate_vs_v7": cmp_agg,
+                       "category_arc_agreement": cat_arc_agreement, "v7_category_arc": v7["category_arc"]},
         "ablation": {
-            "retrieval_role_order": plan_holdout["role_order"],
-            "off_role_order": plan_off["role_order"],
-            "aggregate_role_order": plan_agg["role_order"],
+            "retrieval_event_order": plan_holdout["event_order"],
+            "off_event_order": plan_off["event_order"],
+            "aggregate_event_order": plan_agg["event_order"],
+            "retrieval_event_order_differs_from_off": plan_holdout["event_order"] != plan_off["event_order"],
+            "retrieval_event_order_differs_from_aggregate":
+                plan_holdout["event_order"] != plan_agg["event_order"],
             "retrieval_durations": [s["duration_target_s"] for s in plan_holdout["sequences"]],
             "off_durations": [s["duration_target_s"] for s in plan_off["sequences"]],
             "aggregate_durations": [s["duration_target_s"] for s in plan_agg["sequences"]],
