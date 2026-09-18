@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import logging
 import uuid
-from collections.abc import Iterable, Sequence
+from collections.abc import Iterable, Iterator, Sequence
 from dataclasses import asdict
 from fractions import Fraction
 from pathlib import Path
@@ -45,6 +45,13 @@ ANALYSIS_VERSION = "4"
 # when only its midpoint is good. Long scenes are split into segments this size so each part of
 # a clip is measured, scored and accepted or rejected on its own.
 MAX_SHOT_SECONDS = Fraction(5)
+# How many shots' representative frames may be held before a CLIP encode flush. A 4K frame is
+# ~25 MB decoded, so materialising every shot's samples for a whole asset at once (the old
+# behaviour) scaled peak memory with shot_count and was signal-killed on the largest asset
+# (DJI_0530: 501 shots, 4K). 32 bounds the resident representative-frame window to well under a
+# gigabyte while keeping CLIP batches large enough to be efficient; it is a memory bound, not a
+# semantic knob -- the embedding for a frame does not depend on the batch it rode in.
+_ENCODE_CHUNK_SHOTS = 32
 # Energy is read in short windows and merged, so a drop is found where it is rather than
 # smeared across a quarter of the song. Levels are relative to the track's own loud passages.
 ENERGY_WINDOW_SECONDS = 4
@@ -57,12 +64,18 @@ LOW_ENERGY_RATIO = 0.30
 MIN_DYNAMIC_RANGE = 0.15
 
 
-def _shot_frame_groups(asset: MediaAsset, ranges: list[TimeRange]) -> list[list[Any]]:
-    """Read all shot samples while opening a source asset only once."""
+def _shot_frame_groups(asset: MediaAsset, ranges: list[TimeRange]) -> Iterator[list[Any]]:
+    """Yield each shot's samples in turn while opening a source asset only once.
+
+    A generator, not a list: the caller consumes one shot's frames, measures/encodes them and
+    lets them go before the next shot is decoded. Returning every shot's frames at once made peak
+    memory scale with the shot count times a 4K frame, which was the signal-kill on the largest
+    asset. The seek to each shot's midpoint is absolute, so the frames sampled for a shot are
+    identical to before and independent of how the caller batches them.
+    """
     import cv2  # type: ignore[import-not-found]
 
     capture = cv2.VideoCapture(str(asset.path))
-    groups: list[list[Any]] = []
     try:
         for source_range in ranges:
             frames = []
@@ -77,10 +90,9 @@ def _shot_frame_groups(asset: MediaAsset, ranges: list[TimeRange]) -> list[list[
                     for _ in range(gap - 1):
                         if not capture.grab():
                             break
-            groups.append(frames)
+            yield frames
     finally:
         capture.release()
-    return groups
 
 
 def _fallback_ranges(asset: MediaAsset) -> Iterable[TimeRange]:
@@ -220,12 +232,36 @@ def _encode_asset(database: Database, classifier: VisionClassifier, asset: Media
     ]
     if not ranges:
         ranges = list(_scene_ranges(asset))
-    frame_groups = _shot_frame_groups(asset, ranges)
-    metrics = [measure_frames(frames) for frames in frame_groups]
-    middle_frames = [frames[len(frames) // 2] if frames else None for frames in frame_groups]
-    positions = [index for index, frame in enumerate(middle_frames) if frame is not None]
-    encoded = classifier.encode([middle_frames[index] for index in positions])
-    embeddings = {} if encoded is None else dict(zip(positions, encoded))
+    # Read one shot at a time and let its frames go once measured, holding only a bounded window
+    # of representative frames for the next CLIP flush. This is an execution change only: the same
+    # frames are sampled, the same `measure_frames` inputs are used, and a frame's embedding does
+    # not depend on which batch it was encoded in, so metrics, embeddings, shot ids and boundaries
+    # match the old materialise-everything path. The whole asset's features are still written in
+    # one atomic `_store_features` at the end -- an exception partway through never persists a
+    # partial asset.
+    metrics: list[FrameMetrics] = []
+    embeddings: dict[int, Any] = {}
+    pending_positions: list[int] = []
+    pending_images: list[Any] = []
+
+    def _flush_encode() -> None:
+        if not pending_images:
+            return
+        encoded = classifier.encode(pending_images)
+        if encoded is not None:
+            embeddings.update(zip(pending_positions, encoded))
+        pending_positions.clear()
+        pending_images.clear()
+
+    for ordinal, frames in enumerate(_shot_frame_groups(asset, ranges)):
+        metrics.append(measure_frames(frames))
+        middle = frames[len(frames) // 2] if frames else None
+        if middle is not None:
+            pending_positions.append(ordinal)
+            pending_images.append(middle)
+            if len(pending_images) >= _ENCODE_CHUNK_SHOTS:
+                _flush_encode()
+    _flush_encode()
     _store_features(database, asset, ranges, metrics, embeddings)
 
 

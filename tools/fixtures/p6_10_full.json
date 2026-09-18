@@ -1,0 +1,22 @@
+{
+  "assets_completed": 362,
+  "assets_id_stable": 362,
+  "assets_id_stable_total": 362,
+  "assets_total": 362,
+  "embedding_null_after": 0,
+  "embedding_null_shots": [],
+  "embeddings_of": 2638,
+  "embeddings_populated": 2638,
+  "failures": [],
+  "peak_rss_gb": 4.52,
+  "runtime_seconds": 4580.1,
+  "shots_after": 2638,
+  "shots_before": 2638,
+  "shots_without_features": 0,
+  "timeline_items_after": 129,
+  "timeline_items_before": 129,
+  "timeline_resolved_after": 129,
+  "timeline_resolved_before": 129,
+  "tq_zero_after": 0,
+  "tq_zero_shots": []
+}

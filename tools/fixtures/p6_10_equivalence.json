@@ -1,0 +1,23 @@
+{
+  "clip_batch_vs_chunk": {
+    "dim": 512,
+    "max_abs_delta": 0.0,
+    "min_cosine": 1.0
+  },
+  "feature_equivalence": {
+    "C7152": {
+      "embedding_min_cosine": 1.0,
+      "metrics_exact": true,
+      "same_shot_ids": true,
+      "shots": 15,
+      "tq_exact": true
+    },
+    "C7309": {
+      "embedding_min_cosine": 1.0,
+      "metrics_exact": true,
+      "same_shot_ids": true,
+      "shots": 16,
+      "tq_exact": true
+    }
+  }
+}
