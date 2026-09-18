@@ -2336,13 +2336,31 @@ def build_timeline(
             ]
             if usable:
                 available_shots = usable
-            elif current_frame >= frame_rate.frames_from_seconds(
-                target_duration * MINIMUM_DELIVERABLE_SHARE
-            ):
-                # Nothing left worth cutting to, and enough film to hand over. Stopping here
-                # is better than filling the rest with the stretches this gate exists to keep
-                # out.
-                break
+            else:
+                # Nothing can carry a cut *this* long -- but the gate above is a function of the
+                # requested length, and a shorter cut may still reach a clean run of the same
+                # remaining footage (the comment two lines up already says a shot "stays in the
+                # pool for the next cut, where a different length may reach a better stretch").
+                # So before ending the whole film, ask whether any shot can carry the shortest
+                # allowed cut. If one can, this is a *local* slot failure at this length, not a
+                # global story exhaustion: shorten this cut and keep going -- which is exactly
+                # what the faster reception section wants. Only when nothing can hold even the
+                # minimum cut is the material genuinely spent, and only then does the
+                # enough-to-deliver early stop still apply.
+                usable_at_min = [
+                    shot for shot in available_shots
+                    if _cut_run_score(
+                        shot, windows_by_shot.get(shot.id), consumed_source_frames[shot.id],
+                        MIN_CUT_SECONDS, sharpness_bar) > UNUSABLE_RUN_SCORE
+                ]
+                if usable_at_min:
+                    desired = MIN_CUT_SECONDS
+                    available_shots = usable_at_min
+                elif current_frame >= frame_rate.frames_from_seconds(
+                    target_duration * MINIMUM_DELIVERABLE_SHARE
+                ):
+                    # Nothing left worth cutting to at any length, and enough film to hand over.
+                    break
         if opening is not None and desired < TYPICAL_CUT_SECONDS:
             # A wide shot inside the opening reads as nothing at all. One edit gave its fourth
             # cut — 0.98 seconds — to a wide of a hotel lobby, and the editor found the opening
