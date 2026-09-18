@@ -1,0 +1,226 @@
+{
+  "FIRST_DANCE": [
+    {
+      "duration_s": 9.04,
+      "event_type": "OTHER",
+      "n_shots": 5,
+      "reference_id": "ref:_sjJtpPP36E",
+      "scale_pattern": [
+        "?",
+        "?",
+        "?",
+        "?",
+        "?"
+      ],
+      "sequence_id": "ref:_sjJtpPP36E#w5i29",
+      "similarity": 1.0402,
+      "story_role": "FIRST_DANCE",
+      "tier": 2,
+      "why": "role=FIRST_DANCE event=OTHER pos=0.6176 tier2"
+    },
+    {
+      "duration_s": 8.48,
+      "event_type": "OTHER",
+      "n_shots": 5,
+      "reference_id": "ref:b-Rqq_B2nKY",
+      "scale_pattern": [
+        "?",
+        "?",
+        "?",
+        "?",
+        "?"
+      ],
+      "sequence_id": "ref:b-Rqq_B2nKY#w5i25",
+      "similarity": 1.04,
+      "story_role": "FIRST_DANCE",
+      "tier": 2,
+      "why": "role=FIRST_DANCE event=OTHER pos=0.6111 tier2"
+    },
+    {
+      "duration_s": 8.52,
+      "event_type": "OTHER",
+      "n_shots": 5,
+      "reference_id": "ref:VHpqYteMbTg",
+      "scale_pattern": [
+        "?",
+        "?",
+        "?",
+        "?",
+        "?"
+      ],
+      "sequence_id": "ref:VHpqYteMbTg#w5i31",
+      "similarity": 1.04,
+      "story_role": "FIRST_DANCE",
+      "tier": 2,
+      "why": "role=FIRST_DANCE event=OTHER pos=0.6091 tier2"
+    }
+  ],
+  "INTRO_ESTABLISH": [
+    {
+      "duration_s": 12.721,
+      "event_type": "OTHER",
+      "n_shots": 5,
+      "reference_id": "ref:p1vkOMWvN7U",
+      "scale_pattern": [
+        "?",
+        "?",
+        "?",
+        "?",
+        "?"
+      ],
+      "sequence_id": "ref:p1vkOMWvN7U#w5i2",
+      "similarity": 1.1705,
+      "story_role": "INTRO_ESTABLISH",
+      "tier": 2,
+      "why": "role=INTRO_ESTABLISH event=OTHER pos=0.0957 tier2"
+    },
+    {
+      "duration_s": 13.96,
+      "event_type": "OTHER",
+      "n_shots": 5,
+      "reference_id": "ref:1117083593",
+      "scale_pattern": [
+        "?",
+        "?",
+        "?",
+        "?",
+        "?"
+      ],
+      "sequence_id": "ref:1117083593#w5i0",
+      "similarity": 1.17,
+      "story_role": "INTRO_ESTABLISH",
+      "tier": 2,
+      "why": "role=INTRO_ESTABLISH event=OTHER pos=0.0329 tier2"
+    },
+    {
+      "duration_s": 12.08,
+      "event_type": "OTHER",
+      "n_shots": 5,
+      "reference_id": "ref:Fbq4SM_Qpgg",
+      "scale_pattern": [
+        "?",
+        "?",
+        "?",
+        "?",
+        "?"
+      ],
+      "sequence_id": "ref:Fbq4SM_Qpgg#w5i0",
+      "similarity": 1.1699,
+      "story_role": "INTRO_ESTABLISH",
+      "tier": 2,
+      "why": "role=INTRO_ESTABLISH event=OTHER pos=0.0962 tier2"
+    }
+  ],
+  "PARTY_BUILD": [
+    {
+      "duration_s": 5.16,
+      "event_type": "OTHER",
+      "n_shots": 5,
+      "reference_id": "ref:MgWLLzMnHR8",
+      "scale_pattern": [
+        "?",
+        "?",
+        "?",
+        "?",
+        "?"
+      ],
+      "sequence_id": "ref:MgWLLzMnHR8#w5i46",
+      "similarity": 1.0078,
+      "story_role": "PARTY_BUILD",
+      "tier": 2,
+      "why": "role=PARTY_BUILD event=OTHER pos=0.7462 tier2"
+    },
+    {
+      "duration_s": 5.08,
+      "event_type": "OTHER",
+      "n_shots": 5,
+      "reference_id": "ref:1199148509",
+      "scale_pattern": [
+        "?",
+        "?",
+        "?",
+        "?",
+        "?"
+      ],
+      "sequence_id": "ref:1199148509#w5i44",
+      "similarity": 1.0072,
+      "story_role": "PARTY_BUILD",
+      "tier": 2,
+      "why": "role=PARTY_BUILD event=OTHER pos=0.7381 tier2"
+    },
+    {
+      "duration_s": 5.56,
+      "event_type": "OTHER",
+      "n_shots": 5,
+      "reference_id": "ref:U8MbInvJ9xs",
+      "scale_pattern": [
+        "?",
+        "?",
+        "?",
+        "?",
+        "?"
+      ],
+      "sequence_id": "ref:U8MbInvJ9xs#w5i54",
+      "similarity": 1.0068,
+      "story_role": "PARTY_BUILD",
+      "tier": 2,
+      "why": "role=PARTY_BUILD event=OTHER pos=0.7434 tier2"
+    }
+  ],
+  "RESOLUTION_OUTRO": [
+    {
+      "duration_s": 10.877,
+      "event_type": "OTHER",
+      "n_shots": 5,
+      "reference_id": "ref:1050693600",
+      "scale_pattern": [
+        "?",
+        "?",
+        "?",
+        "?",
+        "?"
+      ],
+      "sequence_id": "ref:1050693600#w5i95",
+      "similarity": 1.0706,
+      "story_role": "RESOLUTION_OUTRO",
+      "tier": 2,
+      "why": "role=RESOLUTION_OUTRO event=OTHER pos=0.975 tier2"
+    },
+    {
+      "duration_s": 10.797,
+      "event_type": "OTHER",
+      "n_shots": 5,
+      "reference_id": "ref:1143362002",
+      "scale_pattern": [
+        "?",
+        "?",
+        "?",
+        "?",
+        "?"
+      ],
+      "sequence_id": "ref:1143362002#w5i68",
+      "similarity": 1.0701,
+      "story_role": "RESOLUTION_OUTRO",
+      "tier": 2,
+      "why": "role=RESOLUTION_OUTRO event=OTHER pos=0.9658 tier2"
+    },
+    {
+      "duration_s": 11.353,
+      "event_type": "OTHER",
+      "n_shots": 5,
+      "reference_id": "ref:U8MbInvJ9xs",
+      "scale_pattern": [
+        "?",
+        "?",
+        "?",
+        "?",
+        "?"
+      ],
+      "sequence_id": "ref:U8MbInvJ9xs#w5i71",
+      "similarity": 1.0701,
+      "story_role": "RESOLUTION_OUTRO",
+      "tier": 2,
+      "why": "role=RESOLUTION_OUTRO event=OTHER pos=0.9671 tier2"
+    }
+  ]
+}

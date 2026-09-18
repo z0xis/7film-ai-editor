@@ -1,0 +1,1218 @@
+{
+  "ablation": {
+    "aggregate_durations": [
+      26.1,
+      22.1,
+      22.1,
+      22.1,
+      22.1,
+      22.1,
+      22.1,
+      21.4
+    ],
+    "aggregate_role_order": [
+      "INTRO_ESTABLISH",
+      "PREPARATION",
+      "BUILD",
+      "RECEPTION_ENTRY",
+      "FIRST_DANCE",
+      "PARTY_BUILD",
+      "CLIMAX",
+      "RESOLUTION_OUTRO"
+    ],
+    "off_durations": [
+      28.8,
+      28.8,
+      21.6,
+      21.6,
+      21.6,
+      14.4,
+      14.4,
+      28.8
+    ],
+    "off_role_order": [
+      "INTRO_ESTABLISH",
+      "PREPARATION",
+      "BUILD",
+      "RECEPTION_ENTRY",
+      "FIRST_DANCE",
+      "PARTY_BUILD",
+      "CLIMAX",
+      "RESOLUTION_OUTRO"
+    ],
+    "retrieval_durations": [
+      33.0,
+      30.6,
+      23.0,
+      21.8,
+      21.0,
+      12.7,
+      12.2,
+      25.6
+    ],
+    "retrieval_equals_off": false,
+    "retrieval_role_order": [
+      "INTRO_ESTABLISH",
+      "PREPARATION",
+      "BUILD",
+      "RECEPTION_ENTRY",
+      "FIRST_DANCE",
+      "PARTY_BUILD",
+      "CLIMAX",
+      "RESOLUTION_OUTRO"
+    ]
+  },
+  "active_reference_count_holdout": 18,
+  "comparison": {
+    "aggregate_vs_v7": {
+      "event_coverage": 0.8,
+      "order_agreement": 0.167,
+      "order_lcs": 4,
+      "plan_event_order": [
+        "PREPARATION",
+        "CEREMONY",
+        "FIRST_DANCE",
+        "PARTY_KINA",
+        "OUTRO"
+      ],
+      "v7_event_order": [
+        "PREPARATION",
+        "PREPARATION",
+        "PREPARATION",
+        "PREPARATION",
+        "PREPARATION",
+        "PREPARATION",
+        "PREPARATION",
+        "FIRST_DANCE",
+        "PREPARATION",
+        "PREPARATION",
+        "PREPARATION",
+        "CAKE",
+        "PREPARATION",
+        "FIRST_DANCE",
+        "PARTY_KINA",
+        "PREPARATION",
+        "PREPARATION",
+        "PARTY_KINA",
+        "PREPARATION",
+        "PARTY_KINA",
+        "PREPARATION",
+        "PARTY_KINA",
+        "PREPARATION",
+        "OUTRO"
+      ]
+    },
+    "holdout_vs_v7": {
+      "event_coverage": 0.8,
+      "order_agreement": 0.167,
+      "order_lcs": 4,
+      "plan_event_order": [
+        "PREPARATION",
+        "CEREMONY",
+        "FIRST_DANCE",
+        "PARTY_KINA",
+        "OUTRO"
+      ],
+      "v7_event_order": [
+        "PREPARATION",
+        "PREPARATION",
+        "PREPARATION",
+        "PREPARATION",
+        "PREPARATION",
+        "PREPARATION",
+        "PREPARATION",
+        "FIRST_DANCE",
+        "PREPARATION",
+        "PREPARATION",
+        "PREPARATION",
+        "CAKE",
+        "PREPARATION",
+        "FIRST_DANCE",
+        "PARTY_KINA",
+        "PREPARATION",
+        "PREPARATION",
+        "PARTY_KINA",
+        "PREPARATION",
+        "PARTY_KINA",
+        "PREPARATION",
+        "PARTY_KINA",
+        "PREPARATION",
+        "OUTRO"
+      ]
+    },
+    "off_vs_v7": {
+      "event_coverage": 0.8,
+      "order_agreement": 0.167,
+      "order_lcs": 4,
+      "plan_event_order": [
+        "PREPARATION",
+        "CEREMONY",
+        "FIRST_DANCE",
+        "PARTY_KINA",
+        "OUTRO"
+      ],
+      "v7_event_order": [
+        "PREPARATION",
+        "PREPARATION",
+        "PREPARATION",
+        "PREPARATION",
+        "PREPARATION",
+        "PREPARATION",
+        "PREPARATION",
+        "FIRST_DANCE",
+        "PREPARATION",
+        "PREPARATION",
+        "PREPARATION",
+        "CAKE",
+        "PREPARATION",
+        "FIRST_DANCE",
+        "PARTY_KINA",
+        "PREPARATION",
+        "PREPARATION",
+        "PARTY_KINA",
+        "PREPARATION",
+        "PARTY_KINA",
+        "PREPARATION",
+        "PARTY_KINA",
+        "PREPARATION",
+        "OUTRO"
+      ]
+    }
+  },
+  "heldout_references": [
+    "IS EDIT - AI CUT V7",
+    "is edit"
+  ],
+  "leakage_check": {
+    "clean": true,
+    "held_out_present_in_retrieval": []
+  },
+  "plan_holdout": {
+    "active_references": [
+      "ref:1050693600",
+      "ref:1074649838",
+      "ref:1117083593",
+      "ref:1143362002",
+      "ref:1151600045",
+      "ref:1180464792",
+      "ref:1199148509",
+      "ref:50edMEI-3Fw",
+      "ref:Fbq4SM_Qpgg",
+      "ref:MgWLLzMnHR8",
+      "ref:QYfupWEw_S4",
+      "ref:U8MbInvJ9xs",
+      "ref:VHpqYteMbTg",
+      "ref:_sjJtpPP36E",
+      "ref:b-Rqq_B2nKY",
+      "ref:p1vkOMWvN7U",
+      "ref:tYSML45z5HM",
+      "ref:xmSZxH5kfBs"
+    ],
+    "energy_curve": [
+      "low",
+      "low",
+      "medium",
+      "medium",
+      "medium",
+      "high",
+      "high",
+      "low"
+    ],
+    "event_order": [
+      "OTHER",
+      "PREPARATION",
+      "PREPARATION",
+      "CEREMONY",
+      "FIRST_DANCE",
+      "PARTY_KINA",
+      "PARTY_KINA",
+      "OUTRO"
+    ],
+    "mode": "retrieval",
+    "role_order": [
+      "INTRO_ESTABLISH",
+      "PREPARATION",
+      "BUILD",
+      "RECEPTION_ENTRY",
+      "FIRST_DANCE",
+      "PARTY_BUILD",
+      "CLIMAX",
+      "RESOLUTION_OUTRO"
+    ],
+    "sequences": [
+      {
+        "duration_target_s": 33.0,
+        "event_type": "OTHER",
+        "index": 0,
+        "music_energy": "low",
+        "n_shots_target": 5,
+        "retrieved": [
+          {
+            "duration_s": 12.721,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:p1vkOMWvN7U",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:p1vkOMWvN7U#w5i2",
+            "similarity": 1.1705,
+            "story_role": "INTRO_ESTABLISH",
+            "tier": 2,
+            "why": "role=INTRO_ESTABLISH event=OTHER pos=0.0957 tier2"
+          },
+          {
+            "duration_s": 12.08,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:Fbq4SM_Qpgg",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:Fbq4SM_Qpgg#w5i0",
+            "similarity": 1.1699,
+            "story_role": "INTRO_ESTABLISH",
+            "tier": 2,
+            "why": "role=INTRO_ESTABLISH event=OTHER pos=0.0962 tier2"
+          },
+          {
+            "duration_s": 13.96,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:1117083593",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:1117083593#w5i0",
+            "similarity": 1.1699,
+            "story_role": "INTRO_ESTABLISH",
+            "tier": 2,
+            "why": "role=INTRO_ESTABLISH event=OTHER pos=0.0329 tier2"
+          },
+          {
+            "duration_s": 14.48,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:xmSZxH5kfBs",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:xmSZxH5kfBs#w5i1",
+            "similarity": 1.1695,
+            "story_role": "INTRO_ESTABLISH",
+            "tier": 2,
+            "why": "role=INTRO_ESTABLISH event=OTHER pos=0.0507 tier2"
+          },
+          {
+            "duration_s": 14.598,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:p1vkOMWvN7U",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:p1vkOMWvN7U#w5i1",
+            "similarity": 1.1695,
+            "story_role": "INTRO_ESTABLISH",
+            "tier": 2,
+            "why": "role=INTRO_ESTABLISH event=OTHER pos=0.0745 tier2"
+          }
+        ],
+        "shot_scale_roles": [
+          "wide",
+          "medium",
+          "detail"
+        ],
+        "story_role": "INTRO_ESTABLISH"
+      },
+      {
+        "duration_target_s": 30.6,
+        "event_type": "PREPARATION",
+        "index": 1,
+        "music_energy": "low",
+        "n_shots_target": 5,
+        "retrieved": [
+          {
+            "duration_s": 14.0,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:Fbq4SM_Qpgg",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:Fbq4SM_Qpgg#w5i2",
+            "similarity": 1.0694,
+            "story_role": "PREPARATION",
+            "tier": 2,
+            "why": "role=PREPARATION event=OTHER pos=0.1731 tier2"
+          },
+          {
+            "duration_s": 14.76,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:Fbq4SM_Qpgg",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:Fbq4SM_Qpgg#w5i3",
+            "similarity": 1.069,
+            "story_role": "PREPARATION",
+            "tier": 2,
+            "why": "role=PREPARATION event=OTHER pos=0.2115 tier2"
+          },
+          {
+            "duration_s": 12.0,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:Fbq4SM_Qpgg",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:Fbq4SM_Qpgg#w5i1",
+            "similarity": 1.0686,
+            "story_role": "PREPARATION",
+            "tier": 2,
+            "why": "role=PREPARATION event=OTHER pos=0.1346 tier2"
+          },
+          {
+            "duration_s": 11.12,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:b-Rqq_B2nKY",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:b-Rqq_B2nKY#w5i7",
+            "similarity": 1.068,
+            "story_role": "PREPARATION",
+            "tier": 2,
+            "why": "role=PREPARATION event=OTHER pos=0.2111 tier2"
+          },
+          {
+            "duration_s": 11.0,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:b-Rqq_B2nKY",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:b-Rqq_B2nKY#w5i6",
+            "similarity": 1.0673,
+            "story_role": "PREPARATION",
+            "tier": 2,
+            "why": "role=PREPARATION event=OTHER pos=0.1889 tier2"
+          }
+        ],
+        "shot_scale_roles": [
+          "wide",
+          "medium",
+          "detail"
+        ],
+        "story_role": "PREPARATION"
+      },
+      {
+        "duration_target_s": 23.0,
+        "event_type": "PREPARATION",
+        "index": 2,
+        "music_energy": "medium",
+        "n_shots_target": 5,
+        "retrieved": [
+          {
+            "duration_s": 9.16,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:VHpqYteMbTg",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:VHpqYteMbTg#w5i18",
+            "similarity": 1.0382,
+            "story_role": "BUILD",
+            "tier": 2,
+            "why": "role=BUILD event=OTHER pos=0.3727 tier2"
+          },
+          {
+            "duration_s": 8.68,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:1199148509",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:1199148509#w5i20",
+            "similarity": 1.0374,
+            "story_role": "BUILD",
+            "tier": 2,
+            "why": "role=BUILD event=OTHER pos=0.3571 tier2"
+          },
+          {
+            "duration_s": 10.12,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:VHpqYteMbTg",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:VHpqYteMbTg#w5i17",
+            "similarity": 1.0365,
+            "story_role": "BUILD",
+            "tier": 2,
+            "why": "role=BUILD event=OTHER pos=0.3545 tier2"
+          },
+          {
+            "duration_s": 9.52,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:tYSML45z5HM",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:tYSML45z5HM#w5i41",
+            "similarity": 1.0363,
+            "story_role": "BUILD",
+            "tier": 2,
+            "why": "role=BUILD event=OTHER pos=0.3199 tier2"
+          },
+          {
+            "duration_s": 9.84,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:tYSML45z5HM",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:tYSML45z5HM#w5i42",
+            "similarity": 1.0361,
+            "story_role": "BUILD",
+            "tier": 2,
+            "why": "role=BUILD event=OTHER pos=0.3272 tier2"
+          }
+        ],
+        "shot_scale_roles": [
+          "medium",
+          "wide"
+        ],
+        "story_role": "BUILD"
+      },
+      {
+        "duration_target_s": 21.8,
+        "event_type": "CEREMONY",
+        "index": 3,
+        "music_energy": "medium",
+        "n_shots_target": 5,
+        "retrieved": [
+          {
+            "duration_s": 8.76,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:1050693600",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:1050693600#w5i45",
+            "similarity": 1.0382,
+            "story_role": "RECEPTION_ENTRY",
+            "tier": 2,
+            "why": "role=RECEPTION_ENTRY event=OTHER pos=0.475 tier2"
+          },
+          {
+            "duration_s": 9.16,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:tYSML45z5HM",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:tYSML45z5HM#w5i62",
+            "similarity": 1.0382,
+            "story_role": "RECEPTION_ENTRY",
+            "tier": 2,
+            "why": "role=RECEPTION_ENTRY event=OTHER pos=0.4743 tier2"
+          },
+          {
+            "duration_s": 8.24,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:1050693600",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:1050693600#w5i46",
+            "similarity": 1.038,
+            "story_role": "RECEPTION_ENTRY",
+            "tier": 2,
+            "why": "role=RECEPTION_ENTRY event=OTHER pos=0.485 tier2"
+          },
+          {
+            "duration_s": 9.48,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:1074649838",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:1074649838#w5i40",
+            "similarity": 1.038,
+            "story_role": "RECEPTION_ENTRY",
+            "tier": 2,
+            "why": "role=RECEPTION_ENTRY event=OTHER pos=0.4775 tier2"
+          },
+          {
+            "duration_s": 9.04,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:tYSML45z5HM",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:tYSML45z5HM#w5i61",
+            "similarity": 1.0379,
+            "story_role": "RECEPTION_ENTRY",
+            "tier": 2,
+            "why": "role=RECEPTION_ENTRY event=OTHER pos=0.4669 tier2"
+          }
+        ],
+        "shot_scale_roles": [
+          "medium",
+          "wide"
+        ],
+        "story_role": "RECEPTION_ENTRY"
+      },
+      {
+        "duration_target_s": 21.0,
+        "event_type": "FIRST_DANCE",
+        "index": 4,
+        "music_energy": "medium",
+        "n_shots_target": 5,
+        "retrieved": [
+          {
+            "duration_s": 9.04,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:_sjJtpPP36E",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:_sjJtpPP36E#w5i29",
+            "similarity": 1.0401,
+            "story_role": "FIRST_DANCE",
+            "tier": 2,
+            "why": "role=FIRST_DANCE event=OTHER pos=0.6176 tier2"
+          },
+          {
+            "duration_s": 8.48,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:b-Rqq_B2nKY",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:b-Rqq_B2nKY#w5i25",
+            "similarity": 1.0399,
+            "story_role": "FIRST_DANCE",
+            "tier": 2,
+            "why": "role=FIRST_DANCE event=OTHER pos=0.6111 tier2"
+          },
+          {
+            "duration_s": 8.52,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:VHpqYteMbTg",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:VHpqYteMbTg#w5i31",
+            "similarity": 1.0399,
+            "story_role": "FIRST_DANCE",
+            "tier": 2,
+            "why": "role=FIRST_DANCE event=OTHER pos=0.6091 tier2"
+          },
+          {
+            "duration_s": 8.24,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:1074649838",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:1074649838#w5i52",
+            "similarity": 1.0398,
+            "story_role": "FIRST_DANCE",
+            "tier": 2,
+            "why": "role=FIRST_DANCE event=OTHER pos=0.6124 tier2"
+          },
+          {
+            "duration_s": 8.76,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:1199148509",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:1199148509#w5i35",
+            "similarity": 1.0392,
+            "story_role": "FIRST_DANCE",
+            "tier": 2,
+            "why": "role=FIRST_DANCE event=OTHER pos=0.5952 tier2"
+          }
+        ],
+        "shot_scale_roles": [
+          "medium",
+          "wide"
+        ],
+        "story_role": "FIRST_DANCE"
+      },
+      {
+        "duration_target_s": 12.7,
+        "event_type": "PARTY_KINA",
+        "index": 5,
+        "music_energy": "high",
+        "n_shots_target": 5,
+        "retrieved": [
+          {
+            "duration_s": 5.16,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:MgWLLzMnHR8",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:MgWLLzMnHR8#w5i46",
+            "similarity": 1.0083,
+            "story_role": "PARTY_BUILD",
+            "tier": 2,
+            "why": "role=PARTY_BUILD event=OTHER pos=0.7462 tier2"
+          },
+          {
+            "duration_s": 5.08,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:1199148509",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:1199148509#w5i44",
+            "similarity": 1.0077,
+            "story_role": "PARTY_BUILD",
+            "tier": 2,
+            "why": "role=PARTY_BUILD event=OTHER pos=0.7381 tier2"
+          },
+          {
+            "duration_s": 5.56,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:U8MbInvJ9xs",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:U8MbInvJ9xs#w5i54",
+            "similarity": 1.0074,
+            "story_role": "PARTY_BUILD",
+            "tier": 2,
+            "why": "role=PARTY_BUILD event=OTHER pos=0.7434 tier2"
+          },
+          {
+            "duration_s": 4.96,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:1143362002",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:1143362002#w5i51",
+            "similarity": 1.0072,
+            "story_role": "PARTY_BUILD",
+            "tier": 2,
+            "why": "role=PARTY_BUILD event=OTHER pos=0.7329 tier2"
+          },
+          {
+            "duration_s": 5.32,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:MgWLLzMnHR8",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:MgWLLzMnHR8#w5i45",
+            "similarity": 1.0069,
+            "story_role": "PARTY_BUILD",
+            "tier": 2,
+            "why": "role=PARTY_BUILD event=OTHER pos=0.7308 tier2"
+          }
+        ],
+        "shot_scale_roles": [
+          "medium",
+          "close_up"
+        ],
+        "story_role": "PARTY_BUILD"
+      },
+      {
+        "duration_target_s": 12.2,
+        "event_type": "PARTY_KINA",
+        "index": 6,
+        "music_energy": "high",
+        "n_shots_target": 5,
+        "retrieved": [
+          {
+            "duration_s": 5.4,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:1074649838",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:1074649838#w5i75",
+            "similarity": 1.0133,
+            "story_role": "CLIMAX",
+            "tier": 2,
+            "why": "role=CLIMAX event=OTHER pos=0.8708 tier2"
+          },
+          {
+            "duration_s": 5.0,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:1074649838",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:1074649838#w5i74",
+            "similarity": 1.013,
+            "story_role": "CLIMAX",
+            "tier": 2,
+            "why": "role=CLIMAX event=OTHER pos=0.8596 tier2"
+          },
+          {
+            "duration_s": 5.56,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:50edMEI-3Fw",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:50edMEI-3Fw#w5i42",
+            "similarity": 1.0129,
+            "story_role": "CLIMAX",
+            "tier": 2,
+            "why": "role=CLIMAX event=OTHER pos=0.8725 tier2"
+          },
+          {
+            "duration_s": 4.52,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:1117083593",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:1117083593#w5i63",
+            "similarity": 1.0129,
+            "story_role": "CLIMAX",
+            "tier": 2,
+            "why": "role=CLIMAX event=OTHER pos=0.8618 tier2"
+          },
+          {
+            "duration_s": 4.64,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:b-Rqq_B2nKY",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:b-Rqq_B2nKY#w5i36",
+            "similarity": 1.0125,
+            "story_role": "CLIMAX",
+            "tier": 2,
+            "why": "role=CLIMAX event=OTHER pos=0.8556 tier2"
+          }
+        ],
+        "shot_scale_roles": [
+          "medium",
+          "close_up"
+        ],
+        "story_role": "CLIMAX"
+      },
+      {
+        "duration_target_s": 25.6,
+        "event_type": "OUTRO",
+        "index": 7,
+        "music_energy": "low",
+        "n_shots_target": 5,
+        "retrieved": [
+          {
+            "duration_s": 10.877,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:1050693600",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:1050693600#w5i95",
+            "similarity": 1.0708,
+            "story_role": "RESOLUTION_OUTRO",
+            "tier": 2,
+            "why": "role=RESOLUTION_OUTRO event=OTHER pos=0.975 tier2"
+          },
+          {
+            "duration_s": 10.797,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:1143362002",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:1143362002#w5i68",
+            "similarity": 1.0702,
+            "story_role": "RESOLUTION_OUTRO",
+            "tier": 2,
+            "why": "role=RESOLUTION_OUTRO event=OTHER pos=0.9658 tier2"
+          },
+          {
+            "duration_s": 11.353,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:U8MbInvJ9xs",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:U8MbInvJ9xs#w5i71",
+            "similarity": 1.0702,
+            "story_role": "RESOLUTION_OUTRO",
+            "tier": 2,
+            "why": "role=RESOLUTION_OUTRO event=OTHER pos=0.9671 tier2"
+          },
+          {
+            "duration_s": 10.753,
+            "event_type": "OTHER",
+            "n_shots": 5,
+            "reference_id": "ref:50edMEI-3Fw",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:50edMEI-3Fw#w5i46",
+            "similarity": 1.0694,
+            "story_role": "RESOLUTION_OUTRO",
+            "tier": 2,
+            "why": "role=RESOLUTION_OUTRO event=OTHER pos=0.951 tier2"
+          },
+          {
+            "duration_s": 8.753,
+            "event_type": "OTHER",
+            "n_shots": 4,
+            "reference_id": "ref:50edMEI-3Fw",
+            "scale_pattern": [
+              "?",
+              "?",
+              "?",
+              "?"
+            ],
+            "sequence_id": "ref:50edMEI-3Fw#w4i47",
+            "similarity": 1.0694,
+            "story_role": "RESOLUTION_OUTRO",
+            "tier": 2,
+            "why": "role=RESOLUTION_OUTRO event=OTHER pos=0.9608 tier2"
+          }
+        ],
+        "shot_scale_roles": [
+          "wide",
+          "medium",
+          "detail"
+        ],
+        "story_role": "RESOLUTION_OUTRO"
+      }
+    ],
+    "target": {
+      "available_events": [
+        "CAKE",
+        "CEREMONY",
+        "FIRST_DANCE",
+        "OTHER",
+        "OUTRO",
+        "PARTY_KINA",
+        "PREPARATION"
+      ],
+      "project": "15 Agustos",
+      "target_duration_s": 180.0
+    },
+    "transitions": [
+      {
+        "at_index": 1,
+        "energy_delta": "flat",
+        "from": "INTRO_ESTABLISH",
+        "to": "PREPARATION"
+      },
+      {
+        "at_index": 2,
+        "energy_delta": "up",
+        "from": "PREPARATION",
+        "to": "BUILD"
+      },
+      {
+        "at_index": 3,
+        "energy_delta": "flat",
+        "from": "BUILD",
+        "to": "RECEPTION_ENTRY"
+      },
+      {
+        "at_index": 4,
+        "energy_delta": "flat",
+        "from": "RECEPTION_ENTRY",
+        "to": "FIRST_DANCE"
+      },
+      {
+        "at_index": 5,
+        "energy_delta": "up",
+        "from": "FIRST_DANCE",
+        "to": "PARTY_BUILD"
+      },
+      {
+        "at_index": 6,
+        "energy_delta": "flat",
+        "from": "PARTY_BUILD",
+        "to": "CLIMAX"
+      },
+      {
+        "at_index": 7,
+        "energy_delta": "down",
+        "from": "CLIMAX",
+        "to": "RESOLUTION_OUTRO"
+      }
+    ]
+  },
+  "target_context": {
+    "available_events": [
+      "CAKE",
+      "CEREMONY",
+      "FIRST_DANCE",
+      "OTHER",
+      "OUTRO",
+      "PARTY_KINA",
+      "PREPARATION"
+    ],
+    "target_duration_s": 180.0
+  },
+  "v7_structure": {
+    "event_order": [
+      "PREPARATION",
+      "PREPARATION",
+      "PREPARATION",
+      "PREPARATION",
+      "PREPARATION",
+      "PREPARATION",
+      "PREPARATION",
+      "FIRST_DANCE",
+      "PREPARATION",
+      "PREPARATION",
+      "PREPARATION",
+      "CAKE",
+      "PREPARATION",
+      "FIRST_DANCE",
+      "PARTY_KINA",
+      "PREPARATION",
+      "PREPARATION",
+      "PARTY_KINA",
+      "PREPARATION",
+      "PARTY_KINA",
+      "PREPARATION",
+      "PARTY_KINA",
+      "PREPARATION",
+      "OUTRO"
+    ],
+    "event_order_raw": [
+      "OTHER",
+      "PREPARATION",
+      "OTHER",
+      "PREPARATION",
+      "OTHER",
+      "PREPARATION",
+      "OTHER",
+      "PREPARATION",
+      "OTHER",
+      "PREPARATION",
+      "OTHER",
+      "PREPARATION",
+      "OTHER",
+      "PREPARATION",
+      "OTHER",
+      "FIRST_DANCE",
+      "PREPARATION",
+      "OTHER",
+      "PREPARATION",
+      "OTHER",
+      "PREPARATION",
+      "CAKE",
+      "PREPARATION",
+      "FIRST_DANCE",
+      "OTHER",
+      "PARTY_KINA",
+      "PREPARATION",
+      "OTHER",
+      "PREPARATION",
+      "PARTY_KINA",
+      "PREPARATION",
+      "OTHER",
+      "PARTY_KINA",
+      "OTHER",
+      "PREPARATION",
+      "PARTY_KINA",
+      "PREPARATION",
+      "OUTRO"
+    ],
+    "n_shots": 87,
+    "song_count": 1
+  }
+}

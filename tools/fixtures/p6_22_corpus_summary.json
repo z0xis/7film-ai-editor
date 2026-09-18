@@ -1,0 +1,307 @@
+{
+  "build_version": 1,
+  "counts": {
+    "edits": 20,
+    "episodes": 102,
+    "sequences": 5772,
+    "shots": 1493,
+    "tier1_edits": 2,
+    "tier2_edits": 18,
+    "transitions": 100
+  },
+  "created_from": [
+    "Resolve:IS EDIT - AI CUT V7",
+    "Resolve:is edit",
+    "data/references/7film-style-profile.json (18 refs)"
+  ],
+  "edits": [
+    {
+      "duration_s": 365.6,
+      "evidence": [
+        "timeline_order",
+        "source_in_out",
+        "category",
+        "shot_scale",
+        "chronology"
+      ],
+      "kind": "selects",
+      "n_shots": 187,
+      "project": "15 Agustos",
+      "reference_id": "is edit",
+      "tier": 1
+    },
+    {
+      "duration_s": 121.76,
+      "evidence": [
+        "timeline_order",
+        "source_in_out",
+        "category",
+        "shot_scale",
+        "chronology",
+        "music"
+      ],
+      "kind": "narrative",
+      "n_shots": 87,
+      "project": "15 Agustos",
+      "reference_id": "IS EDIT - AI CUT V7",
+      "tier": 1
+    },
+    {
+      "duration_s": 127.0,
+      "evidence": [
+        "shot_durations",
+        "bpm",
+        "section_medians",
+        "story_position"
+      ],
+      "kind": "render_only",
+      "n_shots": 100,
+      "project": "Sheraz & Nagib Teaser",
+      "reference_id": "ref:1050693600",
+      "tier": 2
+    },
+    {
+      "duration_s": 90.0,
+      "evidence": [
+        "shot_durations",
+        "bpm",
+        "section_medians",
+        "story_position"
+      ],
+      "kind": "render_only",
+      "n_shots": 89,
+      "project": "TEASER Nour & Wassin",
+      "reference_id": "ref:1074649838",
+      "tier": 2
+    },
+    {
+      "duration_s": 90.0,
+      "evidence": [
+        "shot_durations",
+        "bpm",
+        "section_medians",
+        "story_position"
+      ],
+      "kind": "render_only",
+      "n_shots": 76,
+      "project": "Tatiana & David Teaser",
+      "reference_id": "ref:1117083593",
+      "tier": 2
+    },
+    {
+      "duration_s": 90.0,
+      "evidence": [
+        "shot_durations",
+        "bpm",
+        "section_medians",
+        "story_position"
+      ],
+      "kind": "render_only",
+      "n_shots": 73,
+      "project": "Leana & Yoan Ibiza",
+      "reference_id": "ref:1143362002",
+      "tier": 2
+    },
+    {
+      "duration_s": 90.0,
+      "evidence": [
+        "shot_durations",
+        "bpm",
+        "section_medians",
+        "story_position"
+      ],
+      "kind": "render_only",
+      "n_shots": 80,
+      "project": "LOVE IN LEBANON",
+      "reference_id": "ref:1151600045",
+      "tier": 2
+    },
+    {
+      "duration_s": 90.0,
+      "evidence": [
+        "shot_durations",
+        "bpm",
+        "section_medians",
+        "story_position"
+      ],
+      "kind": "render_only",
+      "n_shots": 67,
+      "project": "Teaser Carla & Ryan",
+      "reference_id": "ref:1180464792",
+      "tier": 2
+    },
+    {
+      "duration_s": 90.0,
+      "evidence": [
+        "shot_durations",
+        "bpm",
+        "section_medians",
+        "story_position"
+      ],
+      "kind": "render_only",
+      "n_shots": 63,
+      "project": "Jess & Eden's Destination Wedding in Tuscany, Italy.",
+      "reference_id": "ref:1199148509",
+      "tier": 2
+    },
+    {
+      "duration_s": 68.0,
+      "evidence": [
+        "shot_durations",
+        "bpm",
+        "section_medians",
+        "story_position"
+      ],
+      "kind": "render_only",
+      "n_shots": 51,
+      "project": "EYLEM & OĞUZHAN - ANTALYA DT HİLTON HOTEL",
+      "reference_id": "ref:50edMEI-3Fw",
+      "tier": 2
+    },
+    {
+      "duration_s": 71.0,
+      "evidence": [
+        "shot_durations",
+        "bpm",
+        "section_medians",
+        "story_position"
+      ],
+      "kind": "render_only",
+      "n_shots": 26,
+      "project": "JANSET & ÖZGÜR -  ANADOLUPARK",
+      "reference_id": "ref:Fbq4SM_Qpgg",
+      "tier": 2
+    },
+    {
+      "duration_s": 71.0,
+      "evidence": [
+        "shot_durations",
+        "bpm",
+        "section_medians",
+        "story_position"
+      ],
+      "kind": "render_only",
+      "n_shots": 65,
+      "project": "Wedding Highlights, G&N / Villa Medicea di Lilliano, Florence, Italy.",
+      "reference_id": "ref:MgWLLzMnHR8",
+      "tier": 2
+    },
+    {
+      "duration_s": 76.0,
+      "evidence": [
+        "shot_durations",
+        "bpm",
+        "section_medians",
+        "story_position"
+      ],
+      "kind": "render_only",
+      "n_shots": 50,
+      "project": "ASLI & ÖZKAN - CASASUR HOTEL",
+      "reference_id": "ref:QYfupWEw_S4",
+      "tier": 2
+    },
+    {
+      "duration_s": 90.0,
+      "evidence": [
+        "shot_durations",
+        "bpm",
+        "section_medians",
+        "story_position"
+      ],
+      "kind": "render_only",
+      "n_shots": 76,
+      "project": "Georgie & Jordy - Epic Jewish Wedding Trailer ( LUMIX S1II)",
+      "reference_id": "ref:U8MbInvJ9xs",
+      "tier": 2
+    },
+    {
+      "duration_s": 80.0,
+      "evidence": [
+        "shot_durations",
+        "bpm",
+        "section_medians",
+        "story_position"
+      ],
+      "kind": "render_only",
+      "n_shots": 55,
+      "project": "VICTORIA - ERDENAY - ANTALYA DT HİLTON HOTEL",
+      "reference_id": "ref:VHpqYteMbTg",
+      "tier": 2
+    },
+    {
+      "duration_s": 100.0,
+      "evidence": [
+        "shot_durations",
+        "bpm",
+        "section_medians",
+        "story_position"
+      ],
+      "kind": "render_only",
+      "n_shots": 51,
+      "project": "İLAYDA & DORUK - HOTEL SU",
+      "reference_id": "ref:_sjJtpPP36E",
+      "tier": 2
+    },
+    {
+      "duration_s": 69.0,
+      "evidence": [
+        "shot_durations",
+        "bpm",
+        "section_medians",
+        "story_position"
+      ],
+      "kind": "render_only",
+      "n_shots": 45,
+      "project": "Wedding Highlights, A&Z / Borgo Stomennano, Tuscany, Italy.",
+      "reference_id": "ref:b-Rqq_B2nKY",
+      "tier": 2
+    },
+    {
+      "duration_s": 116.0,
+      "evidence": [
+        "shot_durations",
+        "bpm",
+        "section_medians",
+        "story_position"
+      ],
+      "kind": "render_only",
+      "n_shots": 47,
+      "project": "EPIC Movie Trailer Style Wedding Film",
+      "reference_id": "ref:p1vkOMWvN7U",
+      "tier": 2
+    },
+    {
+      "duration_s": 155.0,
+      "evidence": [
+        "shot_durations",
+        "bpm",
+        "section_medians",
+        "story_position"
+      ],
+      "kind": "render_only",
+      "n_shots": 136,
+      "project": "Wedding Film at Villa Rota, Italy | Nicola & Linda",
+      "reference_id": "ref:tYSML45z5HM",
+      "tier": 2
+    },
+    {
+      "duration_s": 87.0,
+      "evidence": [
+        "shot_durations",
+        "bpm",
+        "section_medians",
+        "story_position"
+      ],
+      "kind": "render_only",
+      "n_shots": 69,
+      "project": "CEMRE & BAYBARS - AKRA BARUT HOTEL",
+      "reference_id": "ref:xmSZxH5kfBs",
+      "tier": 2
+    }
+  ],
+  "schema_version": "p6.22.1",
+  "source_fingerprint": {
+    "db": "e8798470c518",
+    "style_profile": "b9df80963a04622a"
+  }
+}
