@@ -1,0 +1,33 @@
+{"schema_version": "p6.25.1", "annotator": "claude-visual-contactsheet", "note": "shot-index spans over EXTERNAL references only; V7/is edit never annotated"}
+{"reference_id": "ref:1143362002", "shots": [30], "event": "CAKE", "confidence": "HIGH", "notes": "white tiered cake"}
+{"reference_id": "ref:1151600045", "shots": [54], "event": "CAKE", "confidence": "HIGH", "notes": "large white tiered cake"}
+{"reference_id": "ref:MgWLLzMnHR8", "shots": [53, 54], "event": "CAKE", "confidence": "HIGH", "notes": "couple cutting a fruit tart"}
+{"reference_id": "ref:tYSML45z5HM", "shots": [122, 123, 124], "event": "CAKE", "confidence": "HIGH", "notes": "tiered cake, cutting with sparklers"}
+{"reference_id": "ref:b-Rqq_B2nKY", "shots": [41], "event": "CAKE", "confidence": "MEDIUM", "notes": "tiered cake"}
+{"reference_id": "ref:1050693600", "shots": [44, 45], "event": "BOUQUET", "confidence": "HIGH", "notes": "bouquet toss"}
+{"reference_id": "ref:U8MbInvJ9xs", "shots": [8, 9], "event": "BOUQUET", "confidence": "HIGH", "notes": "bride tossing bouquet"}
+{"reference_id": "ref:50edMEI-3Fw", "shots": [22, 23], "event": "ENTRANCE", "confidence": "MEDIUM", "notes": "confetti walk-in"}
+{"reference_id": "ref:_sjJtpPP36E", "shots": [17, 18], "event": "ENTRANCE", "confidence": "MEDIUM", "notes": "couple entering, crowd"}
+{"reference_id": "ref:50edMEI-3Fw", "shots": [5, 6, 7, 8, 9, 16], "event": "PREPARATION", "confidence": "HIGH", "notes": "dress, cufflinks, makeup, watch"}
+{"reference_id": "ref:p1vkOMWvN7U", "shots": [2, 4, 8, 9], "event": "PREPARATION", "confidence": "MEDIUM", "notes": "veil, cufflink, jacket, earring"}
+{"reference_id": "ref:VHpqYteMbTg", "shots": [1, 3, 4, 8, 9, 20, 21, 22], "event": "PREPARATION", "confidence": "MEDIUM", "notes": "hotel getting ready"}
+{"reference_id": "ref:1180464792", "shots": [21, 22, 23], "event": "CEREMONY", "confidence": "HIGH", "notes": "altar table, ring exchange"}
+{"reference_id": "ref:MgWLLzMnHR8", "shots": [1, 2, 3, 33, 34], "event": "CEREMONY", "confidence": "HIGH", "notes": "outdoor aisle"}
+{"reference_id": "ref:b-Rqq_B2nKY", "shots": [24, 25, 26, 27], "event": "CEREMONY", "confidence": "HIGH", "notes": "aisle, ceremony"}
+{"reference_id": "ref:tYSML45z5HM", "shots": [69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79], "event": "CEREMONY", "confidence": "HIGH", "notes": "ceremony, vows"}
+{"reference_id": "ref:U8MbInvJ9xs", "shots": [20, 35, 36], "event": "CEREMONY", "confidence": "MEDIUM", "notes": "chairs, ceremony"}
+{"reference_id": "ref:1050693600", "shots": [51, 52, 55, 56, 58, 59, 61, 62, 63, 64, 69, 70, 72, 73, 74, 79, 80, 81, 82], "event": "PARTY", "confidence": "HIGH", "notes": "crowd dancing night"}
+{"reference_id": "ref:1074649838", "shots": [36, 37, 38, 39, 40, 44, 67, 68, 69], "event": "PARTY", "confidence": "HIGH", "notes": "crowd dancing"}
+{"reference_id": "ref:1117083593", "shots": [30, 31, 35, 48, 49, 56, 57, 58, 60, 61], "event": "PARTY", "confidence": "HIGH", "notes": "party dancing"}
+{"reference_id": "ref:1143362002", "shots": [35, 36, 37, 38, 39, 40, 50, 51, 53, 55, 56, 57, 58, 59], "event": "PARTY", "confidence": "HIGH", "notes": "crowd dancing"}
+{"reference_id": "ref:xmSZxH5kfBs", "shots": [17, 18, 20, 21, 22, 23, 25, 27, 28, 30, 31, 32, 33, 36, 37, 38, 39], "event": "PARTY", "confidence": "HIGH", "notes": "seaside night crowd dancing"}
+{"reference_id": "ref:_sjJtpPP36E", "shots": [30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40], "event": "PARTY", "confidence": "HIGH", "notes": "crowd dancing"}
+{"reference_id": "ref:tYSML45z5HM", "shots": [100, 101, 102, 103, 104, 105, 106, 107, 108, 113, 114, 115, 116, 117, 119, 120], "event": "PARTY", "confidence": "HIGH", "notes": "party toasts and dancing"}
+{"reference_id": "ref:U8MbInvJ9xs", "shots": [42, 43, 44, 45, 46, 47, 48, 49, 64], "event": "PARTY", "confidence": "HIGH", "notes": "garden party dancing"}
+{"reference_id": "ref:Fbq4SM_Qpgg", "shots": [19, 21, 23, 24], "event": "PARTY", "confidence": "MEDIUM", "notes": "party dancing"}
+{"reference_id": "ref:p1vkOMWvN7U", "shots": [0, 1, 20, 25, 26, 34, 38, 39], "event": "OTHER", "confidence": "HIGH", "notes": "venue/landscape (no event)"}
+{"reference_id": "ref:QYfupWEw_S4", "shots": [0, 1, 2, 3, 10, 20, 30, 40], "event": "OTHER", "confidence": "HIGH", "notes": "urban couple portraits (no event)"}
+{"reference_id": "ref:p1vkOMWvN7U", "shots": [23, 24, 27, 29, 30, 35, 37, 40, 42, 45], "event": "COUPLE_PORTRAIT", "confidence": "HIGH", "notes": "couple posing (first-dance confusable negative)"}
+{"reference_id": "ref:QYfupWEw_S4", "shots": [4, 5, 11, 16, 17, 22, 25, 27, 32, 35, 38], "event": "COUPLE_PORTRAIT", "confidence": "HIGH", "notes": "couple posing (first-dance confusable negative)"}
+{"reference_id": "ref:1074649838", "shots": [24, 25, 27, 33, 34, 35, 52, 53, 54], "event": "COUPLE_PORTRAIT", "confidence": "MEDIUM", "notes": "couple portraits"}
+{"reference_id": "ref:b-Rqq_B2nKY", "shots": [11, 12, 20, 21, 30, 31, 39], "event": "COUPLE_PORTRAIT", "confidence": "MEDIUM", "notes": "couple portraits"}

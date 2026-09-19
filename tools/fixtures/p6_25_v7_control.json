@@ -1,0 +1,20 @@
+{
+  "cake_positive_control": {
+    "cake_probability": 0.057,
+    "detected_as_cake": false,
+    "predicted": "COUPLE_PORTRAIT",
+    "source": "C7309.MP4",
+    "v7_cake_shot": 51
+  },
+  "first_dance_note": "probe has no FIRST_DANCE class (0 external labels) -> cannot be tested",
+  "model_frozen_before_v7": true,
+  "v7_in_training": false,
+  "v7_prediction_distribution": {
+    "CEREMONY": 5,
+    "COUPLE_PORTRAIT": 53,
+    "OTHER": 5,
+    "PARTY": 20,
+    "PREPARATION": 4
+  },
+  "v7_shots_predicted_cake": []
+}
