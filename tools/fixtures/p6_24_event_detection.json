@@ -1,0 +1,127 @@
+{
+  "cake_argmax_count": 0,
+  "coarse_category_arc": [
+    "COUPLE",
+    "COUPLE",
+    "COUPLE",
+    "COUPLE",
+    "COUPLE",
+    "PARTY_KINA",
+    "PARTY_KINA",
+    "PARTY_KINA"
+  ],
+  "confidence_distribution": {
+    "LOW": 971,
+    "MEDIUM": 56,
+    "UNKNOWN": 35
+  },
+  "event_distribution": {
+    "BOUQUET": 214,
+    "CEREMONY": 390,
+    "ENTRANCE": 5,
+    "FIRST_DANCE": 53,
+    "KINA": 3,
+    "KISS": 42,
+    "PARTY": 54,
+    "PREPARATION": 6,
+    "RING": 105,
+    "SPARKLER_SENDOFF": 155,
+    "UNKNOWN": 35
+  },
+  "events": [
+    "BOUQUET",
+    "CAKE",
+    "CEREMONY",
+    "ENTRANCE",
+    "FIRST_DANCE",
+    "KINA",
+    "KISS",
+    "PARTY",
+    "PREPARATION",
+    "RING",
+    "SPARKLER_SENDOFF"
+  ],
+  "fine_event_learned_arc": [
+    "CEREMONY",
+    "CEREMONY",
+    "CEREMONY",
+    "CEREMONY",
+    "BOUQUET",
+    "BOUQUET",
+    "SPARKLER_SENDOFF",
+    "SPARKLER_SENDOFF"
+  ],
+  "first_dance_predictions": 53,
+  "method": "multi-frame(3) + CLIP prompt ensembles(pos-neg) + temporal smoothing + soft position prior",
+  "validation": {
+    "method": "stratified visual inspection of MEDIUM+ and top-scoring predictions",
+    "precision_sampled": 0.0,
+    "samples": [
+      {
+        "actual": "crowd lifting a person outdoors",
+        "correct": false,
+        "pred": "BOUQUET"
+      },
+      {
+        "actual": "blurry night crowd dancing",
+        "correct": false,
+        "pred": "BOUQUET"
+      },
+      {
+        "actual": "woman standing in ocean at sunset",
+        "correct": false,
+        "pred": "CEREMONY"
+      },
+      {
+        "actual": "empty beach at sunset",
+        "correct": false,
+        "pred": "CEREMONY"
+      },
+      {
+        "actual": "night party hands raised",
+        "correct": false,
+        "pred": "SPARKLER_SENDOFF"
+      },
+      {
+        "actual": "night party red light",
+        "correct": false,
+        "pred": "SPARKLER_SENDOFF"
+      },
+      {
+        "actual": "groom adjusting cufflink (prep detail)",
+        "correct": false,
+        "pred": "RING"
+      },
+      {
+        "actual": "groom adjusting watch (prep detail)",
+        "correct": false,
+        "pred": "RING"
+      },
+      {
+        "actual": "empty decorated reception tables",
+        "correct": false,
+        "pred": "PARTY"
+      },
+      {
+        "actual": "couple portrait indoors (not dancing)",
+        "correct": false,
+        "pred": "FIRST_DANCE"
+      },
+      {
+        "actual": "couple portrait b&w hallway",
+        "correct": false,
+        "pred": "FIRST_DANCE"
+      },
+      {
+        "actual": "couple portrait garden",
+        "correct": false,
+        "pred": "FIRST_DANCE"
+      },
+      {
+        "actual": "couple portrait with bouquet",
+        "correct": false,
+        "pred": "FIRST_DANCE"
+      }
+    ]
+  }
+}
