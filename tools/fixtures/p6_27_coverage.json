@@ -1,0 +1,33 @@
+{
+  "goal": "reach >=8 independent weddings with CONFIRMED positive episodes per acceptance event, from external final wedding films (15A excluded)",
+  "archive_inventory": {
+    "external_cinematic_finals": 18,
+    "cinematic_finals_note": "the supplied reference highlight films (data/references/media) -- couple/party-cinematic, structurally light on documentary first-dance and cake-cutting",
+    "real_documentary_weddings_accessible": 1,
+    "elenora_mustafa": {"path": "/Users/ibrahimsoylu/Desktop/ELENORA MUSTAFA/KLIP/CLIP/",
+                        "type": "raw footage (345 clips, no final edit)",
+                        "reconnaissance": "real Turkish wedding with genuine reception dancing (couple + halay/crowd) + prep; usable but raw and singular"},
+    "client_wedding_finals_accessible": 0,
+    "15a_excluded": true
+  },
+  "thorough_temporal_audit_18_finals": {
+    "FIRST_DANCE": {"confirmed_weddings": 0, "probable_weddings": 9,
+                    "probable_note": "all ambiguous vs couple portrait/slow-embrace/styled twirl -- unsafe as precision-first positives",
+                    "rejected_weddings": 4},
+    "CAKE_ACTION": {"confirmed_weddings": 1, "probable_action_weddings": 4, "setup_only_weddings": 3}
+  },
+  "max_available_coverage": {
+    "FIRST_DANCE_confirmed": "0 (18 finals) + up to 1 (Elenora, needs annotation) = ~1",
+    "CAKE_ACTION_confirmed": "1 (MgWLLzMnHR8) + up to 1 (Elenora) = ~2"
+  },
+  "coverage_gate": {
+    "threshold_weddings": 8,
+    "FIRST_DANCE": "FAIL (max ~1 confirmed of 8 required)",
+    "CAKE_ACTION": "FAIL (max ~2 confirmed of 8 required)"
+  },
+  "conclusion": "the accessible archive cannot provide >=8 confirmed weddings for either acceptance event; the user's real client-wedding finals (documentary Turkish weddings with clear first-dance/kina/cake) are NOT in any accessible project path",
+  "gate_not_weakened": true,
+  "15a_training_examples": 0,
+  "v7_used": false,
+  "model_trained": false
+}
