@@ -1,0 +1,29 @@
+{
+  "contact_sheet_limitation_confirmed": true,
+  "method": "dense temporal frame strips reviewed in motion (not thumbnails)",
+  "first_dance": {
+    "confirmed_weddings": 0,
+    "probable_weddings": 4,
+    "rejected_regions": 4,
+    "sufficiency": "INSUFFICIENT_CROSS_WEDDING_SUPPORT",
+    "note": "0 confirmed isolated reception first-dances; 4 probable are ambiguous vs couple portrait/crowd; rejected regions were portraits, sparkler entrances, elopement walks"
+  },
+  "cake_action": {
+    "confirmed_weddings": 1,
+    "confirmed_plus_probable_weddings": 4,
+    "sufficiency": "INSUFFICIENT_CROSS_WEDDING_SUPPORT",
+    "note": "1 clear cutting/serving (MgWLLzMnHR8); 3 probable (couple-at-cake/sparkler presentation)"
+  },
+  "corrects_p6_25": "P6.25 FIRST_DANCE=0 was a contact-sheet limitation; temporal audit finds 4 probable (still <5 confirmed) -- not proof of absence, but confirmed insufficient cross-wedding support",
+  "external_archive": {
+    "path_required": false,
+    "found": "ELENORA MUSTAFA (separate non-15A real wedding)",
+    "path": "/Users/ibrahimsoylu/Desktop/ELENORA MUSTAFA/KLIP/CLIP/",
+    "type": "raw footage (345 clips), NOT a final edit; needs event annotation",
+    "usable": "candidate additional evidence -- a traditional wedding likely contains clear first-dance + cake, but raw footage must be event-annotated first"
+  },
+  "representation_comparison_run": false,
+  "representation_comparison_reason": "premature -- fewer than 5 confirmed positive weddings for the acceptance events; comparing static vs temporal features needs sufficient verified labels first",
+  "15a_training_examples": 0,
+  "v7_used": false
+}
