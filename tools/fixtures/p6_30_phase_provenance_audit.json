@@ -1,0 +1,196 @@
+{
+  "build_timeline_changes": 0,
+  "c7309_control": {
+    "asset_frames_at_db_rate": 1992,
+    "distance_from_p6_20_source_in_frames": 31,
+    "normalized_detected_shot": {
+      "asset_id": "a778e858-df7a-5aaa-802b-6637991a58ee",
+      "category": "couple",
+      "duration_frames": 125,
+      "id": "5e6f3478-aad7-55fa-b661-a95077c25d1d",
+      "shot_scale": "wide",
+      "start_frame": 1625
+    },
+    "normalized_human_inside_selected_shot": true,
+    "normalized_human_inside_selected_source_range": true,
+    "p6_20_selected_item": {
+      "asset_id": "a778e858-df7a-5aaa-802b-6637991a58ee",
+      "category": "couple",
+      "rate": 50.0,
+      "score": 0.4899,
+      "shot_id": "5e6f3478-aad7-55fa-b661-a95077c25d1d",
+      "source_name": "C7309.MP4",
+      "source_path": "/Volumes/T7 2TB-1/15 AG\u0306USTOS/CLIP hikaye /C7309.MP4",
+      "speed": 1.0,
+      "src_dur_frames": 105,
+      "src_start_frame": 1635,
+      "tl_dur_frames": 105,
+      "tl_start_frame": 2926
+    },
+    "slowmo_normalized_left": 1666,
+    "v7_raw_left": 3332,
+    "v7_raw_left_in_range": false
+  },
+  "db_sha256": "2889a72fd9703b8c0f4d7a5a50934a5186ce9d3761e38eb59fdbb8d1e2d02245",
+  "db_unchanged": true,
+  "p6_20_plan_hash": "49991347e0d406ea",
+  "planner_findings": {
+    "distinct_phase_reuse_counted_separately": true,
+    "exact_shot_reuse_penalty": true,
+    "explicit_action_phase_preference": false,
+    "explicit_phase_role": false,
+    "forward_progression_signal": true,
+    "siblings_ranked_independently": true
+  },
+  "resolve_calls": 0,
+  "same_source_siblings": {
+    "assets_with_multiple_detected_shots": 99,
+    "max_sibling_count": 501,
+    "median_sibling_count": 5,
+    "selected_assets": 101,
+    "selected_items": 132
+  },
+  "shadow_phase_classification": {
+    "KEEP_PHASE": 0,
+    "REVIEW": 0,
+    "SWITCH_PHASE": 0,
+    "UNKNOWN": 132,
+    "reason": "V7 source coordinates lack speed/timebase provenance; selector not run"
+  },
+  "timeline_writes": 0,
+  "v7_trace_provenance": {
+    "item_fields": [
+      "source_name",
+      "timeline_start",
+      "timeline_duration",
+      "raw_left"
+    ],
+    "mapped_items": 87,
+    "out_of_range_examples": [
+      {
+        "asset_frames": 720,
+        "raw_in_range": false,
+        "raw_left": 788,
+        "source": "C7203.MP4",
+        "timeline_duration": 105,
+        "timeline_start": 180410
+      },
+      {
+        "asset_frames": 1368,
+        "raw_in_range": false,
+        "raw_left": 2062,
+        "source": "C7110.MP4",
+        "timeline_duration": 77,
+        "timeline_start": 180620
+      },
+      {
+        "asset_frames": 552,
+        "raw_in_range": false,
+        "raw_left": 768,
+        "source": "C7168.MP4",
+        "timeline_duration": 77,
+        "timeline_start": 181206
+      },
+      {
+        "asset_frames": 1128,
+        "raw_in_range": false,
+        "raw_left": 1342,
+        "source": "C7151.MP4",
+        "timeline_duration": 72,
+        "timeline_start": 181447
+      },
+      {
+        "asset_frames": 2112,
+        "raw_in_range": false,
+        "raw_left": 2576,
+        "source": "C7173.MP4",
+        "timeline_duration": 77,
+        "timeline_start": 181601
+      },
+      {
+        "asset_frames": 2064,
+        "raw_in_range": false,
+        "raw_left": 3240,
+        "source": "C7161.MP4",
+        "timeline_duration": 77,
+        "timeline_start": 181678
+      },
+      {
+        "asset_frames": 600,
+        "raw_in_range": false,
+        "raw_left": 878,
+        "source": "C7181.MP4",
+        "timeline_duration": 78,
+        "timeline_start": 182344
+      },
+      {
+        "asset_frames": 384,
+        "raw_in_range": false,
+        "raw_left": 534,
+        "source": "C7198.MP4",
+        "timeline_duration": 56,
+        "timeline_start": 183154
+      },
+      {
+        "asset_frames": 696,
+        "raw_in_range": false,
+        "raw_left": 884,
+        "source": "C7176.MP4",
+        "timeline_duration": 58,
+        "timeline_start": 183210
+      },
+      {
+        "asset_frames": 816,
+        "raw_in_range": false,
+        "raw_left": 994,
+        "source": "C7237.MP4",
+        "timeline_duration": 94,
+        "timeline_start": 183268
+      },
+      {
+        "asset_frames": 720,
+        "raw_in_range": false,
+        "raw_left": 842,
+        "source": "C7217.MP4",
+        "timeline_duration": 90,
+        "timeline_start": 183362
+      },
+      {
+        "asset_frames": 1032,
+        "raw_in_range": false,
+        "raw_left": 1684,
+        "source": "C7196.MP4",
+        "timeline_duration": 130,
+        "timeline_start": 183562
+      },
+      {
+        "asset_frames": 528,
+        "raw_in_range": false,
+        "raw_left": 663,
+        "source": "C7246.MP4",
+        "timeline_duration": 135,
+        "timeline_start": 184002
+      },
+      {
+        "asset_frames": 1992,
+        "raw_in_range": false,
+        "raw_left": 3332,
+        "source": "C7309.MP4",
+        "timeline_duration": 50,
+        "timeline_start": 184602
+      },
+      {
+        "asset_frames": 31537,
+        "raw_in_range": false,
+        "raw_left": 35144,
+        "source": "DJI_0530.MOV",
+        "timeline_duration": 49,
+        "timeline_start": 185193
+      }
+    ],
+    "out_of_source_range": 15,
+    "per_item_source_timebase_present": false,
+    "per_item_speed_present": false,
+    "phase_benchmark_valid": false
+  }
+}
