@@ -1,0 +1,83 @@
+{
+  "benchmarks": {
+    "failure_class_distribution": null,
+    "p6_29_rerun": false,
+    "p6_30_rerun": false
+  },
+  "build_timeline_changes": 0,
+  "c7309_regression": {
+    "canonical_source_in": null,
+    "canonical_source_out": null,
+    "coordinate_confidence": "UNKNOWN_COORDINATE",
+    "old_divide_by_two_is_canonical": false,
+    "old_divide_by_two_value": 1666,
+    "physical_asset_frames": 1992,
+    "raw_resolve_left_offset": 3332,
+    "reason": "authoritative per-item retime and source coordinates unavailable",
+    "retime_or_speed": null,
+    "source_fps": "50/1",
+    "trace_timeline_fps": "50"
+  },
+  "canonical_domain": "physical_decoded_source_frames_at_native_source_timebase",
+  "coordinate_schema_version": "p6.30.1-canonical-source-v1",
+  "db_sha256": "2889a72fd9703b8c0f4d7a5a50934a5186ce9d3761e38eb59fdbb8d1e2d02245",
+  "db_unchanged": true,
+  "fidelity_gate": {
+    "bounds_pass": null,
+    "c7309_pass": false,
+    "coverage_pass": false,
+    "duration_consistency_pass": null,
+    "normal_speed_controls_pass": null,
+    "reason": "authoritative source in/out and per-item retime metadata unavailable",
+    "retimed_controls_pass": null,
+    "same_source_reuse_pass": null,
+    "status": "FAIL"
+  },
+  "legacy_offset_policy": "forensic_only_never_automatically_canonical",
+  "metadata_inventory": {
+    "authoritative_source_in_out": false,
+    "matching_fcpxml_or_otio": false,
+    "resolve_live_probe": "UNAVAILABLE",
+    "source_native_fps_per_item": false,
+    "speed_or_retime_per_item": false,
+    "trace_fields": [
+      "source_name",
+      "timeline_start",
+      "timeline_duration",
+      "raw_left"
+    ],
+    "trace_timeline_fps": true
+  },
+  "resolve_timeline_writes": 0,
+  "timeline_changes": 0,
+  "timelines": {
+    "V7": {
+      "ambiguous": 87,
+      "canonical_bounds_note": "no guessed canonical coordinates were emitted",
+      "canonical_bounds_violations": 0,
+      "canonicalized": 0,
+      "mapped_assets": 87,
+      "per_item_source_fps": false,
+      "per_item_source_out": false,
+      "per_item_speed_or_retime": false,
+      "raw_bounds_violations": 15,
+      "timeline_fps_trace_level": "50",
+      "unmapped_assets": 0,
+      "video_items": 87
+    },
+    "is_edit": {
+      "ambiguous": 187,
+      "canonical_bounds_note": "no guessed canonical coordinates were emitted",
+      "canonical_bounds_violations": 0,
+      "canonicalized": 0,
+      "mapped_assets": 187,
+      "per_item_source_fps": false,
+      "per_item_source_out": false,
+      "per_item_speed_or_retime": false,
+      "raw_bounds_violations": 4,
+      "timeline_fps_trace_level": "50",
+      "unmapped_assets": 0,
+      "video_items": 187
+    }
+  }
+}
