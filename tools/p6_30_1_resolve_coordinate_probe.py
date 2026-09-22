@@ -129,7 +129,9 @@ def main() -> int:
     arguments = parser.parse_args()
     report = _json_safe(collect())
     arguments.out.parent.mkdir(parents=True, exist_ok=True)
-    arguments.out.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n")
+    arguments.out.write_text(
+        json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
     counts = {
         timeline["name"]: sum(len(track["items"]) for track in timeline["tracks"])
         for timeline in report["timelines"]

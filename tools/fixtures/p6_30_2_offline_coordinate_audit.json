@@ -1,0 +1,200 @@
+{
+  "build_timeline_changes": 0,
+  "c7309": {
+    "heuristic_divide_by_two_used": false,
+    "logical_source_frame_in": 1666,
+    "logical_source_frame_out": 1691,
+    "method": "RESOLVE_EXPLICIT_SOURCE_FRAME",
+    "otio_exact_match": true,
+    "project_source_frames": 1992,
+    "raw_left": 3332,
+    "raw_right": 602,
+    "source_fps": "50",
+    "source_time_seconds": "833/25",
+    "speed_ratio": "1/2"
+  },
+  "canonical": {
+    "bounds_fail": 0,
+    "duration_fail": 0,
+    "is_edit_ambiguous": 0,
+    "is_edit_logical_frames": 187,
+    "is_edit_source_time": 187,
+    "v7_ambiguous": 0,
+    "v7_logical_frames": 87,
+    "v7_source_time": 87
+  },
+  "capture": {
+    "is_edit_items": 187,
+    "offline_items": 274,
+    "project_duration_coverage": 274,
+    "retime_coverage": 274,
+    "source_fps_coverage": 274,
+    "source_time_coverage": 274,
+    "v7_all_video_items": 108,
+    "v7_main_video_items": 87
+  },
+  "db_sha256": "2889a72fd9703b8c0f4d7a5a50934a5186ce9d3761e38eb59fdbb8d1e2d02245",
+  "db_unchanged": true,
+  "exports": {
+    "fcpxml_source_ranges": {
+      "is_edit": 187,
+      "v7": 105
+    },
+    "fcpxml_succeeded": true,
+    "otio_is_edit_exact_matches": 187,
+    "otio_source_ranges": {
+      "is_edit": 187,
+      "v7": 87
+    },
+    "otio_succeeded": true,
+    "otio_v7_main_exact_matches": 87
+  },
+  "failure_class_audit": {
+    "A_same_shot_different_in": 5,
+    "B_same_source_different_region": 41,
+    "C_different_source_asset": 81,
+    "D_effectively_same_moment": 5,
+    "median_nearest_v7_distance_frames": 258,
+    "population": 132,
+    "representative_examples": {
+      "A": [
+        {
+          "distance_frames": 105,
+          "p6_20_in": 260,
+          "source": "C7246.MP4",
+          "v7_in": 365
+        },
+        {
+          "distance_frames": 62,
+          "p6_20_in": 25,
+          "source": "C7310.MP4",
+          "v7_in": 87
+        },
+        {
+          "distance_frames": 36,
+          "p6_20_in": 50,
+          "source": "C7332.MP4",
+          "v7_in": 86
+        },
+        {
+          "distance_frames": 76,
+          "p6_20_in": 385,
+          "source": "C7450.MP4",
+          "v7_in": 461
+        },
+        {
+          "distance_frames": 50,
+          "p6_20_in": 75,
+          "source": "C7452.MP4",
+          "v7_in": 25
+        }
+      ],
+      "B": [
+        {
+          "distance_frames": 1339,
+          "p6_20_in": 3911,
+          "source": "DJI_0528.MOV",
+          "v7_in": 5250
+        },
+        {
+          "distance_frames": 1937,
+          "p6_20_in": 7187,
+          "source": "DJI_0528.MOV",
+          "v7_in": 5250
+        },
+        {
+          "distance_frames": 1528,
+          "p6_20_in": 3722,
+          "source": "DJI_0528.MOV",
+          "v7_in": 5250
+        },
+        {
+          "distance_frames": 4274,
+          "p6_20_in": 13298,
+          "source": "DJI_0530.MOV",
+          "v7_in": 17572
+        },
+        {
+          "distance_frames": 33,
+          "p6_20_in": 703,
+          "source": "C7151.MP4",
+          "v7_in": 670
+        }
+      ],
+      "C": [
+        {
+          "distance_frames": null,
+          "p6_20_in": 510,
+          "source": "C7219.MP4",
+          "v7_in": null
+        },
+        {
+          "distance_frames": null,
+          "p6_20_in": 383,
+          "source": "DJI_0526.MOV",
+          "v7_in": null
+        },
+        {
+          "distance_frames": null,
+          "p6_20_in": 68,
+          "source": "DJI_0523.MOV",
+          "v7_in": null
+        },
+        {
+          "distance_frames": null,
+          "p6_20_in": 3407,
+          "source": "DJI_0529.MOV",
+          "v7_in": null
+        },
+        {
+          "distance_frames": null,
+          "p6_20_in": 194,
+          "source": "DJI_0527.MOV",
+          "v7_in": null
+        }
+      ],
+      "D": [
+        {
+          "distance_frames": 66,
+          "p6_20_in": 10,
+          "source": "C7194.MP4",
+          "v7_in": 76
+        },
+        {
+          "distance_frames": 6,
+          "p6_20_in": 400,
+          "source": "C7203.MP4",
+          "v7_in": 394
+        },
+        {
+          "distance_frames": 40,
+          "p6_20_in": 135,
+          "source": "C7200.MP4",
+          "v7_in": 175
+        },
+        {
+          "distance_frames": 31,
+          "p6_20_in": 1635,
+          "source": "C7309.MP4",
+          "v7_in": 1666
+        },
+        {
+          "distance_frames": 9,
+          "p6_20_in": 135,
+          "source": "C7352.MP4",
+          "v7_in": 126
+        }
+      ]
+    }
+  },
+  "offline_fidelity_gate": {
+    "reason": "Resolve explicit source frames/time, rate, speed and stored duration agree with OTIO for every V7 main-track item",
+    "status": "PASS"
+  },
+  "project": "15 A\u011fustos",
+  "raw_media_available": false,
+  "resolve_version": "21.1.0.14",
+  "resolve_writes": 0,
+  "schema": "p6.30.2-offline-source-time-v1",
+  "timeline_changes": 0
+}
