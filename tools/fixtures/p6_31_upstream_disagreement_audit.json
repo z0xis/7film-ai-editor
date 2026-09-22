@@ -1,0 +1,167 @@
+{
+  "schema": "p6.31-upstream-disagreement-audit-v1",
+  "p6_20_plan_hash": "49991347e0d406ea",
+  "method": {
+    "alignment": "normalized editorial section and semantic context; never item index",
+    "score_replay": "exact production _score_candidate, frozen weights, captured in memory",
+    "visual_review": "five-frame temporal strips per side",
+    "visual_sample": 12
+  },
+  "reference_pipeline_15a": {
+    "raw_analysed_assets": 362,
+    "is_edit_items": 187,
+    "v7_items": 87,
+    "v7_to_is_edit": {"exact_or_overlap": 87, "same_source_alternate": 0, "outside": 0},
+    "p6_20_to_is_edit": {
+      "exact_or_overlap": 12,
+      "same_source_different_moment": 62,
+      "outside_selects": 58,
+      "unknown": 0
+    },
+    "technical_quality_median": {
+      "overlap_select": 0.417,
+      "same_source_other": 0.3985,
+      "outside_selects": 0.3505
+    }
+  },
+  "canonical_disagreements": {"A": 5, "B": 41, "C": 81, "D": 5},
+  "class_c_decomposition": {
+    "exclusive_curated_axis": {
+      "C1_p6_source_outside_is_edit": 58,
+      "C2_p6_source_curated_but_v7_uses_other_source": 23
+    },
+    "deep_sample_nonexclusive_causal_axis": {
+      "sample": 12,
+      "human_alternative_quality_ineligible": 1,
+      "human_alternative_usable_but_context_narrowed_before_scoring": 7,
+      "human_alternative_reached_scoring_and_lost": 4
+    }
+  },
+  "eligibility_funnel": {
+    "human_alternatives_checked": 12,
+    "in_analysed_pool": 12,
+    "lost_at_quality": 1,
+    "lost_at_duration": 0,
+    "lost_at_contextual_semantic_story_narrowing": 7,
+    "lost_at_chronology": 0,
+    "lost_at_reuse_before_scoring": 0,
+    "reached_scoring": 4
+  },
+  "score_replay": {
+    "comparisons": 4,
+    "selected_wins": 4,
+    "largest_systematic_terms": {
+      "aesthetic_score": 3,
+      "story_relevance": 2,
+      "reuse_or_duplicate_state": 2,
+      "technical_quality": 1,
+      "chronology": 1
+    },
+    "cases": [
+      {"p6": "C7207.MP4", "human": "C7233.MP4", "margin": 0.239,
+       "visual": "BOTH_VALID", "largest_terms": ["aesthetic_score", "technical_quality"]},
+      {"p6": "C7260.MP4", "human": "DJI_0525.MOV", "margin": 0.3016,
+       "visual": "DIFFERENT_EDITORIAL_INTENT", "largest_terms": ["aesthetic_score", "style_fit"]},
+      {"p6": "C7388.MP4", "human": "C7310.MP4", "margin": 0.9602,
+       "visual": "HUMAN_CLEARLY_BETTER", "largest_terms": ["duplicate_penalty", "reuse_penalty", "story_relevance"]},
+      {"p6": "DJI_0530.MOV@13298", "human": "DJI_0530.MOV@17572", "margin": 0.397,
+       "visual": "BOTH_VALID", "largest_terms": ["aesthetic_score", "story_relevance"]}
+    ]
+  },
+  "temporal_visual_audit": {
+    "sample_size": 12,
+    "sampling": "8 section-stratified outside-select pairs plus 4 same-source/different-region controls",
+    "HUMAN_CLEARLY_BETTER": 3,
+    "P6_20_CLEARLY_BETTER": 0,
+    "BOTH_VALID": 6,
+    "DIFFERENT_EDITORIAL_INTENT": 3,
+    "INCONCLUSIVE": 0,
+    "note": "different source is not treated as an error; only 3/12 were clear human wins"
+  },
+  "root_cause_taxonomy": {
+    "ELIGIBILITY_FALSE_NEGATIVE": 0,
+    "QUALITY_GATE_TOO_WEAK": 0,
+    "QUALITY_GATE_TOO_STRICT": 1,
+    "SEMANTIC_ROLE_MISMATCH": 0,
+    "LOCAL_RANKING_FAILURE": 1,
+    "SEQUENCE_CONTEXT_FAILURE": 2,
+    "REUSE_NOVELTY_FAILURE": 0,
+    "CHRONOLOGY_FAILURE": 0,
+    "DURATION_CONSTRAINT": 0,
+    "HIGH_LEVEL_STORY_INTENT_FAILURE": 4,
+    "HUMAN_ALTERNATIVE_NOT_MEANINGFULLY_BETTER": 4,
+    "UNKNOWN": 0
+  },
+  "section_findings": {
+    "intro": {"main_cause": "HIGH_LEVEL_STORY_INTENT_FAILURE",
+      "evidence": "locally valid landscape/detail/prep shots do not form the human opening progression; usable human shots were context-narrowed"},
+    "reception": {"main_cause": "SEQUENCE_CONTEXT_FAILURE",
+      "evidence": "generic energetic party footage wins locally while the human edit advances interaction/cake/party structure"},
+    "outro": {"main_cause": "HIGH_LEVEL_STORY_INTENT_FAILURE",
+      "evidence": "P6.20 closes on overhead dance coverage; V7 resolves with a night pull-out and the planner has no first-class closing-image role"}
+  },
+  "class_b_secondary": {"material_different_region": 41, "nearby_or_overlap": 0, "unknown": 0},
+  "strongest_wrong_source_cases": [
+    {"context": "mid-story progression", "p6": "C7224.MP4@10", "human": "C7229.MP4@429",
+     "human_available": true, "human_eligible": true, "human_scored": false,
+     "score_difference": null, "visual": "HUMAN_CLEARLY_BETTER", "root_cause": "HIGH_LEVEL_STORY_INTENT_FAILURE"},
+    {"context": "reception action progression", "p6": "C7388.MP4@10", "human": "C7310.MP4@87",
+     "human_available": true, "human_eligible": true, "human_scored": true,
+     "score_difference": 0.9602, "visual": "HUMAN_CLEARLY_BETTER", "root_cause": "SEQUENCE_CONTEXT_FAILURE"},
+    {"context": "outro resolution", "p6": "DJI_0529.MOV@1286", "human": "DJI_0524.MOV@1049",
+     "human_available": true, "human_eligible": false, "human_scored": false,
+     "score_difference": null, "visual": "HUMAN_CLEARLY_BETTER", "root_cause": "QUALITY_GATE_TOO_STRICT"}
+  ],
+  "elenora": {
+    "tier1_verified": true,
+    "provenance": "user-confirmed human final in separate Resolve project EM WD; distinct from SQLite REVIZE and TEST timelines",
+    "timeline": "Elenora Mustafa Wedding Day",
+    "timeline_fps": 50.0,
+    "timeline_duration_seconds": 177.08,
+    "video_source_items": 167,
+    "audio_track_items": [122, 3],
+    "canonical_source_items": 167,
+    "otio_crosscheck_items": 167,
+    "bounds_failures": 0,
+    "duration_retime_failures": 0,
+    "online_items": 167,
+    "raw_assets": 345,
+    "human_used_assets": 115,
+    "unused_assets": 230,
+    "same_source_extra_uses": 52,
+    "reused_assets": 31,
+    "forward_reuse_transitions": 40,
+    "backward_reuse_transitions": 12,
+    "analysed_human_moments_mapped": 167,
+    "duration_eligible": 164,
+    "production_quality_usable": 166,
+    "used_asset_quality_median": 0.411,
+    "unused_asset_quality_median": 0.4,
+    "shadow_counterfactual": {
+      "items": 116,
+      "distinct_assets": 101,
+      "human_asset_overlap": 49,
+      "planner_assets_outside_human_final": 52,
+      "human_assets_missing_from_planner": 66,
+      "timeline_written": false
+    }
+  },
+  "cross_project": {
+    "candidate_eligibility": "CONTRADICTED_AS_MAIN_CAUSE",
+    "local_ranking": "UNKNOWN",
+    "quality": "SECONDARY_CROSS_PROJECT_SIGNAL",
+    "sequence_story_intent": "CROSS_PROJECT_CONFIRMED",
+    "reuse_novelty": "PARTIAL_CROSS_PROJECT_SIGNAL",
+    "evidence": "166/167 human Elenora moments pass production quality and all map into analysed shots, while the human final exhibits section-level category progression and extensive deliberate reuse"
+  },
+  "architectural_conclusion": {
+    "candidate_eligibility": "NOT_MATERIAL",
+    "local_shot_ranking": "SECONDARY",
+    "sequence_story_intent": "MAIN",
+    "reuse_novelty": "SECONDARY",
+    "quality": "SECONDARY",
+    "next_milestone": "reference-conditioned Stage-1 to shot-selection shadow integration"
+  },
+  "safety": {"db_writes": 0, "resolve_project_writes": 0, "timeline_changes": 0,
+    "planner_behavior_changes": 0, "reference_mutations": 0}
+}
