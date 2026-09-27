@@ -29,6 +29,19 @@ from .vision import (
 from .windows import measure_windows, store_windows
 
 LOGGER = logging.getLogger(__name__)
+
+
+class SourceMediaUnreadableError(RuntimeError):
+    """No frame of a source asset could be decoded; its analysis must not be stored."""
+
+    def __init__(self, asset: MediaAsset) -> None:
+        name = getattr(asset, "name", asset.id)
+        where = getattr(asset, "path", "")
+        super().__init__(
+            f"Kaynak medya okunamadı: {name} ({where}). Sürücü bağlı mı? "
+            "Analiz, geri dönüş (fallback) verisi yazmak yerine durduruldu."
+        )
+        self.asset_id = asset.id
 # Bumped whenever measuring or labelling changes in a way that makes older rows worse rather
 # than merely different. "2" added the highlight and flatness vetoes, the five second shot cap,
 # the CLIP prompt prior, and energy sections that follow the track instead of its four quarters.
@@ -253,7 +266,9 @@ def _encode_asset(database: Database, classifier: VisionClassifier, asset: Media
         pending_positions.clear()
         pending_images.clear()
 
+    frames_read = 0
     for ordinal, frames in enumerate(_shot_frame_groups(asset, ranges)):
+        frames_read += len(frames)
         metrics.append(measure_frames(frames))
         middle = frames[len(frames) // 2] if frames else None
         if middle is not None:
@@ -262,6 +277,13 @@ def _encode_asset(database: Database, classifier: VisionClassifier, asset: Media
             if len(pending_images) >= _ENCODE_CHUNK_SHOTS:
                 _flush_encode()
     _flush_encode()
+    if ranges and frames_read == 0:
+        # Not one frame of the whole asset could be read: the drive went away or the file is
+        # unreadable. OpenCV says so by returning nothing rather than raising, and storing that
+        # wrote every shot as "missing" with no embedding -- 1641 shots of "17 EYLUL DAMAT" in
+        # minutes, labelled opencv_fallback, under a job that reported success. Raising here keeps
+        # the asset's previous features untouched (nothing was written) and fails the job by name.
+        raise SourceMediaUnreadableError(asset)
     _store_features(database, asset, ranges, metrics, embeddings)
 
 

@@ -143,16 +143,19 @@ class ResumableAnalysisTests(unittest.TestCase):
 
         self.assertEqual([r["shot_id"] for r in features], [r["id"] for r in shots])
 
-    def test_a_frame_that_could_not_be_read_falls_back_without_an_embedding(self):
+    def test_media_that_cannot_be_read_stops_analysis_instead_of_storing_fallback(self):
+        # Used to complete with every shot stored as an opencv_fallback "venue" and no embedding
+        # -- the silent path that degraded 1641 shots of a real project. Now nothing is written.
         classifier = FakeClassifier()
         with mock.patch.object(analysis, "VisionClassifier", lambda: classifier), \
              mock.patch.object(analysis, "_scene_ranges", lambda asset: [TimeRange(0, 100, RATE)]), \
              mock.patch.object(analysis, "_shot_frame_groups", lambda asset, rs: [[] for _ in rs]), \
-             mock.patch.object(analysis, "measure_frames", lambda frames: measurements(0.0)):
-            shots = analysis.analyze_shots(self.database, "p", "job")
+             mock.patch.object(analysis, "measure_frames", lambda frames: measurements(0.0)), \
+             self.assertRaises(analysis.SourceMediaUnreadableError):
+            analysis.analyze_shots(self.database, "p", "job")
 
-        self.assertTrue(all(shot.category == "venue" for shot in shots), "opencv fallback")
-        self.assertIsNone(self.database.fetch_one("SELECT embedding FROM shot_features LIMIT 1")["embedding"])
+        self.assertEqual(self.database.fetch_all("SELECT * FROM shot_features"), [])
+        self.assertEqual(self.database.fetch_all("SELECT * FROM shots"), [])
 
 
 if __name__ == "__main__":

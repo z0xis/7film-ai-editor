@@ -100,8 +100,8 @@ class ChunkedEncodeUnitTests(unittest.TestCase):
             analysis_module._encode_asset(db, clf, SimpleNamespace(id="A"))
         self.assertEqual(clf.encode_calls, 1)
 
-    def test_unreadable_frames_persist_a_row_without_an_embedding(self):
-        frames_per_shot = [[], []]  # both shots decode nothing
+    def test_one_unreadable_shot_persists_a_row_without_an_embedding(self):
+        frames_per_shot = [[np.full((4, 4, 3), 3, np.uint8)], []]  # second shot decodes nothing
         clf = _RecordingClassifier()
         with tempfile.TemporaryDirectory() as tmp, \
                 mock.patch.object(analysis_module, "_shot_frame_groups",
@@ -109,10 +109,32 @@ class ChunkedEncodeUnitTests(unittest.TestCase):
                 mock.patch.object(analysis_module, "measure_frames", lambda f: _metrics(0.0)):
             db = Database(Path(tmp) / "d.sqlite3"); db.migrate(); _seed(db, "A", 2)
             analysis_module._encode_asset(db, clf, SimpleNamespace(id="A"))
-            feats = db.fetch_all("SELECT embedding FROM shot_features WHERE asset_id='A'")
+            feats = db.fetch_all(
+                "SELECT embedding FROM shot_features WHERE asset_id='A' ORDER BY start_frame")
         self.assertEqual(len(feats), 2)
-        self.assertTrue(all(f["embedding"] is None for f in feats))
-        self.assertEqual(clf.encode_calls, 0)  # never called with an empty batch
+        self.assertIsNotNone(feats[0]["embedding"])
+        self.assertIsNone(feats[1]["embedding"])
+        self.assertEqual(clf.batch_sizes, [1])  # never called with an empty batch
+
+    def test_wholly_unreadable_asset_fails_closed_and_keeps_previous_features(self):
+        # P6.31.1: the drive went away mid-run and 1641 shots were stored as "missing" fallback
+        # under a job that said completed. Not one readable frame now stops the job by name.
+        clf = _RecordingClassifier()
+        with tempfile.TemporaryDirectory() as tmp:
+            db = Database(Path(tmp) / "d.sqlite3"); db.migrate(); _seed(db, "A", 2)
+            with mock.patch.object(analysis_module, "_shot_frame_groups",
+                                   self._patch_frames([[np.full((4, 4, 3), 5, np.uint8)]] * 2)), \
+                    mock.patch.object(analysis_module, "measure_frames", lambda f: _metrics()):
+                analysis_module._encode_asset(db, clf, SimpleNamespace(id="A"))
+            before = db.fetch_all("SELECT shot_id, embedding FROM shot_features WHERE asset_id='A'")
+            with mock.patch.object(analysis_module, "_shot_frame_groups",
+                                   self._patch_frames([[], []])), \
+                    mock.patch.object(analysis_module, "measure_frames", lambda f: _metrics(0.0)), \
+                    self.assertRaises(analysis_module.SourceMediaUnreadableError):
+                analysis_module._encode_asset(db, clf, SimpleNamespace(id="A"))
+            after = db.fetch_all("SELECT shot_id, embedding FROM shot_features WHERE asset_id='A'")
+        self.assertEqual(len(before), 2)
+        self.assertEqual(after, before)
 
     def test_failure_mid_encode_persists_no_partial_features(self):
         n = 70

@@ -10,6 +10,9 @@ const path = require("path");
 const WorkflowIntegration = require("./WorkflowIntegration.node");
 const {
   appendClipsInBatches,
+  allMediaPoolFolders,
+  canonicalMediaKey,
+  ensurePoolMedia,
   buildMusicClipInfos,
   buildVideoClipInfos,
   frameRatesAgree,
@@ -209,32 +212,18 @@ async function frameCountOf(mediaPoolItem) {
   return Number.isFinite(frames) && frames >= 1 ? Math.floor(frames) : null;
 }
 
+function mediaKey(sourcePath) {
+  return canonicalMediaKey(sourcePath, { resolvePath: path.resolve, realpath: fs.realpathSync.native });
+}
+
 async function resolveMediaPool(mediaPool, poolPaths) {
-  const itemByPath = new Map();
-  const currentFolder = await mediaPool.GetCurrentFolder();
-  const existingItems = currentFolder ? await currentFolder.GetClipList() : [];
-  for (const mediaPoolItem of existingItems || []) {
-    const properties = await mediaPoolItem.GetClipProperty();
-    const filePath = properties?.["File Path"];
-    if (filePath) itemByPath.set(path.resolve(filePath), mediaPoolItem);
-  }
-  const missingPaths = poolPaths.filter((sourcePath) => !itemByPath.has(path.resolve(sourcePath)));
-  const importedItems = missingPaths.length ? await mediaPool.ImportMedia(missingPaths) : [];
-  for (let index = 0; index < (importedItems || []).length; index += 1) {
-    const mediaPoolItem = importedItems[index];
-    const properties = await mediaPoolItem.GetClipProperty();
-    const filePath = properties?.["File Path"];
-    itemByPath.set(path.resolve(filePath || missingPaths[index]), mediaPoolItem);
-  }
-  const unresolved = poolPaths.filter((sourcePath) => !itemByPath.has(path.resolve(sourcePath)));
-  if (unresolved.length) {
-    throw new Error(`Resolve Media Pool aktarımı tamamlanamadı: ${unresolved.length} dosya bulunamadı.`);
-  }
-  const media = new Map();
-  for (const sourcePath of poolPaths) {
-    const key = path.resolve(sourcePath);
-    const mediaPoolItem = itemByPath.get(key);
-    media.set(key, { mediaPoolItem, frameCount: await frameCountOf(mediaPoolItem) });
+  const { media, duplicateGroups } = await ensurePoolMedia(mediaPool, poolPaths, {
+    keyOf: mediaKey,
+    frameCountOf,
+  });
+  if (duplicateGroups.size) {
+    // Reported, never removed here: an extra copy may be what some timeline is cut from.
+    console.warn(`7Film: Media Pool'da ${duplicateGroups.size} dosyanın birden fazla kopyası var; ilki kullanılıyor.`);
   }
   return media;
 }
@@ -254,7 +243,7 @@ async function linkProxies(media, items) {
   const seen = new Set();
   for (const item of items || []) {
     const proxyPath = item?.proxy_path ? String(item.proxy_path) : null;
-    const sourcePath = item?.source_path ? path.resolve(String(item.source_path)) : null;
+    const sourcePath = item?.source_path ? mediaKey(String(item.source_path)) : null;
     if (!proxyPath || !sourcePath || seen.has(sourcePath)) continue;
     seen.add(sourcePath);
     const mediaPoolItem = media.get(sourcePath)?.mediaPoolItem;
@@ -291,7 +280,7 @@ async function appendMusic(mediaPool, timeline, plan, media) {
   const timelineStart = Number(await timeline.GetStartFrame()) || 0;
   const { clipInfos, missing } = buildMusicClipInfos({
     plan,
-    lookup: (musicPath) => media.get(path.resolve(musicPath))?.mediaPoolItem,
+    lookup: (musicPath) => media.get(mediaKey(musicPath))?.mediaPoolItem,
     timelineStart,
     trackIndex: MUSIC_TRACK_INDEX,
   });
@@ -315,7 +304,7 @@ async function createTimelineFromPlan(mediaPool, project, plan, timelineName) {
 
   const { clipInfos, labels, dropped } = buildVideoClipInfos(
     plan.items || [],
-    (sourcePath) => media.get(path.resolve(sourcePath)),
+    (sourcePath) => media.get(mediaKey(sourcePath)),
   );
   if (!clipInfos.length) throw new Error("Kurgu planında video klibi bulunamadı.");
   if (dropped.length) {
@@ -512,9 +501,18 @@ async function importTimeline(_event, payload) {
     timeline = await createTimelineFromPlan(mediaPool, project, plan, timelineName);
   } catch (error) {
     importMethod = hasRetiming(plan) ? "FCPXML (yavaş çekim)" : "FCPXML";
+    // Letting the import bring its own source clips imported every source again: a rough cut whose API build had
+    // already brought its media in (and then failed on a speed or frame rate check) left the
+    // shoot in the pool twice. The media is made present once, idempotently, and the FCPXML
+    // is linked to what is already there.
+    await resolveMediaPool(mediaPool, [...new Set([
+      ...(plan.items || []).map((item) => String(item.source_path)),
+      ...musicSegments(plan).map((segment) => segment.path),
+    ])]);
     timeline = await mediaPool.ImportTimelineFromFile(importFile, {
       timelineName,
-      importSourceClips: true,
+      importSourceClips: false,
+      sourceClipsFolders: await allMediaPoolFolders(mediaPool),
     });
     if (!timeline) throw error;
   }

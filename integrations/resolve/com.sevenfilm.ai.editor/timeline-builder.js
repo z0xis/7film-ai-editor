@@ -399,7 +399,120 @@ function monitorFormatForRate(current, rate) {
   return next === `${prefix}${scan} ${present}` ? null : next;
 }
 
+/**
+ * One physical file, one key. Resolve reports "File Path" composed (NFC) while the engine
+ * stores what the volume listing gave it, decomposed (NFD) — measured on "17 EYLUL DAMAT":
+ * 370/370 Resolve paths NFC, 298/298 engine paths NFD. Keyed as raw strings the two never
+ * matched, every clip looked missing, and each rough cut imported the shoot again.
+ *
+ * Case is kept: two files differing only in case are two files on a case-sensitive volume.
+ * `realpath` is optional so this stays pure; given one, symlinks and volume aliases collapse.
+ */
+function canonicalMediaKey(rawPath, { resolvePath = (p) => p, realpath = null } = {}) {
+  const text = String(rawPath ?? "").trim();
+  if (!text) return null;
+  let absolute = resolvePath(text.normalize("NFC"));
+  if (realpath) {
+    try {
+      absolute = realpath(absolute);
+    } catch (_error) {
+      // A file that cannot be reached right now still has a stable textual identity.
+    }
+  }
+  return String(absolute).normalize("NFC");
+}
+
+/**
+ * Which of `poolPaths` are genuinely not in the pool yet.
+ *
+ * `existingItems` is every media pool item in the project, from every folder — not just the
+ * current one: the shoot usually sits in bins, and reading only the open folder made every
+ * binned clip look missing. Paths the plan names twice (in two normalizations) are asked for
+ * once.
+ */
+function planMediaImport(existingItems, poolPaths, keyOf) {
+  const itemByKey = new Map();
+  const duplicateGroups = new Map();
+  for (const { item, filePath } of existingItems || []) {
+    const key = keyOf(filePath);
+    if (!key) continue;
+    if (itemByKey.has(key)) {
+      duplicateGroups.set(key, (duplicateGroups.get(key) || [itemByKey.get(key)]).concat(item));
+      continue;
+    }
+    itemByKey.set(key, item);
+  }
+  const missing = [];
+  const seen = new Set();
+  for (const sourcePath of poolPaths || []) {
+    const key = keyOf(sourcePath);
+    if (!key || itemByKey.has(key) || seen.has(key)) continue;
+    seen.add(key);
+    missing.push(sourcePath);
+  }
+  return { itemByKey, missing, duplicateGroups };
+}
+
+// Every folder of the project's pool, root first.
+async function allMediaPoolFolders(mediaPool) {
+  const folders = [];
+  const pending = [await mediaPool.GetRootFolder()];
+  while (pending.length) {
+    const folder = pending.shift();
+    if (!folder) continue;
+    folders.push(folder);
+    pending.push(...((await folder.GetSubFolderList()) || []));
+  }
+  return folders;
+}
+
+// Every item in the project, whichever bin it sits in.
+async function allMediaPoolItems(mediaPool) {
+  const found = [];
+  for (const folder of await allMediaPoolFolders(mediaPool)) {
+    for (const item of (await folder.GetClipList()) || []) {
+      const properties = await item.GetClipProperty();
+      const filePath = properties?.["File Path"];
+      if (filePath) found.push({ item, filePath });
+    }
+  }
+  return found;
+}
+
+/**
+ * Make every path present in the pool exactly once and return an item per canonical key.
+ * Imports only what no folder holds yet, so calling this again imports nothing.
+ */
+async function ensurePoolMedia(mediaPool, poolPaths, { keyOf, frameCountOf = async () => null }) {
+  const existing = await allMediaPoolItems(mediaPool);
+  const { itemByKey, missing, duplicateGroups } = planMediaImport(existing, poolPaths, keyOf);
+  const importedItems = missing.length ? await mediaPool.ImportMedia(missing) : [];
+  for (let index = 0; index < (importedItems || []).length; index += 1) {
+    const mediaPoolItem = importedItems[index];
+    const properties = await mediaPoolItem.GetClipProperty();
+    const key = keyOf(properties?.["File Path"] || missing[index]);
+    if (key && !itemByKey.has(key)) itemByKey.set(key, mediaPoolItem);
+  }
+  const unresolved = (poolPaths || []).filter((sourcePath) => !itemByKey.has(keyOf(sourcePath)));
+  if (unresolved.length) {
+    throw new Error(`Resolve Media Pool aktarımı tamamlanamadı: ${unresolved.length} dosya bulunamadı.`);
+  }
+  const media = new Map();
+  for (const sourcePath of poolPaths || []) {
+    const key = keyOf(sourcePath);
+    if (media.has(key)) continue;
+    const mediaPoolItem = itemByKey.get(key);
+    media.set(key, { mediaPoolItem, frameCount: await frameCountOf(mediaPoolItem) });
+  }
+  return { media, imported: (importedItems || []).length, duplicateGroups };
+}
+
 module.exports = {
+  allMediaPoolFolders,
+  allMediaPoolItems,
+  canonicalMediaKey,
+  ensurePoolMedia,
+  planMediaImport,
   closingFadeFrames,
   hasRetiming,
   retimedSourceFrames,
